@@ -3,7 +3,7 @@
 import { isServer, QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
-interface ProvidersProps {
+interface QueryProvidersProps {
   children: React.ReactNode;
 }
 
@@ -28,7 +28,7 @@ function getQueryClient() {
   }
 }
 
-export function Providers({ children }: ProvidersProps) {
+export function QueryProviders({ children }: QueryProvidersProps) {
   const queryClient = getQueryClient();
 
   return (
