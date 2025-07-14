@@ -1,7 +1,7 @@
 @import "tailwindcss";
 :root {
-  --background: #ffffff; /* 브랜드 컬러 변경*/
-  --foreground: #171717; /* 브랜드 컬러 변경*/
+  --background: #111111; /* 브랜드 컬러 변경*/
+  --foreground: #202020; /* 브랜드 컬러 변경*/
 }
 
 @theme inline {
@@ -13,8 +13,8 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a; /* 브랜드 컬러 변경*/
-    --foreground: #ededed; /* 브랜드 컬러 변경*/
+    --background: #111111; /* 브랜드 컬러 변경*/
+    --foreground: #202020; /* 브랜드 컬러 변경*/
   }
 }
 

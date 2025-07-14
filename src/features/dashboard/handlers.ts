@@ -1,157 +1,176 @@
-import { http, HttpResponse } from 'msw';
-import { DashboardData, DashboardStats, Task } from './types';
+import { http, HttpResponse } from "msw";
+import { StudyGroup, Dashboard } from "./types";
 
 // 모킹용 데이터
-const mockTasks: Task[] = [
-  {
-    id: '1',
-    title: 'MSW 설정 완료하기',
-    description: 'Mock Service Worker를 프로젝트에 설정',
-    completed: true,
-    priority: 'high',
-    createdAt: '2025-01-10T09:00:00Z',
-    updatedAt: '2025-01-10T10:30:00Z',
-  },
-  {
-    id: '2',
-    title: '대시보드 UI 구현',
-    description: '사용자 대시보드 인터페이스 개발',
-    completed: false,
-    priority: 'high',
-    createdAt: '2025-01-10T11:00:00Z',
-    updatedAt: '2025-01-10T11:00:00Z',
-  },
-  {
-    id: '3',
-    title: 'API 연동 테스트',
-    description: 'React Query와 MSW 연동 테스트',
-    completed: false,
-    priority: 'medium',
-    createdAt: '2025-01-10T14:00:00Z',
-    updatedAt: '2025-01-10T14:00:00Z',
-  },
-  {
-    id: '4',
-    title: '컴포넌트 테스트 작성',
-    description: 'React Testing Library로 컴포넌트 테스트',
-    completed: false,
-    priority: 'medium',
-    createdAt: '2025-01-11T09:00:00Z',
-    updatedAt: '2025-01-11T09:00:00Z',
-  },
-  {
-    id: '5',
-    title: '스토리북 설정',
-    description: '컴포넌트 문서화를 위한 스토리북 설정',
-    completed: false,
-    priority: 'low',
-    createdAt: '2025-01-11T15:00:00Z',
-    updatedAt: '2025-01-11T15:00:00Z',
-  },
-];
+const mockStudyGroup: StudyGroup = {
+  id: "study-1",
+  name: "스터디 제목이 여기에",
+  description: "우리는 어떤 스터디를 같이 하는 모입입니다. 열공!",
+  createdAt: new Date("2025-01-01T00:00:00Z"),
+  image: "/images/study-background.jpg",
+  teamProgress: 55,
+  inviteLink: "A34B5fD",
+  members: [
+    {
+      id: "member-1",
+      name: "닉네임1",
+      image: "/images/study-background.jpg",
+    },
+    {
+      id: "member-2",
+      name: "닉네임2",
+      image: "/images/study-background.jpg",
+    },
+    {
+      id: "member-3",
+      name: "닉네임3",
+      image: "/images/study-background.jpg",
+    },
+    {
+      id: "member-4",
+      name: "닉네임4",
+      image: "/images/study-background.jpg",
+    },
+    {
+      id: "member-5",
+      name: "닉네임5",
+      image: "/images/study-background.jpg",
+    },
+    {
+      id: "member-6",
+      name: "닉네임6",
+      image: "/images/study-background.jpg",
+    },
+  ],
+};
 
-const calculateStats = (tasks: Task[]): DashboardStats => {
-  const totalTasks = tasks.length;
-  const completedTasks = tasks.filter(task => task.completed).length;
-  const pendingTasks = totalTasks - completedTasks;
-  const completionRate = totalTasks > 0 ? Math.round((completedTasks / totalTasks) * 100) : 0;
+const mockDashboard: Dashboard = {
+  studyGoal: {
+    id: "goal-1",
+    title: "피그마 툴 익히기",
+    completedCt: "1/4",
+    mytodoList: [
+      {
+        id: "todo-1",
+        content: "튜토리얼 영상 1-3 시청",
+        createdAt: new Date("2025-01-10T09:00:00Z"),
+        completed: true,
+        completedAt: new Date("2025-01-10T15:00:00Z"),
+        note: "테스트 노트 내용 1",
+        order: 1,
+        shared: true,
+      },
+      {
+        id: "todo-2",
+        content: "사용자 인터뷰 실습 준비",
+        createdAt: new Date("2025-01-10T10:00:00Z"),
+        completed: false,
+        completedAt: new Date("2025-01-11T14:00:00Z"),
+        note: "",
+        order: 2,
+        shared: false,
+      },
+    ],
+    teamProgress: [
+      {
+        name: "닉네임1",
+        image: "/images/study-background.jpg",
+        progress: 80,
+        completedCt: [8, 10],
+      },
+      {
+        name: "닉네임2",
+        image: "/images/study-background.jpg",
+        progress: 70,
+        completedCt: [7, 10],
+      },
+      {
+        name: "닉네임3",
+        image: "/images/study-background.jpg",
+        progress: 90,
+        completedCt: [9, 10],
+      },
+      {
+        name: "닉네임4",
+        image: "/images/study-background.jpg",
+        progress: 60,
+        completedCt: [6, 10],
+      },
+    ],
+  },
+};
 
-  return {
-    totalTasks,
-    completedTasks,
-    pendingTasks,
-    completionRate,
-    lastUpdated: new Date().toISOString(),
-  };
+const mockDashboardNone: Dashboard = {
+  studyGoal: {
+    id: "goal-1",
+    title: "",
+    completedCt: "0/0",
+    mytodoList: [],
+    teamProgress: [],
+  },
 };
 
 export const dashboardHandlers = [
-  // 대시보드 전체 데이터 조회
-  http.get('/api/dashboard', () => {
-    const stats = calculateStats(mockTasks);
-    const recentTasks = mockTasks.slice(0, 5);
+  // 스터디 그룹 정보 조회
+  http.get("/api/study-group/:id", ({ params }) => {
+    const studyId = params.id as string;
 
-    const dashboardData: DashboardData = {
-      stats,
-      recentTasks,
-    };
+    if (studyId !== mockStudyGroup.id) {
+      return HttpResponse.json({ error: "Study group not found" }, { status: 404 });
+    }
 
-    return HttpResponse.json(dashboardData);
+    return HttpResponse.json(mockStudyGroup);
   }),
 
-  // 대시보드 통계만 조회
-  http.get('/api/dashboard/stats', () => {
-    const stats = calculateStats(mockTasks);
-    return HttpResponse.json(stats);
-  }),
-
-  // 최근 작업 목록 조회
-  http.get('/api/dashboard/recent-tasks', ({ request }) => {
+  // 대시보드 데이터 조회
+  http.get("/api/dashboard", ({ request }) => {
     const url = new URL(request.url);
-    const limit = parseInt(url.searchParams.get('limit') || '5', 10);
-    
-    const recentTasks = mockTasks
-      .sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime())
-      .slice(0, limit);
+    const groupId = url.searchParams.get("groupId");
+    const goalId = url.searchParams.get("goalId");
 
-    return HttpResponse.json(recentTasks);
-  }),
-
-  // 작업 완료 상태 토글
-  http.patch('/api/tasks/:id/toggle', ({ params }) => {
-    const taskId = params.id as string;
-    const task = mockTasks.find(t => t.id === taskId);
-
-    if (!task) {
-      return HttpResponse.json(
-        { error: 'Task not found' },
-        { status: 404 }
-      );
+    if (!groupId || !goalId) {
+      return HttpResponse.json({ error: "groupId and goalId are required" }, { status: 400 });
     }
 
-    task.completed = !task.completed;
-    task.updatedAt = new Date().toISOString();
-
-    return HttpResponse.json(task);
-  }),
-
-  // 새 작업 추가
-  http.post('/api/tasks', async ({ request }) => {
-    const taskData = await request.json() as {
-      title: string;
-      description?: string;
-      priority: 'low' | 'medium' | 'high';
-    };
-
-    const newTask: Task = {
-      id: (mockTasks.length + 1).toString(),
-      title: taskData.title,
-      description: taskData.description,
-      completed: false,
-      priority: taskData.priority,
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-    };
-
-    mockTasks.unshift(newTask);
-
-    return HttpResponse.json(newTask, { status: 201 });
-  }),
-
-  // 작업 삭제
-  http.delete('/api/tasks/:id', ({ params }) => {
-    const taskId = params.id as string;
-    const taskIndex = mockTasks.findIndex(t => t.id === taskId);
-
-    if (taskIndex === -1) {
-      return HttpResponse.json(
-        { error: 'Task not found' },
-        { status: 404 }
-      );
+    if (groupId !== mockStudyGroup.id) {
+      return HttpResponse.json({ error: "Study group not found" }, { status: 404 });
     }
 
-    mockTasks.splice(taskIndex, 1);
+    return HttpResponse.json(mockDashboard);
+    // return HttpResponse.json(mockDashboardNone);
+  }),
 
-    return HttpResponse.json({ success: true });
+  // 투두 리스트 제목 업데이트
+  http.patch("/api/study/:groupId/goal/:goalId/title", async ({ params, request }) => {
+    const { groupId, goalId } = params;
+
+    if (groupId !== mockStudyGroup.id) {
+      return HttpResponse.json({ error: "Study group not found" }, { status: 404 });
+    }
+
+    if (goalId !== mockDashboard.studyGoal.id) {
+      return HttpResponse.json({ error: "Goal not found" }, { status: 404 });
+    }
+
+    try {
+      const body = (await request.json()) as { title: string };
+
+      if (!body.title || body.title.trim() === "") {
+        return HttpResponse.json({ error: "Title is required" }, { status: 400 });
+      }
+
+      // 모킹용 데이터 업데이트
+      mockDashboard.studyGoal.title = body.title;
+
+      return HttpResponse.json({
+        message: "Title updated successfully",
+        studyGoal: {
+          id: mockDashboard.studyGoal.id,
+          title: mockDashboard.studyGoal.title,
+        },
+      });
+    } catch (error) {
+      return HttpResponse.json({ error: "Invalid JSON body" }, { status: 400 });
+    }
   }),
 ];
