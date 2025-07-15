@@ -1,31 +1,125 @@
 "use client";
 
-import { useQuery } from "@tanstack/react-query";
 import { motion } from "framer-motion";
-import { StudyGroup as StudyGroupType } from "./types";
+import { useState, useEffect, useRef } from "react";
+import { useStudyGroup } from "./model";
+import { updateStudyGroupInfo, updateStudyGroupImage } from "./api";
 
-// API 함수
-const fetchStudyGroup = async (studyId: string): Promise<StudyGroupType> => {
-  const response = await fetch(`/api/study-group/${studyId}`);
-  if (!response.ok) {
-    throw new Error("Failed to fetch study group");
-  }
-  return response.json();
-};
-
-// React Query 훅
-const useStudyGroup = (studyId: string) => {
-  return useQuery({
-    queryKey: ["studyGroup", studyId],
-    queryFn: () => fetchStudyGroup(studyId),
-    enabled: !!studyId,
-  });
-};
-
-export default function StudyGroup() {
-  const studyId = "study-1"; // 핸들러와 일치하도록 수정
-
+export default function StudyGroup({ studyId }: { studyId: string }) {
   const { data: studyGroup, isLoading, error } = useStudyGroup(studyId);
+
+  const [title, setTitle] = useState(studyGroup?.title || "");
+  const [description, setDescription] = useState(studyGroup?.description || "");
+  const [isUpdating, setIsUpdating] = useState(false);
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  // studyGroup이 처음 로드될 때만 상태 초기화 (무한 루프 방지)
+  useEffect(() => {
+    if (studyGroup && !title && !description) {
+      setTitle(studyGroup.title);
+      setDescription(studyGroup.description);
+    }
+  }, [studyGroup]);
+
+  // debounced API 호출 함수
+  const debouncedUpdateInfo = (newTitle: string, newDescription: string) => {
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+    }
+
+    timeoutRef.current = setTimeout(async () => {
+      if (studyGroup && (newTitle !== studyGroup.title || newDescription !== studyGroup.description)) {
+        if (newTitle.trim() !== "" && newDescription.trim() !== "") {
+          try {
+            setIsUpdating(true);
+            await updateStudyGroupInfo(studyId, newTitle, newDescription);
+            console.log("스터디 정보가 성공적으로 업데이트되었습니다");
+          } catch (error) {
+            console.error("스터디 정보 업데이트 실패:", error);
+            // 실패 시 원래 값으로 되돌리기
+            if (studyGroup) {
+              setTitle(studyGroup.title);
+              setDescription(studyGroup.description);
+            }
+          } finally {
+            setIsUpdating(false);
+          }
+        }
+      }
+    }, 2000);
+  };
+
+  // 제목 변경 핸들러
+  const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newTitle = e.target.value;
+    setTitle(newTitle);
+    debouncedUpdateInfo(newTitle, description);
+  };
+
+  // 설명 변경 핸들러
+  const handleDescriptionChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const newDescription = e.target.value;
+    setDescription(newDescription);
+    debouncedUpdateInfo(title, newDescription);
+  };
+
+  // 배경 이미지 변경 핸들러
+  const handleImageChange = () => {
+    const fileInput = document.createElement("input");
+    fileInput.type = "file";
+    fileInput.accept = "image/*";
+    fileInput.style.display = "none";
+
+    fileInput.onchange = async (event) => {
+      const file = (event.target as HTMLInputElement).files?.[0];
+      if (file && studyGroup) {
+        try {
+          setIsUpdating(true);
+
+          // 파일을 Base64로 변환
+          const reader = new FileReader();
+          reader.onload = async (e) => {
+            const base64String = e.target?.result as string;
+
+            try {
+              await updateStudyGroupImage(studyId, base64String);
+              console.log("배경 이미지가 성공적으로 업데이트되었습니다");
+            } catch (error) {
+              console.error("배경 이미지 업데이트 실패:", error);
+              alert("배경 이미지 업데이트에 실패했습니다.");
+            } finally {
+              setIsUpdating(false);
+            }
+          };
+
+          reader.onerror = () => {
+            alert("파일 읽기에 실패했습니다.");
+            setIsUpdating(false);
+          };
+
+          reader.readAsDataURL(file);
+        } catch (error) {
+          console.error("파일 처리 실패:", error);
+          alert("파일 처리에 실패했습니다.");
+          setIsUpdating(false);
+        }
+      }
+    };
+
+    // 파일 선택 창 열기
+    document.body.appendChild(fileInput);
+    fileInput.click();
+    document.body.removeChild(fileInput);
+  };
+
+  // 컴포넌트 언마운트 시 타이머 정리
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    };
+  }, []);
 
   // 로딩 상태 처리
   if (isLoading) {
@@ -58,12 +152,28 @@ export default function StudyGroup() {
     <div className="relative w-full h-full bg-cover bg-center bg-no-repeat" style={{ backgroundImage: `url(${studyGroup.image})` }}>
       {/* 오버레이 */}
       <div className="absolute inset-0 bg-black opacity-50"></div>
+
+      {/* 배경 변경 버튼 */}
+      <button onClick={handleImageChange} disabled={isUpdating} className="absolute top-4 right-4 z-10 p-2 bg-black bg-opacity-50 rounded-full hover:bg-opacity-70 transition-all duration-200 disabled:opacity-50" title="배경 이미지 변경">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z" fill="white" />
+        </svg>
+      </button>
+
       {/* 컨텐츠 */}
       <div className="relative px-10 py-8 flex flex-col gap-3">
-        {/*스터디 제목 */}
-        <h1 className="text-2xl font-bold text-white">{studyGroup.name}</h1>
-        {/*스터디 내용 */}
-        <p className="text-xs font-light text-white">{studyGroup.description}</p>
+        {/* 스터디 제목 (편집 가능) */}
+        <div className="relative">
+          <input type="text" value={title} onChange={handleTitleChange} disabled={isUpdating} className="text-2xl font-bold text-white bg-transparent border-none outline-none w-full placeholder-gray-300 disabled:opacity-50" placeholder="스터디 제목을 입력하세요" />
+          {/* {isUpdating && (
+            <div className="absolute -right-8 top-1/2 transform -translate-y-1/2">
+              <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+            </div>
+          )} */}
+        </div>
+
+        {/* 스터디 설명 (편집 가능) */}
+        <textarea value={description} onChange={handleDescriptionChange} disabled={isUpdating} className="text-xs font-light text-white bg-transparent border-none outline-none w-full resize-none placeholder-gray-300 disabled:opacity-50" placeholder="스터디 설명을 입력하세요" rows={2} />
       </div>
       {/*TODO Progress 바 max-w 어디까지 설정할지 */}
       {/* 팀원 목록 */}
@@ -73,15 +183,7 @@ export default function StudyGroup() {
           <div className="flex -space-x-2">
             {studyGroup.members.slice(0, 4).map((member, index) => (
               <div key={member.id} className="relative w-8 h-8 rounded-full border-2 border-white bg-gray-200 overflow-hidden" style={{ zIndex: studyGroup.members.length + index }}>
-                <img
-                  src={member.image}
-                  alt={member.name}
-                  className="w-full h-full object-cover"
-                  onError={(e) => {
-                    e.currentTarget.src =
-                      "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='16' fill='%23e5e7eb'/%3E%3Ctext x='16' y='16' text-anchor='middle' dy='.3em' fill='%236b7280' font-size='12'%3E👤%3C/text%3E%3C/svg%3E";
-                  }}
-                />
+                <img src={member.image} alt={member.name} className="w-full h-full object-cover" />
               </div>
             ))}
             {/* 추가 멤버가 있을 경우 +숫자 표시 */}

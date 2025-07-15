@@ -1,10 +1,10 @@
 import { http, HttpResponse } from "msw";
-import { StudyGroup, Dashboard } from "./types";
+import { StudyGroup, Dashboard } from "../../entities/dashboard";
 
 // 모킹용 데이터
 const mockStudyGroup: StudyGroup = {
   id: "study-1",
-  name: "스터디 제목이 여기에",
+  title: "스터디 제목이 여기에",
   description: "우리는 어떤 스터디를 같이 하는 모입입니다. 열공!",
   createdAt: new Date("2025-01-01T00:00:00Z"),
   image: "/images/study-background.jpg",
@@ -111,18 +111,7 @@ const mockDashboardNone: Dashboard = {
 };
 
 export const dashboardHandlers = [
-  // 스터디 그룹 정보 조회
-  http.get("/api/study-group/:id", ({ params }) => {
-    const studyId = params.id as string;
-
-    if (studyId !== mockStudyGroup.id) {
-      return HttpResponse.json({ error: "Study group not found" }, { status: 404 });
-    }
-
-    return HttpResponse.json(mockStudyGroup);
-  }),
-
-  // 대시보드 데이터 조회
+  // Dashboard 조회 API
   http.get("/api/dashboard", ({ request }) => {
     const url = new URL(request.url);
     const groupId = url.searchParams.get("groupId");
@@ -140,9 +129,88 @@ export const dashboardHandlers = [
     // return HttpResponse.json(mockDashboardNone);
   }),
 
-  // 투두 리스트 제목 업데이트
-  http.patch("/api/study/:groupId/goal/:goalId/title", async ({ params, request }) => {
-    const { groupId, goalId } = params;
+  // StudyGroup 조회 API
+  http.get("/api/study-group/:id", ({ params }) => {
+    const studyId = params.id as string;
+
+    if (studyId !== mockStudyGroup.id) {
+      return HttpResponse.json({ error: "Study group not found" }, { status: 404 });
+    }
+
+    return HttpResponse.json(mockStudyGroup);
+  }),
+
+  // StudyGroup 기본 정보 수정 API (제목, 설명)
+  http.patch("/api/studygroup/info/:groupId", async ({ params, request }) => {
+    const { groupId } = params;
+
+    if (groupId !== mockStudyGroup.id) {
+      return HttpResponse.json({ error: "Study group not found" }, { status: 404 });
+    }
+
+    try {
+      const body = (await request.json()) as { title: string; description: string };
+
+      if (!body.title || !body.description) {
+        return HttpResponse.json({ error: "Title and description are required" }, { status: 400 });
+      }
+
+      // 모킹용 데이터 업데이트
+      mockStudyGroup.title = body.title;
+      mockStudyGroup.description = body.description;
+
+      return HttpResponse.json({
+        message: "Study group info updated successfully",
+        studyGroup: {
+          id: mockStudyGroup.id,
+          title: mockStudyGroup.title,
+          description: mockStudyGroup.description,
+        },
+      });
+    } catch (error) {
+      return HttpResponse.json({ error: "Invalid JSON body" }, { status: 400 });
+    }
+  }),
+
+  // StudyGroup 이미지 수정 API
+  http.patch("/api/studygroup/image/:groupId", async ({ params, request }) => {
+    const { groupId } = params;
+
+    if (groupId !== mockStudyGroup.id) {
+      return HttpResponse.json({ error: "Study group not found" }, { status: 404 });
+    }
+
+    try {
+      const body = (await request.json()) as { image: string };
+
+      if (!body.image) {
+        return HttpResponse.json({ error: "Image is required" }, { status: 400 });
+      }
+
+      // 모킹용 데이터 업데이트
+      mockStudyGroup.image = body.image;
+
+      return HttpResponse.json({
+        message: "Study group image updated successfully",
+        studyGroup: {
+          id: mockStudyGroup.id,
+          image: mockStudyGroup.image,
+        },
+      });
+    } catch (error) {
+      return HttpResponse.json({ error: "Invalid JSON body" }, { status: 400 });
+    }
+  }),
+
+  // 소주제(goal) 제목 업데이트 API
+  http.patch("/api/goal/title", async ({ request }) => {
+    const url = new URL(request.url);
+    const groupId = url.searchParams.get("groupId");
+    const goalId = url.searchParams.get("goalId");
+
+    if (!groupId || !goalId) {
+      return HttpResponse.json({ error: "groupId and goalId are required" }, { status: 400 });
+    }
 
     if (groupId !== mockStudyGroup.id) {
       return HttpResponse.json({ error: "Study group not found" }, { status: 404 });
@@ -168,6 +236,58 @@ export const dashboardHandlers = [
           id: mockDashboard.studyGoal.id,
           title: mockDashboard.studyGoal.title,
         },
+      });
+    } catch (error) {
+      return HttpResponse.json({ error: "Invalid JSON body" }, { status: 400 });
+    }
+  }),
+
+  //todo 완료 체크 API
+  http.patch("/api/todo/completion", async ({ request }) => {
+    const url = new URL(request.url);
+    const todoListId = url.searchParams.get("todoListId");
+    const todoId = url.searchParams.get("todoId");
+
+    if (!todoListId || !todoId) {
+      return HttpResponse.json({ error: "todoListId and todoId are required" }, { status: 400 });
+    }
+
+    if (todoListId !== mockDashboard.studyGoal.id) {
+      return HttpResponse.json({ error: "TodoList not found" }, { status: 404 });
+    }
+
+    try {
+      const body = (await request.json()) as { completed: boolean };
+
+      if (typeof body.completed !== "boolean") {
+        return HttpResponse.json({ error: "completed must be a boolean" }, { status: 400 });
+      }
+
+      // 해당 todo 찾기
+      const todoIndex = mockDashboard.studyGoal.mytodoList.findIndex((todo) => todo.id === todoId);
+
+      if (todoIndex === -1) {
+        return HttpResponse.json({ error: "Todo not found" }, { status: 404 });
+      }
+
+      // 모킹용 데이터 업데이트
+      mockDashboard.studyGoal.mytodoList[todoIndex].completed = body.completed;
+
+      if (body.completed) {
+        mockDashboard.studyGoal.mytodoList[todoIndex].completedAt = new Date();
+      } else {
+        mockDashboard.studyGoal.mytodoList[todoIndex].completedAt = undefined;
+      }
+
+      // 완료 횟수 업데이트
+      const completedCount = mockDashboard.studyGoal.mytodoList.filter((todo) => todo.completed).length;
+      const totalCount = mockDashboard.studyGoal.mytodoList.length;
+      mockDashboard.studyGoal.completedCt = `${completedCount}/${totalCount}`;
+
+      return HttpResponse.json({
+        message: "Todo completion updated successfully",
+        todo: mockDashboard.studyGoal.mytodoList[todoIndex],
+        completedCt: mockDashboard.studyGoal.completedCt,
       });
     } catch (error) {
       return HttpResponse.json({ error: "Invalid JSON body" }, { status: 400 });

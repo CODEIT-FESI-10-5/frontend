@@ -1,6 +1,6 @@
 export interface StudyGroup {
   id: string; //study 아이디
-  name: string; //study 이름
+  title: string; //study 이름
   description: string; //study 설명
   createdAt: Date; // study 생성 일자
   image: string; // study 백그라운드 이미지
@@ -20,13 +20,13 @@ export interface Dashboard {
   };
 }
 
-interface members {
+export interface members {
   id: string; // 팀원 아이디
   name: string; // 팀원 이름
   image: string; // 프로필 이미지
 }
 
-interface Todo {
+export interface Todo {
   id: string; // todo 아이디
   content: string; // todo 내용
   createdAt: Date; // todo 생성 일자
@@ -37,7 +37,7 @@ interface Todo {
   shared: boolean; //  공통 todo 여부
 }
 
-interface teamProgress {
+export interface teamProgress {
   name: string; // 팀원 이름
   image: string; // 프로필 이미지
   progress: number; // 진행도 % (40%)

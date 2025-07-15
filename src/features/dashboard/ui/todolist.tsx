@@ -2,7 +2,8 @@
 
 import { motion } from "framer-motion";
 import { useState, useEffect, useRef } from "react";
-import { Dashboard as DashboardType } from "../types";
+import type { Dashboard } from "../../../entities/dashboard";
+import { updateGoalTitle } from "../api";
 import Todo from "./todo";
 import Link from "next/link";
 
@@ -15,25 +16,7 @@ function calculateProgress(mytodoList: { completed: boolean }[]) {
   return totalTodos > 0 ? (completedTodos / totalTodos) * 100 : 0;
 }
 
-//todo list 제목 업데이트 api
-export async function updateTodoListTitle(groupId: string, goalId: string, newTitle: string) {
-  const response = await fetch(`/api/study/${groupId}/goal/${goalId}/title`, {
-    method: "PATCH",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ title: newTitle }),
-  });
-
-  if (!response.ok) {
-    throw new Error("Failed to update todo list title");
-  }
-
-  return response.json();
-}
-
-export default function TodoList(props: { dashboard: DashboardType }) {
-  const { dashboard } = props;
+export default function TodoList({ dashboard }: { dashboard: Dashboard }) {
   const [title, setTitle] = useState(dashboard.studyGoal.title);
   const [isUpdating, setIsUpdating] = useState(false);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -52,7 +35,7 @@ export default function TodoList(props: { dashboard: DashboardType }) {
       if (newTitle !== dashboard.studyGoal.title && newTitle.trim() !== "") {
         try {
           setIsUpdating(true);
-          await updateTodoListTitle("study-1", "goal-1", newTitle);
+          await updateGoalTitle("study-1", "goal-1", newTitle);
           console.log("제목이 성공적으로 업데이트되었습니다:", newTitle);
         } catch (error) {
           console.error("제목 업데이트 실패:", error);

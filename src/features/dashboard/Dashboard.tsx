@@ -1,30 +1,11 @@
 "use client";
 
-import { useQuery } from "@tanstack/react-query";
-import { Dashboard as DashboardType } from "./types";
-import TodoList from "./component/todolist";
-
-// API 함수
-const fetchDashboard = async (groupId: string, goalId: string): Promise<DashboardType> => {
-  const response = await fetch(`/api/dashboard?groupId=${groupId}&goalId=${goalId}`);
-  if (!response.ok) {
-    throw new Error("Failed to fetch dashboard");
-  }
-  return response.json();
-};
-
-// React Query 훅
-const useDashboard = (groupId: string, goalId: string) => {
-  return useQuery<DashboardType>({
-    queryKey: ["dashboard", groupId, goalId],
-    queryFn: () => fetchDashboard(groupId, goalId),
-    enabled: !!groupId && !!goalId,
-  });
-};
+import { TodoList, TeamProgress } from "./ui";
+import { useDashboard } from "./model";
 
 export default function Dashboard() {
-  const groupId = "study-1"; // 실제로는 props나 params에서 가져올 것
-  const goalId = "goal-1"; // 실제로는 props나 params에서 가져올 것
+  const groupId = "study-1"; // 핸들러와 일치하도록 수정
+  const goalId = "goal-1"; // 핸들러와 일치하도록 수정
 
   const { data: dashboard, isLoading, error } = useDashboard(groupId, goalId);
 
@@ -55,7 +36,10 @@ export default function Dashboard() {
   return (
     <div className="p-8 flex flex-col items-start justify-center gap-2">
       <h2 className="text-[#d4d4d4] font-semibold text-xl ml-2">스터디 현황</h2>
-      <TodoList dashboard={dashboard} />
+      <div className="flex justify-center items-center gap-10">
+        <TodoList dashboard={dashboard} />
+        <TeamProgress dashboard={dashboard} />
+      </div>
     </div>
   );
 }
