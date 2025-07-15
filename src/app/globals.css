@@ -1,6 +1,6 @@
 @import "tailwindcss";
 :root {
-  --background: #ffffff; /* 브랜드 컬러 변경*/
+  --background: #111111; /* 브랜드 컬러 변경*/
   --foreground: #171717; /* 브랜드 컬러 변경*/
 }
 
@@ -12,50 +12,103 @@
 }
 @theme {
   /* Background */
-  --color-bg-default: #ffffff;
-  --color-surface-1: #111111;
-  --color-surface-2: #222222;
-  --color-surface-3: #333333;
-  --color-surface-4: #444444;
+  --color-surface-1: #171717;
+  --color-surface-2: #202020;
+  --color-surface-3: #353535;
+  --color-surface-4: #2c2c2c;
 
   /* Border */
-  --color-border-subtle: #3a3a3a;
-  --color-border-default: #4a4a4a;
-  --color-border-emphasis: #5a5a5a;
+  --color-border-subtle: #282828;
+  --color-border-default: #363636;
+  --color-border-emphasis: #454545;
 
   /* Text */
-  --color-text-tertiary: #a0a0a0;
-  --color-text-secondary: #c8c8c8;
-  --color-text-primary: #eeeeee;
+  --color-text-tertiary: #9b9b9b;
+  --color-text-secondary: #d4d4d4;
+  --color-text-primary: #f5f5f5;
   --color-text-white: #ffffff;
 
   /* Main Color */
-  --color-primary: #7678ed;
-  --color-secondary: #3c3e78;
-  --color-tertiary: #2a2b5f;
-  --color-highlight: #fdb567;
-  --color-error: #d81b60;
-
-  /* Headline */
-  --font-headline-large: 700 26px/35px "Noto Sans", sans-serif;
-  --font-headline-medium: 600 24px/33px "Noto Sans", sans-serif;
-  --font-headline-small: 700 20px/27px "Noto Sans", sans-serif;
-
-  /* Title */
-  --font-title-large: 500 20px/25px "Noto Sans", sans-serif;
-  --font-title-medium: 600 18px/25px "Noto Sans", sans-serif;
-
-  /* Body */
-  --font-body-large: 600 16px/22px "Noto Sans", sans-serif;
-  --font-body-medium: 700 16px/22px "Noto Sans", sans-serif;
-  --font-body-small: 500 16px/22px "Noto Sans", sans-serif;
-
-  /* Label */
-  --font-label-large: 500 14px/19px "Noto Sans", sans-serif;
-  --font-label-medium: 500 14px/19px "Noto Sans", sans-serif;
-  --font-label-small: 400 14px/19px "Noto Sans", sans-serif;
+  --color-primary: #7380e9;
+  --color-secondary: #394187;
+  --color-tertiary: #2c336c;
+  --color-highlight: #ffb25a;
+  --color-error: #e20c3f;
+}
+@utility headline-large {
+  font-size: 26px;
+  line-height: 35px;
+  font-weight: 700;
+  font-family: "Noto Sans", sans-serif;
 }
 
+@utility headline-medium {
+  font-size: 24px;
+  line-height: 33px;
+  font-weight: 600;
+  font-family: "Noto Sans", sans-serif;
+}
+
+@utility headline-small {
+  font-size: 20px;
+  line-height: 27px;
+  font-weight: 700;
+  font-family: "Noto Sans", sans-serif;
+}
+
+@utility title-large {
+  font-size: 20px;
+  line-height: 25px;
+  font-weight: 500;
+  font-family: "Noto Sans", sans-serif;
+}
+
+@utility title-medium {
+  font-size: 18px;
+  line-height: 25px;
+  font-weight: 600;
+  font-family: "Noto Sans", sans-serif;
+}
+
+@utility body-large {
+  font-size: 16px;
+  line-height: 22px;
+  font-weight: 600;
+  font-family: "Noto Sans", sans-serif;
+}
+@utility body-medium {
+  font-size: 16px;
+  line-height: 22px;
+  font-weight: 700;
+  font-family: "Noto Sans", sans-serif;
+}
+@utility body-small {
+  font-size: 16px;
+  line-height: 22px;
+  font-weight: 500;
+  font-family: "Noto Sans", sans-serif;
+}
+
+@utility label-large {
+  font-size: 14px;
+  line-height: 19px;
+  font-weight: 500;
+  font-family: "Noto Sans", sans-serif;
+}
+
+@utility label-medium {
+  font-size: 14px;
+  line-height: 19px;
+  font-weight: 500;
+  font-family: "Noto Sans", sans-serif;
+}
+
+@utility label-small {
+  font-size: 14px;
+  line-height: 19px;
+  font-weight: 400;
+  font-family: "Noto Sans", sans-serif;
+}
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a; /* 브랜드 컬러 변경*/
