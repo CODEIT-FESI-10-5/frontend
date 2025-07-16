@@ -29,10 +29,9 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <body className={`${notoSansKR.variable} ${roboto.variable} antialiased`}>
-        <QueryProvider>
-          <MswProvider />
-          {children}
-        </QueryProvider>
+        <MswProvider>
+          <QueryProvider>{children}</QueryProvider>
+        </MswProvider>
       </body>
     </html>
   );
