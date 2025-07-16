@@ -1,5 +1,5 @@
-@import "tailwindcss";
-@config "../../tailwind.config.ts";
+@import 'tailwindcss';
+@config "../tailwind.config.ts";
 
 :root {
   --background: #111111; /* 브랜드 컬러 변경*/
@@ -41,75 +41,75 @@
   font-size: 1.625rem;
   line-height: 2.1875rem;
   font-weight: 700;
-  font-family: "Noto Sans", sans-serif;
+  font-family: 'Noto Sans', sans-serif;
 }
 
 @utility headline-medium {
   font-size: 1.5rem;
   line-height: 2.0625rem;
   font-weight: 600;
-  font-family: "Noto Sans", sans-serif;
+  font-family: 'Noto Sans', sans-serif;
 }
 
 @utility headline-small {
   font-size: 1.25rem;
   line-height: 1.6875rem;
   font-weight: 700;
-  font-family: "Noto Sans", sans-serif;
+  font-family: 'Noto Sans', sans-serif;
 }
 
 @utility title-large {
   font-size: 1.25rem;
   line-height: 1.5625rem;
   font-weight: 500;
-  font-family: "Noto Sans", sans-serif;
+  font-family: 'Noto Sans', sans-serif;
 }
 
 @utility title-medium {
   font-size: 1.125rem;
   line-height: 1.5625rem;
   font-weight: 600;
-  font-family: "Noto Sans", sans-serif;
+  font-family: 'Noto Sans', sans-serif;
 }
 
 @utility body-large {
   font-size: 1rem;
   line-height: 1.375rem;
   font-weight: 600;
-  font-family: "Noto Sans", sans-serif;
+  font-family: 'Noto Sans', sans-serif;
 }
 @utility body-medium {
   font-size: 1rem;
   line-height: 1.375rem;
   font-weight: 700;
-  font-family: "Noto Sans", sans-serif;
+  font-family: 'Noto Sans', sans-serif;
 }
 @utility body-small {
   font-size: 1rem;
   line-height: 1.375rem;
   font-weight: 500;
-  font-family: "Noto Sans", sans-serif;
+  font-family: 'Noto Sans', sans-serif;
 }
 
 @utility label-large {
   font-size: 0.875rem;
   line-height: 1.1875rem;
   font-weight: 500;
-  font-family: "Noto Sans", sans-serif;
+  font-family: 'Noto Sans', sans-serif;
 }
 
 @utility label-medium {
   font-size: 0.875rem;
   line-height: 1.1875rem;
   font-weight: 500;
-  font-family: "Noto Sans", sans-serif;
+  font-family: 'Noto Sans', sans-serif;
 }
 
 @utility label-small {
   font-size: 0, 875rem;
   line-height: 1.1875rem;
   font-weight: 400;
-  font-family: "Noto Sans", sans-serif;
+  font-family: 'Noto Sans', sans-serif;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -122,5 +122,10 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Noto Sans KR, Roboto, Arial, Helvetica, sans-serif;
+  font-family:
+    Noto Sans KR,
+    Roboto,
+    Arial,
+    Helvetica,
+    sans-serif;
 }
