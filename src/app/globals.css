@@ -1,4 +1,6 @@
 @import "tailwindcss";
+@config "../../tailwind.config.ts";
+
 :root {
   --background: #111111; /* 브랜드 컬러 변경*/
   --foreground: #171717; /* 브랜드 컬러 변경*/
