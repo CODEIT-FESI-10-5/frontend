@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import Button from '@/shared/ui/Button';
+import Button from '@/shared/ui/TodoButton';
 import { useCreateTodoMutation } from '@/features/todo/hooks/useTodolist';
 import ToggleButton from '@/shared/ui/ToggleButton';
 import { cn } from '@/shared/utils/cn';

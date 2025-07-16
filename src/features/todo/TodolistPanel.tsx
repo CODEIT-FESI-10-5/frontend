@@ -1,7 +1,7 @@
 'use client';
 
 import EditTodoCard from '@/entities/todo/EditTodoCard';
-import Button from '@/shared/ui/Button';
+import Button from '@/shared/ui/TodoButton';
 import { cn } from '@/shared/utils/cn';
 import { AnimatePresence, LayoutGroup, motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
