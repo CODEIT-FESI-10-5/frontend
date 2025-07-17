@@ -1,4 +1,4 @@
-import Profile from '@/features/sidebar/ui/Profile';
+import Profile from '@/features/sidebar/profile/ui/Profile';
 
 export default function SideBar() {
   return (
