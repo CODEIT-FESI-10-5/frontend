@@ -162,17 +162,19 @@ export default function StudyGroup({ studyId }: { studyId: string }) {
 
   return (
     <div
-      className="relative h-full w-full bg-cover bg-center bg-no-repeat"
-      style={{ backgroundImage: `url(${studyGroup.image})` }}
+      style={{
+        backgroundImage: `linear-gradient(to bottom, rgba(0,0,0,0.45), rgba(0,0,0,0.45)), url(${studyGroup.image})`,
+        backgroundSize: 'cover',
+        backgroundRepeat: 'no-repeat',
+        backgroundPosition: 'center',
+      }}
+      className="relative px-54 pt-44 pb-32 text-white"
     >
-      {/* 오버레이 */}
-      <div className="absolute inset-0 bg-black opacity-50"></div>
-
-      {/* 배경 변경 버튼 */}
+      {/* 배경 변경 버튼 텍스트로 변경*/}
       <button
         onClick={handleImageChange}
         disabled={isUpdating}
-        className="bg-opacity-50 hover:bg-opacity-70 absolute top-4 right-4 z-10 rounded-full bg-black p-2 transition-all duration-200 disabled:opacity-50"
+        className="bg-opacity-50 hover:bg-opacity-70 absolute top-10 right-10 z-10 rounded-full bg-black p-2 transition-all duration-200 disabled:opacity-50"
         title="배경 이미지 변경"
       >
         <svg
@@ -190,44 +192,37 @@ export default function StudyGroup({ studyId }: { studyId: string }) {
       </button>
 
       {/* 컨텐츠 */}
-      <div className="relative flex flex-col gap-3 px-10 py-8">
+      <div className="mb-35 flex flex-col gap-13">
         {/* 스터디 제목 (편집 가능) */}
-        <div className="relative">
-          <input
-            type="text"
-            value={title}
-            onChange={handleTitleChange}
-            disabled={isUpdating}
-            className="headline-large w-full border-none bg-transparent placeholder-gray-300 outline-none disabled:opacity-50"
-            placeholder="스터디 제목을 입력하세요"
-          />
-          {/* {isUpdating && (
-            <div className="absolute -right-8 top-1/2 transform -translate-y-1/2">
-              <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-            </div>
-          )} */}
-        </div>
+        <input
+          type="text"
+          value={title}
+          onChange={handleTitleChange}
+          disabled={isUpdating}
+          className="headline-large w-full border-none bg-transparent placeholder-gray-300 outline-none disabled:opacity-50"
+          placeholder="스터디 제목을 입력하세요..."
+        />
 
         {/* 스터디 설명 (편집 가능) */}
         <textarea
           value={description}
           onChange={handleDescriptionChange}
           disabled={isUpdating}
-          className="w-full resize-none border-none bg-transparent text-xs font-light text-white placeholder-gray-300 outline-none disabled:opacity-50"
-          placeholder="스터디 설명을 입력하세요"
-          rows={2}
+          className="label-large text-text-primary w-full resize-none border-none placeholder-gray-300 outline-none disabled:opacity-50"
+          placeholder="스터디 목표나 응원 메세지를 적어주세요..."
+          rows={1}
         />
       </div>
       {/*TODO Progress 바 max-w 어디까지 설정할지 */}
-      {/* 팀원 목록 */}
-      <div className="flex items-end justify-between">
-        <div className="relative flex items-center gap-2 px-10">
+      <div className="mb-12 flex items-end justify-between">
+        {/* 팀원 목록 */}
+        <div className="flex items-center gap-8">
           {/* 겹치는 프로필 이미지들 */}
-          <div className="flex -space-x-2">
+          <div className="flex -space-x-12">
             {studyGroup.members.slice(0, 4).map((member, index) => (
               <div
                 key={member.id}
-                className="relative h-8 w-8 overflow-hidden rounded-full border-2 border-white bg-gray-200"
+                className="border-text-secondary h-32 w-32 overflow-hidden rounded-full border-2"
                 style={{ zIndex: studyGroup.members.length + index }}
               >
                 <img
@@ -239,49 +234,42 @@ export default function StudyGroup({ studyId }: { studyId: string }) {
             ))}
             {/* 추가 멤버가 있을 경우 +숫자 표시 */}
             {studyGroup.members.length > 4 && (
-              <div className="relative z-30 flex h-8 w-8 items-center justify-center rounded-full border-2 border-white bg-gray-600">
-                <span className="text-xs font-medium text-white">
+              <div className="border-text-secondary z-30 flex h-32 w-32 items-center justify-center rounded-full border-2 bg-gray-600">
+                <span className="label-large text-white">
                   +{studyGroup.members.length - 4}
                 </span>
               </div>
             )}
           </div>
           {/* 멤버 수 텍스트 */}
-          <span className="ml-2 text-sm font-light text-white underline">
+          <span className="text-text-primary label-small underline">
             {studyGroup.members.length}명 참여중
           </span>
         </div>
-
-        <div className="flex items-baseline justify-center gap-1 px-10">
-          <span className="relative text-xl font-light text-white">
-            {studyGroup.teamProgress}%
-          </span>
-          <span className="relative text-sm font-light text-white">
-            {' '}
-            달성중
-          </span>
+        {/* 팀원 진행도 % */}
+        <div className="text-text-primary flex items-center justify-center gap-6 px-10">
+          <span className="headline-small">{studyGroup.teamProgress}%</span>
+          <span className="label-small">달성중</span>
         </div>
       </div>
       {/* Progress 바 */}
-      <div className="px-10 py-3 pb-8">
-        {/* Progress Bar Container */}
-        <div className="h-3.5 w-full overflow-hidden rounded-full bg-[#e1e1e1] backdrop-blur-sm">
-          {/* Animated Progress Fill */}
-          <motion.div
-            className="h-full rounded-full bg-gradient-to-r from-[#3a4288] to-[#babee2] shadow-lg"
-            initial={{ width: 0 }}
-            animate={{ width: `${studyGroup.teamProgress}%` }}
-            transition={{
-              duration: 1.5,
-              delay: 0.5,
-              ease: 'easeOut',
-            }}
-          />
-        </div>
+      {/* Progress Bar Container */}
+      <div className="h-3.5 w-full overflow-hidden rounded-full bg-[#e1e1e1] backdrop-blur-sm">
+        {/* Animated Progress Fill */}
+        <motion.div
+          className="from-secondary to-primary h-full rounded-full bg-gradient-to-r shadow-lg"
+          initial={{ width: 0 }}
+          animate={{ width: `${studyGroup.teamProgress}%` }}
+          transition={{
+            duration: 1.5,
+            delay: 0.5,
+            ease: 'easeOut',
+          }}
+        />
       </div>
       {/*초대 링크 */}
-      <div className="absolute right-5 -bottom-5 flex gap-1 rounded-sm bg-[#2c336c] px-4 py-2 text-sm font-medium text-[#d5d5d5]">
-        <span className="">초대 코드 {studyGroup.inviteLink}</span>
+      <div className="bg-tertiary text-text-secondary absolute right-20 -bottom-26 flex gap-6 rounded-sm px-18 py-14">
+        <span className="title-medium">초대 코드 {studyGroup.inviteLink}</span>
         <svg
           width="24"
           height="24"

@@ -107,7 +107,7 @@
 }
 
 @utility label-small {
-  font-size: 0, 875rem;
+  font-size: 0.875rem;
   line-height: 1.1875rem;
   font-weight: 400;
   font-family: 'Noto Sans', sans-serif;
