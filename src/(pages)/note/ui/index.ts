@@ -1,1 +1,3 @@
-export { NoteListPage } from '@/(pages)/note/ui/NoteListPage';
+export { NoteEditPage } from './NoteEditPage';
+export { NoteListPage } from './NoteListPage';
+

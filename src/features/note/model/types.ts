@@ -12,3 +12,13 @@ export interface Note {
 export interface NoteListResponse {
   notes: Note[];
 }
+
+export interface NoteResponse {
+  note: Note;
+}
+
+export interface UpdateNoteRequest {
+  id: number;
+  title: string;
+  content: string;
+} 

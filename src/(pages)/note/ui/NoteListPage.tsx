@@ -13,7 +13,7 @@ const studyGoals = [
   { id: 4, title: '데이터베이스' },
 ];
 
-export default function NoteListPage() {
+export function NoteListPage() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const [selectedGoalId, setSelectedGoalId] = useState<number | null>(null);
