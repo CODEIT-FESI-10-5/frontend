@@ -14,7 +14,7 @@ export default function TodoCheckBox({ isChecked, handleClick }: CheckBoxProp) {
     >
       <div
         className={cn(
-          'h-5 w-5 cursor-pointer rounded-full border border-slate-300 shadow transition-colors hover:shadow-lg',
+          'h-20 w-20 cursor-pointer rounded-full border border-slate-300 shadow transition-colors hover:shadow-lg',
           { 'border-green-600 bg-green-600': isChecked },
         )}
       />
@@ -26,7 +26,7 @@ export default function TodoCheckBox({ isChecked, handleClick }: CheckBoxProp) {
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          className="h-3.5 w-3.5"
+          className="h-14 w-14"
           viewBox="0 0 20 20"
           fill="currentColor"
           stroke="currentColor"

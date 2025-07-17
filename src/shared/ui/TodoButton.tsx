@@ -3,27 +3,26 @@ import { cn } from '../utils/cn';
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   size?: 'sm' | 'md' | 'lg';
-  color:
-    | 'bg-white'
-    | 'bg-surface-400'
-    | 'bg-frame-primary'
-    | 'bg-frame-secondary';
+  color: 'bg-white' | 'bg-surface-4' | 'bg-primary' | 'bg-secondary';
+  styleProps?: string;
 }
 
 export default function Button({
   size = 'md',
   color,
+  styleProps = '',
   children,
   onClick = () => {},
 }: ButtonProps) {
   return (
     <button
       className={cn(
-        'flex items-center justify-center gap-1 rounded-md font-medium text-white',
+        'body-small flex items-center justify-center gap-10 rounded-md px-12 py-6 text-white',
         'transition hover:scale-105 hover:cursor-pointer active:scale-95',
+        styleProps,
         { 'px-3 py-1': size == 'sm' },
-        { 'px-6 py-2': size == 'md' },
-        { 'px-8 py-3': size == 'lg' },
+        { 'h-40 w-84': size == 'md' },
+        { 'h-36 w-160': size == 'lg' },
         color,
       )}
       onClick={onClick}

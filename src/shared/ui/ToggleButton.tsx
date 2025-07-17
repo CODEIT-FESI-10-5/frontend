@@ -2,6 +2,7 @@ import { ReactNode } from 'react';
 import { cn } from '../utils/cn';
 interface ToggleButtonProp {
   type?: 'sm' | 'md' | 'lg';
+  styleProps?: string;
   isOn: boolean;
   children: ReactNode;
   toggleSwitch: () => void;
@@ -9,6 +10,7 @@ interface ToggleButtonProp {
 
 export default function ToggleButton({
   type = 'md',
+  styleProps = '',
   isOn,
   children,
   toggleSwitch,
@@ -16,19 +18,22 @@ export default function ToggleButton({
   return (
     <div
       className={cn(
-        'border-border-emphasis flex cursor-pointer items-center justify-center gap-1 rounded-lg border',
+        'body-small flex cursor-pointer items-center justify-center gap-2 rounded-lg border border-[#ECECEC] px-12 py-6',
         'transition hover:scale-105',
+        styleProps,
         { '': type == 'sm' },
-        { 'px-4 py-2': type == 'md' },
-        { '': type == 'lg' },
+        { 'h-40 w-84 px-12 py-6': type == 'md' },
+        { 'h-143 w-36': type == 'lg' },
       )}
       onClick={toggleSwitch}
     >
       <div className="relative">
         <div
           className={cn(
-            'border-surface-400 h-5 w-5 cursor-pointer rounded border shadow transition-colors hover:shadow-lg',
-            isOn ? 'bg-surface-400' : 'bg-white',
+            'h-18 w-18 cursor-pointer rounded-sm border-2 shadow transition-colors hover:shadow-lg',
+            isOn
+              ? 'bg-surface-4 border-surface-4'
+              : 'border-[#898989] bg-white',
           )}
         />
         <span
