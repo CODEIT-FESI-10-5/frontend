@@ -1,0 +1,17 @@
+'use client';
+import { useProfileQuery } from '@/entities/user/api/fetchProfile';
+
+export default function Profile() {
+  const { isLoading, data, error } = useProfileQuery();
+  if (isLoading) return <div>로딩중</div>;
+  if (error) return <div>오류발생</div>;
+  return (
+    <div className="bg-surface-4 h-79 w-full">
+      <div>{data?.image ? <img src={data.image} /> : <div />}</div>
+      <div>
+        <p className="body-large text-text-secondary">{data?.name}</p>
+        <p className="label-small text-text-secondary">{data?.email}</p>
+      </div>
+    </div>
+  );
+}

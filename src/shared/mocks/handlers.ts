@@ -6,4 +6,6 @@
 
 //export const handlers = [...authHandlers, ...dashboardHandlers, ...noteHandlers, ...profileHandlers, ...todoHandlers];
 
-export const handlers = [];
+import { sidebarHandler } from '@/features/sidebar/api/handler';
+
+export const handlers = [...sidebarHandler];
