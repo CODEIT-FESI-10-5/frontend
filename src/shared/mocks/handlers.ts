@@ -8,4 +8,9 @@
 
 import { sidebarProfileHandler } from '@/features/sidebar/profile/api/handler';
 import { sidebarButtonHandler } from '@/features/sidebar/button/api/handler';
-export const handlers = [...sidebarProfileHandler, ...sidebarButtonHandler];
+import { sidebarStudyHandler } from '@/features/sidebar/study/api/handler';
+export const handlers = [
+  ...sidebarProfileHandler,
+  ...sidebarButtonHandler,
+  ...sidebarStudyHandler,
+];
