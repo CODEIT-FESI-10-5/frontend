@@ -5,7 +5,4 @@ export const sidebarProfileHandler = [
   http.get('/api/sidebar/profile', () => {
     return HttpResponse.json(mockProfile);
   }),
-  //   http.get("/api/sidebar/study-list", () => {
-  //     return HttpResponse.json(mockStudyList);
-  //   }),
 ];
