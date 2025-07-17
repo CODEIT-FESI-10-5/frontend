@@ -1,41 +1,39 @@
-export const fetchTodolistSeperateOrder = async (
-  todolistId: string,
-  server: boolean = false,
-) => {
-  let url = '';
-  if (server)
-    url = `${process.env.NEXT_PUBLIC_MOCKSERVER_URL}/api/todolistSeperateOrder/${todolistId}`;
-  else
-    url = `${process.env.NEXT_PUBLIC_BASE_URL}/api/todolistSeperateOrder/${todolistId}`;
+import { clientFetch } from '@/shared/api';
 
-  const response = await fetch(url);
+// export const fetchTodolist = async (
+//   todolistId: string,
+//   server: boolean = false,
+// ) => {
+//   let url = `/api/todolist/${todolistId}`;
+//   if (server) url = `${process.env.NEXT_PUBLIC_MOCKSERVER_URL}` + url;
+//   else url = `${process.env.NEXT_PUBLIC_BASE_URL}` + url;
+//   console.log('fetch');
 
-  if (!response.ok) {
-    throw new Error('Failed to fetch todolist');
-  }
+//   const response = await fetch(url);
 
-  return await response.json();
+//   if (!response.ok) {
+//     throw new Error('Failed to fetch todolist');
+//   }
+
+//   return await response.json();
+// };
+
+export const fetchTodolist = async (todolistId: string) => {
+  const endpoint = `/api/todolist/${todolistId}`;
+  const parsedResponse = await clientFetch.get(endpoint);
+
+  return parsedResponse;
 };
 
 export interface newTodoData {
   content: string;
   shared: boolean;
 }
-
 export const createTodo = async (todolistId: string, newTodo: newTodoData) => {
-  const url = `/api/todolist/${todolistId}/todo`;
-  const response = await fetch(url, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(newTodo),
-  });
-  if (!response.ok) {
-    throw new Error('Failed to create new todo.');
-  }
+  const endpoint = `/api/todolist/${todolistId}/todo`;
+  const parsedResponse = await clientFetch.post(endpoint, newTodo);
 
-  return await response.json();
+  return parsedResponse;
 };
 
 export interface newContent {
@@ -48,51 +46,25 @@ export const updateTodo = async (
   todoId: string,
   newContent: newContent,
 ) => {
-  const url = `/api/todolist/${todolistId}/todo/${todoId}`;
-  const response = await fetch(url, {
-    method: 'PATCH',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(newContent),
-  });
-  if (!response.ok) {
-    throw new Error('Failed to update the todo.');
-  }
+  const endpoint = `/api/todolist/${todolistId}/todo/${todoId}`;
+  const parsedResponse = await clientFetch.patch(endpoint, newContent);
 
-  return await response.json();
+  return parsedResponse;
 };
 
 export const updateTodoOrder = async (
   todolistId: string,
   newOrder: Array<string>,
 ) => {
-  const url = `/api/todolist/${todolistId}/order/`;
-  const response = await fetch(url, {
-    method: 'PATCH',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(newOrder),
-  });
-  if (!response.ok) {
-    throw new Error('Failed to update the todolist order.');
-  }
+  const endpoint = `/api/todolist/${todolistId}/order`;
+  const parsedResponse = await clientFetch.patch(endpoint, newOrder);
 
-  return await response.json();
+  return parsedResponse;
 };
 
 export const deleteTodo = async (todolistId: string, todoId: string) => {
-  const url = `/api/todolist/${todolistId}/todo/${todoId}`;
-  const response = await fetch(url, {
-    method: 'DELETE',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  });
-  if (!response.ok) {
-    throw new Error('Failed to delete the todo.');
-  }
+  const endpoint = `/api/todolist/${todolistId}/todo/${todoId}`;
+  const parsedResponse = await clientFetch.delete(endpoint);
 
-  return await response.json();
+  return parsedResponse;
 };
