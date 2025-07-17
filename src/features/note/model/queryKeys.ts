@@ -1,5 +1,5 @@
-export const goalQueryKeys = {
-  all: ['goal'] as const,
-  byStudy: (studyId: string) => [...goalQueryKeys.all, 'study', studyId] as const,
-  detail: (goalId: string) => [...goalQueryKeys.all, 'detail', goalId] as const,
-} as const;
+export const noteKeys = {
+  all: ['notes'] as const,
+  lists: () => [...noteKeys.all, 'list'] as const,
+  list: (studyGoalId: number) => [...noteKeys.lists(), studyGoalId] as const,
+};

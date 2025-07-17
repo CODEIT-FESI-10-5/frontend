@@ -1,29 +1,14 @@
-// 스터디 목표 생성 요청
-export interface CreateGoalRequest {
+export interface Note {
+  id: number;
   title: string;
-  description?: string;
+  content: string;
+  studyGoalId: number;
+  todoId: number;
+  todoTitle: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
-// 스터디 목표 생성 응답
-export interface CreateGoalResponse {
-  studyGoalId: string;
-}
-
-// 스터디 목표 상세 응답
-export interface GoalDetailResponse {
-  id: string;
-  title: string;
-  description: string;
-  createdAt: Date;
-  updatedAt: Date;
-  studyId: string;
-  progress: number;
-  todoCount: number;
-  completedTodoCount: number;
-}
-
-// 스터디 목표 수정 요청
-export interface UpdateGoalRequest {
-  title?: string;
-  description?: string;
+export interface NoteListResponse {
+  notes: Note[];
 }

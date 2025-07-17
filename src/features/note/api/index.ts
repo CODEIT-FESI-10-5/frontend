@@ -1,3 +1,2 @@
-// Note API 세그먼트 Public API
-// export * from './note-api';
-// export * from './queries';
+export { useNotesByStudyGoalId } from './noteQueries';
+export { getNotesByStudyGoalId } from './noteApi';
