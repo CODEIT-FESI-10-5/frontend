@@ -1,4 +1,4 @@
-import Profile from '@/features/sidebar/profile/ui/Profile';
+import Profile from '@/entities/user/ui/Profile';
 import CreateStudyButton from '@/features/sidebar/button/ui/CreateStudyButton';
 import JoinButton from '@/features/sidebar/button/ui/JoinStudyButton';
 
