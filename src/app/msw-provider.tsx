@@ -2,7 +2,11 @@
 
 import { useEffect, useState } from 'react';
 
-export function MswProvider() {
+interface MswProviderProps {
+  children: React.ReactNode;
+}
+
+export function MswProvider({ children }: MswProviderProps) {
   const [mswReady, setMswReady] = useState(false);
 
   useEffect(() => {
@@ -26,5 +30,5 @@ export function MswProvider() {
     return <div>Loading...</div>;
   }
 
-  return null;
+  return <>{children}</>;
 }

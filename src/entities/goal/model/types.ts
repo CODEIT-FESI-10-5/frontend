@@ -1,4 +1,4 @@
-export interface Dashboard {
+export interface Goal {
   studyGoal: {
     id: string; // study 목표 아이디
     title: string; // study 목표(소주제)

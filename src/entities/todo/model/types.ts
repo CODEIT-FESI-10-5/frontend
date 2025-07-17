@@ -1,38 +1,11 @@
-// 투두 리스트 응답
-export interface TodoListResponse {
-  myTodoList: TodoData[];
-  order: string[];
+export interface Todo {
+  id: string; // todo 아이디
+  content: string; // todo 내용
+  createdAt: Date; // todo 생성 일자
+  completed: boolean; // todo 완료 여부
+  completedAt?: Date; // todo 완료 일자
+  note: string; // 노트 내용
+  order: number; // 순서 정보
+  shared: boolean; //  공통 todo 여부
 }
 
-export interface TodoData {
-  todoId: string;
-  content: string;
-  completed: boolean;
-  createdAt: Date;
-  completedAt?: Date;
-  note: string;
-  shared: boolean;
-}
-
-// 투두 생성 요청
-export interface CreateTodoRequest {
-  content: string;
-  shared: boolean;
-}
-
-// 투두 수정 요청
-export interface UpdateTodoRequest {
-  content?: string;
-  completed?: boolean;
-}
-
-// 투두 순서 변경 요청
-export interface UpdateTodoOrderRequest {
-  order: string[];
-}
-
-// 투두 생성/수정/삭제 응답 (성공/실패만 확인)
-export interface TodoMutationResponse {
-  success: boolean;
-  message?: string;
-}
