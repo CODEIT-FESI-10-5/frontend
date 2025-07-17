@@ -1,8 +1,8 @@
 'use client';
-import { useProfileQuery } from '@/entities/user/api/fetchProfile';
+import { useGetProfileQuery } from '../model/useProfileQuery';
 
 export default function Profile() {
-  const { isLoading, data, error } = useProfileQuery();
+  const { isLoading, data, error } = useGetProfileQuery();
   if (isLoading) return <div>로딩중</div>;
   if (error) return <div>오류발생</div>;
   return (
