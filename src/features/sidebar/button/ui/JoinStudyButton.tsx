@@ -9,7 +9,7 @@ export default function JoinButton() {
       className="bg-secondary body-large text-text-white rounded-6 h-50 w-143"
       onClick={() => router.push('/')}
     >
-      코드로 참여하기
+      코드로 가입하기
     </button>
   );
 }
