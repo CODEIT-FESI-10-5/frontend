@@ -4,13 +4,22 @@ import { useGetGoalQuery } from '../model/useGetGoalQuery';
 import { Goal } from '@/entities/goal';
 import { useGoalStore } from '../model/useGoalStore';
 import { useStudyStore } from '../../study/model/useStudyStore';
-import { useParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import clsx from 'clsx';
+import { useCreateGoalMutation } from '@/features/sidebar/goal/model/useCreateGoalMutation';
 
 export default function StudyGoalList() {
+  const router = useRouter();
   const { setLastVisitedGoalId, getLastVisitedGoalId } = useGoalStore();
   const { currentStudyId } = useStudyStore();
   const currentGoalId = getLastVisitedGoalId(currentStudyId);
+
+  const mutation = useCreateGoalMutation((newGoal) => {
+    console.log('clicked');
+    setLastVisitedGoalId(currentStudyId, newGoal.id);
+    router.push(`/dashboard/${currentStudyId}/goal/${newGoal.id}`);
+  });
+
   const { isLoading, data, error } = useGetGoalQuery();
   if (isLoading) return <div>로딩 중...</div>;
   if (error) return <div>에러 발생</div>;
@@ -19,11 +28,12 @@ export default function StudyGoalList() {
   const handleClick = (goal: Goal) => {
     setLastVisitedGoalId(currentStudyId, goal.id);
   };
+
   return (
     <section className="flex flex-col gap-14">
       <div className="flex items-center justify-between">
         <h2 className="text-text-secondary body-large">스터디 목표</h2>
-        <CreateGoalSVG />
+        <CreateGoalSVG onClick={() => mutation.mutate()} />
       </div>
 
       <ul className="py-4">

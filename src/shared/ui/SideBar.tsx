@@ -8,7 +8,9 @@ export default function SideBar() {
   return (
     <div className="bg-surface-2 fixed flex h-screen w-348 flex-col gap-64 p-26">
       <div>
-        <div>logo</div>
+        <div className="text-primary bg-surface-4 mb-28 flex h-41 w-129 items-center justify-center">
+          logo
+        </div>
         <Profile />
         <div className="mt-24 flex justify-between">
           <CreateStudyButton />
