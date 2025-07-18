@@ -6,14 +6,14 @@ type UserStore = {
   setStudyId: (id: string) => void;
 };
 
-export const useUserStore = create<UserStore>()(
+export const useProfileStore = create<UserStore>()(
   persist(
     (set) => ({
       UserId: '',
       setStudyId: (id) => set({ UserId: id }),
     }),
     {
-      name: 'user-storage',
+      name: 'profile-storage',
     },
   ),
 );

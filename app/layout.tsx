@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { Noto_Sans_KR, Roboto } from 'next/font/google';
 import { QueryProvider } from '../src/app/query-provider';
 import { MswProvider } from '../src/app/msw-provider';
-import SideBar from '../src/shared/ui/SideBar';
+import SideBar from '@/widgets/sidebar/ui/SideBar';
 import './globals.css';
 
 const notoSansKR = Noto_Sans_KR({

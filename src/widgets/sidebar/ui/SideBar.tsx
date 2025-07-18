@@ -1,4 +1,4 @@
-import Profile from '@/entities/user/ui/Profile';
+import { Profile } from '@/features/getProfile/ui';
 import CreateStudyButton from '@/features/sidebar/button/ui/CreateStudyButton';
 import JoinButton from '@/features/sidebar/button/ui/JoinStudyButton';
 import StudyGoalList from '@/features/sidebar/goal/ui/StudyGoalList';
@@ -8,9 +8,7 @@ export default function SideBar() {
   return (
     <div className="bg-surface-2 fixed flex h-screen w-348 flex-col gap-64 p-26">
       <div>
-        <div className="text-primary bg-surface-4 mb-28 flex h-41 w-129 items-center justify-center">
-          logo
-        </div>
+        <img src="/public/images/logo.png" alt="logo" />
         <Profile />
         <div className="mt-24 flex justify-between">
           <CreateStudyButton />

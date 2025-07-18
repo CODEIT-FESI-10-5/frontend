@@ -1,5 +1,5 @@
 'use client';
-import { useGetProfileQuery } from '@/features/sidebar/profile/model/useProfileQuery';
+import { useGetProfileQuery } from '@/features/getProfile/model';
 
 export default function Profile() {
   const { isLoading, data, error } = useGetProfileQuery();
