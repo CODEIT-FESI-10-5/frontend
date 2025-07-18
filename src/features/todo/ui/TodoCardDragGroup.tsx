@@ -18,27 +18,27 @@ export default function TodoCardDragGroup({ type }: TodoCardDragGroupProps) {
 
   return (
     <Reorder.Group
-      className="flex flex-col gap-16"
+      className="relative flex flex-col gap-16"
       axis="y"
       onReorder={setTodoGroup}
       values={todoGroup}
     >
-      <AnimatePresence>
+      <AnimatePresence mode="popLayout">
         {todoGroup.map((todo, idx) => (
-          <Reorder.Item
+          <motion.div
             key={todo.id}
-            value={todo}
-            dragListener={draggable}
-            onDragEnd={() => console.log('drop elem: post newOrder')}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
           >
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
+            <Reorder.Item
+              value={todo}
+              dragListener={draggable}
+              onDragEnd={() => console.log('drop elem: post newOrder')}
             >
               <TodoCard idx={idx + 1} todo={todo} />
-            </motion.div>
-          </Reorder.Item>
+            </Reorder.Item>
+          </motion.div>
         ))}
       </AnimatePresence>
     </Reorder.Group>

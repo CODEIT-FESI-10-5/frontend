@@ -53,21 +53,26 @@ export default function TodolistPanel() {
       layout
       className="bg-surface-1 flex h-full w-full flex-col items-start gap-50 rounded-md px-30 py-40"
     >
-      <Link
-        href={`/dashbord/${TEMP_TODOLIST_ID}`}
-        className="mx-10 flex cursor-pointer items-center gap-30 text-white transition hover:scale-105"
-      >
-        <IconBack stroke="white" />
-        <p className="title-large">전체 투두 리스트</p>
-      </Link>
+      <motion.div layout={'position'}>
+        <Link
+          href={`/dashbord/${TEMP_TODOLIST_ID}`}
+          className="mx-10 flex cursor-pointer items-center gap-30 text-white transition hover:scale-105"
+        >
+          <IconBack stroke="white" />
+          <p className="title-large">전체 투두 리스트</p>
+        </Link>
+      </motion.div>
       <motion.div
         layout
         className={cn(
-          'flex w-740 flex-col items-start',
+          'relative flex w-740 flex-col',
           'bg-surface-3 rounded-lg p-40 text-black shadow-lg',
         )}
       >
-        <div className="mb-40 flex w-full justify-between">
+        <motion.div
+          layout={'position'}
+          className="mb-40 flex w-full justify-between"
+        >
           <p className="headline-large font-bold text-white">
             투두 리스트 제목
           </p>
@@ -75,11 +80,12 @@ export default function TodolistPanel() {
             <IconAdd width={19} height={19} fill="white" />
             <p className="label-small">세부 투두 생성</p>
           </Button>
-        </div>
+        </motion.div>
         <LayoutGroup>
-          <AnimatePresence>
+          <AnimatePresence mode="popLayout">
             {isEditMode && (
               <motion.div
+                layout={'position'}
                 key="edit-frame"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
