@@ -1,15 +1,17 @@
-"use client";
+'use client';
 
-import { motion } from "framer-motion";
-import { useState, useEffect, useRef } from "react";
-import { updateGoalTitle } from "../api";
-import Link from "next/link";
-import { Goal } from "../model";
-import TodoCard from "@/entities/todo/ui/todoCard";
+import { motion } from 'framer-motion';
+import { useState, useEffect, useRef } from 'react';
+import { updateGoalTitle } from '../api';
+import Link from 'next/link';
+import { Goal } from '../model';
+import TodoCard from '@/entities/todo/ui/todoCard';
+import NewTodoIcon from '@/assets/todo_new.svg';
 
 /**
  * mytodoList의 completed 상태를 기반으로 진행도를 계산
  */
+
 function calculateProgress(mytodoList: { completed: boolean }[]) {
   const totalTodos = mytodoList.length;
   const completedTodos = mytodoList.filter((todo) => todo.completed).length;
@@ -17,6 +19,16 @@ function calculateProgress(mytodoList: { completed: boolean }[]) {
 }
 
 export default function GoalCard({ goal }: { goal: Goal }) {
+  // 진행도 메시지 관리 변수
+  const getProgressMessage = (progress: number) => {
+    if (progress < 10) return '';
+    if (progress < 30) return '시작이 좋아요!';
+    if (progress < 50) return '계속 가볼까요?';
+    if (progress < 70) return '이 흐름을 잃지 않는게 중요해요.';
+    if (progress < 90) return '꾸준함이 인상적이에요.';
+    if (progress < 100) return '거의 다 왔어요!';
+    return '축하해요! 목표를 완료했어요.';
+  };
   const [title, setTitle] = useState(goal.studyGoal.title);
   const [isUpdating, setIsUpdating] = useState(false);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -32,13 +44,13 @@ export default function GoalCard({ goal }: { goal: Goal }) {
 
     // 새로운 타이머 설정 (1.5초 후 API 호출)
     timeoutRef.current = setTimeout(async () => {
-      if (newTitle !== goal.studyGoal.title && newTitle.trim() !== "") {
+      if (newTitle !== goal.studyGoal.title && newTitle.trim() !== '') {
         try {
           setIsUpdating(true);
-          await updateGoalTitle("study-1", "goal-1", newTitle);
-          console.log("제목이 성공적으로 업데이트되었습니다:", newTitle);
+          await updateGoalTitle('study-1', 'goal-1', newTitle);
+          console.log('제목이 성공적으로 업데이트되었습니다:', newTitle);
         } catch (error) {
-          console.error("제목 업데이트 실패:", error);
+          console.error('제목 업데이트 실패:', error);
           // 실패 시 원래 제목으로 되돌리기
           setTitle(goal.studyGoal.title);
         } finally {
@@ -67,17 +79,15 @@ export default function GoalCard({ goal }: { goal: Goal }) {
   //Todo 리스트가 없고 제목도 없을때
   if (goal.studyGoal.mytodoList.length === 0 && !title) {
     return (
-      <div className="w-full h-[540px] max-w-[534px] min-w-0 grow shrink p-6 rounded-md bg-[#353535]">
+      <div className="bg-surface-3 border-border-emphasis h-[537px] w-full max-w-[537px] min-w-0 shrink grow rounded-md border px-34 py-40">
         {/* 스터디 목표 제목 수정 가능하게 input으로 구현 */}
-        <div className="relative">
-          <input type="text" className="w-full bg-transparent text-white text-2xl font-bold focus:outline-none" value={title} onChange={handleTitleChange} placeholder="스터디 목표를 입력..." />
-          {/* 업데이트 상태 표시 */}
-          {isUpdating && (
-            <div className="absolute right-0 top-1/2 transform -translate-y-1/2">
-              <div className="text-xs text-[#ff6b35]">저장 중...</div>
-            </div>
-          )}
-        </div>
+        <input
+          type="text"
+          className="headline-large placeholeder:text-text-tertiary w-full bg-transparent focus:outline-none"
+          value={title}
+          onChange={handleTitleChange}
+          placeholder="스터디 목표를 입력..."
+        />
       </div>
     );
   }
@@ -85,27 +95,25 @@ export default function GoalCard({ goal }: { goal: Goal }) {
   //Todo 리스트만 없을때
   if (goal.studyGoal.mytodoList.length === 0) {
     return (
-      <div className="w-full h-[540px] max-w-[534px] min-w-0 grow shrink p-6 rounded-md bg-[#353535]">
+      <div className="bg-surface-3 border-border-emphasis h-[537px] w-full max-w-[537px] min-w-0 shrink grow rounded-md border px-34 py-40">
         {/* 스터디 목표 제목 수정 가능하게 input으로 구현 */}
-        <div className="relative">
-          <input type="text" className="w-full bg-transparent text-white text-2xl font-bold focus:outline-none" value={title} onChange={handleTitleChange} placeholder="스터디 목표를 입력..." />
-          {/* 업데이트 상태 표시 */}
-          {isUpdating && (
-            <div className="absolute right-0 top-1/2 transform -translate-y-1/2">
-              <div className="text-xs text-[#ff6b35]">저장 중...</div>
-            </div>
-          )}
-        </div>
+        <input
+          type="text"
+          className="headline-large placeholeder:text-text-tertiary w-full bg-transparent focus:outline-none"
+          value={title}
+          onChange={handleTitleChange}
+          placeholder="스터디 목표를 입력..."
+        />
         {/*Todo 생성 이동 */}
         {/*Todo href 링크 수정 */}
-        <Link href="/goal/todo/create" className="mt-4 font-normal text-base flex text-[#f5f5f5] flex-col items-center justify-center gap-3 bg-[#2c2c2c] p-8 rounded-xl border-2 border-dashed border-[#454545]">
-          <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path
-              d="M15 22.3333H17V17H22.3334V15H17V9.66667H15V15H9.66671V17H15V22.3333ZM16.0024 28.6667C14.2504 28.6667 12.6036 28.3342 11.062 27.6693C9.52048 27.0044 8.1796 26.1021 7.03937 24.9623C5.89915 23.8226 4.99637 22.4822 4.33104 20.9413C3.66593 19.4004 3.33337 17.7541 3.33337 16.0023C3.33337 14.2503 3.66582 12.6036 4.33071 11.062C4.9956 9.52045 5.89793 8.17956 7.03771 7.03934C8.17749 5.89911 9.51782 4.99634 11.0587 4.331C12.5996 3.66589 14.2459 3.33334 15.9977 3.33334C17.7497 3.33334 19.3965 3.66578 20.938 4.33067C22.4796 4.99556 23.8205 5.89789 24.9607 7.03767C26.1009 8.17745 27.0037 9.51778 27.669 11.0587C28.3342 12.5996 28.6667 14.2459 28.6667 15.9977C28.6667 17.7497 28.3343 19.3964 27.6694 20.938C27.0045 22.4796 26.1022 23.8204 24.9624 24.9607C23.8226 26.1009 22.4823 27.0037 20.9414 27.669C19.4005 28.3341 17.7542 28.6667 16.0024 28.6667ZM16 26.6667C18.9778 26.6667 21.5 25.6333 23.5667 23.5667C25.6334 21.5 26.6667 18.9778 26.6667 16C26.6667 13.0222 25.6334 10.5 23.5667 8.43334C21.5 6.36667 18.9778 5.33334 16 5.33334C13.0223 5.33334 10.5 6.36667 8.43337 8.43334C6.36671 10.5 5.33337 13.0222 5.33337 16C5.33337 18.9778 6.36671 21.5 8.43337 23.5667C10.5 25.6333 13.0223 26.6667 16 26.6667Z"
-              fill="#F5F5F5"
-            />
-          </svg>
-          <span>세부 투두를 추가해 목표를 구체화해보세요.</span>
+        <Link
+          href="/goal/todo/create"
+          className="mt-28 flex flex-col items-center justify-center gap-3 rounded-xl border-2 border-dashed border-[#454545] bg-[#2c2c2c] p-8 py-36 text-base font-normal text-[#f5f5f5]"
+        >
+          <NewTodoIcon width={32} height={32} />
+          <span className="text-text-primary body-small">
+            세부 투두를 추가해 목표를 구체화해보세요.
+          </span>
         </Link>
         <div></div>
       </div>
@@ -116,58 +124,67 @@ export default function GoalCard({ goal }: { goal: Goal }) {
   return (
     <div>
       {/* Todo 리스트 있을때 */}
-      <div className="p-6 rounded-md bg-[#353535]">
-        {/* 스터디 목표 제목 수정 가능하게 input으로 구현 */}
-        <div className="relative">
-          <input type="text" className="w-full bg-transparent text-white text-2xl font-bold focus:outline-none" value={title} onChange={handleTitleChange} placeholder="스터디 목표를 입력..." />
-          {/* 업데이트 상태 표시 */}
-          {isUpdating && (
-            <div className="absolute right-0 top-1/2 transform -translate-y-1/2">
-              <div className="text-xs text-[#ff6b35]">저장 중...</div>
-            </div>
-          )}
+      <div className="bg-surface-3 border-border-emphasis h-[537px] w-full max-w-[537px] min-w-0 shrink grow rounded-md border px-34 py-40">
+        <div className="mb-28 flex flex-col gap-8">
+          {/* 스터디 목표 제목 수정 가능하게 input으로 구현 */}
+          <input
+            type="text"
+            className="headline-large placeholeder:text-text-tertiary w-full bg-transparent focus:outline-none"
+            value={title}
+            onChange={handleTitleChange}
+            placeholder="스터디 목표를 입력..."
+          />
+          {/* 왼쪽 텍스트 + 진행도 메시지 */}
+          <div className="label-large text-text-primary flex items-center gap-4">
+            <span>{goal.studyGoal.completedCt} 완료</span>
+            <span className="text-text-tertiary">|</span>
+            <span>{getProgressMessage(progress)}</span>
+          </div>
         </div>
         {/* Progress 바 */}
-        <div className="relative mt-4">
-          {/* Progress 바와 텍스트를 포함하는 컨테이너 */}
-          <div className="relative bg-[#4a4a4a] rounded-full h-7 overflow-hidden">
-            {/* Animated Progress Fill */}
-            <motion.div
-              className="h-full bg-gradient-to-r from-[#ff6b35] to-[#ff8c42] rounded-full"
-              initial={{ width: 0 }}
-              animate={{ width: `${progress}%` }}
-              transition={{
-                duration: 1.5,
-                delay: 0.5,
-                ease: "easeOut",
-              }}
-            />
-
-            {/* 왼쪽 텍스트 (날짜/시작시간) */}
-            <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-white text-sm font-semibold">{goal.studyGoal.completedCt} 완료</div>
-
-            {/* 오른쪽 텍스트 (진행도) */}
-            <div className="absolute right-3 top-1/2 transform -translate-y-1/2 text-white text-sm font-semibold">{Math.round(progress)}%</div>
+        {/* Progress 바와 텍스트를 포함하는 컨테이너 */}
+        <div className="relative mb-48 h-28 overflow-hidden rounded-full bg-[#5a5a5a]">
+          {/* Animated Progress Fill */}
+          <motion.div
+            className="to-highlight h-full rounded-full bg-gradient-to-r from-[#ff7333]"
+            initial={{ width: 0 }}
+            animate={{ width: `${progress}%` }}
+            transition={{
+              duration: 1.5,
+              delay: 0.5,
+              ease: 'easeOut',
+            }}
+          />
+          {/* 진행도 텍스트를 progressBar 위에서 진행도에 따라 위치 */}
+          {/*TODO 표시 할 공간이 없을때 어떤식으로 할지 */}
+          <div
+            className="label-large pointer-events-none absolute top-1/2 -translate-y-1/2 transform text-white"
+            style={{ left: `calc(${progress / 2}%)` }}
+          >
+            {Math.round(progress)}%
           </div>
         </div>
         {/* Todo List 리스트 항목 추가 */}
-        <div className="flex flex-col gap-10 mt-10">
+        <div className="flex flex-col gap-32">
           {/*최근 완료된 투두 */}
-          <div className="flex flex-col gap-2">
-            <span className="font-semibold text-lg text-white">최근 완료된 투두</span>
+          <div className="flex flex-col gap-12">
+            <span className="title-medium text-white">최근 완료된 투두</span>
             {/* 가장 최근 완료된 투두를 정렬 후 todo 컴포넌트 넣음 */}
             {goal.studyGoal.mytodoList
               .filter((todo) => todo.completed)
-              .sort((a, b) => (b.completedAt ? new Date(b.completedAt).getTime() : 0) - (a.completedAt ? new Date(a.completedAt).getTime() : 0))
+              .sort(
+                (a, b) =>
+                  (b.completedAt ? new Date(b.completedAt).getTime() : 0) -
+                  (a.completedAt ? new Date(a.completedAt).getTime() : 0),
+              )
               .slice(0, 1)
               .map((todo) => (
                 <TodoCard key={todo.id} todo={todo} />
               ))}
-            {/* <Todo todo={goal.studyGoal.mytodoList[0]}></Todo> */}
           </div>
           {/*진행중인 투두 */}
-          <div className="flex flex-col gap-2">
-            <span className="font-semibold text-lg text-white">진행중인 투두</span>
+          <div className="flex flex-col gap-12">
+            <span className="title-medium text-white">진행중인 투두</span>
             {/* order 순서가 가장 높은(숫자가 낮음) 투두*/}
             {goal.studyGoal.mytodoList
               .filter((todo) => todo.completed === false)
@@ -176,15 +193,14 @@ export default function GoalCard({ goal }: { goal: Goal }) {
               .map((todo) => (
                 <TodoCard key={todo.id} todo={todo} />
               ))}
-            {/* <Todo todo={goal.studyGoal.mytodoList[1]}></Todo> */}
           </div>
         </div>
         {/*전체 보기 이동 */}
-        <div className="bg-[#171717] rounded-md px-4 py-2 mt-6 text-center">
-          <Link href="/goal/todolist">
-            <span className="text-white font-semibold">전체 보기</span>
-          </Link>
-        </div>
+        <Link href="/goal/todolist">
+          <span className="text-text-secondary body-medium mt-28 flex items-center justify-center">
+            전체 보기
+          </span>
+        </Link>
       </div>
     </div>
   );

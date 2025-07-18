@@ -44,7 +44,10 @@ export default function GoalPage({ params }: GoalPageProps) {
   }
 
   return (
-    <div className="p-6">
+    <div className="px-32 py-36">
+      <h3 className="title-medium text-text-secondary mb-15 ml-12">
+        스터디 현황
+      </h3>
       <GoalCard goal={goal} />
     </div>
   );

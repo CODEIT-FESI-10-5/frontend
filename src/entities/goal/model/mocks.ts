@@ -11,7 +11,7 @@ export const mockGoal: Goal = {
         content: '튜토리얼 영상 1-3 시청',
         createdAt: new Date('2025-01-10T09:00:00Z'),
         completed: true,
-        completedAt: new Date('2025-01-10T15:00:00Z'),
+        completedAt: new Date('2025-01-10T19:00:00Z'),
         note: '테스트 노트 내용 1',
         order: 1,
         shared: true,
@@ -56,7 +56,7 @@ export const mockGoal: Goal = {
   },
 };
 
-export const mockDashboardNone: Goal = {
+export const mockGoalNone: Goal = {
   studyGoal: {
     id: 'goal-1',
     title: '',
