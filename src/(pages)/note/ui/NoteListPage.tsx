@@ -2,8 +2,8 @@
 
 import React, { useState, useEffect } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
-import { NoteCard } from '@/features/note/ui';
-import { useNotesByStudyGoalId } from '@/features/note/api';
+import { NoteCard } from '@/features/get-note/ui/NoteCard';
+import { useNotesByStudyGoalId } from '@/features/get-note/api/getNoteQueries';
 
 // 임시 사이드바 데이터
 const studyGoals = [
