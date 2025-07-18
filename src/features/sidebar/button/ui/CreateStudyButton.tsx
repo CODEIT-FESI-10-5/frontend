@@ -7,7 +7,6 @@ export default function CreateStudyButton() {
   const router = useRouter();
 
   const mutation = useCreateStudyMutation((data) => {
-    console.log('button clicked', data.newStudyId);
     router.push(`/dashboard/${data.newStudyId}`);
   });
 
