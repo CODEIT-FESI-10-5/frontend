@@ -25,7 +25,7 @@ export default function StudyList() {
   // dropdown
   const handleClick = (study: StudyItem) => {
     setStudyId(study.id);
-    //router.push(`/dashboard/${study.id}`);
+    router.push(`/dashboard/${study.id}`);
     setIsOpen(false);
   };
 
