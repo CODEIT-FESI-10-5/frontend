@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Note } from '@/entities/note';
+import { Note } from '@/entities/note/model/types';
 
 interface NoteEditorProps {
   initialNote?: Note;

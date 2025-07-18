@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { UpdateNoteRequest } from "../model/types";
-import { updateNote } from "./updateNote";
-import { noteKeys } from "../../model";
+import { UpdateNoteRequest } from "@/features/edit-note/model/types";
+import { updateNote } from "@/features/edit-note/api/updateNote";
+import { noteKeys } from "@/entities/note/model/queryKeys";
 
 export const useUpdateNote = () => {
   const queryClient = useQueryClient();

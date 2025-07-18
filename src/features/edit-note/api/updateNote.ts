@@ -1,4 +1,4 @@
-import { UpdateNoteRequest } from "@/features/note/edit-note/model/types";
+import { UpdateNoteRequest } from "@/features/edit-note/model/types";
 import { NoteResponse } from "@/entities/note/model/types";
 
 export const updateNote = async (noteData: UpdateNoteRequest): Promise<NoteResponse> => {

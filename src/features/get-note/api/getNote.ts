@@ -1,4 +1,4 @@
-import { type NoteListResponse, type NoteResponse } from "@/entities/note/"
+import { type NoteListResponse, type NoteResponse } from "@/entities/note/model/types"
 
 export const getNotesByStudyGoalId = async (studyGoalId: number): Promise<NoteListResponse> => {
   const response = await fetch(`/api/notes/${studyGoalId}`, {
