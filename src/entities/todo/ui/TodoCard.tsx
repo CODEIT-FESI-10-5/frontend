@@ -7,41 +7,16 @@ import {
 import TodoCheckBox from '@/shared/ui/TodoCheckBox';
 import { cn } from '@/shared/utils/cn';
 import dayjs from 'dayjs';
-import { AnimatePresence, motion } from 'framer-motion';
 import IconDots from '@/../public/assets/icon-dots.svg';
 import IconNote from '@/../public/assets/icon-note.svg';
 import { useState } from 'react';
-import { createPortal } from 'react-dom';
 import IconButton from '@/shared/ui/IconButton';
 import IconLink from '@/shared/ui/IconLink';
 import FuncDropDown from './FuncDropDown';
+import { TodoData } from '../model';
+import PortalBackdrop from './PortalBackdrop';
 
 const TODOLIST_ID = '12345';
-
-interface DropdownPortalProps {
-  isOpen: boolean;
-  onClose: () => void;
-  children?: React.ReactNode;
-}
-
-function BackdropPortal({ isOpen, onClose, children }: DropdownPortalProps) {
-  return createPortal(
-    <AnimatePresence>
-      {isOpen && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 0.2 }}
-          exit={{ opacity: 0 }}
-          className="bg-surface-2 fixed inset-0"
-          onClick={onClose}
-        >
-          {children}
-        </motion.div>
-      )}
-    </AnimatePresence>,
-    document.getElementById('portal-backdrop')!,
-  );
-}
 
 function LabelArea({
   content,
@@ -74,16 +49,6 @@ function LabelArea({
       )}
     </div>
   );
-}
-
-export interface TodoData {
-  id: string;
-  content: string;
-  completed: boolean;
-  createdAt: Date;
-  completedAt: Date | null;
-  order: number;
-  shared: boolean;
 }
 
 export interface TodoCardProps {
@@ -134,7 +99,7 @@ export default function TodoCard({ todo }: TodoCardProps) {
               items={[{ name: '투두 삭제', handleClick: () => handleDelete() }]}
             />
           )}
-          <BackdropPortal isOpen={isOpen} onClose={() => setIsOpen(false)} />
+          <PortalBackdrop isOpen={isOpen} onClose={() => setIsOpen(false)} />
         </div>
       </div>
     </div>

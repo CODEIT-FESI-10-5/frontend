@@ -4,13 +4,22 @@ export interface TodoListResponse {
   order: string[];
 }
 
-export interface TodoData {
+export interface TodoDataTemp {
   todoId: string;
   content: string;
   completed: boolean;
   createdAt: Date;
   completedAt?: Date;
   note: string;
+  shared: boolean;
+}
+
+export interface TodoData {
+  id: string;
+  content: string;
+  completed: boolean;
+  createdAt: Date;
+  completedAt?: Date;
   shared: boolean;
 }
 
