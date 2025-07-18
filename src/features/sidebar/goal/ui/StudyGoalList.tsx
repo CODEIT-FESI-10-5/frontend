@@ -42,13 +42,13 @@ export default function StudyGoalList() {
             onClick={() => handleClick(goal)}
             key={goal.id}
             className={clsx(
-              'bg-surface-2 rounded-4 h-36 w-full px-12 py-7',
-              goal.id === currentGoalId && 'bg-surface-4 text-text-secondary',
+              'rounded-4 h-36 w-full px-12 py-7',
+              goal.id === currentGoalId
+                ? 'bg-surface-4 text-text-secondary'
+                : 'bg-surface-2 text-text-tertiary',
             )}
           >
-            <h3 className="text-text-tertiary flex items-center">
-              {goal.title}
-            </h3>
+            <h3 className="flex items-center">{goal.title}</h3>
           </li>
         ))}
       </ul>
