@@ -5,7 +5,6 @@ import { cn } from '@/shared/utils/cn';
 import { AnimatePresence, LayoutGroup, motion } from 'framer-motion';
 import { useEffect } from 'react';
 import { useTodolistStore } from '../model/store/todolistStore';
-import { TodoData } from '@/entities/todo/ui/TodoCard';
 import { useTodolistQuery } from '../model/hooks/useTodolist';
 import TodoCardDragGroup from './TodoCardDragGroup';
 import IconAdd from '@/../public/assets/icon-add.svg';
@@ -13,38 +12,26 @@ import IconBack from '@/../public/assets/icon-back.svg';
 import EditTodoForm from '@/features/todo/ui/EditTodoForm';
 import { useEditTodoStore } from '../model/store/editTodoStore';
 import Link from 'next/link';
+import sortTodolistByOrderArray from '../lib/utils/sortTodolistByOrderArray';
+import divideTodolistGroup from '../lib/utils/divideTodolistGroup';
 
 const TEMP_TODOLIST_ID = '12345';
 
 export default function TodolistPanel() {
   const { data } = useTodolistQuery(TEMP_TODOLIST_ID);
-  const setTodolist = useTodolistStore((state) => state.setTodolist);
-  const { personal, setPersonal } = useTodolistStore();
-  const { shared, setShared } = useTodolistStore();
-  const { done, setDone } = useTodolistStore();
-  const setOrder = useTodolistStore((state) => state.setOrder);
+  const { personal, shared, done, setAllGroup } = useTodolistStore();
   const { isEditMode, toggleEditMode } = useEditTodoStore();
 
   useEffect(() => {
-    console.log('todoData fetching:', data);
+    // console.log('todoData fetching:', data);
     if (data) {
-      const shared: TodoData[] = [];
-      const personal: TodoData[] = [];
-      const done: TodoData[] = [];
-      setOrder(data.order);
-
-      data.order?.forEach((currId: string) => {
-        const currTodo = data.todolist.find(
-          (todo: TodoData) => todo.id === currId,
-        );
-        if (currTodo.completed) done.push(currTodo);
-        else if (currTodo.shared) shared.push(currTodo);
-        else personal.push(currTodo);
-      });
-      setTodolist(data.todolist);
-      setDone(done);
-      setShared(shared);
-      setPersonal(personal);
+      const orderedTodolist = sortTodolistByOrderArray(
+        data.todolist,
+        data.order,
+      );
+      const { newShared, newPersonal, newDone } =
+        divideTodolistGroup(orderedTodolist);
+      setAllGroup(newDone, newShared, newPersonal);
     }
   }, [data]);
 
