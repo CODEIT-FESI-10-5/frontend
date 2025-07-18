@@ -2,3 +2,4 @@
 // export * from './LoginForm';
 // export * from './SignupForm';
 // export * from './LogoutButton';
+export { default as AuthLayout } from './AuthLayout';
