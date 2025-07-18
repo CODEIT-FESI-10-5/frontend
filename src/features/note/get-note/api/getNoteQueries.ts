@@ -1,7 +1,9 @@
 import { useQuery } from '@tanstack/react-query';
 import { useSearchParams } from 'next/navigation';
-import { getNoteById, getNotesByStudyGoalId } from '@/features/note/api';
-import { noteKeys, type NoteListResponse } from '@/features/note/model';
+import { getNoteById, getNotesByStudyGoalId } from '@/features/note/get-note/api/getNote';
+import { type NoteListResponse } from '@/entities/note/model/types';
+import { noteKeys } from '@/entities/note/model/queryKeys';
+
 
 export const useNotesByStudyGoalId = (hasStudyGoalId: boolean) => {
   const searchParams = useSearchParams();
