@@ -8,15 +8,9 @@ export interface StudyItem {
   title: string;
   description: string;
   isLeader: boolean;
-  studyGoals: string[];
 }
 
 // 스터디 생성 응답
 export interface CreateStudyResponse {
   studyId: string;
-}
-
-// 스터디 목표 생성 응답
-export interface CreateGoalResponse {
-  studyGoalId: string;
 }

@@ -1,6 +1,7 @@
 import Profile from '@/entities/user/ui/Profile';
 import CreateStudyButton from '@/features/sidebar/button/ui/CreateStudyButton';
 import JoinButton from '@/features/sidebar/button/ui/JoinStudyButton';
+import StudyGoalList from '@/features/sidebar/goal/ui/StudyGoalList';
 import StudyList from '@/features/sidebar/study/ui/StudyList';
 
 export default function SideBar() {
@@ -15,6 +16,7 @@ export default function SideBar() {
         </div>
       </div>
       <StudyList />
+      <StudyGoalList />
     </div>
   );
 }
