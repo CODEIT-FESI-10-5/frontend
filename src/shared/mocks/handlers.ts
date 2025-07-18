@@ -6,13 +6,15 @@
 
 //export const handlers = [...authHandlers, ...dashboardHandlers, ...noteHandlers, ...profileHandlers, ...todoHandlers];
 
-import { sidebarProfileHandler } from '@/features/getProfile/api/handler';
-import { sidebarButtonHandler } from '@/features/sidebar/button/api/handler';
-import { sidebarStudyHandler } from '@/features/sidebar/study/api/handler';
-import { sidebarGoalHandler } from '@/features/sidebar/goal/api/handler';
+import { sidebarProfileHandler } from '@/features/get-profile/api/handler';
+import { sidebarCreateStudyHandler } from '@/features/create-study/api/handler';
+import { sidebarStudyHandler } from '@/features/get-study-list/api/handler';
+import { sidebarGoalHandler } from '@/features/get-goal-list/api/handler';
+import { sidebarCreateGoalHandler } from '@/features/create-goal/api/handler';
 export const handlers = [
   ...sidebarProfileHandler,
-  ...sidebarButtonHandler,
+  ...sidebarCreateStudyHandler,
   ...sidebarStudyHandler,
   ...sidebarGoalHandler,
+  ...sidebarCreateGoalHandler,
 ];
