@@ -1,9 +1,9 @@
 'use client';
 
 import { useParams, useRouter } from 'next/navigation';
-import { useNoteById } from '@/features/note/api';
-import { NoteEditor } from '@/features/note/ui';
-import { useUpdateNote } from '@/features/note/api';
+import { useNoteById } from '@/features/note/api/noteQueries';
+import { NoteEditor } from '@/features/note/edit-note';
+import { useUpdateNote } from '@/features/note/edit-note/api/useUpdateNoteMutation';
 
 export function NoteEditPage() {
   const params = useParams();

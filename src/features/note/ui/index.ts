@@ -1,2 +1,2 @@
 export { NoteCard } from './NoteCard';
-export { NoteEditor } from './NoteEditor';
+export { NoteEditor } from '../edit-note/ui/NoteEditor';

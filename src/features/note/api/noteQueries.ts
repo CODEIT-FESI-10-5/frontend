@@ -1,8 +1,7 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { useSearchParams } from 'next/navigation';
-import { getNoteById, getNotesByStudyGoalId, updateNote } from '@/features/note/api';
-import { noteKeys, type UpdateNoteRequest, type NoteListResponse } from '@/features/note/model';
-
+import { getNoteById, getNotesByStudyGoalId } from '@/features/note/api';
+import { noteKeys, type NoteListResponse } from '@/features/note/model';
 
 export const useNotesByStudyGoalId = (hasStudyGoalId: boolean) => {
   const searchParams = useSearchParams();
@@ -23,23 +22,4 @@ export const useNoteById = (noteId: number, enabled: boolean = true) => {
   });
 };
 
-export const useUpdateNote = () => {
-  const queryClient = useQueryClient();
 
-  return useMutation({
-    mutationFn: (noteData: UpdateNoteRequest) => updateNote(noteData),
-    onSuccess: (data, variables) => {
-      queryClient.setQueryData(
-        noteKeys.detail(variables.id),
-        data
-      );
-
-      queryClient.invalidateQueries({
-        queryKey: noteKeys.lists(),
-      });
-    },
-    onError: (error) => {
-      console.error('노트 수정 실패:', error);
-    },
-  });
-};

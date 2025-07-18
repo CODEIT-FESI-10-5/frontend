@@ -1,2 +1,2 @@
-export { useNotesByStudyGoalId, useNoteById, useUpdateNote } from './noteQueries';
-export { getNotesByStudyGoalId, getNoteById, updateNote } from './noteApi';
+export { useNotesByStudyGoalId, useNoteById } from './noteQueries';
+export { getNotesByStudyGoalId, getNoteById } from './noteApi';
