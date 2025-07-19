@@ -9,6 +9,15 @@ export interface CreateGoalResponse {
   studyGoalId: string;
 }
 
+export interface GoalListResponse {
+  goalList: Goal[];
+}
+
+export interface Goal {
+  id: string;
+  title: string;
+}
+
 // 스터디 목표 상세 응답
 export interface GoalDetailResponse {
   id: string;
