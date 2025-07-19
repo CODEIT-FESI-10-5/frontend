@@ -14,9 +14,9 @@ export default function StudyInfo({
   inviteLink: StudyGroup['inviteLink'];
 }) {
   return (
-    <>
+    <div className="max-w-1000">
       {/*TODO Progress 바 max-w 어디까지 설정할지 */}
-      <div className="mb-12 flex items-end justify-between">
+      <div className="mb-12 flex max-w-1000 items-end justify-between">
         {/* 팀원 목록 */}
         <div className="flex items-center gap-8">
           {/* 겹치는 프로필 이미지들 */}
@@ -74,6 +74,6 @@ export default function StudyInfo({
         <span className="title-medium">초대 코드 {inviteLink}</span>
         <CopyIcon width={10} height={10} />
       </div>
-    </>
+    </div>
   );
 }
