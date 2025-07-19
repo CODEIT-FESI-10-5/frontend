@@ -7,7 +7,7 @@ import type { Todo } from '@/shared/model';
 
 export default function Todo({ todo }: { todo: Todo }) {
   return (
-    <div className="flex h-72 w-full items-center justify-between rounded-lg bg-white px-18 text-[#313131]">
+    <div className="bg-surface-4 text-text-primary flex h-72 w-full items-center justify-between rounded-lg px-18">
       <div className="flex items-center justify-center gap-10">
         <UpdateTodoCompletion completed={todo.completed} />
         <TodoInfo todo={todo} />

@@ -1,8 +1,13 @@
 import { useEffect, useRef, useState } from 'react';
 import { updateGoalTitle } from '../api/updateGoalTitle';
 
-export default function EditGoalTitle({ goalTitle }: { goalTitle: string }) {
-  const [title, setTitle] = useState<string>(goalTitle);
+export default function EditGoalTitle({
+  title,
+  setTitle,
+}: {
+  title: string;
+  setTitle: (newTitle: string) => void;
+}) {
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const debouncedUpdateTitle = (newTitle: string) => {
@@ -13,14 +18,14 @@ export default function EditGoalTitle({ goalTitle }: { goalTitle: string }) {
 
     // 새로운 타이머 설정 (1.5초 후 API 호출)
     timeoutRef.current = setTimeout(async () => {
-      if (newTitle !== goalTitle && newTitle.trim() !== '') {
+      if (newTitle !== title && newTitle.trim() !== '') {
         try {
           await updateGoalTitle('study-1', 'goal-1', newTitle);
           console.log('제목이 성공적으로 업데이트되었습니다:', newTitle);
         } catch (error) {
           console.error('제목 업데이트 실패:', error);
           // 실패 시 원래 제목으로 되돌리기
-          setTitle(goalTitle);
+          setTitle(title);
         }
       }
     }, 2000); // 2초 debounce

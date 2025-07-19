@@ -1,8 +1,6 @@
 import dayjs from 'dayjs';
 import { Todo } from '../model';
-export default function TodoInfo(props: { todo: Todo }) {
-  const { todo } = props;
-
+export default function TodoInfo({ todo }: { todo: Todo }) {
   {
     /*TODO 디자인 미완성 완성후 다시 구현 */
   }
@@ -11,12 +9,12 @@ export default function TodoInfo(props: { todo: Todo }) {
     return (
       <div className="flex flex-col gap-4">
         {/*투두 내용*/}
-        <div className="flex items-center justify-center gap-6">
+        <div className="body-medium flex items-center justify-center gap-6 line-through">
           {todo.shared && <SharedText />}
-          <div className="text-base font-bold line-through">{todo.content}</div>
+          <div>{todo.content}</div>
         </div>
         {/*완료 일자*/}
-        <div className="text-sm font-medium text-[#4d4d4d]">
+        <div className="text-text-primary label-medium">
           완료일시:
           {todo.completedAt
             ? dayjs(todo.completedAt).format(' YYYY.MM.DD H:mm')
@@ -30,18 +28,14 @@ export default function TodoInfo(props: { todo: Todo }) {
   return (
     <div className="flex flex-col">
       {/*투두 내용*/}
-      <div className="flex items-center justify-center gap-1">
+      <div className="body-medium flex items-center justify-center gap-6">
         {todo.shared && <SharedText />}
-        <div className="text-base font-bold">{todo.content}</div>
+        <div>{todo.content}</div>
       </div>
     </div>
   );
 }
 
 function SharedText() {
-  return (
-    <div className="label-small rounded-md border border-solid border-[#ffbe73] bg-[#ffd4a3] px-6 py-3">
-      공통
-    </div>
-  );
+  return <span>[공통]</span>;
 }

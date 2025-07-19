@@ -1,4 +1,4 @@
-import { Goal } from './types';
+import { Goal } from '../../model/types';
 
 export const mockGoal: Goal = {
   studyGoal: {

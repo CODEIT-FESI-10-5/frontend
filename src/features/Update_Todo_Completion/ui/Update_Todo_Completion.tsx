@@ -7,8 +7,8 @@ export default function UpdateTodoCompletion({
   completed: boolean;
 }) {
   return completed ? (
-    <CheckTodoFillIcon width={28} height={28} />
+    <CheckTodoFillIcon width={30} height={30} />
   ) : (
-    <CheckTodoBlankIcon width={28} height={28} />
+    <CheckTodoBlankIcon width={30} height={30} />
   );
 }

@@ -1,5 +1,4 @@
 import { studyHandlers } from '@/entities/study/api';
-import { goalHandlers } from './handlers/goalHandlers';
-import { todoHandlers } from './handlers/todoHandlers';
+import { goalHandlers } from '@/entities/goal/api';
 
-export const handlers = [...goalHandlers, ...studyHandlers, ...todoHandlers];
+export const handlers = [...goalHandlers, ...studyHandlers];

@@ -1,5 +1,5 @@
 import { http, HttpResponse } from 'msw';
-import { mockGoal, mockGoalNone } from '@/entities/goal/model/mocks';
+import { mockGoal, mockGoalNone } from '@/entities/goal/api/mocks/mocks';
 
 export const goalHandlers = [
   // Goal 조회 API
