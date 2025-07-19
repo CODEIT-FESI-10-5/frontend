@@ -16,9 +16,7 @@ export default function StudyGroupLayout({
   return (
     <div className="flex flex-col bg-[#171717]">
       {/* StudyGroup 컴포넌트 (studyId로 데이터 fetch) */}
-      <div>
-        <Study studyId={studyId} />
-      </div>
+      <Study studyId={studyId} />
 
       {/* 페이지 컨텐츠 (goalId로 데이터 fetch) */}
       <div>{children}</div>
