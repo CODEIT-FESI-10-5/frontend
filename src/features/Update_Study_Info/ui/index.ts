@@ -2,3 +2,5 @@
 // export * from './SideBar';
 // export * from './Navigation';
 // export * from './MenuItems';
+
+export * from './Update_Study_Info';

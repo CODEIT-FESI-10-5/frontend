@@ -1,5 +1,5 @@
 import { http, HttpResponse } from 'msw';
-import { mockStudyGroup } from '@/entities/study/model/mocks';
+import { mockStudyGroup } from './mocks';
 
 export const studyHandlers = [
   // StudyGroup 조회 API
@@ -59,14 +59,16 @@ export const studyHandlers = [
       );
     }
     try {
-      const body = (await request.json()) as { image: string };
-      if (!body.image) {
+      const formData = await request.formData();
+      const imageFile = formData.get('image');
+      if (!imageFile) {
         return HttpResponse.json(
           { error: 'Image is required' },
           { status: 400 },
         );
       }
-      mockStudyGroup.image = body.image;
+      // 실제 서비스에서는 파일 저장/URL 반환 등 처리 필요
+      mockStudyGroup.image = 'uploaded-image-url-or-data'; // 예시
       return HttpResponse.json({
         message: 'Study group image updated successfully',
         studyGroup: {
@@ -75,7 +77,10 @@ export const studyHandlers = [
         },
       });
     } catch (error) {
-      return HttpResponse.json({ error: 'Invalid JSON body' }, { status: 400 });
+      return HttpResponse.json(
+        { error: 'Invalid FormData body' },
+        { status: 400 },
+      );
     }
   }),
 ];

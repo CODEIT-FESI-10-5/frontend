@@ -2,6 +2,6 @@
 // export * from './study-api';
 // export * from './queries';
 
-export * from './fetchStudyGroup';
-export * from './updateStudyGroupInfo';
-export * from './updateStudyGroupImage';
+export * from './fetchStudy';
+export * from './updateStudyInfo';
+export * from './mocks';
