@@ -1,27 +1,27 @@
 import TodoCard from '@/entities/todo/ui/TodoCard';
 import { AnimatePresence, motion, Reorder } from 'framer-motion';
-import { TodolistAction, useTodolistStore } from '../model/store/todolistStore';
 import { useUpdateOrderMutation } from '../model/hooks/useTodolist';
+import { GoalAction, useGoalStore } from '@/features/fetch-goal/model/store';
 
 interface TodoCardDragGroupProps {
   type: 'personal' | 'shared' | 'done';
 }
 
 export default function TodoCardDragGroup({ type }: TodoCardDragGroupProps) {
-  const todoGroup = useTodolistStore((state) => state[type]);
+  const todoGroup = useGoalStore((state) => state[type]);
   const setFns = {
-    personal: (state: TodolistAction) => state.setPersonal,
-    shared: (state: TodolistAction) => state.setShared,
-    done: (state: TodolistAction) => state.setDone,
+    personal: (state: GoalAction) => state.setPersonal,
+    shared: (state: GoalAction) => state.setShared,
+    done: (state: GoalAction) => state.setDone,
   };
-  const setTodoGroup = useTodolistStore((state) => setFns[type](state));
-  const { todolistId, getCurrOrder } = useTodolistStore();
+  const setTodoGroup = useGoalStore((state) => setFns[type](state));
+  const { goalId, getCurrOrder } = useGoalStore();
   const draggable = !(type === 'done');
   const updateOrder = useUpdateOrderMutation();
   const handleDrop = () => {
     console.log('drop elem: post newOrder');
     updateOrder.mutate({
-      todolistId,
+      todolistId: goalId,
       newOrder: getCurrOrder(),
     });
   };

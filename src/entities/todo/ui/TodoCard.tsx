@@ -1,11 +1,8 @@
 'use client';
 
-import {
-  useDeleteTodoMutation,
-  useUpdateTodoMutation,
-} from '@/features/todo/model/hooks/useTodolist';
+import { useUpdateTodoMutation } from '@/features/todo/model/hooks/useTodolist';
 import TodoCheckBox from '@/shared/ui/TodoCheckBox';
-import { cn } from '@/shared/utils/cn';
+import { cn } from '@/shared/lib/utils/cn';
 import dayjs from 'dayjs';
 import IconDots from '@/../public/assets/icon-dots.svg';
 import IconNote from '@/../public/assets/icon-note.svg';
@@ -15,6 +12,7 @@ import IconLink from '@/shared/ui/IconLink';
 import FuncDropDown from './FuncDropDown';
 import { TodoData } from '../model';
 import PortalBackdrop from './PortalBackdrop';
+import { useDeleteTodoMutation } from '@/features/delete-todo/model/hooks';
 
 const TODOLIST_ID = '12345';
 
