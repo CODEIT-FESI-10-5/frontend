@@ -8,7 +8,7 @@ import IconBack from '@/../public/assets/icon-back.svg';
 import { useCreateTodoStore } from '../../create-todo/model/store';
 import Link from 'next/link';
 import Todolist from './Todolist';
-import { useTodolistGroupInit } from '../model/hooks/useTodolistGroupInit';
+import { useTodoGroupInit } from '@/features/fetch-goal/model/hooks';
 
 const TEMP_TODOLIST_ID = '12345';
 
@@ -43,7 +43,7 @@ function TitleArea() {
 }
 
 export default function TodolistPanel() {
-  useTodolistGroupInit(TEMP_TODOLIST_ID);
+  useTodoGroupInit(TEMP_TODOLIST_ID);
 
   return (
     <LayoutGroup>

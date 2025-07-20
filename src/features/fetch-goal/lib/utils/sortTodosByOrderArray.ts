@@ -1,6 +1,6 @@
 import { TodoData } from '@/entities/todo/model/types';
 
-export default function sortTodolistByOrderArray(
+export default function sortTodosByOrderArray(
   todolist: Array<TodoData>,
   orderArray: Array<string>,
 ) {

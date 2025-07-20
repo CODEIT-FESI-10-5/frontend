@@ -1,21 +1,21 @@
-import { useEffect } from 'react';
-import { useTodolistStore } from '../store/todolistStore';
-import { useTodolistQuery } from './useTodolist';
-import sortTodolistByOrderArray from '../../lib/utils/sortTodolistByOrderArray';
-import divideTodolistGroup from '../../lib/utils/divideTodolistGroup';
+// import { useEffect } from 'react';
+// import { useTodolistStore } from '../store/todolistStore';
+// import sortTodolistByOrderArray from '../../../fetch-goal/lib/utils/sortTodosByOrderArray';
+// import divideTodolistGroup from '../../../fetch-goal/lib/utils/divideTodoGroup';
+// import { useGoalQuery } from '@/features/fetch-goal/model/hooks';
 
-export function useTodolistGroupInit(todolistId: string) {
-  const { data } = useTodolistQuery(todolistId);
-  const { setTodolistId, setAllGroup } = useTodolistStore();
+// export function useTodolistGroupInit(todolistId: string) {
+//   const { data } = useGoalQuery(todolistId);
+//   const { setTodolistId, setAllGroup } = useTodolistStore();
 
-  useEffect(() => {
-    if (!data) return;
-    // console.log(data);
+//   useEffect(() => {
+//     if (!data) return;
+//     // console.log(data);
 
-    const ordered = sortTodolistByOrderArray(data.todolist, data.order);
-    const { newShared, newPersonal, newDone } = divideTodolistGroup(ordered);
+//     const ordered = sortTodolistByOrderArray(data.todolist, data.order);
+//     const { newShared, newPersonal, newDone } = divideTodolistGroup(ordered);
 
-    setTodolistId(data.todolistId);
-    setAllGroup(newDone, newShared, newPersonal);
-  }, [data, setAllGroup, setTodolistId]);
-}
+//     setTodolistId(data.todolistId);
+//     setAllGroup(newDone, newShared, newPersonal);
+//   }, [data, setAllGroup, setTodolistId]);
+// }

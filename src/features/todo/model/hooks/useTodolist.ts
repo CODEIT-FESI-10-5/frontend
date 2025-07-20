@@ -1,19 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import {
   deleteTodo,
-  fetchTodolist,
   newContent,
   updateTodo,
   updateTodoOrder,
 } from '../../api/todolist';
-
-export const useTodolistQuery = (todolistId: string) => {
-  return useQuery({
-    queryKey: ['todolist', todolistId],
-    queryFn: () => fetchTodolist(todolistId),
-  });
-};
 
 const useTodoCustomMutation = <TVariables, TResult>(
   mutationFn: (variables: TVariables) => Promise<TResult>,
@@ -29,17 +21,6 @@ const useTodoCustomMutation = <TVariables, TResult>(
     },
   });
 };
-
-// interface CreateTodoMutationParams {
-//   todolistId: string;
-//   newTodo: newTodoData;
-// }
-
-// export const useCreateTodoMutation = () =>
-//   useTodoCustomMutation<CreateTodoMutationParams, any>(
-//     ({ todolistId, newTodo }) => createTodo(todolistId, newTodo),
-//     ['todolist'],
-//   );
 
 interface UpdateTodoMutationParams {
   todolistId: string;

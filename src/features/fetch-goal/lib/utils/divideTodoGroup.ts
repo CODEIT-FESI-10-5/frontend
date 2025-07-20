@@ -1,6 +1,6 @@
 import { TodoData } from '@/entities/todo/model/types';
 
-export default function divideTodolistGroup(orderedTodolist: Array<TodoData>) {
+export default function divideTodoGroup(orderedTodolist: Array<TodoData>) {
   const newShared: Array<TodoData> = [];
   const newPersonal: Array<TodoData> = [];
   const newDone: Array<TodoData> = [];

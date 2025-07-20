@@ -1,23 +1,5 @@
 import { clientFetch } from '@/shared/api';
 
-export const fetchTodolist = async (todolistId: string) => {
-  const endpoint = `/api/todolist/${todolistId}`;
-  const parsedResponse = await clientFetch.get(endpoint);
-
-  return parsedResponse;
-};
-
-// export interface newTodoData {
-//   content: string;
-//   shared: boolean;
-// }
-// export const createTodo = async (todolistId: string, newTodo: newTodoData) => {
-//   const endpoint = `/api/todolist/${todolistId}/todo`;
-//   const parsedResponse = await clientFetch.post(endpoint, newTodo);
-
-//   return parsedResponse;
-// };
-
 export interface newContent {
   content: string;
   completed: boolean;
