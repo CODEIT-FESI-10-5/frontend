@@ -1,8 +1,8 @@
 import Button from '@/shared/ui/TodoButton';
-import { useCreateTodoMutation } from '@/features/todo/model/hooks/useTodolist';
 import ToggleButton from '@/shared/ui/ToggleButton';
-import { cn } from '@/shared/utils/cn';
+import { cn } from '@/shared/lib/utils/cn';
 import { useCreateTodoStore } from '@/features/create-todo/model/store/createTodoStore';
+import { useCreateTodoMutation } from '../model/hooks';
 
 const TODOLIST_ID = '12345';
 const IS_ADMIN = true;

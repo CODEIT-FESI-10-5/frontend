@@ -1,12 +1,12 @@
 import { AnimatePresence, motion } from 'framer-motion';
-import EditTodoForm from './EditTodoForm';
+import EditTodoForm from '../../create-todo/ui/CreateTodoForm';
 import TodoCardDragGroup from './TodoCardDragGroup';
-import { useEditTodoStore } from '../model/store/editTodoStore';
+import { useCreateTodoStore } from '../../create-todo/model/store';
 import { useTodolistStore } from '../model/store/todolistStore';
 
 export default function Todolist() {
   const { done, shared, personal } = useTodolistStore();
-  const isEditMode = useEditTodoStore((state) => state.isEditMode);
+  const isEditMode = useCreateTodoStore((state) => state.isCreateMode);
 
   return (
     <>

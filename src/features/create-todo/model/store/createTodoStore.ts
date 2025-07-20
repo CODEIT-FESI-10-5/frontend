@@ -1,14 +1,14 @@
 import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
 
-export interface CreateTodoState {
+interface CreateTodoState {
   isCreateMode: boolean;
   content: string;
   isShared: boolean;
   isInvalid: boolean;
 }
 
-export interface CreateTodoAction {
+interface CreateTodoAction {
   resetField: () => void;
   toggleEditMode: () => void;
   setContent: (input: string) => void;

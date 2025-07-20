@@ -1,11 +1,11 @@
 'use client';
 
 import Button from '@/shared/ui/TodoButton';
-import { cn } from '@/shared/utils/cn';
+import { cn } from '@/shared/lib/utils/cn';
 import { LayoutGroup, motion } from 'framer-motion';
 import IconAdd from '@/../public/assets/icon-add.svg';
 import IconBack from '@/../public/assets/icon-back.svg';
-import { useEditTodoStore } from '../model/store/editTodoStore';
+import { useCreateTodoStore } from '../../create-todo/model/store';
 import Link from 'next/link';
 import Todolist from './Todolist';
 import { useTodolistGroupInit } from '../model/hooks/useTodolistGroupInit';
@@ -27,7 +27,7 @@ function BackButton() {
 }
 
 function TitleArea() {
-  const toggleEditMode = useEditTodoStore((state) => state.toggleEditMode);
+  const toggleEditMode = useCreateTodoStore((state) => state.toggleEditMode);
   return (
     <motion.div
       layout={'position'}
