@@ -2,95 +2,68 @@
 
 import Button from '@/shared/ui/TodoButton';
 import { cn } from '@/shared/utils/cn';
-import { AnimatePresence, LayoutGroup, motion } from 'framer-motion';
-import { useEffect } from 'react';
-import { useTodolistStore } from '../model/store/todolistStore';
-import { useTodolistQuery } from '../model/hooks/useTodolist';
-import TodoCardDragGroup from './TodoCardDragGroup';
+import { LayoutGroup, motion } from 'framer-motion';
 import IconAdd from '@/../public/assets/icon-add.svg';
 import IconBack from '@/../public/assets/icon-back.svg';
-import EditTodoForm from '@/features/todo/ui/EditTodoForm';
 import { useEditTodoStore } from '../model/store/editTodoStore';
 import Link from 'next/link';
-import sortTodolistByOrderArray from '../lib/utils/sortTodolistByOrderArray';
-import divideTodolistGroup from '../lib/utils/divideTodolistGroup';
+import Todolist from './Todolist';
+import { useTodolistGroupInit } from '../model/hooks/useTodolistGroupInit';
 
 const TEMP_TODOLIST_ID = '12345';
 
-export default function TodolistPanel() {
-  const { data } = useTodolistQuery(TEMP_TODOLIST_ID);
-  const { personal, shared, done, setAllGroup } = useTodolistStore();
-  const { isEditMode, toggleEditMode } = useEditTodoStore();
+function BackButton() {
+  return (
+    <motion.div layout={'position'}>
+      <Link
+        href={`/dashbord/${TEMP_TODOLIST_ID}`}
+        className="mx-10 flex cursor-pointer items-center gap-30 text-white transition hover:scale-105"
+      >
+        <IconBack stroke="white" />
+        <p className="title-large">전체 투두 리스트</p>
+      </Link>
+    </motion.div>
+  );
+}
 
-  useEffect(() => {
-    // console.log('todoData fetching:', data);
-    if (data) {
-      const orderedTodolist = sortTodolistByOrderArray(
-        data.todolist,
-        data.order,
-      );
-      const { newShared, newPersonal, newDone } =
-        divideTodolistGroup(orderedTodolist);
-      setAllGroup(newDone, newShared, newPersonal);
-    }
-  }, [data]);
-
+function TitleArea() {
+  const toggleEditMode = useEditTodoStore((state) => state.toggleEditMode);
   return (
     <motion.div
-      layout
-      className="bg-surface-1 flex h-full w-full flex-col items-start gap-50 rounded-md px-30 py-40"
+      layout={'position'}
+      className="mb-40 flex w-full justify-between"
     >
-      <motion.div layout={'position'}>
-        <Link
-          href={`/dashbord/${TEMP_TODOLIST_ID}`}
-          className="mx-10 flex cursor-pointer items-center gap-30 text-white transition hover:scale-105"
-        >
-          <IconBack stroke="white" />
-          <p className="title-large">전체 투두 리스트</p>
-        </Link>
-      </motion.div>
+      <p className="headline-large font-bold text-white">투두 리스트 제목</p>
+      <Button size="lg" color="bg-primary" onClick={() => toggleEditMode()}>
+        <IconAdd width={19} height={19} fill="white" />
+        <p className="label-small">세부 투두 생성</p>
+      </Button>
+    </motion.div>
+  );
+}
+
+export default function TodolistPanel() {
+  useTodolistGroupInit(TEMP_TODOLIST_ID);
+
+  return (
+    <LayoutGroup>
       <motion.div
         layout
-        className={cn(
-          'relative flex w-740 flex-col',
-          'bg-surface-3 rounded-lg p-40 text-black shadow-lg',
-        )}
+        className="bg-surface-1 flex h-full w-full flex-col items-start gap-50 rounded-md px-30 py-40"
       >
+        <BackButton />
         <motion.div
-          layout={'position'}
-          className="mb-40 flex w-full justify-between"
+          layout
+          className={cn(
+            'relative flex w-740 flex-col',
+            'bg-surface-3 rounded-lg p-40 text-black shadow-lg',
+          )}
         >
-          <p className="headline-large font-bold text-white">
-            투두 리스트 제목
-          </p>
-          <Button size="lg" color="bg-primary" onClick={() => toggleEditMode()}>
-            <IconAdd width={19} height={19} fill="white" />
-            <p className="label-small">세부 투두 생성</p>
-          </Button>
+          <TitleArea />
+          <Todolist />
         </motion.div>
-        <LayoutGroup>
-          <AnimatePresence mode="popLayout">
-            {isEditMode && (
-              <motion.div
-                layout={'position'}
-                key="edit-frame"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-              >
-                <EditTodoForm />
-              </motion.div>
-            )}
-          </AnimatePresence>
-
-          <div className="flex flex-col gap-16">
-            {done.length > 0 && <TodoCardDragGroup type={'done'} />}
-            {shared.length > 0 && <TodoCardDragGroup type={'shared'} />}
-            {personal.length > 0 && <TodoCardDragGroup type={'personal'} />}
-          </div>
-        </LayoutGroup>
-        <div id="portal-backdrop"></div>
+        <div id="portal-backdrop" />
       </motion.div>
-    </motion.div>
+    </LayoutGroup>
   );
 }

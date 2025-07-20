@@ -1,6 +1,7 @@
 import TodoCard from '@/entities/todo/ui/TodoCard';
 import { AnimatePresence, motion, Reorder } from 'framer-motion';
 import { TodolistAction, useTodolistStore } from '../model/store/todolistStore';
+import { useUpdateOrderMutation } from '../model/hooks/useTodolist';
 
 interface TodoCardDragGroupProps {
   type: 'personal' | 'shared' | 'done';
@@ -14,7 +15,16 @@ export default function TodoCardDragGroup({ type }: TodoCardDragGroupProps) {
     done: (state: TodolistAction) => state.setDone,
   };
   const setTodoGroup = useTodolistStore((state) => setFns[type](state));
+  const { todolistId, getCurrOrder } = useTodolistStore();
   const draggable = !(type === 'done');
+  const updateOrder = useUpdateOrderMutation();
+  const handleDrop = () => {
+    console.log('drop elem: post newOrder');
+    updateOrder.mutate({
+      todolistId,
+      newOrder: getCurrOrder(),
+    });
+  };
 
   return (
     <Reorder.Group
@@ -34,7 +44,7 @@ export default function TodoCardDragGroup({ type }: TodoCardDragGroupProps) {
             <Reorder.Item
               value={todo}
               dragListener={draggable}
-              onDragEnd={() => console.log('drop elem: post newOrder')}
+              onDragEnd={() => handleDrop()}
             >
               <TodoCard idx={idx + 1} todo={todo} />
             </Reorder.Item>

@@ -3,13 +3,14 @@ import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
 
 export interface TodolistState {
+  todolistId: string;
   done: TodoData[];
   shared: TodoData[];
   personal: TodoData[];
-  order: string[];
 }
 
 export interface TodolistAction {
+  setTodolistId: (newTodolistId: string) => void;
   setDone: (newDone: TodolistState['done']) => void;
   setShared: (newShared: TodolistState['shared']) => void;
   setPersonal: (newPersonal: TodolistState['personal']) => void;
@@ -18,15 +19,18 @@ export interface TodolistAction {
     newShared: TodolistState['shared'],
     newPersonal: TodolistState['personal'],
   ) => void;
-  setOrder: (newOrder: string[]) => void;
+  getCurrOrder: () => Array<string>;
 }
 
 export const useTodolistStore = create<TodolistState & TodolistAction>()(
   devtools(
-    (set) => ({
+    (set, get) => ({
+      todolistId: '',
       done: [],
       shared: [],
       personal: [],
+      setTodolistId: (newTodolistId: string) =>
+        set(() => ({ todolistId: newTodolistId })),
       setDone: (newDone: TodoData[]) => set(() => ({ done: [...newDone] })),
       setShared: (newShared: TodoData[]) =>
         set(() => ({ shared: [...newShared] })),
@@ -42,7 +46,10 @@ export const useTodolistStore = create<TodolistState & TodolistAction>()(
           shared: [...newShared],
           personal: [...newPersonal],
         })),
-      setOrder: (newOrder: string[]) => set(() => ({ order: [...newOrder] })),
+      getCurrOrder: () => {
+        const { done, shared, personal } = get();
+        return [...done, ...shared, ...personal].map((todo) => todo.id);
+      },
     }),
     {
       name: 'todo-list-store',
