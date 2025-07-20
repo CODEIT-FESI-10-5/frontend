@@ -57,7 +57,9 @@ export const updateTodoOrder = async (
   newOrder: Array<string>,
 ) => {
   const endpoint = `/api/todolist/${todolistId}/order`;
-  const parsedResponse = await clientFetch.patch(endpoint, newOrder);
+  const parsedResponse = await clientFetch.patch(endpoint, {
+    newOrder: newOrder,
+  });
 
   return parsedResponse;
 };
