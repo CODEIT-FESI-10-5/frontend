@@ -41,9 +41,9 @@ export function NoteListPage() {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <div className="mb-6 bg-red-500">
+      <div className="mb-6">
         {/* 목표별 버튼 - 사이드바 임시 컴포넌트 */}
-        <div className="mb-6 flex flex-wrap gap-3 bg-blue-500">
+        <div className="mb-6 flex flex-wrap gap-3">
           {studyGoals.map((goal) => (
             <button
               key={goal.id}
@@ -77,8 +77,8 @@ export function NoteListPage() {
 
       {/* 학습 목표를 선택했을 때 */}
       {!isLoading && !isError && hasStudyGoalId && (
-        <div>
-          <div className="flex items-center gap-10">
+        <div className="bg-surface-1 px-30 py-40">
+          <div className="flex items-center gap-10 mb-40">
             <NoteListPageIcon />
             <span className="text-xl font-bold text-white">
               {studyGoals.find((goal) => goal.id === selectedGoalId)?.title}
@@ -93,7 +93,7 @@ export function NoteListPage() {
               <p className="text-gray-400">첫 번째 노트를 작성해보세요!</p>
             </div>
           ) : (
-            <div className="space-y-4">
+            <div className="space-y-12">
               {notes.map((note) => (
                 <NoteCard key={note.id} note={note} />
               ))}
