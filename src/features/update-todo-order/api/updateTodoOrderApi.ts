@@ -1,10 +1,10 @@
 import { clientFetch } from '@/shared/api';
 
 export const updateTodoOrder = async (
-  todolistId: string,
+  goalId: string,
   newOrder: Array<string>,
 ) => {
-  const endpoint = `/api/todolist/${todolistId}/order`;
+  const endpoint = `/api/goal/${goalId}/order`;
   const parsedResponse = await clientFetch.patch(endpoint, {
     newOrder: newOrder,
   });
