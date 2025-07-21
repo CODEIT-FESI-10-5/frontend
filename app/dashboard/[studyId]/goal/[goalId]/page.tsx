@@ -1,6 +1,6 @@
 'use client';
 
-import GoalPage from '@/(pages)/dashboard/[studyId]/goal/[goalId]/goalPage';
+import GoalPage from '@/pages/dashboard/[studyId]/goal/[goalId]/goalPage';
 
 interface GoalPageProps {
   params: Promise<{
