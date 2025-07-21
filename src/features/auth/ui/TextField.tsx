@@ -9,7 +9,7 @@ interface TextFieldProps extends React.InputHTMLAttributes<HTMLInputElement> {
 }
 const baseStyle =
   'border-border-emphasis border-1 text-text-tertiary focus:border-border-input-focused focus:text-text-white';
-const errorStyle = 'border-highlight border-1.5 text-text-white';
+const errorStyle = 'border-highlight text-text-white';
 
 export default function TextField({
   label,
@@ -22,7 +22,7 @@ export default function TextField({
       <label className="text-text-tertiary label-small">{label}</label>
       <input
         className={clsx(
-          'bg-surface-3 rounded-6 h-51 w-442 p-16 outline-none',
+          'bg-surface-3 rounded-6 border-1.5 h-51 w-442 p-16 outline-none',
           error ? errorStyle : baseStyle,
         )}
         {...props}
