@@ -3,7 +3,7 @@
 import Button from '@/shared/ui/TodoButton';
 import { cn } from '@/shared/lib/utils/cn';
 import { LayoutGroup, motion } from 'framer-motion';
-import IconAdd from '@/../public/assets/icon-add.svg';
+import IconNewTodo from '@/../public/assets/icon-new-todo.svg';
 import IconBack from '@/../public/assets/icon-back.svg';
 import { useCreateTodoStore } from '../../../features/create-todo/model/store';
 import Link from 'next/link';
@@ -34,8 +34,8 @@ function TitleArea() {
       className="mb-40 flex w-full justify-between"
     >
       <p className="headline-large font-bold text-white">투두 리스트 제목</p>
-      <Button size="lg" color="bg-primary" onClick={() => toggleEditMode()}>
-        <IconAdd width={19} height={19} fill="white" />
+      <Button size="lg" color="bg-highlight" onClick={() => toggleEditMode()}>
+        <IconNewTodo width={24} height={24} fill="white" />
         <p className="label-small">세부 투두 생성</p>
       </Button>
     </motion.div>

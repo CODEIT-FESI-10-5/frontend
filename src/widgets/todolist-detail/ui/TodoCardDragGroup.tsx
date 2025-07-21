@@ -1,7 +1,7 @@
-import TodoCard from '@/entities/todo/ui/TodoCard';
 import { AnimatePresence, motion, Reorder } from 'framer-motion';
 import { GoalAction, useGoalStore } from '@/features/fetch-goal/model/store';
 import { useUpdateTodoOrderMutation } from '@/features/update-todo-order/model/hooks';
+import Todo from '@/widgets/todo/ui/todo';
 
 interface TodoCardDragGroupProps {
   type: 'personal' | 'shared' | 'done';
@@ -34,7 +34,7 @@ export default function TodoCardDragGroup({ type }: TodoCardDragGroupProps) {
       values={todoGroup}
     >
       <AnimatePresence mode="popLayout">
-        {todoGroup.map((todo, idx) => (
+        {todoGroup.map((todo) => (
           <motion.div
             key={todo.id}
             initial={{ opacity: 0 }}
@@ -46,7 +46,7 @@ export default function TodoCardDragGroup({ type }: TodoCardDragGroupProps) {
               dragListener={draggable}
               onDragEnd={() => handleDrop()}
             >
-              <TodoCard idx={idx + 1} todo={todo} />
+              <Todo todo={todo} />
             </Reorder.Item>
           </motion.div>
         ))}
