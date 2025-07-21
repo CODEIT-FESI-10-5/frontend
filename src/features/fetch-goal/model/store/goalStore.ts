@@ -1,23 +1,23 @@
-import { TodoData } from '@/entities/todo/model/types';
+import { Todo } from '@/entities/todo/model/types';
 import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
 
 export interface GoalState {
   goalId: string;
-  done: TodoData[];
-  shared: TodoData[];
-  personal: TodoData[];
+  done: Todo[];
+  shared: Todo[];
+  personal: Todo[];
 }
 
 export interface GoalAction {
   setGoalId: (newGoalId: string) => void;
-  setDone: (newDone: TodoData[]) => void;
-  setShared: (newShared: TodoData[]) => void;
-  setPersonal: (newPersonal: TodoData[]) => void;
+  setDone: (newDone: Todo[]) => void;
+  setShared: (newShared: Todo[]) => void;
+  setPersonal: (newPersonal: Todo[]) => void;
   setAllGroup: (
-    newDone: TodoData[],
-    newShared: TodoData[],
-    newPersonal: TodoData[],
+    newDone: Todo[],
+    newShared: Todo[],
+    newPersonal: Todo[],
   ) => void;
   getCurrOrder: () => Array<string>;
 }
@@ -30,16 +30,11 @@ export const useGoalStore = create<GoalState & GoalAction>()(
       shared: [],
       personal: [],
       setGoalId: (newGoalId: string) => set(() => ({ goalId: newGoalId })),
-      setDone: (newDone: TodoData[]) => set(() => ({ done: [...newDone] })),
-      setShared: (newShared: TodoData[]) =>
-        set(() => ({ shared: [...newShared] })),
-      setPersonal: (newPersonal: TodoData[]) =>
+      setDone: (newDone: Todo[]) => set(() => ({ done: [...newDone] })),
+      setShared: (newShared: Todo[]) => set(() => ({ shared: [...newShared] })),
+      setPersonal: (newPersonal: Todo[]) =>
         set(() => ({ personal: [...newPersonal] })),
-      setAllGroup: (
-        newDone: TodoData[],
-        newShared: TodoData[],
-        newPersonal: TodoData[],
-      ) =>
+      setAllGroup: (newDone: Todo[], newShared: Todo[], newPersonal: Todo[]) =>
         set(() => ({
           done: [...newDone],
           shared: [...newShared],

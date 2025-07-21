@@ -1,11 +1,11 @@
-import { TodoData } from '@/entities/todo/model/types';
+import { Todo } from '@/entities/todo/model/types';
 
-export default function divideTodoGroup(orderedTodolist: Array<TodoData>) {
-  const newShared: Array<TodoData> = [];
-  const newPersonal: Array<TodoData> = [];
-  const newDone: Array<TodoData> = [];
+export default function divideTodoGroup(orderedTodolist: Array<Todo>) {
+  const newShared: Array<Todo> = [];
+  const newPersonal: Array<Todo> = [];
+  const newDone: Array<Todo> = [];
 
-  orderedTodolist.map((todo: TodoData) => {
+  orderedTodolist.map((todo: Todo) => {
     if (todo.completed) newDone.push(todo);
     else if (todo.shared) newShared.push(todo);
     else newPersonal.push(todo);

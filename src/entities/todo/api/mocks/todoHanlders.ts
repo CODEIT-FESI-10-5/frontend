@@ -1,12 +1,12 @@
 import { http, HttpResponse } from 'msw';
-import { goal } from './goalMock';
+import { mockGoal } from './mockGoal';
 
-let idCounter = goal.todolist.length;
+let idCounter = mockGoal.todolist.length;
 
 export const todoHandlers = [
   // GET: 투두 리스트 내 투두 전체 가져오기
   http.get('/api/goal/:goalId', () => {
-    const mockData = goal;
+    const mockData = mockGoal;
     if (!mockData) {
       return HttpResponse.json({ message: 'Goal not found' }, { status: 404 });
     }
@@ -27,8 +27,8 @@ export const todoHandlers = [
       note: false,
       shared: (body as { content: string; shared: boolean }).shared,
     };
-    goal.todolist.push(newTodo);
-    goal.order.push(newId);
+    mockGoal.todolist.push(newTodo);
+    mockGoal.order.push(newId);
     return HttpResponse.json({ status: 201 });
   }),
 
@@ -37,7 +37,7 @@ export const todoHandlers = [
     const { todoId } = params;
     const body = await request.json();
 
-    const targetIndexInTodolist = goal.todolist.findIndex(
+    const targetIndexInTodolist = mockGoal.todolist.findIndex(
       (todo) => todo.id === todoId,
     );
 
@@ -46,24 +46,24 @@ export const todoHandlers = [
     }
 
     // 기존 요소를 업데이트
-    goal.todolist[targetIndexInTodolist] = {
-      ...goal.todolist[targetIndexInTodolist], // 기존 필드 유지
+    mockGoal.todolist[targetIndexInTodolist] = {
+      ...mockGoal.todolist[targetIndexInTodolist], // 기존 필드 유지
       completed: (body as { completed: boolean }).completed, // 변경된 필드 덮어쓰기
       completedAt: new Date(Date.now()),
     };
 
-    const targetIndexInOrder = goal.order.findIndex(
+    const targetIndexInOrder = mockGoal.order.findIndex(
       (currTodoId) => currTodoId === todoId,
     );
-    goal.order.splice(targetIndexInOrder, 1);
+    mockGoal.order.splice(targetIndexInOrder, 1);
     if ((body as { completed: boolean }).completed) {
-      const lastCompletedIndex = goal.order.findIndex(
+      const lastCompletedIndex = mockGoal.order.findIndex(
         (currTodoId) =>
-          !goal.todolist.find((todo) => todo.id === currTodoId)?.completed,
+          !mockGoal.todolist.find((todo) => todo.id === currTodoId)?.completed,
       );
-      goal.order.splice(lastCompletedIndex, 0, todoId as string);
+      mockGoal.order.splice(lastCompletedIndex, 0, todoId as string);
     } else {
-      goal.order.push(todoId as string);
+      mockGoal.order.push(todoId as string);
     }
 
     return HttpResponse.json({ status: 201 });
@@ -74,7 +74,7 @@ export const todoHandlers = [
     const body = await request.json();
 
     console.log(body);
-    goal.order = (body as { newOrder: Array<string> }).newOrder;
+    mockGoal.order = (body as { newOrder: Array<string> }).newOrder;
 
     return HttpResponse.json({ status: 201 });
   }),
@@ -82,13 +82,13 @@ export const todoHandlers = [
   // DELETE: 투두 삭제
   http.delete('/api/goal/:goalId/todo/:todoId', async ({ params }) => {
     const { todoId } = params;
-    const index = goal.todolist.findIndex((todo) => todo.id === todoId);
+    const index = mockGoal.todolist.findIndex((todo) => todo.id === todoId);
     if (index === -1) {
       return HttpResponse.json({ status: 404, message: 'Todo not found' });
     }
 
-    goal.todolist.splice(index, 1);
-    goal.order = goal.order.filter((id) => id !== todoId);
+    mockGoal.todolist.splice(index, 1);
+    mockGoal.order = mockGoal.order.filter((id) => id !== todoId);
 
     return HttpResponse.json({ status: 204 });
   }),

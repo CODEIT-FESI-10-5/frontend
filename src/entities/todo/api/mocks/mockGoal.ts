@@ -1,4 +1,4 @@
-export const goal = {
+export const mockGoal = {
   goalId: '123123123123',
   title: '피그마 툴 익히기',
   todolist: [
