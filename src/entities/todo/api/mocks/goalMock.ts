@@ -1,5 +1,6 @@
-export const todolist = {
-  todolistId: '123123123123',
+export const goal = {
+  goalId: '123123123123',
+  title: '피그마 툴 익히기',
   todolist: [
     {
       id: '0000',
@@ -7,6 +8,7 @@ export const todolist = {
       createdAt: new Date(),
       completedAt: new Date(),
       completed: false,
+      note: false,
       shared: true,
     },
     {
@@ -15,6 +17,7 @@ export const todolist = {
       createdAt: new Date(),
       completedAt: new Date(),
       completed: false,
+      note: false,
       shared: true,
     },
     {
@@ -23,6 +26,7 @@ export const todolist = {
       createdAt: new Date(),
       completedAt: new Date(),
       completed: false,
+      note: false,
       shared: true,
     },
     {
@@ -31,6 +35,7 @@ export const todolist = {
       createdAt: new Date(),
       completedAt: new Date(),
       completed: false,
+      note: false,
       shared: true,
     },
     {
@@ -39,6 +44,7 @@ export const todolist = {
       createdAt: new Date(),
       completedAt: new Date(),
       completed: false,
+      note: false,
       shared: false,
     },
     {
@@ -47,6 +53,7 @@ export const todolist = {
       createdAt: new Date(),
       completedAt: new Date(),
       completed: false,
+      note: false,
       shared: false,
     },
     {
@@ -55,6 +62,7 @@ export const todolist = {
       createdAt: new Date(),
       completedAt: new Date(),
       completed: false,
+      note: false,
       shared: false,
     },
   ],
