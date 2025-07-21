@@ -1,10 +1,10 @@
 'use client';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import SubmitButton from '@/features/auth/ui/SubmitButton';
-import TextField from '@/features/auth/ui/TextField';
+import SubmitButton from '@/features/auth-login/ui/SubmitButton';
+import TextField from '@/features/auth-login/ui/TextField';
 import Link from 'next/link';
-import { LoginSchema, loginSchema } from '@/features/auth';
+import { LoginSchema, loginSchema } from '@/features/auth-login';
 
 export default function LoginForm() {
   const {
