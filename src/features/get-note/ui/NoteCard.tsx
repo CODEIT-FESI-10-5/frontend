@@ -3,6 +3,8 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { type Note } from '@/entities/note/model/types';
+import NoteOpenIcon from '@/assets/note-open.svg';
+import NoteClosedIcon from '@/assets/note-close.svg';
 
 interface NoteCardProps {
   note: Note;
@@ -29,7 +31,14 @@ export function NoteCard({ note }: NoteCardProps) {
       <div className="flex items-start justify-between">
         <div className="flex-1">
           <div className="mb-2 flex items-center justify-between">
-            <h3 className="text-lg font-semibold">{note.todoTitle}</h3>
+            {/* 아이콘 */}
+            <div className="flex items-center gap-8">
+              <span className="mr-2 flex-shrink-0">
+                {isExpanded ? <NoteOpenIcon /> : <NoteClosedIcon />}
+              </span>
+              <h3 className="text-lg font-semibold">{note.todoTitle}</h3>
+            </div>
+
             {isExpanded && (
               <button
                 onClick={handleEditClick}
