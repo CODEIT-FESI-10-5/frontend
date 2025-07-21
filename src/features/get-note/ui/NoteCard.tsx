@@ -25,50 +25,45 @@ export function NoteCard({ note }: NoteCardProps) {
 
   return (
     <div
-      className="mb-4 cursor-pointer rounded-lg border border-green-500 p-4"
+      className="bg-surface-2 cursor-pointer rounded-lg px-16 py-12"
       onClick={handleCardClick}
     >
-      <div className="flex items-start justify-between">
-        <div className="flex-1">
-          <div className="mb-2 flex items-center justify-between">
-            {/* 아이콘 */}
-            <div className="flex items-center gap-8">
-              <span className="mr-2 flex-shrink-0">
-                {isExpanded ? <NoteOpenIcon /> : <NoteClosedIcon />}
-              </span>
-              <h3 className="text-lg font-semibold">{note.todoTitle}</h3>
-            </div>
-
-            {isExpanded && (
-              <button
-                onClick={handleEditClick}
-                className="rounded bg-blue-500 px-3 py-1 text-sm text-white transition-colors hover:bg-blue-600"
-              >
-                노트 수정
-              </button>
-            )}
+      <div className="flex flex-col">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-8">
+            <span className="mr-2 flex-shrink-0">
+              {isExpanded ? <NoteOpenIcon /> : <NoteClosedIcon />}
+            </span>
+            <h3 className="text-lg font-semibold">{note.todoTitle}</h3>
           </div>
-
           {isExpanded && (
-            <div className="mt-4">
-              <div className="relative rounded-md bg-gray-50 p-3">
-                <p className="whitespace-pre-wrap text-gray-700">
-                  {note.content}
-                </p>
-              </div>
-              <div className="mt-2 text-sm text-white">
-                <span>
-                  생성일: {new Date(note.createdAt).toLocaleDateString()}
-                </span>
-                {note.updatedAt !== note.createdAt && (
-                  <span className="ml-4">
-                    수정일: {new Date(note.updatedAt).toLocaleDateString()}
-                  </span>
-                )}
-              </div>
-            </div>
+            <button
+              onClick={handleEditClick}
+              className="text-text-primary border-border-emphasis hover:bg-surface-1 cursor-pointer rounded-md border px-10 py-10 text-sm transition-colors"
+            >
+              노트 수정
+            </button>
           )}
         </div>
+        {isExpanded && (
+          <div className="mt-18">
+            <div className="relative rounded-md">
+              <p className="text-text-primary whitespace-pre-wrap">
+                {note.content}
+              </p>
+            </div>
+            <div className="text-text-tertiary mt-2 text-sm">
+              <span>
+                생성일: {new Date(note.createdAt).toLocaleDateString()}
+              </span>
+              {note.updatedAt !== note.createdAt && (
+                <span className="ml-4">
+                  수정일: {new Date(note.updatedAt).toLocaleDateString()}
+                </span>
+              )}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
