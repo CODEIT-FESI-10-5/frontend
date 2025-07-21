@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { Noto_Sans_KR, Roboto } from 'next/font/google';
 import { QueryProvider } from '../src/app/query-provider';
 import { MswProvider } from '../src/app/msw-provider';
-import SideBar from '@/widgets/sidebar/ui/SideBar';
+// import SideBar from '@/widgets/sidebar/ui/SideBar';
 import './globals.css';
 
 const notoSansKR = Noto_Sans_KR({
@@ -32,7 +32,7 @@ export default function RootLayout({
       <body className={`${notoSansKR.variable} ${roboto.variable} antialiased`}>
         <MswProvider>
           <QueryProvider>
-            <SideBar />
+            {/* <SideBar /> */}
             {children}
           </QueryProvider>
         </MswProvider>

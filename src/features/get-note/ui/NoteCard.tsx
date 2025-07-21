@@ -23,24 +23,24 @@ export function NoteCard({ note }: NoteCardProps) {
 
   return (
     <div
-      className="mb-4 cursor-pointer rounded-lg border border-gray-200 p-4"
+      className="mb-4 cursor-pointer rounded-lg border border-green-500 p-4"
       onClick={handleCardClick}
     >
       <div className="flex items-start justify-between">
         <div className="flex-1">
-          <h3 className="mb-2 text-lg font-semibold">{note.todoTitle}</h3>
+          <div className="mb-2 flex items-start justify-between">
+            <h3 className="text-lg font-semibold">{note.todoTitle}</h3>
+            <button
+              onClick={handleEditClick}
+              className="rounded bg-blue-500 px-3 py-1 text-sm text-white transition-colors hover:bg-blue-600"
+            >
+              노트 수정
+            </button>
+          </div>
 
           {isExpanded && (
             <div className="mt-4">
               <div className="relative rounded-md bg-gray-50 p-3">
-                <div className="mb-2 flex items-start justify-between">
-                  <button
-                    onClick={handleEditClick}
-                    className="rounded bg-blue-500 px-3 py-1 text-sm text-white transition-colors hover:bg-blue-600"
-                  >
-                    노트 수정
-                  </button>
-                </div>
                 <p className="whitespace-pre-wrap text-gray-700">
                   {note.content}
                 </p>
