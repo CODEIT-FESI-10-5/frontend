@@ -1,32 +1,44 @@
 'use client';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
 import SubmitButton from '@/shared/ui/SubmitButton';
 import TextField from '@/shared/ui/TextField';
-import { useRouter } from 'next/navigation';
-
-import { useState } from 'react';
+import Link from 'next/link';
+import { LoginSchema, loginSchema } from '@/features/auth';
 
 export default function LoginForm() {
-  const router = useRouter();
-  const [email, setEmail] = useState('');
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<LoginSchema>({
+    resolver: zodResolver(loginSchema),
+    defaultValues: {
+      email: '',
+      password: '',
+    },
+    mode: 'onBlur',
+  });
+  console.log('login', errors.email?.message);
   return (
     <div>
       <form className="flex flex-col gap-60">
         <div className="flex flex-col gap-30">
           <TextField
             label="이메일"
-            name="email"
             type="text"
             placeholder="이메일을 입력해주세요."
-            onChange={(e) => setEmail(e.target.value)}
-            required
+            {...register('email', { required: true })}
+            error={!!errors.email}
+            errorMessage={errors.email?.message}
           />
           <TextField
             label="비밀번호"
-            name="password"
             type="password"
             placeholder="비밀번호를 입력해주세요."
-            onChange={(e) => setEmail(e.target.value)}
-            required
+            {...register('password', { required: true })}
+            error={!!errors.password}
+            errorMessage={errors.password?.message}
           />
         </div>
         <SubmitButton name="로그인" type="submit" />
@@ -34,13 +46,12 @@ export default function LoginForm() {
       <div className="mt-24 flex items-start justify-center">
         <p className="text-text-tertiary label-medium">
           아직 회원이 아닌가요?{' '}
-          <button
-            type="button"
+          <Link
+            href={'/'}
             className="text-text-secondary label-medium underline"
-            onClick={() => router.push('/signup')}
           >
             회원가입하기
-          </button>
+          </Link>
         </p>
       </div>
     </div>
