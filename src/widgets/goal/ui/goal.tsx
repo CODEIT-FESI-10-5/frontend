@@ -85,7 +85,7 @@ export default function Goal({
         <EditGoalTitle title={title} setTitle={setTitle} />
         <Link
           href="/goal/todo/create"
-          className="mt-28 flex flex-col items-center justify-center gap-3 rounded-xl border-2 border-dashed border-[#454545] bg-[#2c2c2c] p-8 py-36 text-base font-normal text-[#f5f5f5]"
+          className="mt-28 flex flex-col items-center justify-center gap-3 rounded-xl border border-dashed border-[#454545] bg-[#2c2c2c] p-8 py-36 text-base font-normal text-[#f5f5f5]"
         >
           <NewTodoIcon width={32} height={32} />
           <span className="text-text-primary body-small">

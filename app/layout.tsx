@@ -34,7 +34,7 @@ export default function RootLayout({
       <body className={`${notoSansKR.variable} ${roboto.variable} antialiased`}>
         <MswProvider>
           <QueryProvider>
-            <main className="border-border-subtle ml-348 h-full rounded-md border p-36">
+            <main className="ml-348 h-full rounded-md p-36">
               <SideBar />
               {children}
             </main>
