@@ -1,8 +1,8 @@
+import divideTodoGroup from '@/entities/todo/lib/utils/divideTodoGroup';
+import sortTodosByOrderArray from '@/entities/todo/lib/utils/sortTodosByOrderArray';
 import { useEffect } from 'react';
 import { useGoalStore } from '../store';
 import { useGoalQuery } from './useGoal';
-import sortTodosByOrderArray from '../../lib/utils/sortTodosByOrderArray';
-import divideTodoGroup from '../../lib/utils/divideTodoGroup';
 
 export function useTodoGroupInit(todolistId: string) {
   const { data } = useGoalQuery(todolistId);
@@ -10,12 +10,14 @@ export function useTodoGroupInit(todolistId: string) {
 
   useEffect(() => {
     if (!data) return;
-    // console.log(data);
 
-    const ordered = sortTodosByOrderArray(data.todolist, data.order);
+    const ordered = sortTodosByOrderArray(
+      data.studyGoal.mytodoList,
+      data.studyGoal.order,
+    );
     const { newDone, newShared, newPersonal } = divideTodoGroup(ordered);
 
-    setGoalId(data.todolistId);
+    setGoalId(data.studyGoal.id);
     setAllGroup(newDone, newShared, newPersonal);
   }, [data, setAllGroup, setGoalId]);
 }

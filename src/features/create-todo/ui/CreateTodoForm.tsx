@@ -37,7 +37,7 @@ export default function CreateTodoForm() {
   return (
     <form
       onSubmit={handleSubmit}
-      className="mb-16 flex min-h-70 min-w-650 justify-between gap-16 rounded-lg bg-white p-16"
+      className="bg-surface-4 text-text-primary mb-16 flex min-h-70 min-w-650 justify-between gap-16 rounded-lg p-16"
     >
       <input
         className={cn(
@@ -61,7 +61,7 @@ export default function CreateTodoForm() {
             {'공통'}
           </ToggleButton>
         )}
-        <Button size="md" color="bg-surface-4">
+        <Button size="md" color="bg-primary">
           {'완료'}
         </Button>
       </div>

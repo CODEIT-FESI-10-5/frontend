@@ -6,7 +6,7 @@ import { sidebarGoalHandler } from '@/features/get-goal-list/api/handler';
 import { sidebarCreateGoalHandler } from '@/features/create-goal/api/handler';
 import { studyHandlers } from '@/entities/study/api';
 import { goalHandlers } from '@/entities/goal/api';
-import { todoHandlers } from '@/entities/todo/api/mocks/todoHanlders';
+import { todoHandlers } from '@/entities/goal/api/mocks/todoHanlders';
 
 export const handlers = [
   ...sidebarProfileHandler,

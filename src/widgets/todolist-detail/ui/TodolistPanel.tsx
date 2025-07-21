@@ -8,7 +8,7 @@ import IconBack from '@/../public/assets/icon-back.svg';
 import { useCreateTodoStore } from '../../../features/create-todo/model/store';
 import Link from 'next/link';
 import Todolist from './Todolist';
-import { useTodoGroupInit } from '@/features/fetch-goal/model/hooks';
+import { useTodoGroupInit } from '@/entities/goal/model/hooks';
 
 const TEMP_TODOLIST_ID = '12345';
 

@@ -1,7 +1,8 @@
 import { AnimatePresence, motion, Reorder } from 'framer-motion';
-import { GoalAction, useGoalStore } from '@/features/fetch-goal/model/store';
+
 import { useUpdateTodoOrderMutation } from '@/features/update-todo-order/model/hooks';
 import Todo from '@/widgets/todo/ui/todo';
+import { GoalAction, useGoalStore } from '@/entities/goal/model/store';
 
 interface TodoCardDragGroupProps {
   type: 'personal' | 'shared' | 'done';
