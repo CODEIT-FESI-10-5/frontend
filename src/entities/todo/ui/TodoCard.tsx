@@ -1,6 +1,5 @@
 'use client';
 
-import { useUpdateTodoMutation } from '@/features/todo/model/hooks/useTodolist';
 import TodoCheckBox from '@/shared/ui/TodoCheckBox';
 import { cn } from '@/shared/lib/utils/cn';
 import dayjs from 'dayjs';
@@ -13,6 +12,7 @@ import FuncDropDown from './FuncDropDown';
 import { TodoData } from '../model';
 import PortalBackdrop from './PortalBackdrop';
 import { useDeleteTodoMutation } from '@/features/delete-todo/model/hooks';
+import { useUpdateTodoMutation } from '@/features/update-todo/model/hooks/useUpdateTodo';
 
 const TODOLIST_ID = '12345';
 
@@ -60,9 +60,9 @@ export default function TodoCard({ todo }: TodoCardProps) {
   const updateTodo = useUpdateTodoMutation();
   const handleCheck = () => {
     updateTodo.mutate({
-      todolistId: TODOLIST_ID,
+      goalId: TODOLIST_ID,
       todoId: todo.id,
-      newContent: { content: todo.content, completed: !todo.completed },
+      newTodoState: { completed: !todo.completed },
     });
   };
   const deleteTodo = useDeleteTodoMutation();

@@ -21,7 +21,7 @@ export default function TodoCardDragGroup({ type }: TodoCardDragGroupProps) {
   const handleDrop = () => {
     console.log('drop elem: post newOrder');
     updateOrder.mutate({
-      todolistId: goalId,
+      goalId,
       newOrder: getCurrOrder(),
     });
   };

@@ -20,6 +20,7 @@ export interface TodoData {
   completed: boolean;
   createdAt: Date;
   completedAt?: Date;
+  note: boolean;
   shared: boolean;
 }
 

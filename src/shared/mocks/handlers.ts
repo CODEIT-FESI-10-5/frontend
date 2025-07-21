@@ -4,7 +4,7 @@
 // import { profileHandlers } from "./handlers/profile";
 // import { todoHandlers } from "./handlers/todo";
 
-import { todoHandlers } from '@/features/todo/api/mocks';
+import { todoHandlers } from '@/entities/todo/api/mocks/goalHanlders';
 
 //export const handlers = [...authHandlers, ...dashboardHandlers, ...noteHandlers, ...profileHandlers, ...todoHandlers];
 
