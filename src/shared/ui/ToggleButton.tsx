@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import { cn } from '../utils/cn';
+import { cn } from '../lib/utils/cn';
 interface ToggleButtonProp {
   type?: 'sm' | 'md' | 'lg';
   styleProps?: string;
@@ -22,8 +22,8 @@ export default function ToggleButton({
         'transition hover:scale-105',
         styleProps,
         { '': type == 'sm' },
-        { 'h-40 w-84 px-12 py-6': type == 'md' },
-        { 'h-143 w-36': type == 'lg' },
+        { 'h-40 w-84': type == 'md' },
+        { '': type == 'lg' },
       )}
       onClick={toggleSwitch}
     >
