@@ -1,9 +1,10 @@
 import { Note } from "../types";
 
+
+// 반환받는 노트 데이터 목록
 export const notes: Note[] = [
   {
     id: 1,
-    title: 'HTML 기초',
     content: 'HTML의 기본 구조와 태그들에 대해 학습했습니다. 시맨틱 태그와 폼 요소의 활용법을 익혔습니다.',
     studyGoalId: 1,
     todoId: 1,
@@ -13,7 +14,6 @@ export const notes: Note[] = [
   },
   {
     id: 2,
-    title: 'CSS 스타일링',
     content: 'CSS의 선택자와 박스 모델에 대해 학습했습니다. Flexbox와 Grid 레이아웃을 활용한 반응형 디자인을 실습했습니다.',
     studyGoalId: 1,
     todoId: 2,
@@ -23,7 +23,6 @@ export const notes: Note[] = [
   },
   {
     id: 3,
-    title: 'JavaScript 기초',
     content: 'JavaScript의 변수, 함수, 객체에 대해 학습했습니다. DOM 조작과 이벤트 처리 방법을 익혔습니다.',
     studyGoalId: 1,
     todoId: 3,
@@ -33,7 +32,6 @@ export const notes: Note[] = [
   },
   {
     id: 4,
-    title: 'React 컴포넌트',
     content: 'React의 기본 개념과 컴포넌트에 대해 학습했습니다. JSX 문법과 props, state의 차이점을 이해했습니다.',
     studyGoalId: 2,
     todoId: 4,
@@ -43,7 +41,6 @@ export const notes: Note[] = [
   },
   {
     id: 5,
-    title: 'TypeScript 기초',
     content: 'TypeScript의 타입 시스템과 인터페이스에 대해 학습했습니다. 제네릭과 유니온 타입의 활용법을 익혔습니다.',
     studyGoalId: 2,
     todoId: 5,
@@ -53,7 +50,6 @@ export const notes: Note[] = [
   },
   {
     id: 6,
-    title: 'Next.js 라우팅',
     content: 'Next.js의 App Router와 파일 기반 라우팅 시스템에 대해 학습했습니다. 동적 라우팅과 중첩 라우팅을 실습했습니다.',
     studyGoalId: 2,
     todoId: 6,
@@ -63,7 +59,6 @@ export const notes: Note[] = [
   },
   {
     id: 7,
-    title: 'Node.js 기초',
     content: 'Node.js의 기본 개념과 모듈 시스템에 대해 학습했습니다. npm과 package.json의 활용법을 익혔습니다.',
     studyGoalId: 3,
     todoId: 7,
@@ -73,7 +68,6 @@ export const notes: Note[] = [
   },
   {
     id: 8,
-    title: 'Express.js 서버',
     content: 'Express.js를 사용한 웹 서버 구축에 대해 학습했습니다. 미들웨어와 라우팅 설정 방법을 실습했습니다.',
     studyGoalId: 3,
     todoId: 8,
@@ -83,7 +77,6 @@ export const notes: Note[] = [
   },
   {
     id: 9,
-    title: 'SQL 기초',
     content: 'SQL의 기본 문법과 데이터베이스 설계에 대해 학습했습니다. SELECT, INSERT, UPDATE, DELETE 쿼리를 실습했습니다.',
     studyGoalId: 4,
     todoId: 9,
@@ -93,7 +86,6 @@ export const notes: Note[] = [
   },
   {
     id: 10,
-    title: 'MongoDB NoSQL',
     content: 'MongoDB의 문서 기반 데이터베이스 구조에 대해 학습했습니다. CRUD 작업과 집계 파이프라인을 실습했습니다.',
     studyGoalId: 4,
     todoId: 10,

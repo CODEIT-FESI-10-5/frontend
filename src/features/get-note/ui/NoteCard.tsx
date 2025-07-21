@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { type Note } from '@/entities/note/model';
+import { type Note } from '@/entities/note/model/types';
 
 interface NoteCardProps {
   note: Note;
@@ -34,9 +34,6 @@ export function NoteCard({ note }: NoteCardProps) {
             <div className="mt-4">
               <div className="relative rounded-md bg-gray-50 p-3">
                 <div className="mb-2 flex items-start justify-between">
-                  <h4 className="text-md font-medium text-gray-800">
-                    {note.title}
-                  </h4>
                   <button
                     onClick={handleEditClick}
                     className="rounded bg-blue-500 px-3 py-1 text-sm text-white transition-colors hover:bg-blue-600"

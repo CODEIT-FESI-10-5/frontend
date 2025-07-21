@@ -20,13 +20,12 @@ export function NoteEditPage() {
 
   const updateNoteMutation = useUpdateNote();
 
-  const handleSubmit = async (title: string, content: string) => {
+  const handleSubmit = async (content: string) => {
     if (!note) return;
 
     updateNoteMutation.mutate(
       {
         id: note.id,
-        title,
         content,
       },
       {
