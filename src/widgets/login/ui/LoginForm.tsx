@@ -10,7 +10,7 @@ export default function LoginForm() {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isValid },
   } = useForm<LoginSchema>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -20,9 +20,14 @@ export default function LoginForm() {
     mode: 'onBlur',
   });
   console.log('login', errors.email?.message);
+
+  const onValid = (data: LoginSchema) => {
+    console.log('성공', data);
+  };
+
   return (
     <div>
-      <form className="flex flex-col gap-60">
+      <form onSubmit={handleSubmit(onValid)} className="flex flex-col gap-60">
         <div className="flex flex-col gap-30">
           <TextField
             label="이메일"
@@ -41,7 +46,7 @@ export default function LoginForm() {
             errorMessage={errors.password?.message}
           />
         </div>
-        <SubmitButton name="로그인" type="submit" />
+        <SubmitButton name="로그인" isActive={isValid} type="submit" />
       </form>
       <div className="mt-24 flex items-start justify-center">
         <p className="text-text-tertiary label-medium">
