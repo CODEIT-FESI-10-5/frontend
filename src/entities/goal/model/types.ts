@@ -1,6 +1,7 @@
 export interface Goal {
   studyGoal: {
     id: string; // study 목표 아이디
+    order: string[]; // todo order 순서
     title: string; // study 목표(소주제)
     completedCt: string; // mytodoList 완료 횟수 (4/8)
     progress?: number; // 진행도 % 프론트에서 계산
@@ -14,8 +15,7 @@ export interface Todo {
   createdAt: Date; // todo 생성 일자
   completed: boolean; // todo 완료 여부
   completedAt?: Date; // todo 완료 일자
-  note: string; // 노트 내용
-  order: number; // 순서 정보
+  note: boolean; // note 여부
   shared: boolean; //  공통 todo 여부
 }
 

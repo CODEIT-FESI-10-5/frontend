@@ -3,5 +3,4 @@
 // export * from './queries';
 
 export * from './fetchGoal';
-export * from './updateGoalTitle';
 export * from './mocks';

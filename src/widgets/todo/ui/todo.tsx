@@ -3,7 +3,7 @@ import UpdateTodoCompletion from '@/features/update-todo/ui/update-todo';
 import NoteIcon from '@/assets/note.svg';
 import NewNoteIcon from '@/assets/note_new.svg';
 import DotsIcon from '@/assets/dots.svg';
-import type { Todo } from '@/entities/todo';
+import type { Todo } from '../model';
 
 export default function Todo({ todo }: { todo: Todo }) {
   return (

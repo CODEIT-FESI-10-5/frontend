@@ -85,7 +85,7 @@ export default function Goal({
         <EditGoalTitle title={title} setTitle={setTitle} />
         <Link
           href="/goal/todo/create"
-          className="mt-28 flex flex-col items-center justify-center gap-3 rounded-xl border-2 border-dashed border-[#454545] bg-[#2c2c2c] p-8 py-36 text-base font-normal text-[#f5f5f5]"
+          className="mt-28 flex flex-col items-center justify-center gap-3 rounded-xl border border-dashed border-[#454545] bg-[#2c2c2c] p-8 py-36 text-base font-normal text-[#f5f5f5]"
         >
           <NewTodoIcon width={32} height={32} />
           <span className="text-text-primary body-small">
@@ -153,14 +153,21 @@ export default function Goal({
         {/*진행중인 투두 */}
         <div className="flex flex-col gap-12">
           <span className="title-medium text-white">진행중인 투두</span>
-          {/* order 순서가 가장 높은(숫자가 낮음) 투두*/}
-          {goal.studyGoal.mytodoList
-            .filter((todo) => todo.completed === false)
-            .sort((a, b) => a.order - b.order)
-            .slice(0, 1)
-            .map((todo) => (
-              <Todo key={todo.id} todo={todo} />
-            ))}
+          {/* studyGoal.order 배열 순서대로 미완료 투두를 정렬하여 첫 번째만 표시 */}
+          {(() => {
+            const order = goal.studyGoal.order;
+            const todoMap = new Map(
+              goal.studyGoal.mytodoList.map((todo) => [todo.id, todo]),
+            );
+            const orderedTodos = order
+              .map((id) => todoMap.get(id))
+              .filter((todo) => todo && todo.completed === false);
+            return orderedTodos
+              .slice(0, 1)
+              .map((todo) =>
+                todo ? <Todo key={todo.id} todo={todo} /> : null,
+              );
+          })()}
         </div>
       </div>
       <Link href="/goal/todolist">
