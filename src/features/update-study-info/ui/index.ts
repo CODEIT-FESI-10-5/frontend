@@ -3,4 +3,4 @@
 // export * from './Navigation';
 // export * from './MenuItems';
 
-export * from './Update_Goal_title';
+export * from './update-study-info';

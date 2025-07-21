@@ -1,7 +1,7 @@
 import { useStudyGroup } from '@/entities/study/model/useStudyGroup';
-import UpdateStudyInfo from '@/features/Update_Study_Info/ui/Update_Study_Info';
+import UpdateStudyInfo from '@/features/update-study-info/ui/update-study-info';
 import StudyInfo from '@/entities/study/ui/studyInfo';
-import UpdateStudyImage from '@/features/Update_Study_Image/ui/Update_study_Image';
+import UpdateStudyImage from '@/features/update-study-image/ui/update-study-image';
 
 export default function Study({ studyId }: { studyId: string }) {
   const { data: studyGroup, isLoading, error } = useStudyGroup(studyId);

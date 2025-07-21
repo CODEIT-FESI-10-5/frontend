@@ -1,7 +1,7 @@
 'use client';
 
 import { useRef, useState } from 'react';
-import { updateStudyInfo } from '@/features/Update_Study_Info/api';
+import { updateStudyInfo } from '@/features/update-study-info/api';
 
 export default function UpdateStudyInfo(props: {
   title: string;

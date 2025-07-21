@@ -2,7 +2,7 @@ import { clientFetch } from '@/shared/api/clientFetch';
 
 // todo 완료 체크 API
 export const updateTodoCompletion = async (
-  todoListId: string,
+  goalId: string,
   todoId: string,
   completed: boolean,
 ) => {
@@ -10,7 +10,7 @@ export const updateTodoCompletion = async (
     `/todo/completion`,
     { completed },
     {
-      params: { todoListId, todoId },
+      params: { goalId, todoId },
     },
   );
 };

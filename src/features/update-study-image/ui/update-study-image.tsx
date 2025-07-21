@@ -1,6 +1,6 @@
 'use client';
 import { useRef } from 'react';
-import { updateStudyImage } from '@/features/Update_Study_Image/api';
+import { updateStudyImage } from '../api';
 
 export default function UpdateStudyImage({ studyId }: { studyId: string }) {
   const fileInputRef = useRef<HTMLInputElement | null>(null);

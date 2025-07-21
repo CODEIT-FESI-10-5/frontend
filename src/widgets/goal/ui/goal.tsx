@@ -5,7 +5,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 
 import NewTodoIcon from '@/assets/todo_new.svg';
-import EditGoalTitle from '@/features/Update_Goal_Title/ui/Update_Goal_title';
+import EditGoalTitle from '@/features/update-goal-title/ui/update-goal-title';
 
 import Todo from '@/widgets/todo/ui/todo';
 import type { Goal } from '@/entities/goal';

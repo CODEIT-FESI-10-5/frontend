@@ -1,5 +1,5 @@
 import TodoInfo from '@/entities/todo/ui/todoInfo';
-import UpdateTodoCompletion from '@/features/Update_Todo_Completion/ui/Update_Todo_Completion';
+import UpdateTodoCompletion from '@/features/update-todo/ui/update-todo';
 import NoteIcon from '@/assets/note.svg';
 import NewNoteIcon from '@/assets/note_new.svg';
 import DotsIcon from '@/assets/dots.svg';
