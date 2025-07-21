@@ -1,9 +1,10 @@
-import { Goal } from '../../model/types';
+import { Goal } from '../../model';
 
 export const mockGoal: Goal = {
   studyGoal: {
     id: 'goal-1',
     title: '피그마 툴 익히기',
+    order: ['todo-1', 'todo-3', 'todo-2'],
     completedCt: '1/4',
     mytodoList: [
       {
@@ -12,8 +13,7 @@ export const mockGoal: Goal = {
         createdAt: new Date('2025-01-10T09:00:00Z'),
         completed: true,
         completedAt: new Date('2025-01-10T19:00:00Z'),
-        note: '테스트 노트 내용 1',
-        order: 1,
+        note: true,
         shared: true,
       },
       {
@@ -21,10 +21,18 @@ export const mockGoal: Goal = {
         content: '사용자 인터뷰 실습 준비',
         createdAt: new Date('2025-01-10T10:00:00Z'),
         completed: false,
-        completedAt: new Date('2025-01-11T14:00:00Z'),
-        note: '',
-        order: 2,
+        completedAt: undefined,
+        note: false,
         shared: false,
+      },
+      {
+        id: 'todo-3',
+        content: '프로토타입 제작',
+        createdAt: new Date('2025-01-10T10:00:00Z'),
+        completed: false,
+        completedAt: undefined,
+        note: false,
+        shared: true,
       },
     ],
     teamProgress: [
@@ -60,6 +68,7 @@ export const mockGoalNone: Goal = {
   studyGoal: {
     id: 'goal-1',
     title: '',
+    order: [],
     completedCt: '0/0',
     mytodoList: [],
     teamProgress: [],
