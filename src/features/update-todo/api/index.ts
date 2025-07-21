@@ -2,4 +2,4 @@
 // export * from './todo-api';
 // export * from './queries';
 
-export * from './updateTodoCompletion'
+export * from './updateTodo';
