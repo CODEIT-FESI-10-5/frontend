@@ -1,8 +1,8 @@
 'use client';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import SubmitButton from '@/shared/ui/SubmitButton';
-import TextField from '@/shared/ui/TextField';
+import SubmitButton from '@/features/auth/ui/SubmitButton';
+import TextField from '@/features/auth/ui/TextField';
 import Link from 'next/link';
 import { LoginSchema, loginSchema } from '@/features/auth';
 
