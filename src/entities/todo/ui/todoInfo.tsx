@@ -9,7 +9,7 @@ export default function TodoInfo({ todo }: { todo: Todo }) {
     return (
       <div className="flex flex-col gap-4">
         {/*투두 내용*/}
-        <div className="body-medium flex items-center justify-center gap-6 line-through">
+        <div className="body-medium flex items-center justify-start gap-6 line-through">
           {todo.shared && <SharedText />}
           <div>{todo.content}</div>
         </div>
