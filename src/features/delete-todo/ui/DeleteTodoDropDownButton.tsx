@@ -4,13 +4,15 @@ import { useModal } from '@/shared/lib/utils/useModal';
 import { useDeleteTodoMutation } from '../model/hooks';
 
 export default function DeleteTodoDropDownButton({
+  goalId,
   todoId,
 }: {
+  goalId: string;
   todoId: string;
 }) {
   const buttonRef = useRef<HTMLButtonElement>(null);
   const { open, close } = useModal();
-  const deleteTodo = useDeleteTodoMutation('goal-1');
+  const deleteTodo = useDeleteTodoMutation(goalId);
   const items = [
     {
       name: '투두 삭제',
@@ -23,7 +25,10 @@ export default function DeleteTodoDropDownButton({
 
   const handleClick = () => {
     if (buttonRef.current) {
-      open(<DeleteModal items={items} />, { ref: buttonRef });
+      open(<DeleteModal items={items} />, buttonRef, {
+        top: -17,
+        left: -94,
+      });
     }
   };
   return (
