@@ -132,7 +132,9 @@ export default function Goal({
       <div className="flex flex-col gap-32">
         {/*최근 완료된 투두 */}
         <div className="flex flex-col gap-12">
-          <span className="title-medium text-white">최근 완료된 투두</span>
+          <span className="body-medium font-medium text-white">
+            최근 완료된 투두
+          </span>
           {/* 가장 최근 완료된 투두를 정렬 후 todo 컴포넌트 넣음 */}
           {goal.studyGoal.mytodoList
             .filter((todo) => todo.completed)
@@ -148,7 +150,9 @@ export default function Goal({
         </div>
         {/*진행중인 투두 */}
         <div className="flex flex-col gap-12">
-          <span className="title-medium text-white">진행중인 투두</span>
+          <span className="body-medium font-medium text-white">
+            진행중인 투두
+          </span>
           {/* studyGoal.order 배열 순서대로 미완료 투두를 정렬하여 첫 번째만 표시 */}
           {(() => {
             const order = goal.studyGoal.order;
