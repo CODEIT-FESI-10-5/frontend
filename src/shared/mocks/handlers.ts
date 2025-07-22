@@ -5,5 +5,6 @@
 // import { todoHandlers } from "./handlers/todo";
 
 //export const handlers = [...authHandlers, ...dashboardHandlers, ...noteHandlers, ...profileHandlers, ...todoHandlers];
+import { loginHandler } from '@/features/auth-login/api';
 
-export const handlers = [];
+export const handlers = [loginHandler];
