@@ -23,7 +23,7 @@
   --color-border-subtle: #282828;
   --color-border-default: #363636;
   --color-border-emphasis: #454545;
-  --color-border-input-foused: #6e6980;
+  --color-border-input-focused: #6e6980;
 
   /* Text */
   --color-text-tertiary: #9b9b9b;
@@ -111,6 +111,9 @@
   line-height: 1.1875rem;
   font-weight: 400;
   font-family: 'Noto Sans', sans-serif;
+}
+@utility border-1.5 {
+  border-width: 1.5px;
 }
 
 @media (prefers-color-scheme: dark) {
