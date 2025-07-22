@@ -1,10 +1,24 @@
-// import { authHandlers } from "./handlers/auth";
-// import { dashboardHandlers } from "./handlers/dashboard";
-// import { noteHandlers } from "./handlers/note";
-// import { profileHandlers } from "./handlers/profile";
-// import { todoHandlers } from "./handlers/todo";
-
-//export const handlers = [...authHandlers, ...dashboardHandlers, ...noteHandlers, ...profileHandlers, ...todoHandlers];
+import { noteHandlers } from '@/entities/note/model/mock/handler/noteHandler';
+import { sidebarProfileHandler } from '@/features/get-profile/api/handler';
+import { sidebarCreateStudyHandler } from '@/features/create-study/api/handler';
+import { sidebarStudyHandler } from '@/features/get-study-list/api/handler';
+import { sidebarGoalHandler } from '@/features/get-goal-list/api/handler';
+import { sidebarCreateGoalHandler } from '@/features/create-goal/api/handler';
+import { studyHandlers } from '@/entities/study/api';
+import { goalHandlers } from '@/entities/goal/api';
+import { todoHandlers } from '@/entities/goal/api/mocks/todoHanlders';
 import { loginHandler } from '@/features/auth-login/api';
 
-export const handlers = [...loginHandler];
+export const handlers = [
+  ...sidebarProfileHandler,
+  ...sidebarCreateStudyHandler,
+  ...sidebarStudyHandler,
+  ...sidebarGoalHandler,
+  ...sidebarCreateGoalHandler,
+  ...noteHandlers,
+  ...goalHandlers,
+  ...studyHandlers,
+  ...todoHandlers,
+  ...loginHandler
+];
+

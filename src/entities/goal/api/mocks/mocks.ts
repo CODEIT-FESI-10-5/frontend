@@ -1,0 +1,120 @@
+import { Goal } from '../../model';
+
+export const mockGoal: Goal = {
+  studyGoal: {
+    id: 'goal-1',
+    title: '피그마 툴 익히기',
+    order: [
+      'todo-1',
+      'todo-2',
+      'todo-3',
+      'todo-4',
+      'todo-5',
+      'todo-6',
+      'todo-7',
+    ],
+    completedCt: '1/4',
+    mytodoList: [
+      {
+        id: 'todo-1',
+        content: '튜토리얼 영상 1-3 시청',
+        createdAt: new Date('2025-01-10T09:00:00Z'),
+        completed: true,
+        completedAt: new Date('2025-01-10T19:00:00Z'),
+        note: true,
+        shared: true,
+      },
+      {
+        id: 'todo-2',
+        content: '사용자 인터뷰 실습 준비',
+        createdAt: new Date('2025-01-10T10:00:00Z'),
+        completed: false,
+        completedAt: undefined,
+        note: false,
+        shared: false,
+      },
+      {
+        id: 'todo-3',
+        content: '프로토타입 제작',
+        createdAt: new Date('2025-01-10T10:00:00Z'),
+        completed: false,
+        completedAt: undefined,
+        note: false,
+        shared: true,
+      },
+      {
+        id: 'todo-4',
+        content: '주요 단축키 정리 노션에 업로드',
+        createdAt: new Date('2025-01-10T10:00:00Z'),
+        completedAt: new Date(),
+        completed: false,
+        note: false,
+        shared: true,
+      },
+      {
+        id: 'todo-5',
+        content: '키 인사이트 3개 도출해서 슬랙에 공유',
+        createdAt: new Date('2025-01-10T10:00:00Z'),
+        completedAt: undefined,
+        completed: false,
+        note: false,
+        shared: true,
+      },
+      {
+        id: 'todo-6',
+        content: '간단한 모바일 UI 따라 그리기',
+        createdAt: new Date('2025-01-10T10:00:00Z'),
+        completedAt: undefined,
+        completed: false,
+        note: false,
+        shared: false,
+      },
+      {
+        id: 'todo-7',
+        content: '간단한 모바일 UI 따라 그리기',
+        createdAt: new Date('2025-01-10T10:00:00Z'),
+        completedAt: undefined,
+        completed: false,
+        note: false,
+        shared: false,
+      },
+    ],
+    teamProgress: [
+      {
+        name: '닉네임1',
+        image: '/images/study-background.jpg',
+        progress: 80,
+        completedCt: [8, 10],
+      },
+      {
+        name: '닉네임2',
+        image: '/images/study-background.jpg',
+        progress: 70,
+        completedCt: [7, 10],
+      },
+      {
+        name: '닉네임3',
+        image: '/images/study-background.jpg',
+        progress: 90,
+        completedCt: [9, 10],
+      },
+      {
+        name: '닉네임4',
+        image: '/images/study-background.jpg',
+        progress: 60,
+        completedCt: [6, 10],
+      },
+    ],
+  },
+};
+
+export const mockGoalNone: Goal = {
+  studyGoal: {
+    id: 'goal-1',
+    title: '',
+    order: [],
+    completedCt: '0/0',
+    mytodoList: [],
+    teamProgress: [],
+  },
+};
