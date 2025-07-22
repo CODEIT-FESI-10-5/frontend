@@ -1,1 +1,1 @@
-export * from './update_study_image';
+export * from './update-study-image';

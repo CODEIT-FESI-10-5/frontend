@@ -170,7 +170,7 @@ export default function Goal({
           })()}
         </div>
       </div>
-      <Link href="/goal/todolist">
+      <Link href="/todolist-detail">
         <span className="text-text-secondary body-medium mt-28 flex items-center justify-center">
           전체 보기
         </span>
