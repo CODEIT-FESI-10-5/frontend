@@ -49,10 +49,8 @@ export function NoteCard({ note }: NoteCardProps) {
         {isExpanded && (
           <div className="mt-18">
             <div className="relative rounded-md">
-              {/* script 태그 제거 후 html-react-parser로 파싱 */}
               <div className="text-text-primary prose prose-sm max-w-none">
                 {parse(
-                  // script 태그 제거
                   (note.content || '').replace(
                     /<script[\s\S]*?>[\s\S]*?<\/script>/gi,
                     '',

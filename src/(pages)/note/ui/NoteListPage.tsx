@@ -78,7 +78,7 @@ export function NoteListPage() {
       {/* 학습 목표를 선택했을 때 */}
       {!isLoading && !isError && hasStudyGoalId && (
         <div className="bg-surface-1 px-30 py-40">
-          <div className="flex items-center gap-10 mb-40">
+          <div className="mb-40 flex items-center gap-10">
             <NoteListPageIcon />
             <span className="text-xl font-bold text-white">
               {studyGoals.find((goal) => goal.id === selectedGoalId)?.title}
@@ -102,7 +102,6 @@ export function NoteListPage() {
         </div>
       )}
 
-      {/* 학습 목표를 선택하지 않았을 때 */}
       {!isLoading && !isError && !hasStudyGoalId && (
         <div className="py-12 text-center">
           <div className="mb-4 text-lg text-gray-500">
