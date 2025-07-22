@@ -1,16 +1,30 @@
 import { http, HttpResponse } from 'msw';
-import { mockGoal } from './mocks';
+import { myTodolist } from './mocks';
 
-let idCounter = mockGoal.studyGoal.mytodoList.length;
+let idCounter = myTodolist.todolist.length;
 
-export const todoHandlers = [
+export const todolistHandlers = [
   // GET: 투두 리스트 내 투두 전체 가져오기
-  http.get('/api/goal/:goalId', () => {
-    const mockData = mockGoal;
+  http.get('/api/goal/:goalId/todolist', () => {
+    const mockData = myTodolist;
     if (!mockData) {
       return HttpResponse.json({ message: 'Goal not found' }, { status: 404 });
     }
-    return HttpResponse.json(mockData, { status: 200 });
+
+    const order = myTodolist.order;
+    const todolist = myTodolist.todolist;
+
+    const orderedTodolist = order.map((currTodoId) =>
+      todolist.find((todo) => todo.id === currTodoId),
+    );
+
+    const orderedMockData = {
+      goalId: myTodolist.goalId,
+      title: myTodolist.title,
+      todolist: orderedTodolist,
+    };
+
+    return HttpResponse.json(orderedMockData, { status: 200 });
   }),
 
   // POST: 새 투두 추가하기
@@ -27,8 +41,8 @@ export const todoHandlers = [
       note: false,
       shared: (body as { content: string; shared: boolean }).shared,
     };
-    mockGoal.studyGoal.mytodoList.push(newTodo);
-    mockGoal.studyGoal.order.push(newId);
+    myTodolist.todolist.push(newTodo);
+    myTodolist.order.push(newId);
     return HttpResponse.json({ status: 201 });
   }),
 
@@ -37,7 +51,7 @@ export const todoHandlers = [
     const { todoId } = params;
     const body = await request.json();
 
-    const targetIndexInTodolist = mockGoal.studyGoal.mytodoList.findIndex(
+    const targetIndexInTodolist = myTodolist.todolist.findIndex(
       (todo) => todo.id === todoId,
     );
 
@@ -46,8 +60,8 @@ export const todoHandlers = [
     }
 
     // 기존 요소를 업데이트
-    mockGoal.studyGoal.mytodoList[targetIndexInTodolist] = {
-      ...mockGoal.studyGoal.mytodoList[targetIndexInTodolist], // 기존 필드 유지
+    myTodolist.todolist[targetIndexInTodolist] = {
+      ...myTodolist.todolist[targetIndexInTodolist], // 기존 필드 유지
       completed: (body as { completed: boolean }).completed, // 변경된 필드 덮어쓰기
       completedAt: new Date(Date.now()),
     };
@@ -55,19 +69,19 @@ export const todoHandlers = [
     // 순서 반영하기
     // 완료: 가장 앞으로 당겨오되 완료된 투두중 가장 뒤에 배치
     // 취소: 가장 뒤로 밀려남
-    const targetIndexInOrder = mockGoal.studyGoal.order.findIndex(
+    const targetIndexInOrder = myTodolist.order.findIndex(
       (currTodoId) => currTodoId === todoId,
     );
-    mockGoal.studyGoal.order.splice(targetIndexInOrder, 1);
+    myTodolist.order.splice(targetIndexInOrder, 1);
     if ((body as { completed: boolean }).completed) {
-      const lastCompletedIndex = mockGoal.studyGoal.order.findIndex(
+      const lastCompletedIndex = myTodolist.order.findIndex(
         (currTodoId) =>
-          !mockGoal.studyGoal.mytodoList.find((todo) => todo.id === currTodoId)
+          !myTodolist.todolist.find((todo) => todo.id === currTodoId)
             ?.completed,
       );
-      mockGoal.studyGoal.order.splice(lastCompletedIndex, 0, todoId as string);
+      myTodolist.order.splice(lastCompletedIndex, 0, todoId as string);
     } else {
-      mockGoal.studyGoal.order.push(todoId as string);
+      myTodolist.order.push(todoId as string);
     }
 
     return HttpResponse.json({ status: 201 });
@@ -78,7 +92,7 @@ export const todoHandlers = [
     const body = await request.json();
 
     console.log(body);
-    mockGoal.studyGoal.order = (body as { newOrder: Array<string> }).newOrder;
+    myTodolist.order = (body as { newOrder: Array<string> }).newOrder;
 
     return HttpResponse.json({ status: 201 });
   }),
@@ -86,17 +100,13 @@ export const todoHandlers = [
   // DELETE: 투두 삭제
   http.delete('/api/goal/:goalId/todo/:todoId', async ({ params }) => {
     const { todoId } = params;
-    const index = mockGoal.studyGoal.mytodoList.findIndex(
-      (todo) => todo.id === todoId,
-    );
+    const index = myTodolist.todolist.findIndex((todo) => todo.id === todoId);
     if (index === -1) {
       return HttpResponse.json({ status: 404, message: 'Todo not found' });
     }
 
-    mockGoal.studyGoal.mytodoList.splice(index, 1);
-    mockGoal.studyGoal.order = mockGoal.studyGoal.order.filter(
-      (id) => id !== todoId,
-    );
+    myTodolist.todolist.splice(index, 1);
+    myTodolist.order = myTodolist.order.filter((id) => id !== todoId);
 
     return HttpResponse.json({ status: 204 });
   }),

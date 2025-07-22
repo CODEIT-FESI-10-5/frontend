@@ -103,7 +103,7 @@ export default function Goal({
         {/* 스터디 목표 제목 수정 가능하게 input으로 구현 */}
         <EditGoalTitle title={title} setTitle={setTitle} />
         {/* 왼쪽 텍스트 + 진행도 메시지 */}
-        <div className="label-large text-text-primary flex items-center gap-4">
+        <div className="label-small text-text-primary flex items-center gap-4">
           <span>{goal.studyGoal.completedCt} 완료</span>
           <span className="text-text-tertiary">|</span>
           <span>{getProgressMessage(progress)}</span>
@@ -111,32 +111,30 @@ export default function Goal({
       </div>
       {/* Progress 바 */}
       {/* Progress 바와 텍스트를 포함하는 컨테이너 */}
-      <div className="relative mb-48 h-28 overflow-hidden rounded-full bg-[#5a5a5a]">
-        {/* Animated Progress Fill */}
+      <div className="mb-48 h-28 overflow-hidden rounded-full bg-[#5a5a5a]">
         <motion.div
-          className="to-highlight h-full rounded-full bg-gradient-to-r from-[#ff7333]"
+          className="to-highlight relative h-full rounded-full bg-gradient-to-r from-[#ff7333]"
           initial={{ width: 0 }}
-          animate={{ width: `${progress}%` }}
+          animate={{ width: `${Math.max(progress, 10)}%` }}
           transition={{
             duration: 1.5,
             delay: 0.5,
             ease: 'easeOut',
           }}
-        />
-        {/* 진행도 텍스트를 progressBar 위에서 진행도에 따라 위치 */}
-        {/*TODO 표시 할 공간이 없을때 어떤식으로 할지 */}
-        <div
-          className="label-large pointer-events-none absolute top-1/2 -translate-y-1/2 transform text-white"
-          style={{ left: `calc(${progress / 2}%)` }}
+          style={{ minWidth: '10%' }}
         >
-          {Math.round(progress)}%
-        </div>
+          <div className="body-small pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 font-bold text-white">
+            {Math.round(progress)}%
+          </div>
+        </motion.div>
       </div>
       {/* Todo List 리스트 항목 추가 */}
       <div className="flex flex-col gap-32">
         {/*최근 완료된 투두 */}
         <div className="flex flex-col gap-12">
-          <span className="title-medium text-white">최근 완료된 투두</span>
+          <span className="body-medium font-medium text-white">
+            최근 완료된 투두
+          </span>
           {/* 가장 최근 완료된 투두를 정렬 후 todo 컴포넌트 넣음 */}
           {goal.studyGoal.mytodoList
             .filter((todo) => todo.completed)
@@ -152,7 +150,9 @@ export default function Goal({
         </div>
         {/*진행중인 투두 */}
         <div className="flex flex-col gap-12">
-          <span className="title-medium text-white">진행중인 투두</span>
+          <span className="body-medium font-medium text-white">
+            진행중인 투두
+          </span>
           {/* studyGoal.order 배열 순서대로 미완료 투두를 정렬하여 첫 번째만 표시 */}
           {(() => {
             const order = goal.studyGoal.order;
@@ -170,7 +170,7 @@ export default function Goal({
           })()}
         </div>
       </div>
-      <Link href="/goal/todolist">
+      <Link href="/todolist-detail">
         <span className="text-text-secondary body-medium mt-28 flex items-center justify-center">
           전체 보기
         </span>

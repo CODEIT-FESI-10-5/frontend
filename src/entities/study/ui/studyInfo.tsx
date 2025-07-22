@@ -3,6 +3,9 @@
 import { motion } from 'framer-motion';
 import type { StudyGroup } from '../model';
 import CopyIcon from '@/assets/copy.svg';
+import { useRef } from 'react';
+import Image from 'next/image';
+import { useModal } from '@/shared/lib/utils/useModal';
 
 export default function StudyInfo({
   members,
@@ -13,6 +16,15 @@ export default function StudyInfo({
   teamProgress: StudyGroup['teamProgress'];
   inviteLink: StudyGroup['inviteLink'];
 }) {
+  const memberTextRef = useRef<HTMLSpanElement>(null);
+  const { open } = useModal();
+
+  const handleMemberTextClick = () => {
+    if (memberTextRef.current && members.length > 0) {
+      open(<ProfileModal members={members} />, { ref: memberTextRef });
+    }
+  };
+
   return (
     <div className="max-w-1000">
       {/*TODO Progress 바 max-w 어디까지 설정할지 */}
@@ -24,13 +36,15 @@ export default function StudyInfo({
             {members.slice(0, 4).map((member, index) => (
               <div
                 key={member.id}
-                className="border-text-secondary h-32 w-32 overflow-hidden rounded-full border-2"
+                className="border-text-secondary relative h-32 w-32 overflow-hidden rounded-full border-2"
                 style={{ zIndex: members.length + index }}
               >
-                <img
+                <Image
                   src={member.image}
                   alt={member.name}
-                  className="h-full w-full object-cover"
+                  fill
+                  className="rounded-full object-cover"
+                  style={{ objectFit: 'cover' }}
                 />
               </div>
             ))}
@@ -44,13 +58,17 @@ export default function StudyInfo({
             )}
           </div>
           {/* 멤버 수 텍스트 */}
-          <span className="text-text-primary label-small underline">
+          <span
+            ref={memberTextRef}
+            className="text-text-primary label-small cursor-pointer underline"
+            onClick={handleMemberTextClick}
+          >
             {members.length}명 참여중
           </span>
         </div>
         {/* 팀원 진행도 % */}
         <div className="text-text-primary flex items-center justify-center gap-6 px-10">
-          <span className="headline-small">{teamProgress}%</span>
+          <span className="headline-medium">{teamProgress}%</span>
           <span className="label-small">달성중</span>
         </div>
       </div>
@@ -72,8 +90,31 @@ export default function StudyInfo({
       {/*초대 링크 */}
       <div className="bg-tertiary text-text-secondary absolute right-20 -bottom-26 flex gap-6 rounded-sm px-18 py-14">
         <span className="title-medium">초대 코드 {inviteLink}</span>
-        <CopyIcon width={10} height={10} />
+        <CopyIcon width={24} height={24} />
       </div>
+    </div>
+  );
+}
+
+function ProfileModal({ members }: { members: StudyGroup['members'] }) {
+  return (
+    <div className="bg-surface-4 border-border-emphasis rounded-md border px-20 py-24 shadow-lg">
+      <ul className="flex flex-col gap-14">
+        {members.map((member) => (
+          <li key={member.id} className="flex items-center gap-12">
+            <div className="relative h-32 w-32">
+              <Image
+                src={member.image}
+                alt={member.name}
+                fill
+                className="rounded-full object-cover"
+                style={{ objectFit: 'cover' }}
+              />
+            </div>
+            <span className="label-small">{member.name}</span>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
