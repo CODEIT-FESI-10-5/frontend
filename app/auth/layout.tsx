@@ -1,4 +1,4 @@
-import Logo from '@/images/logo.png';
+import Image from 'next/image';
 export default function AuthLayout({
   children,
 }: {
@@ -11,7 +11,12 @@ export default function AuthLayout({
         <div className="flex flex-1 items-center justify-center">
           <div className="flex h-full w-442 flex-col gap-60">
             <div className="flex flex-col gap-28">
-              <img src="/images/logo.png" className="h-36 w-153" />
+              <Image
+                src="/images/logo.png"
+                width={153}
+                height={36}
+                alt="logo"
+              />
               <div>
                 <h1 className="headline-large text-text-white">
                   슬리드 투두에 오신걸 환경합니다!
