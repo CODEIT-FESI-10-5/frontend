@@ -4,11 +4,10 @@ import { deleteTodo } from '../../api';
 import { todolistQueryKeys } from '@/entities/todolist/model';
 
 interface DeleteTodoMutationParams {
-  goalId: string;
   todoId: string;
 }
 export const useDeleteTodoMutation = (goalId: string) =>
   useTodoCustomMutation<DeleteTodoMutationParams, any>(
-    ({ goalId, todoId }) => deleteTodo(goalId, todoId),
+    ({ todoId }) => deleteTodo(goalId, todoId),
     [...todolistQueryKeys.todolist(goalId)],
   );
