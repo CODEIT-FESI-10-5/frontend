@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { NoteCard } from '@/features/get-note/ui/NoteCard';
 import { useNotesByStudyGoalId } from '@/features/get-note/api/getNoteQueries';
-
+import NoteListPageIcon from '@/assets/note-list-page-icon.svg';
 // 임시 사이드바 데이터
 const studyGoals = [
   { id: 1, title: '프론트엔드 기초' },
@@ -42,8 +42,6 @@ export function NoteListPage() {
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="mb-6">
-        <h1 className="mb-4 text-2xl font-bold text-gray-800">노트 모아보기</h1>
-
         {/* 목표별 버튼 - 사이드바 임시 컴포넌트 */}
         <div className="mb-6 flex flex-wrap gap-3">
           {studyGoals.map((goal) => (
@@ -77,8 +75,16 @@ export function NoteListPage() {
         </div>
       )}
 
+      {/* 학습 목표를 선택했을 때 */}
       {!isLoading && !isError && hasStudyGoalId && (
-        <div>
+        <div className="bg-surface-1 px-30 py-40">
+          <div className="mb-40 flex items-center gap-10">
+            <NoteListPageIcon />
+            <span className="text-xl font-bold text-white">
+              {studyGoals.find((goal) => goal.id === selectedGoalId)?.title}
+            </span>
+          </div>
+
           {notes.length === 0 ? (
             <div className="py-12 text-center">
               <div className="mb-4 text-lg text-gray-500">
@@ -87,7 +93,7 @@ export function NoteListPage() {
               <p className="text-gray-400">첫 번째 노트를 작성해보세요!</p>
             </div>
           ) : (
-            <div className="space-y-4">
+            <div className="space-y-12">
               {notes.map((note) => (
                 <NoteCard key={note.id} note={note} />
               ))}
