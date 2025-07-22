@@ -64,7 +64,7 @@ export default function UpdateStudyInfo(props: {
           value={description}
           onChange={handleDescriptionChange}
           disabled={isUpdating}
-          className="label-large text-text-primary w-full resize-none border-none placeholder-gray-300 outline-none disabled:opacity-50"
+          className="label-small text-text-primary w-full resize-none border-none placeholder-gray-300 outline-none disabled:opacity-50"
           placeholder="스터디 목표나 응원 메세지를 적어주세요..."
           rows={1}
         />
