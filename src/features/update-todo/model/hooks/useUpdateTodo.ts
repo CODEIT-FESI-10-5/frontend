@@ -1,16 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useTodoCustomMutation } from '@/shared/lib/utils/useTodoCustomMutation';
 import { newTodoState, updateTodo } from '../../api';
+import { todolistQueryKeys } from '@/entities/todolist/model';
 
 interface UpdateTodoMutationParams {
-  goalId: string;
   todoId: string;
   newTodoState: newTodoState;
 }
 
-export const useUpdateTodoMutation = () =>
+export const useUpdateTodoMutation = (goalId: string) =>
   useTodoCustomMutation<UpdateTodoMutationParams, any>(
-    ({ goalId, todoId, newTodoState }) =>
-      updateTodo(goalId, todoId, newTodoState),
-    ['todolist'],
+    ({ todoId, newTodoState }) => updateTodo(goalId, todoId, newTodoState),
+    [...todolistQueryKeys.todolist(goalId)],
   );

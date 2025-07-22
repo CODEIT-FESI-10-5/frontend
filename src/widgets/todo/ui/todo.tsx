@@ -9,7 +9,11 @@ export default function Todo({ todo }: { todo: Todo }) {
   return (
     <div className="bg-surface-4 text-text-primary flex h-72 w-full items-center justify-between rounded-lg px-18">
       <div className="flex items-center justify-center gap-10">
-        <UpdateTodoCompletion completed={todo.completed} />
+        <UpdateTodoCompletion
+          completed={todo.completed}
+          todoId={todo.id}
+          goalId={'goal-1'}
+        />
         <TodoInfo todo={todo} />
       </div>
       <div className="flex items-center justify-center gap-4">
