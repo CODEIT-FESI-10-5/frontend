@@ -23,7 +23,7 @@
   --color-border-subtle: #282828;
   --color-border-default: #363636;
   --color-border-emphasis: #454545;
-  --color-border-input-foused: #6e6980;
+  --color-border-input-focused: #6e6980;
 
   /* Text */
   --color-text-tertiary: #9b9b9b;
@@ -35,7 +35,7 @@
   --color-primary: #7380e9;
   --color-secondary: #394187;
   --color-tertiary: #2c336c;
-  --color-highlight: #ffb25a;
+  --color-highlight: #ff9346;
   --color-error: #e20c3f;
 }
 @utility headline-large {
@@ -111,6 +111,9 @@
   line-height: 1.1875rem;
   font-weight: 400;
   font-family: 'Noto Sans', sans-serif;
+}
+@utility border-1.5 {
+  border-width: 1.5px;
 }
 
 @media (prefers-color-scheme: dark) {
