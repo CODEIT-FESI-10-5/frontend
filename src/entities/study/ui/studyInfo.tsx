@@ -65,7 +65,7 @@ export default function StudyInfo({
         </div>
         {/* 팀원 진행도 % */}
         <div className="text-text-primary flex items-center justify-center gap-6 px-10">
-          <span className="headline-small">{teamProgress}%</span>
+          <span className="headline-medium">{teamProgress}%</span>
           <span className="label-small">달성중</span>
         </div>
       </div>
@@ -104,7 +104,7 @@ function ProfileModal({ members }: { members: StudyGroup['members'] }) {
               alt={member.name}
               className="h-32 w-32 rounded-full object-cover"
             />
-            <span>{member.name}</span>
+            <span className="label-small">{member.name}</span>
           </li>
         ))}
       </ul>
