@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import type { StudyGroup } from '../model';
 import CopyIcon from '@/assets/copy.svg';
 import { useRef } from 'react';
+import Image from 'next/image';
 import { useModal } from '@/shared/lib/utils/useModal';
 
 export default function StudyInfo({
@@ -35,13 +36,15 @@ export default function StudyInfo({
             {members.slice(0, 4).map((member, index) => (
               <div
                 key={member.id}
-                className="border-text-secondary h-32 w-32 overflow-hidden rounded-full border-2"
+                className="border-text-secondary relative h-32 w-32 overflow-hidden rounded-full border-2"
                 style={{ zIndex: members.length + index }}
               >
-                <img
+                <Image
                   src={member.image}
                   alt={member.name}
-                  className="h-full w-full object-cover"
+                  fill
+                  className="rounded-full object-cover"
+                  style={{ objectFit: 'cover' }}
                 />
               </div>
             ))}
@@ -99,11 +102,15 @@ function ProfileModal({ members }: { members: StudyGroup['members'] }) {
       <ul className="flex flex-col gap-14">
         {members.map((member) => (
           <li key={member.id} className="flex items-center gap-12">
-            <img
-              src={member.image}
-              alt={member.name}
-              className="h-32 w-32 rounded-full object-cover"
-            />
+            <div className="relative h-32 w-32">
+              <Image
+                src={member.image}
+                alt={member.name}
+                fill
+                className="rounded-full object-cover"
+                style={{ objectFit: 'cover' }}
+              />
+            </div>
             <span className="label-small">{member.name}</span>
           </li>
         ))}
