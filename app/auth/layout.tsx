@@ -19,7 +19,7 @@ export default function AuthLayout({
               />
               <div>
                 <h1 className="headline-large text-text-white">
-                  슬리드 투두에 오신걸 환경합니다!
+                  슬리드 투두에 오신걸 환영합니다!
                 </h1>
                 <p className="text-text-secondary label-large">
                   혼자보다 함께. 슬리드투두로 팀의 스터디 상황을 공유하세요.
