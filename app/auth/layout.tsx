@@ -4,11 +4,9 @@ export default function AuthLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="flex h-screen w-full items-center justify-center">
+    <div className="flex h-full w-full items-center justify-center">
       <div className="bg-surface-2 flex h-880 w-1306 items-center justify-center">
-        <div className="bg-tertiary flex h-848 w-629 flex-col items-center">
-          <div className="mt-154 h-287 w-548 bg-gray-300"></div>
-        </div>
+        <AuthIntro />
         <div className="flex flex-1 items-center justify-center">
           <div className="flex h-full w-442 flex-col gap-60">
             <div>
@@ -24,6 +22,14 @@ export default function AuthLayout({
           </div>
         </div>
       </div>
+    </div>
+  );
+}
+
+function AuthIntro() {
+  return (
+    <div className="bg-tertiary hidden h-848 w-629 flex-col items-center md:flex">
+      <div className="mt-154 h-287 w-548 bg-gray-300"></div>
     </div>
   );
 }
