@@ -3,3 +3,5 @@
 // export * from './queries';
 
 export * from './updateTodo';
+
+export * from './updateTodoApi';
