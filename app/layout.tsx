@@ -8,13 +8,15 @@ import './globals.css';
 const notoSansKR = Noto_Sans_KR({
   variable: '--font-noto-sans-kr',
   subsets: ['latin'],
-  weight: ['100', '300', '400', '500', '700', '900'],
+  weight: ['400', '500', '600', '700'], // 실제 사용하는 weight만 로드
+  display: 'swap', // 폰트 로딩 최적화
 });
 
 const roboto = Roboto({
   variable: '--font-roboto',
   subsets: ['latin'],
-  weight: ['100', '300', '400', '500', '700', '900'],
+  weight: ['400', '500', '600', '700'], // 실제 사용하는 weight만 로드
+  display: 'swap', // 폰트 로딩 최적화
 });
 
 export const metadata: Metadata = {
@@ -32,7 +34,7 @@ export default function RootLayout({
       <body className={`${notoSansKR.variable} ${roboto.variable} antialiased`}>
         <MswProvider>
           <QueryProvider>
-            <main className="border-border-subtle ml-348 h-full rounded-md border p-36">
+            <main className="ml-348 h-full rounded-md p-36">
               <SideBar />
               {children}
             </main>
