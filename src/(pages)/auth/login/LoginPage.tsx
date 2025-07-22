@@ -1,5 +1,5 @@
-import { AuthLayout } from '@/features/auth-login/ui';
-import { LoginForm } from '@/widgets/login/ui';
+import { AuthLayout } from '@/shared/ui';
+import { LoginForm } from '@/features/auth-login/ui';
 export default function LoginPage() {
   return (
     <AuthLayout>

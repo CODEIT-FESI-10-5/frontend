@@ -1,8 +1,8 @@
 'use client';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import SubmitButton from '@/features/auth-login/ui/SubmitButton';
-import TextField from '@/features/auth-login/ui/TextField';
+import SubmitButton from '@/shared/ui/SubmitButton';
+import TextField from '@/shared/ui/TextField';
 import Link from 'next/link';
 import { LoginSchema, loginSchema } from '@/features/auth-login';
 
@@ -50,7 +50,7 @@ export default function LoginForm() {
       </form>
       <div className="mt-24 flex items-start justify-center">
         <p className="text-text-tertiary label-medium">
-          아직 회원이 아닌가요?{' '}
+          아직 회원이 아닌가요?&nbsp;
           <Link
             href={'/'}
             className="text-text-secondary label-medium underline"
