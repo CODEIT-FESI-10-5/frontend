@@ -21,7 +21,10 @@ export default function StudyInfo({
 
   const handleMemberTextClick = () => {
     if (memberTextRef.current && members.length > 0) {
-      open(<ProfileModal members={members} />, { ref: memberTextRef });
+      open(<ProfileModal members={members} />, memberTextRef, {
+        top: 8,
+        left: 0,
+      });
     }
   };
 
