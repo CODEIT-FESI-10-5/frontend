@@ -1,1 +1,1 @@
-export * from './deleteTodoApi';
+export * from './deleteTodo';
