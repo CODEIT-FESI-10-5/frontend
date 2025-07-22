@@ -1,7 +1,7 @@
 export const myTodolist = {
   goalId: 'goal-1',
   title: '피그마 툴 익히기',
-  order: ['todo-1', 'todo-2', 'todo-3', 'todo-4', 'todo-5', 'todo-6'],
+  order: ['todo-1', 'todo-3', 'todo-2', 'todo-4', 'todo-5', 'todo-6'],
   todolist: [
     {
       id: 'todo-1',

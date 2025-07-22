@@ -88,7 +88,7 @@ export const todolistHandlers = [
   }),
 
   // PATCH: 투두 순서 수정
-  http.patch('/api/goal/:goalId/studyGoal.order', async ({ request }) => {
+  http.patch('/api/goal/:goalId/todolist/order', async ({ request }) => {
     const body = await request.json();
 
     console.log(body);
