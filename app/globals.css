@@ -102,3 +102,49 @@ body {
   color: var(--foreground);
   font-family: 'Noto Sans KR', 'Roboto', 'Arial', 'Helvetica', sans-serif;
 }
+
+/* TipTap EditorContent heading, list 스타일 */
+.ProseMirror h1 {
+  font-size: 2em;
+  font-weight: bold;
+  margin: 0.67em 0;
+}
+.ProseMirror h2 {
+  font-size: 1.5em;
+  font-weight: bold;
+  margin: 0.75em 0;
+}
+.ProseMirror h3 {
+  font-size: 1.17em;
+  font-weight: bold;
+  margin: 0.83em 0;
+}
+.ProseMirror h4 {
+  font-size: 1em;
+  font-weight: bold;
+  margin: 1.12em 0;
+}
+.ProseMirror ul {
+  list-style-type: disc;
+}
+.ProseMirror ol {
+  list-style-type: decimal;
+}
+.ProseMirror ul,
+.ProseMirror ol {
+  padding-left: 2em;
+  margin: 1em 0;
+}
+.ProseMirror li {
+  margin: 0.25em 0;
+}
+
+/* prose 커스텀: NoteCard에서 h1~h4, bold에 text-text-primary 적용 */
+.prose h1,
+.prose h2,
+.prose h3,
+.prose h4,
+.prose strong,
+.prose b {
+  color: var(--color-text-primary) !important;
+}

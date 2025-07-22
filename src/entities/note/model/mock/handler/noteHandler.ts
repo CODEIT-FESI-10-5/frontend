@@ -1,6 +1,6 @@
 import { http, HttpResponse } from 'msw';
 import { notes } from '@/entities/note/model/mock/notes.mock';
-import { Note } from '@/features/note/model';
+import { Note } from '@/entities/note/model/types';
 
 export const noteHandlers = [
   http.get('/api/notes/:studyGoalId', ({ params }) => {
@@ -37,12 +37,12 @@ export const noteHandlers = [
   http.patch('/api/notes/:id', async ({ params, request }) => {
     const { id } = params;
     const idNum = Number(id);
-    const body = await request.json() as { title: string; content: string };
-    const { title, content } = body;
+    const body = await request.json() as { content: string };
+    const { content } = body;
 
-    if (!title || !content) {
+    if (!content) {
       return HttpResponse.json(
-        { message: '제목과 내용이 필요합니다.' },
+        { message: '내용이 필요합니다.' },
         { status: 400 }
       );
     }
@@ -58,7 +58,6 @@ export const noteHandlers = [
 
     const updatedNote: Note = {
       ...notes[noteIndex],
-      title,
       content,
       updatedAt: new Date().toISOString(),
     };

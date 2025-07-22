@@ -1,85 +1,118 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Note } from '@/entities/note/model/types';
+import { useEditor, EditorContent } from '@tiptap/react';
+import StarterKit from '@tiptap/starter-kit';
+import Underline from '@tiptap/extension-underline';
+import Placeholder from '@tiptap/extension-placeholder';
+import Highlight from '@tiptap/extension-highlight';
+import { NoteEditorMenu } from './NoteEditorMenu';
 
 interface NoteEditorProps {
   initialNote?: Note;
-  onSubmit: (title: string, content: string) => void;
-  submitButtonText: string;
-  isLoading?: boolean;
+  onAutoSave: (content: string) => void;
 }
 
-export function NoteEditor({
-  initialNote,
-  onSubmit,
-  submitButtonText,
-  isLoading = false,
-}: NoteEditorProps) {
-  const [title, setTitle] = useState('');
-  const [content, setContent] = useState('');
+export function NoteEditor({ initialNote, onAutoSave }: NoteEditorProps) {
+  const [status, setStatus] = useState<'idle' | 'typing' | 'saved'>('idle');
+  const [showStatus, setShowStatus] = useState(false);
+  const [fadeOut, setFadeOut] = useState(false);
+  const timerRef = useRef<NodeJS.Timeout | null>(null);
+  const fadeTimerRef = useRef<NodeJS.Timeout | null>(null);
+
+  // TipTap 에디터 초기화
+  const editor = useEditor({
+    extensions: [
+      StarterKit.configure({
+        heading: { levels: [1, 2, 3, 4] },
+      }),
+      Underline,
+      Highlight,
+      Placeholder.configure({ placeholder: '노트 내용을 입력하세요...' }),
+    ],
+    content: initialNote?.content || '',
+    onUpdate: ({ editor }) => {
+      const html = editor.getHTML();
+
+      setStatus('typing');
+      setShowStatus(true);
+      setFadeOut(false);
+
+      if (timerRef.current) clearTimeout(timerRef.current);
+      if (fadeTimerRef.current) clearTimeout(fadeTimerRef.current);
+
+      timerRef.current = setTimeout(() => {
+        setStatus('saved');
+        onAutoSave(html);
+      }, 1500);
+    },
+    editorProps: {
+      attributes: {
+        class: 'focus:outline-none',
+      },
+    },
+    immediatelyRender: false,
+  });
 
   useEffect(() => {
-    if (initialNote) {
-      setTitle(initialNote.title);
-      setContent(initialNote.content);
+    if (editor && initialNote) {
+      editor.commands.setContent(initialNote.content);
     }
-  }, [initialNote]);
+  }, [editor, initialNote]);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (title.trim() && content.trim()) {
-      onSubmit(title.trim(), content.trim());
+  useEffect(() => {
+    if (status === 'typing') {
+      setShowStatus(true);
+      setFadeOut(false);
+      if (fadeTimerRef.current) clearTimeout(fadeTimerRef.current);
     }
-  };
+    if (status === 'saved') {
+      setShowStatus(true);
+      setFadeOut(false);
+      fadeTimerRef.current = setTimeout(() => {
+        setFadeOut(true);
+        setTimeout(() => setShowStatus(false), 500);
+      }, 1500);
+    }
+    return () => {
+      if (fadeTimerRef.current) clearTimeout(fadeTimerRef.current);
+    };
+  }, [status]);
+
+  useEffect(() => {
+    return () => {
+      if (timerRef.current) clearTimeout(timerRef.current);
+      if (fadeTimerRef.current) clearTimeout(fadeTimerRef.current);
+    };
+  }, []);
+
+  if (!editor) return null;
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
-      <div>
-        <label
-          htmlFor="title"
-          className="mb-2 block text-sm font-medium text-gray-700"
-        >
-          제목
-        </label>
-        <input
-          type="text"
-          id="title"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          className="w-full rounded-md border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-blue-500 focus:outline-none"
-          placeholder="노트 제목을 입력하세요"
-          required
+    <div className="space-y-6">
+      <div className="rounded-md border border-gray-300">
+        <EditorContent
+          editor={editor}
+          className="max-h-[500px] min-h-[200px] overflow-y-auto p-4 focus:outline-none"
         />
+        <NoteEditorMenu editor={editor} />
       </div>
-
-      <div>
-        <label
-          htmlFor="content"
-          className="mb-2 block text-sm font-medium text-gray-700"
-        >
-          내용
-        </label>
-        <textarea
-          id="content"
-          value={content}
-          onChange={(e) => setContent(e.target.value)}
-          rows={10}
-          className="resize-vertical w-full rounded-md border border-gray-300 px-3 py-2 focus:border-transparent focus:ring-2 focus:ring-blue-500 focus:outline-none"
-          placeholder="노트 내용을 입력하세요"
-          required
-        />
+      {/* 상태 메시지 */}
+      <div className="min-h-[1.5em] text-left text-sm">
+        {showStatus && (
+          <span
+            className={`transition-opacity duration-500 ${fadeOut ? 'opacity-0' : 'opacity-100'}`}
+          >
+            {status === 'typing' && (
+              <span className="text-gray-400">작성 중...</span>
+            )}
+            {status === 'saved' && (
+              <span className="text-green-600">작성 완료!</span>
+            )}
+          </span>
+        )}
       </div>
-
-      <div className="flex justify-end">
-        <button
-          type="submit"
-          disabled={isLoading || !title.trim() || !content.trim()}
-          className="rounded-md bg-blue-500 px-6 py-2 text-white transition-colors hover:bg-blue-600 disabled:cursor-not-allowed disabled:bg-gray-400"
-        >
-          {isLoading ? '처리 중...' : submitButtonText}
-        </button>
-      </div>
-    </form>
+    </div>
   );
 }
