@@ -1,9 +1,8 @@
 import { http, HttpResponse } from 'msw';
-import { LoginSchema, loginSchema } from '../model';
+import { loginSchema } from '../model';
 
-export const loginHandler = http.post(
-  '/api/auth/login',
-  async ({ request }) => {
+export const loginHandler = [
+  http.post('/api/auth/login', async ({ request }) => {
     const body = await request.json();
     const result = loginSchema.safeParse(body);
 
@@ -35,5 +34,5 @@ export const loginHandler = http.post(
       },
       { status: 200 },
     );
-  },
-);
+  }),
+];

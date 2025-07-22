@@ -7,4 +7,4 @@
 //export const handlers = [...authHandlers, ...dashboardHandlers, ...noteHandlers, ...profileHandlers, ...todoHandlers];
 import { loginHandler } from '@/features/auth-login/api';
 
-export const handlers = [loginHandler];
+export const handlers = [...loginHandler];
