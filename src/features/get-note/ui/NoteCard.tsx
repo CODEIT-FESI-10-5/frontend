@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { type Note } from '@/entities/note/model/types';
 import NoteOpenIcon from '@/assets/note-open.svg';
 import NoteClosedIcon from '@/assets/note-close.svg';
+import parse from 'html-react-parser';
 
 interface NoteCardProps {
   note: Note;
@@ -48,9 +49,16 @@ export function NoteCard({ note }: NoteCardProps) {
         {isExpanded && (
           <div className="mt-18">
             <div className="relative rounded-md">
-              <p className="text-text-primary whitespace-pre-wrap">
-                {note.content}
-              </p>
+              {/* script 태그 제거 후 html-react-parser로 파싱 */}
+              <div className="text-text-primary prose prose-sm max-w-none">
+                {parse(
+                  // script 태그 제거
+                  (note.content || '').replace(
+                    /<script[\s\S]*?>[\s\S]*?<\/script>/gi,
+                    '',
+                  ),
+                )}
+              </div>
             </div>
             <div className="text-text-tertiary mt-2 text-sm">
               <span>

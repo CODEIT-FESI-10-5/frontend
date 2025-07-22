@@ -8,5 +8,5 @@ module.exports = {
     remDivider: 16,
     extend: {},
   },
-  plugins: [],
+  plugins: [require('@tailwindcss/typography')],
 };

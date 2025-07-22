@@ -166,3 +166,13 @@ body {
 .ProseMirror li {
   margin: 0.25em 0;
 }
+
+/* prose 커스텀: NoteCard에서 h1~h4, bold에 text-text-primary 적용 */
+.prose h1,
+.prose h2,
+.prose h3,
+.prose h4,
+.prose strong,
+.prose b {
+  color: var(--color-text-primary) !important;
+}
