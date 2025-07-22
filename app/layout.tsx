@@ -4,6 +4,7 @@ import { QueryProvider } from '../src/app/query-provider';
 import { MswProvider } from '../src/app/msw-provider';
 import SideBar from '@/widgets/sidebar/ui/SideBar';
 import './globals.css';
+import { Modal } from '@/shared/ui/Modal';
 
 const notoSansKR = Noto_Sans_KR({
   variable: '--font-noto-sans-kr',
@@ -37,6 +38,7 @@ export default function RootLayout({
             <main className="ml-348 h-full rounded-md p-36">
               <SideBar />
               {children}
+              <Modal />
             </main>
           </QueryProvider>
         </MswProvider>

@@ -3,6 +3,8 @@
 import { motion } from 'framer-motion';
 import type { StudyGroup } from '../model';
 import CopyIcon from '@/assets/copy.svg';
+import { useRef } from 'react';
+import { useModal } from '@/shared/lib/utils/useModal';
 
 export default function StudyInfo({
   members,
@@ -13,6 +15,34 @@ export default function StudyInfo({
   teamProgress: StudyGroup['teamProgress'];
   inviteLink: StudyGroup['inviteLink'];
 }) {
+  const memberTextRef = useRef<HTMLSpanElement>(null);
+  const { open } = useModal();
+
+  const handleMemberTextClick = () => {
+    if (memberTextRef.current) {
+      const rect = memberTextRef.current.getBoundingClientRect();
+      const top = rect.top + window.scrollY + rect.height + 8; // 아래쪽에 띄움
+      const left = rect.left + window.scrollX;
+      open(
+        <div className="bg-surface-4 border-border-emphasis rounded-md border px-20 py-24 shadow-lg">
+          <ul className="flex flex-col gap-14">
+            {members.map((member) => (
+              <li key={member.id} className="flex items-center gap-12">
+                <img
+                  src={member.image}
+                  alt={member.name}
+                  className="h-32 w-32 rounded-full object-cover"
+                />
+                <span>{member.name}</span>
+              </li>
+            ))}
+          </ul>
+        </div>,
+        { top, left },
+      );
+    }
+  };
+
   return (
     <div className="max-w-1000">
       {/*TODO Progress 바 max-w 어디까지 설정할지 */}
@@ -44,7 +74,11 @@ export default function StudyInfo({
             )}
           </div>
           {/* 멤버 수 텍스트 */}
-          <span className="text-text-primary label-small underline">
+          <span
+            ref={memberTextRef}
+            className="text-text-primary label-small cursor-pointer underline"
+            onClick={handleMemberTextClick}
+          >
             {members.length}명 참여중
           </span>
         </div>
