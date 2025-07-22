@@ -4,9 +4,14 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import SubmitButton from '@/shared/ui/SubmitButton';
 import TextField from '@/shared/ui/TextField';
 import Link from 'next/link';
-import { LoginSchema, loginSchema } from '@/features/auth-login';
+import {
+  LoginSchema,
+  loginSchema,
+  useLogin,
+} from '@/features/auth-login/model';
 
 export default function LoginForm() {
+  const { mutate } = useLogin();
   const {
     register,
     handleSubmit,
@@ -22,7 +27,7 @@ export default function LoginForm() {
   console.log('login', errors.email?.message);
 
   const onValid = (data: LoginSchema) => {
-    console.log('성공', data);
+    mutate(data);
   };
 
   return (

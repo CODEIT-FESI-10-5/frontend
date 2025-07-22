@@ -1,18 +1,20 @@
 import { http, HttpResponse } from 'msw';
-import { loginSchema } from '../model';
+import { LoginSchema, loginSchema } from '../model';
 
 export const loginHandler = http.post(
   '/api/auth/login',
   async ({ request }) => {
     const body = await request.json();
-    const { email, password } = loginSchema.parse(body);
+    const result = loginSchema.safeParse(body);
 
-    if (!email || !password) {
+    if (!result.success) {
       return HttpResponse.json(
-        { message: '이메일과 비밀번호를 입력하세요.' },
+        { message: '유효성 검사 실패', issues: result.error.issues },
         { status: 400 },
       );
     }
+
+    const { email, password } = result.data;
 
     // 더미 유저 정보
     const user = {
