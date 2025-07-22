@@ -8,15 +8,19 @@ import IconBack from '@/../public/assets/icon-back.svg';
 import { useCreateTodoStore } from '../../../features/create-todo/model/store';
 import Link from 'next/link';
 import Todolist from './Todolist';
-import { useTodoGroupInit } from '@/entities/goal/model/hooks';
+import { useTodolistQuery } from '@/entities/todolist/model/hooks';
+import divideTodoGroup from '@/entities/todolist/lib/utils/divideTodoGroup';
+import { useEffect } from 'react';
+import { useTodolistStore } from '@/entities/todolist/model/store';
+import { useParams } from 'next/navigation';
 
-const TEMP_TODOLIST_ID = '12345';
+const TEMP_GOAL_ID = '12345';
 
 function BackButton() {
   return (
     <motion.div layout={'position'}>
       <Link
-        href={`/dashbord/${TEMP_TODOLIST_ID}`}
+        href={`/dashbord/${TEMP_GOAL_ID}`}
         className="mx-10 flex cursor-pointer items-center gap-30 text-white transition hover:scale-105"
       >
         <IconBack stroke="white" />
@@ -26,14 +30,14 @@ function BackButton() {
   );
 }
 
-function TitleArea() {
+function TitleArea({ title = '목표' }: { title?: string }) {
   const toggleEditMode = useCreateTodoStore((state) => state.toggleEditMode);
   return (
     <motion.div
       layout={'position'}
       className="mb-40 flex w-full justify-between"
     >
-      <p className="headline-large font-bold text-white">투두 리스트 제목</p>
+      <p className="headline-large font-bold text-white">{title}</p>
       <Button size="lg" color="bg-highlight" onClick={() => toggleEditMode()}>
         <IconNewTodo width={24} height={24} fill="white" />
         <p className="label-small">세부 투두 생성</p>
@@ -43,7 +47,18 @@ function TitleArea() {
 }
 
 export default function TodolistPanel() {
-  useTodoGroupInit(TEMP_TODOLIST_ID);
+  const params = useParams<{ goalId: string }>();
+  const { data, isLoading } = useTodolistQuery(params?.goalId);
+  const { setAllGroup } = useTodolistStore();
+
+  useEffect(() => {
+    if (!data) return;
+    const { newDone, newShared, newPersonal } = divideTodoGroup(data.todolist);
+
+    setAllGroup(newDone, newShared, newPersonal);
+  }, [data, setAllGroup]);
+
+  if (!params || isLoading) return <>Loading</>;
 
   return (
     <LayoutGroup>
@@ -59,7 +74,7 @@ export default function TodolistPanel() {
             'bg-surface-3 rounded-lg p-40 text-black shadow-lg',
           )}
         >
-          <TitleArea />
+          <TitleArea title={data?.title} />
           <Todolist />
         </motion.div>
         <div id="portal-backdrop" />

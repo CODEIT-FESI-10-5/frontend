@@ -5,6 +5,8 @@ export default function divideTodoGroup(orderedTodolist: Array<Todo>) {
   const newPersonal: Array<Todo> = [];
   const newDone: Array<Todo> = [];
 
+  console.log(orderedTodolist);
+
   orderedTodolist.map((todo: Todo) => {
     if (todo.completed) newDone.push(todo);
     else if (todo.shared) newShared.push(todo);

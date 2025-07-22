@@ -1,16 +1,14 @@
-import { Todo } from '@/entities/todo/model/types';
 import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
+import { Todo } from '../types';
 
-export interface GoalState {
-  goalId: string;
+export interface TodolistState {
   done: Todo[];
   shared: Todo[];
   personal: Todo[];
 }
 
-export interface GoalAction {
-  setGoalId: (newGoalId: string) => void;
+export interface TodolistAction {
   setDone: (newDone: Todo[]) => void;
   setShared: (newShared: Todo[]) => void;
   setPersonal: (newPersonal: Todo[]) => void;
@@ -22,14 +20,12 @@ export interface GoalAction {
   getCurrOrder: () => Array<string>;
 }
 
-export const useGoalStore = create<GoalState & GoalAction>()(
+export const useTodolistStore = create<TodolistState & TodolistAction>()(
   devtools(
     (set, get) => ({
-      goalId: '',
       done: [],
       shared: [],
       personal: [],
-      setGoalId: (newGoalId: string) => set(() => ({ goalId: newGoalId })),
       setDone: (newDone: Todo[]) => set(() => ({ done: [...newDone] })),
       setShared: (newShared: Todo[]) => set(() => ({ shared: [...newShared] })),
       setPersonal: (newPersonal: Todo[]) =>

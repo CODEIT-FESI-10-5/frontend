@@ -1,2 +1,2 @@
-export * from './useGoal';
+export * from './useTodolistQuery';
 export * from './useTodoGroupInit';
