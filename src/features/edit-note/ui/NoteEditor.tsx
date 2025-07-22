@@ -6,6 +6,8 @@ import { useEditor, EditorContent } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import Underline from '@tiptap/extension-underline';
 import Placeholder from '@tiptap/extension-placeholder';
+import Highlight from '@tiptap/extension-highlight';
+import { NoteEditorMenu } from './NoteEditorMenu';
 
 interface NoteEditorProps {
   initialNote?: Note;
@@ -22,8 +24,11 @@ export function NoteEditor({ initialNote, onAutoSave }: NoteEditorProps) {
   // TipTap 에디터 초기화
   const editor = useEditor({
     extensions: [
-      StarterKit,
+      StarterKit.configure({
+        heading: { levels: [1, 2, 3, 4] },
+      }),
       Underline,
+      Highlight,
       Placeholder.configure({ placeholder: '노트 내용을 입력하세요...' }),
     ],
     content: initialNote?.content || '',
@@ -36,7 +41,7 @@ export function NoteEditor({ initialNote, onAutoSave }: NoteEditorProps) {
 
       if (timerRef.current) clearTimeout(timerRef.current);
       if (fadeTimerRef.current) clearTimeout(fadeTimerRef.current);
-      
+
       timerRef.current = setTimeout(() => {
         setStatus('saved');
         onAutoSave(html);
@@ -89,9 +94,11 @@ export function NoteEditor({ initialNote, onAutoSave }: NoteEditorProps) {
       <div className="rounded-md border border-gray-300">
         <EditorContent
           editor={editor}
-          className="min-h-[200px] p-4 focus:outline-none"
+          className="max-h-[500px] min-h-[200px] overflow-y-auto p-4 focus:outline-none"
         />
+        <NoteEditorMenu editor={editor} />
       </div>
+      {/* 상태 메시지 */}
       <div className="min-h-[1.5em] text-left text-sm">
         {showStatus && (
           <span
