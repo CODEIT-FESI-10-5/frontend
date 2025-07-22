@@ -19,27 +19,8 @@ export default function StudyInfo({
   const { open } = useModal();
 
   const handleMemberTextClick = () => {
-    if (memberTextRef.current) {
-      const rect = memberTextRef.current.getBoundingClientRect();
-      const top = rect.top + window.scrollY + rect.height + 8; // 아래쪽에 띄움
-      const left = rect.left + window.scrollX;
-      open(
-        <div className="bg-surface-4 border-border-emphasis rounded-md border px-20 py-24 shadow-lg">
-          <ul className="flex flex-col gap-14">
-            {members.map((member) => (
-              <li key={member.id} className="flex items-center gap-12">
-                <img
-                  src={member.image}
-                  alt={member.name}
-                  className="h-32 w-32 rounded-full object-cover"
-                />
-                <span>{member.name}</span>
-              </li>
-            ))}
-          </ul>
-        </div>,
-        { top, left },
-      );
+    if (memberTextRef.current && members.length > 0) {
+      open(<ProfileModal members={members} />, { ref: memberTextRef });
     }
   };
 
@@ -108,6 +89,25 @@ export default function StudyInfo({
         <span className="title-medium">초대 코드 {inviteLink}</span>
         <CopyIcon width={10} height={10} />
       </div>
+    </div>
+  );
+}
+
+function ProfileModal({ members }: { members: StudyGroup['members'] }) {
+  return (
+    <div className="bg-surface-4 border-border-emphasis rounded-md border px-20 py-24 shadow-lg">
+      <ul className="flex flex-col gap-14">
+        {members.map((member) => (
+          <li key={member.id} className="flex items-center gap-12">
+            <img
+              src={member.image}
+              alt={member.name}
+              className="h-32 w-32 rounded-full object-cover"
+            />
+            <span>{member.name}</span>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
