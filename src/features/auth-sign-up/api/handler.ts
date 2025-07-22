@@ -4,7 +4,7 @@ import { signUpSchema } from '../model';
 export const signUpHandler = [
   http.post('/api/auth/sign-up', async ({ request }) => {
     const body = await request.json();
-    const result = await signUpSchema.safeParseAsync(body);
+    const result = await signUpSchema.safeParse(body);
 
     if (!result.success) {
       return HttpResponse.json(
