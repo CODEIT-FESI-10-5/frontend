@@ -87,7 +87,7 @@ export default function StudyInfo({
       {/*초대 링크 */}
       <div className="bg-tertiary text-text-secondary absolute right-20 -bottom-26 flex gap-6 rounded-sm px-18 py-14">
         <span className="title-medium">초대 코드 {inviteLink}</span>
-        <CopyIcon width={10} height={10} />
+        <CopyIcon width={24} height={24} />
       </div>
     </div>
   );
