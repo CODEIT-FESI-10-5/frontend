@@ -37,6 +37,11 @@
   --color-tertiary: #2c336c;
   --color-highlight: #ff9346;
   --color-error: #e20c3f;
+
+  /* icon */
+  --color-icon-grey-300: #898989;
+  --color-icon-grey-200: #a7a7a7;
+  --color-icon-grey-100: #e8e8e8;
 }
 @utility headline-large {
   font-size: 1.625rem;
