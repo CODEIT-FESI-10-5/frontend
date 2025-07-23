@@ -1,14 +1,10 @@
 'use client';
 
-import { useParams } from 'next/navigation';
 import { useNoteById } from '@/features/get-note/api/getNoteQueries';
 import { NoteEditor } from '@/features/edit-note';
 import { useUpdateNote } from '@/features/edit-note/api/useUpdateNoteMutation';
 
-export function NoteEditPage() {
-  const params = useParams();
-  const noteId = Number(params?.noteId);
-
+export function NoteEditPage({ noteId }: { noteId: number }) {
   const {
     data: noteData,
     isLoading,
