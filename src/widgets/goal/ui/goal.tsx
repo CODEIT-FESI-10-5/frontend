@@ -10,6 +10,7 @@ import EditGoalTitle from '@/features/update-goal-title/ui/update-goal-title';
 import Todo from '@/widgets/todo/ui/todo';
 import type { Goal } from '@/entities/goal';
 import { useGoal } from '@/entities/goal/model/useGoal';
+import Image from 'next/image';
 
 // 팀원별 진행도 타입
 export interface TeamProgress {
@@ -187,10 +188,7 @@ export default function Goal({
           </Link>
         </div>
         {/* 팀원 진행도 */}
-        <div className="bg-surface-2 border-border-subtle h-[523px] w-full max-w-[537px] rounded-md border p-34">
-          <span className="body-medium font-medium text-white">
-            팀원 진행도
-          </span>
+        <div className="bg-surface-2 border-border-subtle h-[380px] w-full max-w-[423px] rounded-md border p-34">
           {/* 팀원별 진행도 컴포넌트 */}
           <TeamProgressList teamProgress={goal.studyGoal.teamProgress || []} />
         </div>
@@ -208,60 +206,73 @@ export function TeamProgressList({
   // 내림차순 정렬 (진행도 높은 순)
   const sorted = [...teamProgress].sort((a, b) => b.progress - a.progress);
   return (
-    <div className="mt-12 flex flex-col gap-8">
-      <div className="mb-4 flex items-center justify-between">
-        <span className="text-text-primary body-medium font-bold">
-          팀원 달성률
-        </span>
-        <span className="text-xs text-gray-400">5분전 업데이트</span>
+    <div className="flex h-full flex-col justify-between">
+      <div className="flex items-center justify-between">
+        <span className="headline-medium text-white">팀원 달성률</span>
+        {/* TODO 시간 추가해야됨 */}
+        <span className="label-small text-text-tertiary">5분전 업데이트</span>
       </div>
-      <ul className="flex h-[320px] w-full items-end gap-6">
+      <ul className="flex h-full w-full items-end justify-between">
         {sorted.map((member, idx) => {
           // 1등 강조 스타일
           const isFirst = idx === 0;
           // 바 색상
           const barColor = isFirst
-            ? 'bg-[#2D3BA6]'
+            ? 'bg-secondary'
             : idx === 2
-              ? 'bg-[#FF8A3D]'
-              : 'bg-[#6B6B6B]';
+              ? 'bg-highlight'
+              : 'bg-icon-grey-300';
           // 텍스트 색상
-          const textColor = isFirst
-            ? 'text-[#2D3BA6]'
-            : idx === 2
-              ? 'text-[#FF8A3D]'
-              : 'text-[#6B6B6B]';
-          // 진행도 바 높이 (최소 80, 최대 200)
-          const barHeight = 80 + (member.progress / 100) * 120;
+          // const textColor = isFirst
+          //   ? 'text-[#2D3BA6]'
+          //   : idx === 2
+          //     ? 'text-[#FF8A3D]'
+          //     : 'text-[#6B6B6B]';
+          // 진행도 바 높이 (최소 22, 최대 120)
+          const barHeight = 22 + (member.progress / 100) * 98; // 최소 22, 최대 120
           // 순위 텍스트
           let rankText = `${idx + 1}위`;
           if (isFirst) rankText = '1위';
           if (idx === 2) rankText = `3위(나)`;
           return (
-            <li key={member.name} className="flex w-1/5 flex-col items-center">
-              <span className="mb-2 max-w-[60px] truncate text-center text-xs text-white">
-                {member.name}
-              </span>
-              <div className="relative mb-2">
+            <li
+              key={member.name}
+              className="relative flex flex-col items-center gap-6"
+            >
+              <div className="mb-10 flex flex-col items-center justify-center gap-10">
+                <span className="label-small text-text-secondary max-w-[60px] truncate">
+                  {member.name}
+                </span>
                 <img
                   src={member.image}
                   alt={member.name}
-                  className={`h-52 w-52 rounded-full border-2 object-cover ${isFirst ? 'border-[#2D3BA6]' : 'border-[#444]'}`}
+                  className={`border-icon-grey-200 h-52 w-52 rounded-full border-4 object-cover`}
                 />
               </div>
               <motion.div
-                className={`flex flex-col items-center justify-end ${barColor} relative w-64 rounded-t-lg`}
+                className={`bottom-0 flex flex-col items-center justify-end ${barColor} relative w-64 rounded-t-md`}
                 initial={{ height: 80 }}
                 animate={{ height: barHeight }}
                 transition={{ duration: 1 }}
               >
-                <span className="mb-1 text-sm font-bold text-white">
+                {
+                  //1등일 때 이미지 추가
+                  isFirst && (
+                    <Image
+                      width={35}
+                      height={35}
+                      src={'/images/teamprogress-first.png'}
+                      alt="1st place"
+                      className="absolute top-0 left-1/2 -translate-x-1/2"
+                    />
+                  )
+                }
+
+                <span className="body-small absolute bottom-3 text-white">
                   {member.progress}%
                 </span>
               </motion.div>
-              <span
-                className={`mt-2 text-xs font-bold ${isFirst ? 'text-[#2D3BA6]' : idx === 2 ? 'text-[#FF8A3D]' : 'text-[#6B6B6B]'}`}
-              >
+              <span className={`body-medium text-text-primary`}>
                 {rankText}
               </span>
             </li>
