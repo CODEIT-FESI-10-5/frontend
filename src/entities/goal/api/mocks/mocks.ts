@@ -95,7 +95,7 @@ export const mockGoal: Goal = {
       {
         name: '닉네임3',
         image: '/images/study-background.jpg',
-        progress: 90,
+        progress: 100,
         completedCt: [9, 10],
       },
       {
