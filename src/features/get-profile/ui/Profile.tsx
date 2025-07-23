@@ -22,7 +22,7 @@ export default function Profile() {
           {data?.email}
         </p>
       </div>
-      <div className="ml-auto flex h-full w-full justify-start">
+      <div className="ml-auto flex h-full w-full justify-end">
         <SettingIcon className="" />
       </div>
     </div>
