@@ -1,5 +1,10 @@
 import { NoteEditPage } from '@/pages/note/ui/NoteEditPage';
 
-export default function Page({ params }: { params: { noteId: string } }) {
-  return <NoteEditPage noteId={Number(params.noteId)} />;
+export default async function Page({
+  params,
+}: {
+  params: Promise<{ noteId: string }>;
+}) {
+  const { noteId } = await params;
+  return <NoteEditPage noteId={Number(noteId)} />;
 }
