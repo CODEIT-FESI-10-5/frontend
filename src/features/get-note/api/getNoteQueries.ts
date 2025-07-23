@@ -22,10 +22,9 @@ export const useNotesByStudyGoalId = (hasStudyGoalId: boolean) => {
 };
 
 // 노트 데이터 가져오기
-export const useNoteById = (noteId: number, enabled: boolean = true) => {
+export const useNoteById = (noteId: number) => {
   return useQuery({
     queryKey: noteKeys.detail(noteId),
     queryFn: () => getNoteById(noteId),
-    enabled: enabled && noteId > 0,
   });
 };

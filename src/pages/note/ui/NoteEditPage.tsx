@@ -5,11 +5,7 @@ import { NoteEditor } from '@/features/edit-note';
 import { useUpdateNote } from '@/features/edit-note/api/useUpdateNoteMutation';
 
 export function NoteEditPage({ noteId }: { noteId: number }) {
-  const {
-    data: noteData,
-    isLoading,
-    isError,
-  } = useNoteById(noteId, noteId > 0);
+  const { data: noteData, isLoading, isError } = useNoteById(noteId);
 
   const note = noteData?.note;
   const updateNoteMutation = useUpdateNote();
