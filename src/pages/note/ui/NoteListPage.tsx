@@ -18,7 +18,7 @@ export function NoteListPage() {
   const router = useRouter();
   const [selectedGoalId, setSelectedGoalId] = useState<number | null>(null);
 
-  const hasStudyGoalId = searchParams.get('studyGoalId') !== null;
+  const hasStudyGoalId = searchParams?.get('studyGoalId') !== null;
   const {
     data: notesData,
     isLoading,
@@ -26,7 +26,7 @@ export function NoteListPage() {
   } = useNotesByStudyGoalId(hasStudyGoalId);
 
   useEffect(() => {
-    const urlStudyGoalId = Number(searchParams.get('studyGoalId'));
+    const urlStudyGoalId = Number(searchParams?.get('studyGoalId'));
     if (urlStudyGoalId && urlStudyGoalId !== selectedGoalId) {
       setSelectedGoalId(urlStudyGoalId);
     }

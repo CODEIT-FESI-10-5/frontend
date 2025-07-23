@@ -13,7 +13,7 @@ export default function StudyGroup({
 }: StudyGroupLayoutProps) {
   return (
     <>
-      <StudyGroupLayout children={children} params={params} />
+      <StudyGroupLayout params={params}>{children}</StudyGroupLayout>
     </>
   );
 }

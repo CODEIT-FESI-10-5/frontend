@@ -13,7 +13,7 @@ export const signUpHandler = [
       );
     }
 
-    const { email, name, ...rest } = result.data;
+    const { email, name } = result.data;
 
     // 더미 유저 정보
     const user = {
