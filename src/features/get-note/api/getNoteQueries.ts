@@ -7,6 +7,7 @@ import {
 import { type NoteListResponse } from '@/entities/note/model/types';
 import { noteKeys } from '@/entities/note/model/queryKeys';
 
+// 노트 목록 데이터 가져오기
 export const useNotesByStudyGoalId = (hasStudyGoalId: boolean) => {
   const searchParams = useSearchParams();
   const studyGoalId = hasStudyGoalId
@@ -20,6 +21,7 @@ export const useNotesByStudyGoalId = (hasStudyGoalId: boolean) => {
   });
 };
 
+// 노트 데이터 가져오기
 export const useNoteById = (noteId: number, enabled: boolean = true) => {
   return useQuery({
     queryKey: noteKeys.detail(noteId),
