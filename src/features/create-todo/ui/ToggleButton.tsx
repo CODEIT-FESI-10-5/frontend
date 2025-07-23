@@ -31,9 +31,9 @@ export default function ToggleButton({
       onClick={toggleSwitch}
     >
       {isOn ? (
-        <CheckSquareBlankIcon width={28} height={28} />
-      ) : (
         <CheckSquareFillPrimaryIcon width={28} height={28} />
+      ) : (
+        <CheckSquareBlankIcon width={28} height={28} />
       )}
 
       {children}
