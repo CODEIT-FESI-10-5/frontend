@@ -19,7 +19,7 @@ export const handlers = [
   ...noteHandlers,
   ...goalHandlers,
   ...studyHandlers,
-  ...todoHandlers,
+  ...todolistHandlers,
   ...loginHandler,
   ...signUpHandler,
 ];
