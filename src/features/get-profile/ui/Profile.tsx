@@ -2,6 +2,7 @@
 import Image from 'next/image';
 import { useGetProfileQuery } from '@/features/get-profile/model';
 import SettingIcon from '@/assets/profile-settings.svg';
+import Link from 'next/link';
 
 export default function Profile() {
   const { isLoading, data, error } = useGetProfileQuery();
@@ -22,8 +23,10 @@ export default function Profile() {
           {data?.email}
         </p>
       </div>
-      <div className="ml-auto flex h-full w-full justify-start">
-        <SettingIcon className="" />
+      <div className="ml-auto flex h-full w-full justify-end">
+        <Link href="/account">
+          <SettingIcon />
+        </Link>
       </div>
     </div>
   );

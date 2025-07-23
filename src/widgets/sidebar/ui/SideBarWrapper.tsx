@@ -10,7 +10,7 @@ export default function SideBarWrapper({
 }) {
   const pathname = usePathname() as string;
   const isAuthPage =
-    pathname.startsWith('/auth/login') || pathname.startsWith('/auth/signup');
+    pathname.startsWith('/auth/login') || pathname.startsWith('/auth/sign-up');
 
   if (isAuthPage)
     return (
