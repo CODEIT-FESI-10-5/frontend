@@ -1,10 +1,10 @@
-import Button from '@/shared/ui/TodoButton';
-import ToggleButton from '@/shared/ui/ToggleButton';
 import { cn } from '@/shared/lib/utils/cn';
 import { useCreateTodoStore } from '@/features/create-todo/model/store/createTodoStore';
 import { useCreateTodoMutation } from '../model/hooks';
+import ToggleButton from './ToggleButton';
+import ConfirmButton from '@/features/create-todo/ui/ConfirmButton';
+import CheckTodoBlankIcon from '@/assets/check_todo_blank.svg';
 
-const TODOLIST_ID = '12345';
 const IS_ADMIN = true;
 
 export default function CreateTodoForm() {
@@ -13,7 +13,7 @@ export default function CreateTodoForm() {
   const { isShared, toggleIsShared } = useCreateTodoStore();
   const { resetField, toggleEditMode } = useCreateTodoStore();
 
-  const createTodo = useCreateTodoMutation();
+  const createTodo = useCreateTodoMutation('goal-1');
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (content.trim() === '') {
@@ -25,7 +25,6 @@ export default function CreateTodoForm() {
 
     // 새 Todo 추가 요청 구현부
     createTodo.mutate({
-      todolistId: TODOLIST_ID,
       newTodo: { content, shared: isShared },
     });
 
@@ -37,33 +36,34 @@ export default function CreateTodoForm() {
   return (
     <form
       onSubmit={handleSubmit}
-      className="bg-surface-4 text-text-primary mb-16 flex min-h-70 min-w-650 justify-between gap-16 rounded-lg p-16"
+      className="bg-surface-4 mb-16 flex min-h-70 min-w-650 items-center justify-between gap-14 rounded-lg p-16"
     >
+      <CheckTodoBlankIcon width={30} height={30} />
       <input
         className={cn(
-          'body-small flex-grow',
-          'border-border-default outline-none focus:border-b-1',
+          'body-medium text-text-secondary placeholder:text-text-tertiary flex-grow',
+          'border-border-default outline-none',
           {
-            'border-frame-error border-b-1 placeholder:text-red-300': isInvalid,
+            'border-frame-error placeholder:text-red-300': isInvalid,
           },
         )}
         type="text"
-        placeholder="내용을 입력하세요"
+        placeholder="입력하세요..."
         value={content}
         onChange={(e) => {
           setContent(e.target.value);
         }}
       />
 
-      <div className="flex flex-shrink-0 justify-between gap-8">
+      <div className="flex flex-shrink-0 justify-between gap-9">
         {IS_ADMIN && (
           <ToggleButton isOn={isShared} toggleSwitch={() => toggleIsShared()}>
             {'공통'}
           </ToggleButton>
         )}
-        <Button size="md" color="bg-primary">
+        <ConfirmButton size="md" color="bg-primary">
           {'완료'}
-        </Button>
+        </ConfirmButton>
       </div>
     </form>
   );
