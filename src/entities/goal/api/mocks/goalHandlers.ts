@@ -36,7 +36,7 @@ export const goalHandlers = [
           title: mockGoal.studyGoal.title,
         },
       });
-    } catch (error) {
+    } catch {
       return HttpResponse.json({ error: 'Invalid JSON body' }, { status: 400 });
     }
   }),
@@ -85,7 +85,7 @@ export const goalHandlers = [
         todo: mockGoal.studyGoal.mytodoList[todoIndex],
         completedCt: mockGoal.studyGoal.completedCt,
       });
-    } catch (error) {
+    } catch {
       return HttpResponse.json({ error: 'Invalid JSON body' }, { status: 400 });
     }
   }),
