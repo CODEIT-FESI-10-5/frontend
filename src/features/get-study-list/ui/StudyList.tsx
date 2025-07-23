@@ -31,7 +31,7 @@ export default function StudyList() {
 
   return (
     <section className="flex flex-col gap-14">
-      <h2 className="text-text-secondary body-large">현재 스터디</h2>
+      <h2 className="text-text-secondary title-small">현재 스터디</h2>
       <div id="dropdown">
         <div
           className={clsx(
@@ -42,10 +42,10 @@ export default function StudyList() {
           onClick={() => setIsOpen((prev) => !prev)}
         >
           <div className="flex h-full w-232 flex-col gap-12">
-            <h3 className="text-text-primary body-large">
+            <h3 className="text-text-secondary title-small">
               {currentStudy?.title}
             </h3>
-            <p className="text-text-primary label-large">
+            <p className="text-text-secondary label-small">
               {currentStudy?.description}
             </p>
           </div>
@@ -65,10 +65,10 @@ export default function StudyList() {
                   onClick={() => handleClick(study)}
                 >
                   <div className="flex h-full w-232 flex-col gap-12">
-                    <h3 className="text-text-primary body-large">
+                    <h3 className="text-text-secondary title-small">
                       {study.title}
                     </h3>
-                    <p className="text-text-primary label-large">
+                    <p className="text-text-secondary label-small">
                       {study.description}
                     </p>
                   </div>
