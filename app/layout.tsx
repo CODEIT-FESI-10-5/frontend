@@ -5,6 +5,7 @@ import { MswProvider } from '../src/app/msw-provider';
 import SideBar from '@/widgets/sidebar/ui/SideBar';
 import './globals.css';
 import { Modal } from '@/shared/ui/Modal';
+import CustomToast from '@/shared/ui/CustomToast';
 
 const notoSansKR = Noto_Sans_KR({
   variable: '--font-noto-sans-kr',
@@ -39,6 +40,7 @@ export default function RootLayout({
               <SideBar />
               {children}
               <Modal />
+              <CustomToast />
             </main>
           </QueryProvider>
         </MswProvider>
