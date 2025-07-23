@@ -19,11 +19,7 @@ const submitButtonVariants = cva(
   },
 );
 
-export default function SubmitButton({
-  name,
-  isActive,
-  ...props
-}: SubmitButtonProps) {
+export default function SubmitButton({ name, isActive }: SubmitButtonProps) {
   return (
     <button className={cn(submitButtonVariants({ isActive }))}>{name}</button>
   );
