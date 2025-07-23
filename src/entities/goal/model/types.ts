@@ -25,3 +25,12 @@ export interface teamProgress {
   progress: number; // 진행도 % (40%)
   completedCt: number[]; // todo 완료 횟수 (4/8)
 }
+
+export interface GoalListItem {
+  id: string;
+  title: string;
+}
+
+export interface GoalListResponse {
+  goalList: GoalListItem[];
+}
