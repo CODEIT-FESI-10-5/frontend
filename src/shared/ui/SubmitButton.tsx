@@ -13,7 +13,7 @@ const submitButtonVariants = cva(
     variants: {
       isActive: {
         true: 'bg-primary text-text-white',
-        false: 'bg-white text-black',
+        false: 'bg-icon-grey-100 text-black',
       },
     },
   },

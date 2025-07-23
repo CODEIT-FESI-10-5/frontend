@@ -11,6 +11,7 @@ import {
 } from '@/features/auth-sign-up/model';
 
 export default function SignUpForm() {
+  const { mutate } = useSignUp();
   const {
     register,
     handleSubmit,
@@ -19,13 +20,15 @@ export default function SignUpForm() {
     resolver: zodResolver(signUpSchema),
     defaultValues: {
       email: '',
+      name: '',
       password: '',
+      confirmPassword: '',
     },
-    mode: 'onBlur',
+    mode: 'onChange',
   });
 
   const onValid = (data: SignUpSchema) => {
-    //mutate 로직
+    mutate(data);
   };
 
   return (

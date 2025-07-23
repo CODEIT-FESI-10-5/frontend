@@ -1,16 +1,18 @@
 'use client';
 import { useStudyStore } from '@/features/get-study-list/model';
-import { useState } from 'react';
 import { useGetStudy } from '@/features/get-study-list/model';
 import { StudyItem } from '@/entities/study';
-import { useRouter } from 'next/navigation';
-import clsx from 'clsx';
-import DropDown from '@/assets/dropdown.svg';
+import DropDownIcon from '@/assets/dropdown.svg';
+import DropUpIcon from '@/assets/dropup.svg';
+import { cn } from '@/shared/utils/cn';
 
-export default function StudyList() {
-  const router = useRouter();
-  const { currentStudyId, setStudyId } = useStudyStore();
-  const [isOpen, setIsOpen] = useState(false);
+interface StudyListProps {
+  isOpen: boolean;
+  onClick: () => void;
+}
+
+export default function StudyList({ isOpen, onClick }: StudyListProps) {
+  const { currentStudyId } = useStudyStore();
   const { isLoading, data, error } = useGetStudy();
 
   if (isLoading) return <div>로딩 중...</div>;
@@ -22,60 +24,26 @@ export default function StudyList() {
     data.studyList.find((study: StudyItem) => study.id === currentStudyId) ||
     data.studyList[0];
 
-  // dropdown
-  const handleClick = (study: StudyItem) => {
-    setStudyId(study.id);
-    router.push(`/dashboard/${study.id}`);
-    setIsOpen(false);
-  };
-
   return (
     <section className="flex flex-col gap-14">
-      <h2 className="text-text-secondary body-large">현재 스터디</h2>
-      <div id="dropdown">
-        <div
-          className={clsx(
-            'bg-surface-4 flex h-108 w-full items-center gap-12 p-16',
-            isOpen && 'rounded-t-6',
-            !isOpen && 'rounded-6',
-          )}
-          onClick={() => setIsOpen((prev) => !prev)}
-        >
-          <div className="flex h-full w-232 flex-col gap-12">
-            <h3 className="text-text-primary body-large">
-              {currentStudy?.title}
-            </h3>
-            <p className="text-text-primary label-large">
-              {currentStudy?.description}
-            </p>
-          </div>
-          <DropDown />
-        </div>
-        {isOpen && (
-          <ul>
-            {data.studyList
-              .filter((study: StudyItem) => study.id !== currentStudy?.id)
-              .map((study: StudyItem, idx, arr) => (
-                <li
-                  className={clsx(
-                    'bg-surface-4 h-108 w-full p-16',
-                    idx === arr.length - 1 && 'rounded-b-6',
-                  )}
-                  key={study.id}
-                  onClick={() => handleClick(study)}
-                >
-                  <div className="flex h-full w-232 flex-col gap-12">
-                    <h3 className="text-text-primary body-large">
-                      {study.title}
-                    </h3>
-                    <p className="text-text-primary label-large">
-                      {study.description}
-                    </p>
-                  </div>
-                </li>
-              ))}
-          </ul>
+      <h2 className="text-text-secondary title-small">현재 스터디</h2>
+
+      <div
+        onClick={onClick}
+        className={cn(
+          'bg-surface-4 rounded-6 border-border-default flex h-108 w-full items-center gap-12 border-1 p-16',
+          isOpen && 'border-primary border-1',
         )}
+      >
+        <div className="flex h-full w-232 flex-col gap-12">
+          <h3 className="text-text-secondary title-small">
+            {currentStudy?.title}
+          </h3>
+          <p className="text-text-secondary label-small">
+            {currentStudy?.description}
+          </p>
+        </div>
+        {isOpen ? <DropUpIcon /> : <DropDownIcon />}
       </div>
     </section>
   );

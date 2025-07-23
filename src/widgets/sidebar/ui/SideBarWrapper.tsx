@@ -1,0 +1,28 @@
+'use client';
+
+import { usePathname } from 'next/navigation';
+import SideBar from './SideBar';
+
+export default function SideBarWrapper({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const pathname = usePathname() as string;
+  const isAuthPage =
+    pathname.startsWith('/auth/login') || pathname.startsWith('/auth/signup');
+
+  if (isAuthPage)
+    return (
+      <div className="flex h-screen w-screen items-center justify-center">
+        {children}
+      </div>
+    );
+
+  return (
+    <main className="ml-348 h-full rounded-md p-36">
+      <SideBar />
+      {children}
+    </main>
+  );
+}

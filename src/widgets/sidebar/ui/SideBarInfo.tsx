@@ -5,7 +5,7 @@ import { Profile } from '@/features/get-profile/ui';
 import JoinStudyButton from './JoinStudyButton';
 
 export default function SideBarInfo() {
-  const pathname = usePathname();
+  const pathname = usePathname() as string;
   const isNotePage = pathname.startsWith('/note');
 
   return <div>{isNotePage ? <NoteInfo /> : <ProfileInfo />}</div>;
