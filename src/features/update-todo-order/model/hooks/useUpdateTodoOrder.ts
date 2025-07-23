@@ -10,5 +10,4 @@ interface UpdateTodoOrderMutationParams {
 export const useUpdateTodoOrderMutation = () =>
   useTodoCustomMutation<UpdateTodoOrderMutationParams, any>(
     ({ goalId, newOrder }) => updateTodoOrder(goalId, newOrder),
-    ['todolist'],
   );

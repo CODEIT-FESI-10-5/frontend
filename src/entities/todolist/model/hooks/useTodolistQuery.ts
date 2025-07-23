@@ -5,7 +5,7 @@ import { todolistQueryKeys } from '../queryKeys';
 
 export const useTodolistQuery = (goalId?: string) => {
   return useQuery<Todolist>({
-    queryKey: [todolistQueryKeys.todolist],
+    queryKey: [...todolistQueryKeys.todolist(goalId as string)],
     queryFn: () => fetchTodolist(goalId as string),
     enabled: !!goalId,
   });

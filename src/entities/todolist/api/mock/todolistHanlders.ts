@@ -67,20 +67,31 @@ export const todolistHandlers = [
     };
 
     // 순서 반영하기
-    // 완료: 가장 앞으로 당겨오되 완료된 투두중 가장 뒤에 배치
-    // 취소: 가장 뒤로 밀려남
     const targetIndexInOrder = myTodolist.order.findIndex(
       (currTodoId) => currTodoId === todoId,
     );
     myTodolist.order.splice(targetIndexInOrder, 1);
+
+    // 완료: 가장 앞으로 당겨오되 완료된 투두중 가장 뒤에 배치
     if ((body as { completed: boolean }).completed) {
       const lastCompletedIndex = myTodolist.order.findIndex(
         (currTodoId) =>
           !myTodolist.todolist.find((todo) => todo.id === currTodoId)
             ?.completed,
       );
-      myTodolist.order.splice(lastCompletedIndex, 0, todoId as string);
+      if (lastCompletedIndex < 0) {
+        myTodolist.order.push(todoId as string);
+      } else {
+        myTodolist.order.splice(lastCompletedIndex, 0, todoId as string);
+      }
+      console.log(
+        'target id:',
+        todoId,
+        '/ find last idx: ',
+        lastCompletedIndex,
+      );
     } else {
+      // 취소: 가장 뒤로 밀려남
       myTodolist.order.push(todoId as string);
     }
 
@@ -88,7 +99,7 @@ export const todolistHandlers = [
   }),
 
   // PATCH: 투두 순서 수정
-  http.patch('/api/goal/:goalId/studyGoal.order', async ({ request }) => {
+  http.patch('/api/goal/:goalId/todolist/order', async ({ request }) => {
     const body = await request.json();
 
     console.log(body);

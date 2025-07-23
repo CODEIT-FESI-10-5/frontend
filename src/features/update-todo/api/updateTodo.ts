@@ -1,16 +1,16 @@
-import { clientFetch } from '@/shared/api/clientFetch';
+import { clientFetch } from '@/shared/api';
 
-// todo 완료 체크 API
-export const updateTodoCompletion = async (
+export interface newTodoState {
+  completed: boolean;
+}
+
+export const updateTodo = async (
   goalId: string,
   todoId: string,
-  completed: boolean,
+  newTodoState: newTodoState,
 ) => {
-  return clientFetch.patch(
-    `/todo/completion`,
-    { completed },
-    {
-      params: { goalId, todoId },
-    },
-  );
+  const endpoint = `/api/goal/${goalId}/todo/${todoId}`;
+  const parsedResponse = await clientFetch.patch(endpoint, newTodoState);
+
+  return parsedResponse;
 };

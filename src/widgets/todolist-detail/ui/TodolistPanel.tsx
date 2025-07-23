@@ -14,13 +14,11 @@ import { useEffect } from 'react';
 import { useTodolistStore } from '@/entities/todolist/model/store';
 import { useParams } from 'next/navigation';
 
-const TEMP_GOAL_ID = '12345';
-
-function BackButton() {
+function BackButton({ studyId, goalId }: { studyId: string; goalId: string }) {
   return (
     <motion.div layout={'position'}>
       <Link
-        href={`/dashbord/${TEMP_GOAL_ID}`}
+        href={`/dashbord/${studyId}/goal/${goalId}`}
         className="mx-10 flex cursor-pointer items-center gap-30 text-white transition hover:scale-105"
       >
         <IconBack stroke="white" />
@@ -47,7 +45,7 @@ function TitleArea({ title = '목표' }: { title?: string }) {
 }
 
 export default function TodolistPanel() {
-  const params = useParams<{ goalId: string }>();
+  const params = useParams<{ studyId: string; goalId: string }>();
   const { data, isLoading } = useTodolistQuery(params?.goalId);
   const { setAllGroup } = useTodolistStore();
 
@@ -66,7 +64,7 @@ export default function TodolistPanel() {
         layout
         className="bg-surface-1 flex h-full w-full flex-col items-start gap-50 rounded-md px-30 py-40"
       >
-        <BackButton />
+        <BackButton studyId={params.studyId} goalId={params.goalId} />
         <motion.div
           layout
           className={cn(
