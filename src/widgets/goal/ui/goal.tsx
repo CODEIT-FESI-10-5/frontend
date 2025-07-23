@@ -205,6 +205,10 @@ export function TeamProgressList({
 }) {
   // 내림차순 정렬 (진행도 높은 순)
   const sorted = [...teamProgress].sort((a, b) => b.progress - a.progress);
+  // 최대 4명만 출력, 부족하면 빈 슬롯 추가
+  const maxMembers = 4;
+  const filled = sorted.slice(0, maxMembers);
+  const emptySlots = maxMembers - filled.length;
   return (
     <div className="flex h-full flex-col justify-between">
       <div className="flex items-center justify-between">
@@ -213,51 +217,39 @@ export function TeamProgressList({
         <span className="label-small text-text-tertiary">5분전 업데이트</span>
       </div>
       <ul className="flex h-full w-full items-end justify-between">
-        {sorted.map((member, idx) => {
-          // 1등 강조 스타일
+        {Array.from({ length: maxMembers }).map((_, idx) => {
+          const member = filled[idx];
           const isFirst = idx === 0;
-          // 바 색상
           const barColor = isFirst
             ? 'bg-secondary'
             : idx === 2
               ? 'bg-highlight'
               : 'bg-icon-grey-300';
-          // 텍스트 색상
-          // const textColor = isFirst
-          //   ? 'text-[#2D3BA6]'
-          //   : idx === 2
-          //     ? 'text-[#FF8A3D]'
-          //     : 'text-[#6B6B6B]';
-          // 진행도 바 높이 (최소 22, 최대 120)
-          const barHeight = 22 + (member.progress / 100) * 98; // 최소 22, 최대 120
-          // 순위 텍스트
-          let rankText = `${idx + 1}위`;
-          if (isFirst) rankText = '1위';
-          if (idx === 2) rankText = `3위(나)`;
-          return (
-            <li
-              key={member.name}
-              className="relative flex flex-col items-center gap-6"
-            >
-              <div className="mb-10 flex flex-col items-center justify-center gap-10">
-                <span className="label-small text-text-secondary max-w-[60px] truncate">
-                  {member.name}
-                </span>
-                <img
-                  src={member.image}
-                  alt={member.name}
-                  className={`border-icon-grey-200 h-52 w-52 rounded-full border-4 object-cover`}
-                />
-              </div>
-              <motion.div
-                className={`bottom-0 flex flex-col items-center justify-end ${barColor} relative w-64 rounded-t-md`}
-                initial={{ height: 80 }}
-                animate={{ height: barHeight }}
-                transition={{ duration: 1 }}
+          const barHeight = member ? 22 + (member.progress / 100) * 98 : 22;
+          const rankText = `${idx + 1}위`;
+          if (member) {
+            return (
+              <li
+                key={member.name}
+                className="relative flex flex-col items-center gap-6"
               >
-                {
-                  //1등일 때 이미지 추가
-                  isFirst && (
+                <div className="mb-10 flex flex-col items-center justify-center gap-10">
+                  <span className="label-small text-text-secondary max-w-[60px] truncate">
+                    {member.name}
+                  </span>
+                  <img
+                    src={member.image}
+                    alt={member.name}
+                    className={`border-icon-grey-200 h-52 w-52 rounded-full border-4 object-cover`}
+                  />
+                </div>
+                <motion.div
+                  className={`bottom-0 flex flex-col items-center justify-end ${barColor} relative w-64 rounded-t-md`}
+                  initial={{ height: 22 }}
+                  animate={{ height: barHeight }}
+                  transition={{ duration: 1 }}
+                >
+                  {isFirst && (
                     <Image
                       width={35}
                       height={35}
@@ -265,18 +257,45 @@ export function TeamProgressList({
                       alt="1st place"
                       className="absolute top-0 left-1/2 -translate-x-1/2"
                     />
-                  )
-                }
-
-                <span className="body-small absolute bottom-3 text-white">
-                  {member.progress}%
+                  )}
+                  <span className="body-small absolute bottom-3 text-white">
+                    {member.progress}%
+                  </span>
+                </motion.div>
+                <span className={`body-medium text-text-primary`}>
+                  {rankText}
                 </span>
-              </motion.div>
-              <span className={`body-medium text-text-primary`}>
-                {rankText}
-              </span>
-            </li>
-          );
+              </li>
+            );
+          } else {
+            // 빈 슬롯
+            return (
+              <li
+                key={`empty-${idx}`}
+                className="relative flex flex-col items-center gap-6"
+              >
+                <div className="mb-10 flex flex-col items-center justify-center gap-10">
+                  <span className="label-small max-w-[60px] truncate text-transparent select-none">
+                    -
+                  </span>
+                  <div className="border-icon-grey-200 bg-icon-grey-300 h-52 w-52 rounded-full border-4" />
+                </div>
+                <motion.div
+                  className={`bg-icon-grey-300 relative bottom-0 flex w-64 flex-col items-center justify-end rounded-t-md`}
+                  initial={{ height: 22 }}
+                  animate={{ height: 22 }}
+                  transition={{ duration: 1 }}
+                >
+                  <span className="body-small absolute bottom-3 text-white">
+                    0%
+                  </span>
+                </motion.div>
+                <span className={`body-medium text-text-primary`}>
+                  {rankText}
+                </span>
+              </li>
+            );
+          }
         })}
       </ul>
     </div>
