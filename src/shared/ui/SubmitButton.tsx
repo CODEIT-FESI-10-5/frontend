@@ -20,7 +20,7 @@ const lgVariants = cva(
 );
 
 const smVariants = cva(
-  'rounded-4 flex items-center label-large justify-center w-auto h-auto px-12 py-6 text-text-white',
+  'rounded-4 flex w-fit h-fit items-center label-large justify-center px-12 py-6 text-text-white',
   {
     variants: {
       isActive: {
