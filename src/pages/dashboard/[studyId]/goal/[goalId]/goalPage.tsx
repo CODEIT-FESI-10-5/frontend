@@ -9,7 +9,7 @@ interface GoalPageProps {
 }
 
 export default function GoalPage({ params }: GoalPageProps) {
-  const { studyId, goalId } = use(params);
+  const { goalId } = use(params);
 
   return (
     <div className="px-32 py-36">
@@ -17,7 +17,7 @@ export default function GoalPage({ params }: GoalPageProps) {
         스터디 현황
       </h3>
 
-      <Goal studyId={studyId} goalId={goalId} />
+      <Goal goalId={goalId} />
     </div>
   );
 }
