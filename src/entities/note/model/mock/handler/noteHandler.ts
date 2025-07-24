@@ -16,8 +16,12 @@ export const noteHandlers = [
     }
 
     const filteredNotes = notes.filter(note => note.studyGoalId === studyGoalIdNum);
+    const studyGoalTitle = filteredNotes[0]?.studyGoalTitle || '';
 
-    return HttpResponse.json({ notes: filteredNotes });
+    return HttpResponse.json({
+      studyGoalTitle,
+      notes: filteredNotes
+    });
   }),
 
   // 노트 상세 조회 (기존)

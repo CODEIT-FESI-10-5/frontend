@@ -14,5 +14,6 @@ export interface NoteResponse {
 }
 
 export interface NoteListResponse {
+  studyGoalTitle: string;
   notes: Note[];
 }
