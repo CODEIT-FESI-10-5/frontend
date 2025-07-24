@@ -34,10 +34,13 @@ export default function UpdateStudyImage({ studyId }: { studyId: string }) {
       />
       <button
         onClick={() => fileInputRef.current?.click()}
-        className="bg-opacity-50 hover:bg-opacity-70 absolute top-10 right-10 z-10 rounded-full bg-black p-2 transition-all duration-200 disabled:opacity-50"
+        className="absolute top-10 right-10 z-10 p-2 transition-all duration-200 hover:cursor-pointer disabled:opacity-50"
         title="배경 이미지 변경"
       >
-        <span>배경</span>
+        <div className="flex flex-col items-center justify-center">
+          <span>이미지</span>
+          <span>변경</span>
+        </div>
       </button>
     </>
   );

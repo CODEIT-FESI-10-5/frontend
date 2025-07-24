@@ -4,7 +4,7 @@
 // 요청 설정 옵션
 interface RequestConfig {
   params?: Record<string, any>; // URL 쿼리 파라미터
-  headers?: Record<string, string>; // 추가 HTTP 헤더
+  headers?: Record<string, string | undefined>; // 추가 HTTP 헤더 (delete 연산자 지원)
   includeCredentials?: boolean; // HTTP Only 쿠키 포함 여부 (기본값: true)
 }
 
@@ -12,7 +12,7 @@ interface RequestConfig {
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL || '/api';
 
 // 기본 HTTP 헤더
-const DEFAULT_HEADERS = {
+const DEFAULT_HEADERS: { 'Content-Type'?: string } = {
   'Content-Type': 'application/json',
 };
 
@@ -39,14 +39,23 @@ async function request<T>(
 ) {
   const url = buildURL(endpoint, config?.params);
 
+  // FormData일 경우 Content-Type 헤더 제거 및 body 그대로 전달
+  const isFormData =
+    typeof FormData !== 'undefined' && data instanceof FormData;
+  const headers = {
+    ...DEFAULT_HEADERS,
+    ...config?.headers,
+  };
+  if (isFormData && 'Content-Type' in headers) {
+    // Content-Type 헤더가 있으면 제거 (브라우저가 자동으로 설정)
+    delete headers['Content-Type'];
+  }
+
   const response = await fetch(url, {
     method,
     credentials: config?.includeCredentials !== false ? 'include' : 'omit',
-    headers: {
-      ...DEFAULT_HEADERS,
-      ...config?.headers,
-    },
-    body: data ? JSON.stringify(data) : undefined,
+    headers,
+    body: data ? (isFormData ? data : JSON.stringify(data)) : undefined,
   });
 
   // HTTP 상태 코드 검사
