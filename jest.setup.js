@@ -10,3 +10,6 @@ afterEach(() => server.resetHandlers());
 afterAll(() => server.close());
 
 jest.mock('@/assets/new-todo.svg', () => () => <svg data-testid="svg-mock" />);
+jest.mock('next/navigation', () => ({
+  useParams: jest.fn(),
+}));

@@ -15,6 +15,7 @@ export default function UpdateTodoCompletionCheckbox({
 
   return (
     <button
+      aria-label="update-todo-completion-checkbox"
       onClick={() => {
         updateTodo.mutate({ todoId, newTodoState: { completed: !completed } });
       }}
