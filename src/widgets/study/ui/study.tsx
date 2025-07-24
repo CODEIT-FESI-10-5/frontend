@@ -1,3 +1,5 @@
+'use client';
+
 import { useStudyGroup } from '@/entities/study/model/useStudyGroup';
 import UpdateStudyInfo from '@/features/update-study-info/ui/update-study-info';
 import StudyInfo from '@/entities/study/ui/studyInfo';
