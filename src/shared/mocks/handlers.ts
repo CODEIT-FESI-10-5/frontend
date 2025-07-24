@@ -9,6 +9,7 @@ import { goalHandlers } from '@/entities/goal/api';
 import { loginHandler } from '@/features/auth-login/api';
 import { signUpHandler } from '@/features/auth-sign-up/api';
 import { todolistHandlers } from '@/entities/todolist/api/mock';
+import { sidebarJoinStudyHandler } from '@/features/join-study/api/handler';
 
 export const handlers = [
   ...sidebarProfileHandler,
@@ -22,4 +23,5 @@ export const handlers = [
   ...todolistHandlers,
   ...loginHandler,
   ...signUpHandler,
+  ...sidebarJoinStudyHandler,
 ];
