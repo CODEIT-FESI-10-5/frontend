@@ -6,6 +6,7 @@ import { type Note } from '@/entities/note/model/types';
 import NoteOpenIcon from '@/assets/note-open.svg';
 import NoteClosedIcon from '@/assets/note-close.svg';
 import parse from 'html-react-parser';
+import { AnimatePresence, motion } from 'framer-motion';
 
 interface NoteCardProps {
   note: Note;
@@ -31,7 +32,7 @@ export function NoteCard({ note }: NoteCardProps) {
     >
       <div className="flex flex-col">
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-8">
+          <div className="flex items-center gap-8 py-10">
             <span className="mr-2 flex-shrink-0">
               {isExpanded ? <NoteOpenIcon /> : <NoteClosedIcon />}
             </span>
@@ -46,30 +47,41 @@ export function NoteCard({ note }: NoteCardProps) {
             </button>
           )}
         </div>
-        {isExpanded && (
-          <div className="mt-18">
-            <div className="relative rounded-md">
-              <div className="text-text-primary prose prose-sm max-w-none">
-                {parse(
-                  (note.content || '').replace(
-                    /<script[\s\S]*?>[\s\S]*?<\/script>/gi,
-                    '',
-                  ),
-                )}
+        <AnimatePresence initial={false}>
+          {isExpanded && (
+            <motion.div
+              key="note-content"
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: 'auto', opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.4, ease: 'easeInOut' }}
+              style={{ overflow: 'hidden' }}
+            >
+              <div className="mt-18">
+                <div className="relative rounded-md">
+                  <div className="text-text-primary prose prose-sm max-w-none">
+                    {parse(
+                      (note.content || '').replace(
+                        /<script[\s\S]*?>[\s\S]*?<\/script>/gi,
+                        '',
+                      ),
+                    )}
+                  </div>
+                </div>
+                <div className="text-text-tertiary mt-2 text-sm">
+                  <span>
+                    생성일: {new Date(note.createdAt).toLocaleDateString()}
+                  </span>
+                  {note.updatedAt !== note.createdAt && (
+                    <span className="ml-4">
+                      수정일: {new Date(note.updatedAt).toLocaleDateString()}
+                    </span>
+                  )}
+                </div>
               </div>
-            </div>
-            <div className="text-text-tertiary mt-2 text-sm">
-              <span>
-                생성일: {new Date(note.createdAt).toLocaleDateString()}
-              </span>
-              {note.updatedAt !== note.createdAt && (
-                <span className="ml-4">
-                  수정일: {new Date(note.updatedAt).toLocaleDateString()}
-                </span>
-              )}
-            </div>
-          </div>
-        )}
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </div>
   );
