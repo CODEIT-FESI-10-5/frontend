@@ -1,12 +1,12 @@
-import "@testing-library/jest-dom";
-import { server } from "./src/mocks/server";
+import 'cross-fetch/polyfill';
+import '@testing-library/jest-dom';
 
-// Establish API mocking before all tests.
+// jest.setup.js
+import { server } from './src/shared/mocks/server';
+
+// MSW 서버 시작
 beforeAll(() => server.listen());
-
-// Reset any request handlers that we may add during the tests,
-// so they don't affect other tests.
 afterEach(() => server.resetHandlers());
-
-// Clean up after the tests are finished.
 afterAll(() => server.close());
+
+jest.mock('@/assets/new-todo.svg', () => () => <svg data-testid="svg-mock" />);
