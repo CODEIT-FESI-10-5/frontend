@@ -2,26 +2,20 @@ import { http, HttpResponse } from 'msw';
 import { mockStudyGroup } from './mocks';
 
 export const studyHandlers = [
-  // StudyGroup 조회 API
-  http.get('/study-group/:id', ({ params }) => {
-    const studyId = params.id as string;
-    if (studyId !== mockStudyGroup.id) {
-      return HttpResponse.json(
-        { error: 'Study group not found' },
-        { status: 404 },
-      );
+  // Study 조회 API
+  http.get('/study/:studyId', ({ params }) => {
+    const studyId = params.studyId as string;
+    if (studyId !== mockStudyGroup.data.studyId) {
+      return HttpResponse.json({ error: 'Study not found' }, { status: 404 });
     }
     return HttpResponse.json(mockStudyGroup);
   }),
 
-  // StudyGroup 기본 정보 수정 API (제목, 설명)
-  http.patch('/studygroup/info/:groupId', async ({ params, request }) => {
-    const { groupId } = params;
-    if (groupId !== mockStudyGroup.id) {
-      return HttpResponse.json(
-        { error: 'Study group not found' },
-        { status: 404 },
-      );
+  // Study 기본 정보 수정 API (제목, 설명)
+  http.patch('/study/:studyId/info', async ({ params, request }) => {
+    const { studyId } = params;
+    if (studyId !== mockStudyGroup.data.studyId) {
+      return HttpResponse.json({ error: 'Study not found' }, { status: 404 });
     }
     try {
       const body = (await request.json()) as {
@@ -34,29 +28,26 @@ export const studyHandlers = [
           { status: 400 },
         );
       }
-      mockStudyGroup.title = body.title;
-      mockStudyGroup.description = body.description;
+      mockStudyGroup.data.title = body.title;
+      mockStudyGroup.data.description = body.description;
       return HttpResponse.json({
-        message: 'Study group info updated successfully',
-        studyGroup: {
-          id: mockStudyGroup.id,
-          title: mockStudyGroup.title,
-          description: mockStudyGroup.description,
+        message: 'Study info updated successfully',
+        study: {
+          id: mockStudyGroup.data.studyId,
+          title: mockStudyGroup.data.title,
+          description: mockStudyGroup.data.description,
         },
       });
-    } catch (error) {
+    } catch {
       return HttpResponse.json({ error: 'Invalid JSON body' }, { status: 400 });
     }
   }),
 
-  // StudyGroup 이미지 수정 API
-  http.patch('/studygroup/image/:groupId', async ({ params, request }) => {
-    const { groupId } = params;
-    if (groupId !== mockStudyGroup.id) {
-      return HttpResponse.json(
-        { error: 'Study group not found' },
-        { status: 404 },
-      );
+  // Study 이미지 수정 API
+  http.patch('/study/:studyId/image', async ({ params, request }) => {
+    const { studyId } = params;
+    if (studyId !== mockStudyGroup.data.studyId) {
+      return HttpResponse.json({ error: 'Study not found' }, { status: 404 });
     }
     try {
       const formData = await request.formData();
@@ -68,15 +59,15 @@ export const studyHandlers = [
         );
       }
       // 실제 서비스에서는 파일 저장/URL 반환 등 처리 필요
-      mockStudyGroup.image = 'uploaded-image-url-or-data'; // 예시
+      mockStudyGroup.data.studyImageDir = 'uploaded-image-url-or-data'; // 예시
       return HttpResponse.json({
-        message: 'Study group image updated successfully',
-        studyGroup: {
-          id: mockStudyGroup.id,
-          image: mockStudyGroup.image,
+        message: 'Study image updated successfully',
+        study: {
+          id: mockStudyGroup.data.studyId,
+          image: mockStudyGroup.data.studyImageDir,
         },
       });
-    } catch (error) {
+    } catch {
       return HttpResponse.json(
         { error: 'Invalid FormData body' },
         { status: 400 },

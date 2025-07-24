@@ -8,22 +8,18 @@ interface SubmitButtonProps
 }
 
 const submitButtonVariants = cva(
-  'rounded-6 flex h-54 w-442 items-center justify-center',
+  'rounded-6 flex h-54 w-442 items-center body-medium justify-center',
   {
     variants: {
       isActive: {
         true: 'bg-primary text-text-white',
-        false: 'bg-icon-grey-100 text-black',
+        false: 'bg-disabled text-surface-4',
       },
     },
   },
 );
 
-export default function SubmitButton({
-  name,
-  isActive,
-  ...props
-}: SubmitButtonProps) {
+export default function SubmitButton({ name, isActive }: SubmitButtonProps) {
   return (
     <button className={cn(submitButtonVariants({ isActive }))}>{name}</button>
   );

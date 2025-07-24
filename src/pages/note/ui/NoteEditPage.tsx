@@ -7,7 +7,7 @@ import { useUpdateNote } from '@/features/edit-note/api/useUpdateNoteMutation';
 
 export function NoteEditPage() {
   const params = useParams();
-  const noteId = Number(params.noteId);
+  const noteId = Number(params?.noteId);
 
   const {
     data: noteData,

@@ -42,6 +42,8 @@
   --color-icon-grey-300: #898989;
   --color-icon-grey-200: #a7a7a7;
   --color-icon-grey-100: #e8e8e8;
+
+  --color-disabled: #a9abb9;
 }
 @utility headline-large {
   font-size: 1.625rem;
