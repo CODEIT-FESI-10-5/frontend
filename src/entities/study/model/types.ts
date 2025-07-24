@@ -14,6 +14,7 @@ export interface members {
   name: string; // 팀원 이름
   image: string; // 프로필 이미지
 }
+
 // 스터디 목록 응답
 export interface StudyListResponse {
   studyList: StudyItem[];
@@ -23,7 +24,22 @@ export interface StudyItem {
   id: string;
   title: string;
   description: string;
-  isLeader: boolean;
+  role: 'LEADER' | 'MEMBER';
+}
+
+export interface StudyListResponseApi {
+  data: {
+    totalCount: number;
+    recentStudyId: number;
+    studyList: StudyItemApi[];
+  };
+}
+
+export interface StudyItemApi {
+  studyId: number;
+  role: 'LEADER' | 'MEMBER';
+  title: string;
+  description: string;
 }
 
 // 스터디 생성 응답

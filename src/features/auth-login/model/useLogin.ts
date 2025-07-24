@@ -9,7 +9,7 @@ export function useLogin() {
   return useMutation({
     mutationFn: (data: LoginSchema) => requestLogin(data),
     onSuccess: () => {
-      router.push('/dashboard');
+      router.push('/dashboard/');
     },
     onError: (err) => {
       console.error(err);

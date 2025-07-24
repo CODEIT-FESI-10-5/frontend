@@ -1,6 +1,10 @@
 import { clientFetch } from '@/shared/api';
-import { StudyListResponse } from '../model';
+import { StudyListResponse, StudyListResponseApi } from '../model';
+import { StudyListMapper } from '../model/study.mapper';
 
 export const getStudyList = async (): Promise<StudyListResponse> => {
-  return clientFetch.get('api/sidebar/study-list');
+  const res = await clientFetch.get<StudyListResponseApi>(
+    'api/sidebar/study-list',
+  );
+  return StudyListMapper(res);
 };
