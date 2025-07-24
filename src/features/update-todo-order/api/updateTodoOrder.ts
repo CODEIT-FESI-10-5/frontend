@@ -4,8 +4,9 @@ export const updateTodoOrder = async (
   goalId: string,
   newOrder: Array<string>,
 ) => {
-  const endpoint = `/api/goal/${goalId}/todolist/order`;
+  const endpoint = `/api/todos/order`;
   const parsedResponse = await clientFetch.patch(endpoint, {
+    goalId,
     newOrder: newOrder,
   });
 

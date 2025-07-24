@@ -26,7 +26,6 @@ export default function TodoCardDragGroup({ type }: TodoCardDragGroupProps) {
   const draggable = !(type === 'done');
   const updateOrder = useUpdateTodoOrderMutation();
   const handleDrop = () => {
-    console.log('drop elem: post newOrder');
     if (!params) return;
     updateOrder.mutate({
       goalId: params.goalId,

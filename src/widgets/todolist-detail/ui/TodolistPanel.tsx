@@ -2,7 +2,7 @@
 
 import { cn } from '@/shared/lib/utils/cn';
 import { LayoutGroup, motion } from 'framer-motion';
-import NewTodo from '@/../public/assets/new-todo.svg';
+import NewTodo from '@/assets/new-todo.svg';
 import { useCreateTodoStore } from '../../../features/create-todo/model/store';
 import Todolist from './Todolist';
 import { useTodolistQuery } from '@/entities/todolist/model/hooks';
@@ -42,7 +42,7 @@ function TitleArea({ title = '목표' }: { title?: string }) {
 }
 
 export default function TodolistPanel() {
-  const params = useParams<{ studyId: string; goalId: string }>();
+  const params = useParams<{ goalId: string }>();
   const { data, isLoading } = useTodolistQuery(params?.goalId);
   const { setAllGroup } = useTodolistStore();
 
@@ -53,7 +53,12 @@ export default function TodolistPanel() {
     setAllGroup(newDone, newShared, newPersonal);
   }, [data, setAllGroup]);
 
-  if (!params || isLoading) return <>Loading</>;
+  if (!params || isLoading)
+    return (
+      <>
+        {JSON.stringify(params)} / Loading:{String(isLoading)}
+      </>
+    );
 
   return (
     <LayoutGroup>
