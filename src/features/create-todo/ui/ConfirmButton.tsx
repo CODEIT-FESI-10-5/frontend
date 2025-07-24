@@ -13,6 +13,7 @@ export default function ConfirmButton({
   styleProps = '',
   children,
   onClick = () => {},
+  ...rest
 }: ConfirmButtonProps) {
   return (
     <button
@@ -26,6 +27,7 @@ export default function ConfirmButton({
         color,
       )}
       onClick={onClick}
+      {...rest}
     >
       {children}
     </button>

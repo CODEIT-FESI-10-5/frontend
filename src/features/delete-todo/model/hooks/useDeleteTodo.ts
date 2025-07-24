@@ -8,6 +8,6 @@ interface DeleteTodoMutationParams {
 }
 export const useDeleteTodoMutation = (goalId: string) =>
   useTodoCustomMutation<DeleteTodoMutationParams, any>(
-    ({ todoId }) => deleteTodo(goalId, todoId),
+    ({ todoId }) => deleteTodo(todoId),
     [...todolistQueryKeys.todolist(goalId)],
   );

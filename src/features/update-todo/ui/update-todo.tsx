@@ -11,11 +11,6 @@ export default function UpdateTodoCompletionCheckbox({
   goalId: string;
   todoId: string;
 }) {
-  // return completed ? (
-  //   <CheckTodoFillIcon width={30} height={30} />
-  // ) : (
-  //   <CheckTodoBlankIcon width={30} height={30} />
-  // );
   const updateTodo = useUpdateTodoMutation(goalId);
 
   return (

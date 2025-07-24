@@ -5,8 +5,11 @@ export interface newTodoData {
   shared: boolean;
 }
 export const createTodo = async (goalId: string, newTodo: newTodoData) => {
-  const endpoint = `/api/goal/${goalId}/todo`;
-  const parsedResponse = await clientFetch.post(endpoint, newTodo);
+  const endpoint = `/api/todos`;
+  const parsedResponse = await clientFetch.post(endpoint, {
+    goalId,
+    ...newTodo,
+  });
 
   return parsedResponse;
 };

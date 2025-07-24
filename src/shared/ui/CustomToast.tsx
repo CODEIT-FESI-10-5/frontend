@@ -10,8 +10,14 @@ export default function CustomToast() {
           duration: 3000, // 모든 토스트 공통 지속시간
 
           style: {
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            width: '442px',
+            height: '44px',
             borderRadius: '4px',
-            padding: '10px 40px',
+            padding: '10px 20px',
+            whiteSpace: 'nowrap',
           },
 
           success: {
