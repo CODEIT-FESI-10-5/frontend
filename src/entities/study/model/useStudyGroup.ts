@@ -1,14 +1,35 @@
 import { useQuery } from '@tanstack/react-query';
-import { StudyGroup, studyQueryKeys } from '@/entities/study';
+import {
+  StudyGroup,
+  StudyGroupResponse,
+  studyQueryKeys,
+} from '@/entities/study';
 import { fetchStudy } from '@/entities/study/api';
 
 // StudyGroup React Query 훅
 export const useStudyGroup = (studyId: string) => {
-  return useQuery<StudyGroup>({
+  return useQuery<StudyGroupResponse, Error, StudyGroup>({
     queryKey: studyQueryKeys.detail(studyId),
     queryFn: () => fetchStudy(studyId),
     enabled: !!studyId,
-    staleTime: 5 * 60 * 1000, // 5분간 fresh 상태 유지
-    refetchOnWindowFocus: false, // 윈도우 포커스 시 자동 refetch 방지
+    staleTime: 5 * 60 * 1000,
+    refetchOnWindowFocus: false,
+    select: (response: StudyGroupResponse) => {
+      const d = response.data;
+      return {
+        id: String(d.studyId),
+        title: d.title,
+        description: d.description,
+        createdAt: new Date(d.createAt),
+        image: d.studyImageDir,
+        teamProgress: d.teamProgress,
+        inviteLink: d.inviteCode,
+        members: d.members.map((m: any) => ({
+          id: String(m.userId),
+          name: m.name,
+          image: m.userImageDir,
+        })),
+      };
+    },
   });
 };
