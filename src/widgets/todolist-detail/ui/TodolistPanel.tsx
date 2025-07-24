@@ -1,9 +1,8 @@
 'use client';
 
-import Button from '@/shared/ui/TodoButton';
 import { cn } from '@/shared/lib/utils/cn';
 import { LayoutGroup, motion } from 'framer-motion';
-import IconNewTodo from '@/../public/assets/icon-new-todo.svg';
+import NewTodo from '@/../public/assets/new-todo.svg';
 import IconBack from '@/../public/assets/icon-back.svg';
 import { useCreateTodoStore } from '../../../features/create-todo/model/store';
 import Link from 'next/link';
@@ -13,6 +12,7 @@ import divideTodoGroup from '@/entities/todolist/lib/utils/divideTodoGroup';
 import { useEffect } from 'react';
 import { useTodolistStore } from '@/entities/todolist/model/store';
 import { useParams } from 'next/navigation';
+import ConfirmButton from '@/features/create-todo/ui/ConfirmButton';
 
 function BackButton({ studyId, goalId }: { studyId: string; goalId: string }) {
   return (
@@ -36,10 +36,14 @@ function TitleArea({ title = '목표' }: { title?: string }) {
       className="mb-40 flex w-full justify-between"
     >
       <p className="headline-large font-bold text-white">{title}</p>
-      <Button size="lg" color="bg-highlight" onClick={() => toggleEditMode()}>
-        <IconNewTodo width={24} height={24} fill="white" />
+      <ConfirmButton
+        size="lg"
+        color="bg-highlight"
+        onClick={() => toggleEditMode()}
+      >
+        <NewTodo width={24} height={24} />
         <p className="label-small">세부 투두 생성</p>
-      </Button>
+      </ConfirmButton>
     </motion.div>
   );
 }
@@ -75,7 +79,6 @@ export default function TodolistPanel() {
           <TitleArea title={data?.title} />
           <Todolist />
         </motion.div>
-        <div id="portal-backdrop" />
       </motion.div>
     </LayoutGroup>
   );
