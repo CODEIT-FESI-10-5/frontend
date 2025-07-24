@@ -3,14 +3,14 @@ import { cn } from '@/shared/utils/cn';
 import { cva } from 'class-variance-authority';
 import React from 'react';
 
-interface TextFieldProps extends React.InputHTMLAttributes<HTMLInputElement> {
+interface InputFieldProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label: string;
   error?: boolean;
   errorMessage?: string;
 }
 
-const textFieldVariants = cva(
-  'bg-surface-3 rounded-6 h-51 w-full max-w-442 p-16 outline-none',
+const inputFieldVariants = cva(
+  'bg-surface-3 rounded-6 h-51 w-full p-16 outline-none',
   {
     variants: {
       error: {
@@ -21,16 +21,15 @@ const textFieldVariants = cva(
     },
   },
 );
-export default function TextField({
+export default function InputField({
   label,
   error,
   errorMessage,
   ...props
-}: TextFieldProps) {
+}: InputFieldProps) {
   return (
     <div className="flex w-full flex-col gap-11">
-      <label className="text-text-tertiary label-small">{label}</label>
-      <input className={cn(textFieldVariants({ error }))} {...props}></input>
+      <input className={cn(inputFieldVariants({ error }))} {...props}></input>
       {error && (
         <span className="text-highlight label-small">{errorMessage}</span>
       )}
