@@ -4,7 +4,6 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { type Note } from '@/entities/note/model/types';
 import NoteOpenIcon from '@/assets/note-open.svg';
-import NoteClosedIcon from '@/assets/note-close.svg';
 import parse from 'html-react-parser';
 import { AnimatePresence, motion } from 'framer-motion';
 
@@ -34,7 +33,19 @@ export function NoteCard({ note }: NoteCardProps) {
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-8 py-10">
             <span className="mr-2 flex-shrink-0">
-              {isExpanded ? <NoteOpenIcon /> : <NoteClosedIcon />}
+              <motion.span
+                animate={{
+                  rotate: isExpanded ? 0 : -180,
+                  color: isExpanded ? '#7380E9' : '#fff',
+                }}
+                transition={{ duration: 0.4, ease: 'easeInOut' }}
+                style={{
+                  display: 'inline-block',
+                  color: isExpanded ? '#7380E9' : '#fff',
+                }}
+              >
+                <NoteOpenIcon />
+              </motion.span>
             </span>
             <h3 className="text-lg font-semibold">{note.todoTitle}</h3>
           </div>
