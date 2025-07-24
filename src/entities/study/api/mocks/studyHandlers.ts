@@ -44,7 +44,7 @@ export const studyHandlers = [
           description: mockStudyGroup.description,
         },
       });
-    } catch (error) {
+    } catch {
       return HttpResponse.json({ error: 'Invalid JSON body' }, { status: 400 });
     }
   }),
@@ -76,7 +76,7 @@ export const studyHandlers = [
           image: mockStudyGroup.image,
         },
       });
-    } catch (error) {
+    } catch {
       return HttpResponse.json(
         { error: 'Invalid FormData body' },
         { status: 400 },

@@ -13,7 +13,7 @@ export default function CreateTodoForm() {
   const { isShared, toggleIsShared } = useCreateTodoStore();
   const { resetField, toggleEditMode } = useCreateTodoStore();
 
-  const createTodo = useCreateTodoMutation();
+  const createTodo = useCreateTodoMutation('goal-1');
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (content.trim() === '') {

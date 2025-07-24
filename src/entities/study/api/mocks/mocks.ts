@@ -1,4 +1,4 @@
-import { StudyGroup } from '../types';
+import { StudyGroup } from '../../model';
 
 export const mockStudyGroup: StudyGroup = {
   id: 'study-1',

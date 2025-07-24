@@ -22,7 +22,7 @@ export default function LoginForm() {
       email: '',
       password: '',
     },
-    mode: 'onBlur',
+    mode: 'onChange',
   });
   console.log('login', errors.email?.message);
 

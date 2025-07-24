@@ -13,7 +13,7 @@ export default function CreateStudyButton() {
   return (
     <button
       onClick={() => mutation.mutate()}
-      className="bg-primary body-large text-text-white rounded-6 h-50 w-143"
+      className="bg-primary title-small text-text-white rounded-6 h-50 w-143"
     >
       스터디 만들기
     </button>
