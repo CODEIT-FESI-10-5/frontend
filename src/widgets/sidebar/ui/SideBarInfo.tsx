@@ -2,8 +2,7 @@
 import { usePathname } from 'next/navigation';
 import { CreateStudyButton } from '@/features/create-study/ui';
 import { Profile } from '@/features/get-profile/ui';
-import JoinStudyButton from './JoinStudyButton';
-
+import { JoinStudyButton } from '@/features/join-study/ui';
 export default function SideBarInfo() {
   const pathname = usePathname() as string;
   const isNotePage = pathname.startsWith('/note');

@@ -1,7 +1,7 @@
 'use client';
 import { useState } from 'react';
-import UpdateButton from './UpdateButton';
 import InputField from './InputField';
+import { SubmitButton } from '@/shared/ui';
 
 export default function UpdatePassword() {
   const [isActive, setIsActive] = useState(false);
@@ -11,7 +11,7 @@ export default function UpdatePassword() {
         <h2 className="text-text-white body-medium">계정 보안</h2>
         <div className="flex items-center justify-between">
           <h3 className="body-medium text-white">비밀번호</h3>
-          <UpdateButton type="password" isActive={isActive} />
+          <SubmitButton name="비밀번호 변경" size="sm" isActive={isActive} />
         </div>
         {isActive && <ChangePassword />}
       </section>
