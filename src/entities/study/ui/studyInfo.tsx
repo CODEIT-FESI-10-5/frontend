@@ -3,9 +3,10 @@
 import { motion } from 'framer-motion';
 import type { StudyGroup } from '../model';
 import CopyIcon from '@/assets/copy.svg';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import Image from 'next/image';
 import { useModal } from '@/shared/lib/utils/useModal';
+import toast from 'react-hot-toast';
 
 export default function StudyInfo({
   members,
@@ -28,10 +29,21 @@ export default function StudyInfo({
     }
   };
 
+  // 초대코드 복사 핸들러
+  const handleCopyInvite = async () => {
+    try {
+      await navigator.clipboard.writeText(inviteLink);
+      toast.success('초대 코드가 복사되었습니다!');
+    } catch {
+      // 복사 실패 시 별도 처리 가능
+      toast.error('초대 코드 복사에 실패했습니다.');
+    }
+  };
+
   return (
-    <div className="max-w-1000">
+    <div className="">
       {/*TODO Progress 바 max-w 어디까지 설정할지 */}
-      <div className="mb-12 flex max-w-1000 items-end justify-between">
+      <div className="mb-12 flex items-end justify-between">
         {/* 팀원 목록 */}
         <div className="flex items-center gap-8">
           {/* 겹치는 프로필 이미지들 */}
@@ -91,7 +103,11 @@ export default function StudyInfo({
         />
       </div>
       {/*초대 링크 */}
-      <div className="bg-tertiary text-text-secondary absolute right-20 -bottom-26 flex gap-6 rounded-sm px-18 py-14">
+      <div
+        className="bg-tertiary text-text-secondary hover:bg-tertiary/80 absolute right-20 -bottom-26 flex cursor-pointer gap-6 rounded-sm px-18 py-14"
+        onClick={handleCopyInvite}
+        title="클릭 시 복사"
+      >
         <span className="title-medium">초대 코드 {inviteLink}</span>
         <CopyIcon width={24} height={24} />
       </div>
