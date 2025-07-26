@@ -1,10 +1,10 @@
 import { http, HttpResponse } from 'msw';
-import { signUpSchema } from '../model';
+import { signupSchema } from '../model';
 
 export const signUpHandler = [
   http.post('/api/auth/sign-up', async ({ request }) => {
     const body = await request.json();
-    const result = await signUpSchema.safeParse(body);
+    const result = await signupSchema.safeParse(body);
 
     if (!result.success) {
       return HttpResponse.json(
@@ -13,7 +13,7 @@ export const signUpHandler = [
       );
     }
 
-    const { email, name, ...rest } = result.data;
+    const { email, name } = result.data;
 
     // 더미 유저 정보
     const user = {

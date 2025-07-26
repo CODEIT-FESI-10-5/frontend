@@ -24,7 +24,6 @@ export default function LoginForm() {
     },
     mode: 'onChange',
   });
-  console.log('login', errors.email?.message);
 
   const onValid = (data: LoginSchema) => {
     mutate(data);

@@ -1,6 +1,6 @@
 import { clientFetch } from '@/shared/api';
-import { SignUpSchema } from '@/features/auth-sign-up/model';
+import { SignupRequestApi } from '../model/types';
 
-export const requestSignUp = (data: SignUpSchema) => {
-  return clientFetch.post('/api/auth/sign-up', data);
+export const requestSignup = (data: SignupRequestApi) => {
+  return clientFetch.post('/api/user/signup', data);
 };

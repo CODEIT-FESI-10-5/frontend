@@ -1,6 +1,6 @@
 import * as z from 'zod';
 
-export const signUpSchema = z
+export const signupSchema = z
   .object({
     email: z.email({ message: '올바른 이메일 형식이 아닙니다.' }),
     name: z
@@ -17,4 +17,4 @@ export const signUpSchema = z
     path: ['confirmPassword'],
   });
 
-export type SignUpSchema = z.infer<typeof signUpSchema>;
+export type SignupSchema = z.infer<typeof signupSchema>;

@@ -5,19 +5,19 @@ import SubmitButton from '@/shared/ui/SubmitButton';
 import TextField from '@/shared/ui/TextField';
 import Link from 'next/link';
 import {
-  SignUpSchema,
-  signUpSchema,
-  useSignUp,
+  SignupSchema,
+  signupSchema,
+  useSignup,
 } from '@/features/auth-sign-up/model';
 
 export default function SignUpForm() {
-  const { mutate } = useSignUp();
+  const { mutate } = useSignup();
   const {
     register,
     handleSubmit,
     formState: { errors, isValid },
-  } = useForm<SignUpSchema>({
-    resolver: zodResolver(signUpSchema),
+  } = useForm<SignupSchema>({
+    resolver: zodResolver(signupSchema),
     defaultValues: {
       email: '',
       name: '',
@@ -27,7 +27,7 @@ export default function SignUpForm() {
     mode: 'onChange',
   });
 
-  const onValid = (data: SignUpSchema) => {
+  const onValid = (data: SignupSchema) => {
     mutate(data);
   };
 
