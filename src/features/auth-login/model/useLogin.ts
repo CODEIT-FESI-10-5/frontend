@@ -9,10 +9,10 @@ export function useLogin() {
 
   return useMutation({
     mutationFn: (data: LoginSchema) => requestLogin(data),
-    onSuccess: (res) => {
-      const { userId, name, email, profileImage } = res.data;
+    onSuccess: () => {
+      //   const { userId, name, email, profileImage } = res.data;
 
-      setProfile({ userId, name, email, profileImage });
+      //   setProfile({ userId, name, email, profileImage });
 
       router.push('/');
     },
