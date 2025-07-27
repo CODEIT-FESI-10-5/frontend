@@ -49,6 +49,21 @@ export const todolistHandlers = [
     return HttpResponse.json({ status: 201 });
   }),
 
+  // PATCH: 투두 순서 수정
+  http.patch('/api/todos/priority', async ({ request }) => {
+    const body = (await request.json()) as {
+      todoId: string;
+      priorityOrder: number;
+    };
+    const deletedOrder = myTodolist.order.filter((id) => id !== body.todoId);
+    console.log(deletedOrder);
+    deletedOrder.splice(body.priorityOrder, 0, body.todoId);
+    myTodolist.order = deletedOrder;
+
+    console.log(myTodolist.order);
+    return HttpResponse.json({ status: 201 });
+  }),
+
   // PATCH: 투두 완료/취소, 내용 수정
   http.patch('/api/todos/:todoId', async ({ request, params }) => {
     const { todoId } = params;
@@ -95,17 +110,6 @@ export const todolistHandlers = [
       // 취소: 가장 뒤로 밀려남
       myTodolist.order.push(todoId as string);
     }
-
-    return HttpResponse.json({ status: 201 });
-  }),
-
-  // PATCH: 투두 순서 수정
-  http.patch('/api/todos/order', async ({ request }) => {
-    const body = (await request.json()) as {
-      goalId: string;
-      newOrder: Array<string>;
-    };
-    myTodolist.order = body.newOrder;
 
     return HttpResponse.json({ status: 201 });
   }),

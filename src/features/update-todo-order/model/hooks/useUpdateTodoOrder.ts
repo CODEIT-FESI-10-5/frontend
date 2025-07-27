@@ -3,11 +3,11 @@ import { useTodoCustomMutation } from '@/shared/lib/utils/useTodoCustomMutation'
 import { updateTodoOrder } from '../../api';
 
 interface UpdateTodoOrderMutationParams {
-  goalId: string;
-  newOrder: Array<string>;
+  todoId: string;
+  newOrder: number;
 }
 
 export const useUpdateTodoOrderMutation = () =>
   useTodoCustomMutation<UpdateTodoOrderMutationParams, any>(
-    ({ goalId, newOrder }) => updateTodoOrder(goalId, newOrder),
+    ({ todoId, newOrder }) => updateTodoOrder({ todoId, newOrder }),
   );
