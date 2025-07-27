@@ -6,75 +6,68 @@ import {
   waitFor,
 } from '@testing-library/react';
 import TodolistPanel from '../../../widgets/todolist-detail/ui/TodolistPanel';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useParams } from 'next/navigation';
-import { useTodolistQuery } from '@/entities/todolist/model/hooks';
 import { useCreateTodoStore } from '@/features/create-todo/model/store';
 import CreateTodoForm from '@/features/create-todo/ui/CreateTodoForm';
 import { useCreateTodoMutation } from '@/features/create-todo/model/hooks';
-import Todolist from '../../../widgets/todolist-detail/ui/Todolist';
+import { useTodolistStore } from '@/entities/todolist/model/store';
+import { renderWithQueryClient } from './lib/renderWithQueryClient';
 
-jest.mock('@/entities/todolist/model/hooks', () => ({
-  useTodolistQuery: jest.fn(),
-}));
-jest.mock('@/features/create-todo/model/hooks', () => ({
-  useCreateTodoMutation: jest.fn(),
-}));
+jest.mock('@/features/create-todo/model/hooks', () => {
+  const originalModule = jest.requireActual(
+    '@/features/create-todo/model/hooks',
+  );
+  return {
+    __esModule: true,
+    ...originalModule,
+    useCreateTodoMutation: jest.fn((...args) =>
+      originalModule.useCreateTodoMutation(...args),
+    ),
+  };
+});
 
 describe.skip('투두 상세 페이지 - 새 투두 생성 테스트', () => {
-  const queryClient = new QueryClient();
-  const mutateMock = jest.fn();
   beforeEach(() => {
-    // 여기서 모킹값 설정
+    // 테스트 전체 적용 모킹값 설정
     (useParams as jest.Mock).mockReturnValue({
       goalId: 'goal-1',
     });
-    (useTodolistQuery as jest.Mock).mockReturnValue({
-      data: {
-        title: '테스트 제목',
-        todolist: [
-          {
-            id: 'todo-1',
-            content: '테스트 투두 내용',
-          },
-        ],
-      },
-    });
-    (useCreateTodoMutation as jest.Mock).mockReturnValue({
-      mutate: mutateMock,
-    });
+
     useCreateTodoStore.setState({ isCreateMode: false });
   });
   afterEach(() => {
     jest.clearAllMocks();
   });
 
-  test('새 투두 생성 버튼 클릭시 입력 폼이 나타난다', () => {
-    render(
-      <QueryClientProvider client={queryClient}>
-        <TodolistPanel />
-      </QueryClientProvider>,
-    );
-    fireEvent.click(screen.getByText('세부 투두 생성'));
+  test('새 투두 생성 버튼 클릭시 입력 폼이 나타난다', async () => {
+    renderWithQueryClient(<TodolistPanel />);
+    await waitFor(() => {
+      const openCreateTodoFormButton = screen.getByText('세부 투두 생성');
+      fireEvent.click(openCreateTodoFormButton);
+    });
+
     expect(screen.getByPlaceholderText('입력하세요...')).toBeInTheDocument();
   });
 
-  test('투두가 10개일 경우 입력폼이 열리지 않는다', () => {
-    (useTodolistQuery as jest.Mock).mockReturnValue({
-      data: {
-        title: '테스트 제목',
-        todolist: Array.from({ length: 10 }, (_, i) => ({
+  test('투두가 10개일 경우 입력폼이 열리지 않는다', async () => {
+    renderWithQueryClient(<TodolistPanel />);
+
+    await screen.findByText('피그마 툴 익히기');
+    act(() => {
+      useTodolistStore.setState({
+        personal: Array.from({ length: 10 }, (_, i) => ({
           id: `todo-${i + 1}`,
           content: `테스트 투두 내용 ${i + 1}`,
+          createdAt: new Date(),
+          completed: true,
+          completedAt: undefined,
+          note: false,
+          shared: false,
         })),
-      },
+      });
     });
-    render(
-      <QueryClientProvider client={queryClient}>
-        <TodolistPanel />
-      </QueryClientProvider>,
-    );
-    fireEvent.click(screen.getByText('세부 투두 생성'));
+    // 입력 폼 열기 버튼 클릭
+    fireEvent.click(await screen.findByText('세부 투두 생성'));
     expect(
       screen.queryByPlaceholderText('입력하세요...'),
     ).not.toBeInTheDocument();
@@ -82,7 +75,15 @@ describe.skip('투두 상세 페이지 - 새 투두 생성 테스트', () => {
 
   test('스터디 관리자인 경우에 공통 투두 선택 체크박스가 표시된다', () => {});
 
+  test('스터디 팀원인 경우 공통 투두 선택 체크박스가 표시되지 않는다', () => {});
+
   test('입력 없이 완료 버튼을 클릭하면 경고 스타일이 적용된다', () => {
+    // create todo mutation 훅 호출 여부 확인을 위한 모킹
+    const mutateMock = jest.fn();
+    (useCreateTodoMutation as jest.Mock).mockReturnValue({
+      mutate: mutateMock,
+    });
+
     render(<CreateTodoForm />);
     const input = screen.getByPlaceholderText('입력하세요...');
     const button = screen.getByRole('button', { name: /완료/i });
@@ -93,35 +94,62 @@ describe.skip('투두 상세 페이지 - 새 투두 생성 테스트', () => {
     // mutate 호출 안 됐는지 확인
     expect(mutateMock).not.toHaveBeenCalled();
 
-    // 에러 스타일 적용 확인 (Tailwind class 기준)
-    expect(input).toHaveClass('placeholder:text-red-300');
+    // 입력값 유효성 검사에 걸려 경고 적용 되는지 확인
+    expect(input).toHaveAttribute('aria-invalid', 'true');
   });
 
-  test('유효한 투두 입력 후 제출하면 API 호출 후 폼이 닫힌다', async () => {
-    render(
-      <QueryClientProvider client={queryClient}>
-        <Todolist />
-      </QueryClientProvider>,
-    );
+  test('유효한 투두 입력 후 제출시 API 호출, 폼이 닫히며 성공시 투두 목록이 갱신된다', async () => {
+    // create todo mutation 훅 호출 여부 확인을 위한 모킹
+    const actual = jest.requireActual('@/features/create-todo/model/hooks');
+    const mutateSpy = jest.fn();
+
+    // 실제 훅 실행 결과에서 mutate만 감싸기
+    (useCreateTodoMutation as jest.Mock).mockImplementation((...args) => {
+      const result = actual.useCreateTodoMutation(...args);
+      const originalMutate = result.mutate;
+
+      return {
+        ...result,
+        mutate: (mArgs: {
+          newTodo: {
+            content: '새로운 투두';
+            shared: false;
+          };
+        }) => {
+          mutateSpy(mArgs);
+          return originalMutate(mArgs);
+        },
+      };
+    });
+
+    renderWithQueryClient(<TodolistPanel />);
+
     // 입력 폼 열기
     act(() => {
       useCreateTodoStore.setState({ isCreateMode: true });
     });
 
     //입력 후 완료 버튼 누르기
-    const input = screen.getByPlaceholderText('입력하세요...');
+    const input = await screen.findByPlaceholderText('입력하세요...');
     fireEvent.change(input, { target: { value: '새로운 투두' } });
+
     const button = screen.getByRole('button', { name: /완료/i });
     fireEvent.click(button);
-
-    // 폼이 닫혔는지 확인
     await waitFor(() => {
       expect(input).not.toBeInTheDocument();
     });
 
     // create-todo mutate api호출 확인
-    expect(mutateMock).toHaveBeenCalled();
-  });
+    expect(mutateSpy).toHaveBeenCalledWith({
+      newTodo: {
+        content: '새로운 투두',
+        shared: false,
+      },
+    });
 
-  test('투두 생성 후 갱신 시 새로고침 없이 목록에 반영된다', () => {});
+    // 추가된 투두가 있는지 확인
+    await waitFor(() => {
+      expect(screen.getByText('새로운 투두')).toBeInTheDocument();
+    });
+  });
 });

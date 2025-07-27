@@ -1,47 +1,68 @@
-import { useUpdateTodoMutation } from '@/features/update-todo/model/hooks';
-import Todo from '@/widgets/todo/ui/todo';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, screen, waitFor, within } from '@testing-library/react';
 import { useParams } from 'next/navigation';
-
-jest.mock('@/features/update-todo/model/hooks', () => ({
-  useUpdateTodoMutation: jest.fn(),
-}));
+import { renderWithQueryClient } from './lib/renderWithQueryClient';
+import TodolistPanel from '@/widgets/todolist-detail/ui/TodolistPanel';
+import { useUpdateTodoMutation } from '@/features/update-todo/model/hooks/useUpdateTodo';
 
 describe('투두 상세 페이지 - 투두 완료 여부 갱신 테스트', () => {
-  const queryClient = new QueryClient();
-  const updateMutateMock = jest.fn();
-  const todoMock = {
-    id: 'test-todo-1',
-    content: '테스트 투두',
-    createdAt: new Date(Date.now()),
-    completed: false,
-    completedAt: undefined,
-    note: false,
-    shared: false,
-  };
+  const mutateMock = jest.fn();
   beforeEach(() => {
+    jest.clearAllMocks();
     // 여기서 모킹값 설정
     (useParams as jest.Mock).mockReturnValue({
       goalId: 'goal-1',
     });
     (useUpdateTodoMutation as jest.Mock).mockReturnValue({
-      mutate: updateMutateMock,
+      mutate: mutateMock,
     });
   });
-  test('미완료 투두의 체크박스를 누르면 완료 상태로 변경 요청을 보낸다', () => {
-    render(
-      <QueryClientProvider client={queryClient}>
-        <Todo todo={todoMock} />
-      </QueryClientProvider>,
-    );
+  afterEach(() => {
+    // mutateMock.mockClear();
+  });
+  test('미완료 투두의 체크박스를 클릭시 완료 상태로 변경을 요청하는 api를 호출한다', async () => {
+    // update-todo mutate 호출 여부 추적을 위해 모킹 처리
+    renderWithQueryClient(<TodolistPanel />);
 
-    const checkbox = screen.getByLabelText('update-todo-completion-checkbox');
+    // 마지막 투두 선택 해보기
+    const todoCards = await screen.findAllByLabelText('todo-card');
+    const lastTodoCard = todoCards[todoCards.length - 1];
+
+    // 마지막 카드 내 체크박스 클릭
+    const checkbox = within(lastTodoCard).getByLabelText(
+      'update-todo-completion-checkbox',
+    );
     fireEvent.click(checkbox);
 
-    // create-todo mutate api호출 확인
-    expect(updateMutateMock).toHaveBeenCalled();
+    await waitFor(() =>
+      expect(mutateMock).toHaveBeenCalledWith({
+        todoId: 'todo-6',
+        newTodoState: {
+          completed: true,
+        },
+      }),
+    );
   });
 
-  test('완료 투두의 체크박스를 누르면 미완료 상태로 변경 요청을 보낸다', () => {});
+  test('완료 투두의 체크박스를 클릭시 미완료 상태로 변경을 요청하는 api를 호출한다', async () => {
+    //  update-todo mutate 호출 여부 추적을 위해 모킹 처리
+    renderWithQueryClient(<TodolistPanel />);
+
+    // 마지막 투두 선택 해보기
+    const todoCards = await screen.findAllByLabelText('todo-card');
+    const firstCompletedTodoCard = todoCards[0];
+
+    // 마지막 카드 내 체크박스 클릭
+    const checkbox = within(firstCompletedTodoCard).getByLabelText(
+      'update-todo-completion-checkbox',
+    );
+    fireEvent.click(checkbox);
+
+    console.log(mutateMock.mock.calls);
+    expect(mutateMock).toHaveBeenCalledWith({
+      todoId: 'todo-1',
+      newTodoState: {
+        completed: false,
+      },
+    });
+  });
 });
