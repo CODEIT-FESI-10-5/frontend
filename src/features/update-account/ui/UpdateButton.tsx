@@ -1,5 +1,3 @@
-import { cva, type VariantProps } from 'class-variance-authority';
-
 type UpdateButtonType = 'profile' | 'nickname' | 'password';
 
 interface TypeMapEntry {
@@ -27,8 +25,8 @@ interface UpdateButtonProps {
   isActive: boolean;
 }
 
-export default function UpdateButton({ type, isActive }: UpdateButtonProps) {
-  const { label, action } = typeMap[type];
+export default function UpdateButton({ type }: UpdateButtonProps) {
+  const { label } = typeMap[type];
   return (
     <button className="rounded-4 label-large text-text-primary bg-border-emphasis flex h-31 w-auto items-center justify-center px-12 py-6">
       {label}

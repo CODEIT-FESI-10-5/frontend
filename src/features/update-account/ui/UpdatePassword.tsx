@@ -4,7 +4,7 @@ import UpdateButton from './UpdateButton';
 import InputField from './InputField';
 
 export default function UpdatePassword() {
-  const [isActive, setIsActive] = useState(false);
+  const [isActive] = useState(false);
   return (
     <div>
       <section className="flex flex-col gap-16 px-28 py-30">
@@ -24,12 +24,12 @@ function ChangePassword() {
     <div className="flex flex-col gap-30">
       <div className="flex flex-col gap-8">
         <label className="label-large text-text-tertiary">기존 비밀번호</label>
-        <InputField label="기존 비밀번호" />
+        <InputField />
       </div>
       <div className="flex flex-col gap-8">
         <label className="label-large text-text-tertiary">새 비밀번호</label>
-        <InputField label="새 비밀번호" />
-        <InputField label="새 비밀번호 확인" />
+        <InputField />
+        <InputField />
       </div>
     </div>
   );
