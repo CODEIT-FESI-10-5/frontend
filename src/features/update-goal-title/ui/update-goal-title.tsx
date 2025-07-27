@@ -1,12 +1,16 @@
-import { useEffect, useRef, useState } from 'react';
+'use client';
+
+import { useEffect, useRef } from 'react';
 import { updateGoalTitle } from '../api/updateGoalTitle';
 
 export default function EditGoalTitle({
   title,
   setTitle,
+  goalId,
 }: {
   title: string;
   setTitle: (newTitle: string) => void;
+  goalId: string;
 }) {
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -20,7 +24,7 @@ export default function EditGoalTitle({
     timeoutRef.current = setTimeout(async () => {
       if (newTitle !== title && newTitle.trim() !== '') {
         try {
-          await updateGoalTitle('study-1', 'goal-1', newTitle);
+          await updateGoalTitle(goalId, newTitle);
           console.log('제목이 성공적으로 업데이트되었습니다:', newTitle);
         } catch (error) {
           console.error('제목 업데이트 실패:', error);

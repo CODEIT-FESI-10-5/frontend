@@ -1,3 +1,24 @@
+export interface StudyGroupResponse {
+  httpStatusCode: number;
+  errorCode: string;
+  errorMessage: string;
+  fieldErrors: { field: string; message: string }[];
+  data: {
+    studyId: number | string;
+    title: string;
+    description: string;
+    createAt: string;
+    studyImageDir: string;
+    inviteCode: string;
+    teamProgress: number;
+    members: {
+      userId: number | string;
+      name: string;
+      userImageDir: string;
+    }[];
+  };
+}
+
 export interface StudyGroup {
   id: string; //study 아이디
   title: string; //study 이름

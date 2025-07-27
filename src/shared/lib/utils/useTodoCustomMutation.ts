@@ -1,17 +1,27 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import {
+  useMutation,
+  UseMutationOptions,
+  useQueryClient,
+} from '@tanstack/react-query';
 
-export const useTodoCustomMutation = <TVariables, TResult>(
+export const useTodoCustomMutation = <TVariables, TResult, TError = unknown>(
   mutationFn: (variables: TVariables) => Promise<TResult>,
   invalidateQueryKey?: Array<string>,
+  mutationOptions?: UseMutationOptions<TResult, TError, TVariables>,
 ) => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn,
-    onSuccess: () => {
-      if (!invalidateQueryKey) return;
-      queryClient.invalidateQueries({
-        queryKey: invalidateQueryKey,
-      });
+    ...mutationOptions,
+    onSuccess: (data, variables, context) => {
+      if (invalidateQueryKey) {
+        queryClient.invalidateQueries({
+          queryKey: invalidateQueryKey,
+        });
+      }
+      if (mutationOptions?.onSuccess) {
+        mutationOptions.onSuccess(data, variables, context);
+      }
     },
   });
 };

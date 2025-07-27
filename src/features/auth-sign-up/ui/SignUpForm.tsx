@@ -33,8 +33,11 @@ export default function SignUpForm() {
 
   return (
     <div>
-      <form onSubmit={handleSubmit(onValid)} className="flex flex-col gap-60">
-        <div className="flex flex-col gap-30">
+      <form
+        onSubmit={handleSubmit(onValid)}
+        className="flex w-full flex-col gap-60"
+      >
+        <div className="flex w-full flex-col gap-30">
           <TextField
             label="이메일"
             type="text"
@@ -68,7 +71,12 @@ export default function SignUpForm() {
             errorMessage={errors.confirmPassword?.message}
           />
         </div>
-        <SubmitButton name="회원가입" isActive={isValid} type="submit" />
+        <SubmitButton
+          name="회원가입"
+          isActive={isValid}
+          size="lg"
+          type="submit"
+        />
       </form>
       <div className="mt-24 flex items-start justify-center">
         <Link

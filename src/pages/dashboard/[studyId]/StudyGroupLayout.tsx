@@ -1,5 +1,3 @@
-'use client';
-
 import Study from '@/widgets/study/ui/study';
 import { use } from 'react';
 

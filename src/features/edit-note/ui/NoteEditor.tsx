@@ -91,24 +91,24 @@ export function NoteEditor({ initialNote, onAutoSave }: NoteEditorProps) {
 
   return (
     <div className="space-y-6">
-      <div className="rounded-md border border-gray-300">
+      <div className="rounded-md bg-surface-3">
         <EditorContent
           editor={editor}
-          className="max-h-[500px] min-h-[200px] overflow-y-auto p-4 focus:outline-none"
+          className="h-[300px] overflow-y-auto px-36 py-34 focus:outline-none"
         />
         <NoteEditorMenu editor={editor} />
       </div>
       {/* 상태 메시지 */}
-      <div className="min-h-[1.5em] text-left text-sm">
+      <div className="min-h-30 text-left">
         {showStatus && (
           <span
             className={`transition-opacity duration-500 ${fadeOut ? 'opacity-0' : 'opacity-100'}`}
           >
             {status === 'typing' && (
-              <span className="text-gray-400">작성 중...</span>
+              <span className="text-text-tertiary body-medium">작성 중...</span>
             )}
             {status === 'saved' && (
-              <span className="text-green-600">작성 완료!</span>
+              <span className="body-medium text-highlight">자동 저장되었습니다.</span>
             )}
           </span>
         )}

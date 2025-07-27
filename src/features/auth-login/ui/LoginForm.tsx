@@ -50,7 +50,12 @@ export default function LoginForm() {
             errorMessage={errors.password?.message}
           />
         </div>
-        <SubmitButton name="로그인" isActive={isValid} type="submit" />
+        <SubmitButton
+          name="로그인"
+          isActive={isValid}
+          size="lg"
+          type="submit"
+        />
       </form>
       <div className="mt-24 flex items-start justify-center">
         <p className="text-text-tertiary label-medium">
