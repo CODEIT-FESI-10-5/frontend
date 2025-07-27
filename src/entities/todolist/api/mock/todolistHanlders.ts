@@ -5,7 +5,7 @@ let idCounter = myTodolist.todolist.length;
 
 export const todolistHandlers = [
   // GET: 투두 리스트 내 투두 전체 가져오기
-  http.get('/api/goal/:goalId/todolist', () => {
+  http.get('/api/todos', () => {
     const mockData = myTodolist;
     if (!mockData) {
       return HttpResponse.json({ message: 'Goal not found' }, { status: 404 });
@@ -19,7 +19,6 @@ export const todolistHandlers = [
     );
 
     const orderedMockData = {
-      goalId: myTodolist.goalId,
       title: myTodolist.title,
       todolist: orderedTodolist,
     };
@@ -28,28 +27,51 @@ export const todolistHandlers = [
   }),
 
   // POST: 새 투두 추가하기
-  http.post('/api/goal/:goalId/todo', async (req) => {
-    const body = await req.request.json();
+  http.post('/api/todos', async ({ request }) => {
+    const body = (await request.json()) as {
+      goalId: string;
+      content: string;
+      shared: boolean;
+    };
     const newId = String(idCounter++).repeat(4);
 
     const newTodo = {
       id: newId,
-      content: (body as { content: string; shared: boolean }).content,
+      content: body.content,
       createdAt: new Date(Date.now()),
       completed: false,
       completedAt: new Date(Date.now()),
       note: false,
-      shared: (body as { content: string; shared: boolean }).shared,
+      shared: body.shared,
     };
     myTodolist.todolist.push(newTodo);
     myTodolist.order.push(newId);
     return HttpResponse.json({ status: 201 });
   }),
 
+  // PATCH: 투두 순서 수정
+  http.patch('/api/todos/priority', async ({ request }) => {
+    const body = (await request.json()) as {
+      todoId: string;
+      priorityOrder: number;
+    };
+    const deletedOrder = myTodolist.order.filter((id) => id !== body.todoId);
+    console.log(deletedOrder);
+    deletedOrder.splice(body.priorityOrder, 0, body.todoId);
+    myTodolist.order = deletedOrder;
+
+    console.log(myTodolist.order);
+    return HttpResponse.json({ status: 201 });
+  }),
+
   // PATCH: 투두 완료/취소, 내용 수정
-  http.patch('/api/goal/:goalId/todo/:todoId', async ({ request, params }) => {
+  http.patch('/api/todos/:todoId', async ({ request, params }) => {
     const { todoId } = params;
-    const body = await request.json();
+    const body = (await request.json()) as {
+      goalId: string;
+      content: string;
+      completed: boolean;
+    };
 
     const targetIndexInTodolist = myTodolist.todolist.findIndex(
       (todo) => todo.id === todoId,
@@ -62,7 +84,7 @@ export const todolistHandlers = [
     // 기존 요소를 업데이트
     myTodolist.todolist[targetIndexInTodolist] = {
       ...myTodolist.todolist[targetIndexInTodolist], // 기존 필드 유지
-      completed: (body as { completed: boolean }).completed, // 변경된 필드 덮어쓰기
+      completed: body.completed, // 변경된 필드 덮어쓰기
       completedAt: new Date(Date.now()),
     };
 
@@ -84,12 +106,6 @@ export const todolistHandlers = [
       } else {
         myTodolist.order.splice(lastCompletedIndex, 0, todoId as string);
       }
-      console.log(
-        'target id:',
-        todoId,
-        '/ find last idx: ',
-        lastCompletedIndex,
-      );
     } else {
       // 취소: 가장 뒤로 밀려남
       myTodolist.order.push(todoId as string);
@@ -98,18 +114,8 @@ export const todolistHandlers = [
     return HttpResponse.json({ status: 201 });
   }),
 
-  // PATCH: 투두 순서 수정
-  http.patch('/api/goal/:goalId/todolist/order', async ({ request }) => {
-    const body = await request.json();
-
-    console.log(body);
-    myTodolist.order = (body as { newOrder: Array<string> }).newOrder;
-
-    return HttpResponse.json({ status: 201 });
-  }),
-
   // DELETE: 투두 삭제
-  http.delete('/api/goal/:goalId/todo/:todoId', async ({ params }) => {
+  http.delete('/api/todos/:todoId', async ({ params }) => {
     const { todoId } = params;
     const index = myTodolist.todolist.findIndex((todo) => todo.id === todoId);
     if (index === -1) {
