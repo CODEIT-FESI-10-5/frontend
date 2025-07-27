@@ -1,2 +1,2 @@
 export * from './sign-up.schema';
-export * from './useSignup';
+export * from './useSignUp';
