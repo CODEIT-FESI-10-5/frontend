@@ -5,7 +5,7 @@ import DeleteIcon from '@/assets/icon-delete.svg';
 import { useState } from 'react';
 
 export default function UpdateProfile() {
-  const [isActive, setIsActive] = useState(false);
+  const [isActive] = useState(false);
   //active function import 예정
   return (
     <div>
