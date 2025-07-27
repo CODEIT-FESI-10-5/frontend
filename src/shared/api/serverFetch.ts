@@ -1,6 +1,6 @@
 // 요청 설정 옵션
 interface RequestConfig {
-  params?: Record<string, any>; // URL 쿼리 파라미터
+  params?: Record<string, string | number | boolean | undefined | null>; // URL 쿼리 파라미터
   headers?: Record<string, string>; // 추가 HTTP 헤더
 }
 
@@ -13,7 +13,10 @@ const DEFAULT_HEADERS = {
 };
 
 // URL과 쿼리 파라미터를 조합하여 완전한 URL 생성
-function buildURL(endpoint: string, params?: Record<string, any>) {
+function buildURL(
+  endpoint: string,
+  params?: Record<string, string | number | boolean | undefined | null>,
+) {
   const url = new URL(endpoint, BASE_URL);
   if (params) {
     Object.entries(params).forEach(([key, value]) => {
@@ -29,9 +32,9 @@ function buildURL(endpoint: string, params?: Record<string, any>) {
 async function request<T>(
   method: string,
   endpoint: string,
-  data?: any,
+  data?: unknown,
   config?: RequestConfig & { cookie?: string },
-) {
+): Promise<T> {
   const url = buildURL(endpoint, config?.params);
   const headers: Record<string, string> = {
     ...DEFAULT_HEADERS,
@@ -48,7 +51,7 @@ async function request<T>(
   if (!response.ok) {
     throw new Error(`HTTP error! status: ${response.status}`);
   }
-  return response.json();
+  return response.json() as T;
 }
 
 // 서버 사이드 API 호출을 위한 fetch 래퍼
@@ -57,17 +60,17 @@ export const serverFetch = {
     request<T>('GET', endpoint, undefined, config),
   post: <T>(
     endpoint: string,
-    data?: any,
+    data?: unknown,
     config?: RequestConfig & { cookie?: string },
   ) => request<T>('POST', endpoint, data, config),
   patch: <T>(
     endpoint: string,
-    data?: any,
+    data?: unknown,
     config?: RequestConfig & { cookie?: string },
   ) => request<T>('PATCH', endpoint, data, config),
   put: <T>(
     endpoint: string,
-    data?: any,
+    data?: unknown,
     config?: RequestConfig & { cookie?: string },
   ) => request<T>('PUT', endpoint, data, config),
   delete: <T>(endpoint: string, config?: RequestConfig & { cookie?: string }) =>

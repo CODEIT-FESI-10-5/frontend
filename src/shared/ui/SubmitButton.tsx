@@ -1,19 +1,31 @@
-import { cn } from '@/shared/utils/cn';
 import { cva } from 'class-variance-authority';
 
 interface SubmitButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   name: string;
   isActive: boolean;
+  size?: 'sm' | 'lg';
 }
 
-const submitButtonVariants = cva(
-  'rounded-6 flex h-54 w-442 items-center justify-center',
+const lgVariants = cva(
+  'rounded-6 flex items-center body-medium justify-center w-442 h-54',
   {
     variants: {
       isActive: {
         true: 'bg-primary text-text-white',
-        false: 'bg-icon-grey-100 text-black',
+        false: 'bg-disabled text-surface-4',
+      },
+    },
+  },
+);
+
+const smVariants = cva(
+  'rounded-4 flex w-fit h-fit items-center label-large justify-center px-12 py-6 text-text-white',
+  {
+    variants: {
+      isActive: {
+        true: 'bg-primary',
+        false: 'bg-border-emphasis',
       },
     },
   },
@@ -22,9 +34,9 @@ const submitButtonVariants = cva(
 export default function SubmitButton({
   name,
   isActive,
-  ...props
+  size,
 }: SubmitButtonProps) {
-  return (
-    <button className={cn(submitButtonVariants({ isActive }))}>{name}</button>
-  );
+  const variantFn = size === 'lg' ? lgVariants : smVariants;
+
+  return <button className={variantFn({ isActive })}>{name}</button>;
 }

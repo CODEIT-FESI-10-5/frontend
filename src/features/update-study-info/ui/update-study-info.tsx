@@ -11,7 +11,6 @@ export default function UpdateStudyInfo(props: {
   const [title, setTitle] = useState<string>(props.title);
   const [description, setDescription] = useState<string>(props.description);
 
-  const [isUpdating, setIsUpdating] = useState(false);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   // 2초 디바운스 함수
@@ -20,11 +19,10 @@ export default function UpdateStudyInfo(props: {
       clearTimeout(timeoutRef.current);
     }
     timeoutRef.current = setTimeout(async () => {
-      setIsUpdating(true);
       try {
         await updateStudyInfo(props.studyId, newTitle, newDescription);
-      } finally {
-        setIsUpdating(false);
+      } catch (error) {
+        console.error('Error updating study info:', error);
       }
     }, 2000);
   };
@@ -54,7 +52,6 @@ export default function UpdateStudyInfo(props: {
           type="text"
           value={title}
           onChange={handleTitleChange}
-          disabled={isUpdating}
           className="headline-large w-full border-none bg-transparent placeholder-gray-300 outline-none disabled:opacity-50"
           placeholder="스터디 제목을 입력하세요..."
         />
@@ -63,7 +60,6 @@ export default function UpdateStudyInfo(props: {
         <textarea
           value={description}
           onChange={handleDescriptionChange}
-          disabled={isUpdating}
           className="label-small text-text-primary w-full resize-none border-none placeholder-gray-300 outline-none disabled:opacity-50"
           placeholder="스터디 목표나 응원 메세지를 적어주세요..."
           rows={1}

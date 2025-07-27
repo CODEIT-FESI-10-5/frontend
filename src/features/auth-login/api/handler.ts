@@ -13,7 +13,7 @@ export const loginHandler = [
       );
     }
 
-    const { email, password } = result.data;
+    const { email } = result.data;
 
     // 더미 유저 정보
     const user = {

@@ -1,13 +1,21 @@
 import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
-import { SignUpSchema } from '@/features/auth-sign-up/model';
-import { requestSignUp } from '@/entities/auth/api';
+import { requestSignup } from '@/entities/auth/api';
+import { SignupRequestApi } from '@/entities/auth/model';
+import { SignupSchema } from './sign-up.schema';
 
-export function useSignUp() {
+export function useSignup() {
   const router = useRouter();
 
   return useMutation({
-    mutationFn: (data: SignUpSchema) => requestSignUp(data),
+    mutationFn: (data: SignupSchema) => {
+      const requestData: SignupRequestApi = {
+        nickname: data.name,
+        email: data.email,
+        password: data.password,
+      };
+      return requestSignup(requestData);
+    },
     onSuccess: () => {
       router.push('/auth/login');
     },
