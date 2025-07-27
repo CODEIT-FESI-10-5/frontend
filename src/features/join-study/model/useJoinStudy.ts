@@ -10,11 +10,7 @@ export const useJoinStudy = () => {
     onSuccess: (data: { studyId: string }) => {
       router.push(`/dashboard/${data.studyId}`);
     },
-    onError: (error) => {
-      // error 타입 단언 필요
-      const err = error as any;
-      const errorMessage =
-        err?.body?.errorMessage || '참여 코드가 유효하지 않습니다.';
+    onError: () => {
       //toast(errorMessage) 예정;
     },
   });

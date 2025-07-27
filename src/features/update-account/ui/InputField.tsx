@@ -4,7 +4,6 @@ import { cva } from 'class-variance-authority';
 import React from 'react';
 
 interface InputFieldProps extends React.InputHTMLAttributes<HTMLInputElement> {
-  label: string;
   error?: boolean;
   errorMessage?: string;
 }
@@ -22,7 +21,6 @@ const inputFieldVariants = cva(
   },
 );
 export default function InputField({
-  label,
   error,
   errorMessage,
   ...props

@@ -1,11 +1,11 @@
 import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
-import { LoginSchema, useProfileStore } from '@/features/auth-login';
+import { LoginSchema } from '@/features/auth-login';
 import { requestLogin } from '@/entities/auth/api';
 
 export function useLogin() {
   const router = useRouter();
-  const setProfile = useProfileStore((state) => state.setProfile);
+  // const setProfile = useProfileStore((state) => state.setProfile);
 
   return useMutation({
     mutationFn: (data: LoginSchema) => requestLogin(data),

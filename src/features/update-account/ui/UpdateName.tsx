@@ -4,7 +4,7 @@ import { InputField } from './';
 import { SubmitButton } from '@/shared/ui';
 
 export default function UpdateName() {
-  const [isActive, setIsActive] = useState(false);
+  const [isActive] = useState(false);
   return (
     <div>
       <section className="flex flex-col gap-16 px-28 py-30">
@@ -15,7 +15,7 @@ export default function UpdateName() {
             <div className="flex items-center justify-between">
               <div className="w-376">
                 {isActive ? (
-                  <InputField label="닉네임" />
+                  <InputField />
                 ) : (
                   <p className="text-text-white body-medium">스터디 닉네임</p>
                 )}
