@@ -10,7 +10,10 @@ import { useParams } from 'next/navigation';
 export default function Todo({ todo }: { todo: Todo }) {
   const params = useParams<{ goalId: string }>() as { goalId: string };
   return (
-    <div className="bg-surface-4 text-text-primary flex h-72 w-full items-center justify-between rounded-lg px-18">
+    <div
+      aria-label="todo-card"
+      className="bg-surface-4 text-text-primary flex h-72 w-full items-center justify-between rounded-lg px-18"
+    >
       <div className="flex items-center justify-center gap-14">
         <UpdateTodoCompletionCheckbox
           completed={todo.completed}

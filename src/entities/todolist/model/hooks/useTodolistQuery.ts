@@ -4,9 +4,11 @@ import { Todolist } from '../types';
 import { todolistQueryKeys } from '../queryKeys';
 
 export const useTodolistQuery = (goalId?: string) => {
+  const enabled = !!goalId;
+
   return useQuery<Todolist>({
-    queryKey: [...todolistQueryKeys.todolist(goalId as string)],
-    queryFn: () => fetchTodolist(goalId as string),
-    enabled: !!goalId,
+    queryKey: goalId ? [...todolistQueryKeys.todolist(goalId)] : [],
+    queryFn: () => fetchTodolist(goalId!), // goalId는 enabled가 true일 때만 실행됨
+    enabled,
   });
 };
