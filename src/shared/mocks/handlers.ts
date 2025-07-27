@@ -5,10 +5,11 @@ import { sidebarStudyHandler } from '@/features/get-study-list/api/handler';
 import { sidebarGoalHandler } from '@/features/get-goal-list/api/handler';
 import { sidebarCreateGoalHandler } from '@/features/create-goal/api/handler';
 import { studyHandlers } from '@/entities/study/api';
-import { goalHandlers } from '@/entities/goal/api';
 import { loginHandler } from '@/features/auth-login/api';
 import { signUpHandler } from '@/features/auth-sign-up/api';
 import { todolistHandlers } from '@/entities/todolist/api/mock';
+import { sidebarJoinStudyHandler } from '@/features/join-study/api/handler';
+import { dashboardHandlers } from '@/entities/dashboard';
 
 export const handlers = [
   ...sidebarProfileHandler,
@@ -17,9 +18,10 @@ export const handlers = [
   ...sidebarGoalHandler,
   ...sidebarCreateGoalHandler,
   ...noteHandlers,
-  ...goalHandlers,
+  ...dashboardHandlers,
   ...studyHandlers,
   ...todolistHandlers,
   ...loginHandler,
   ...signUpHandler,
+  ...sidebarJoinStudyHandler,
 ];

@@ -24,7 +24,7 @@ export const useStudyGroup = (studyId: string) => {
         image: d.studyImageDir,
         teamProgress: d.teamProgress,
         inviteLink: d.inviteCode,
-        members: d.members.map((m: any) => ({
+        members: d.members.map((m) => ({
           id: String(m.userId),
           name: m.name,
           image: m.userImageDir,

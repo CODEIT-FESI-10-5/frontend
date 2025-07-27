@@ -1,10 +1,10 @@
 import { http, HttpResponse } from 'msw';
-import { signUpSchema } from '../model';
+import { signupSchema } from '../model';
 
 export const signUpHandler = [
   http.post('/api/auth/sign-up', async ({ request }) => {
     const body = await request.json();
-    const result = await signUpSchema.safeParse(body);
+    const result = await signupSchema.safeParse(body);
 
     if (!result.success) {
       return HttpResponse.json(

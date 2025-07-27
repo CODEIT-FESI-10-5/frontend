@@ -1,2 +1,2 @@
 export * from './requestLogin';
-export * from './requestSignUp';
+export * from './requestSignup';

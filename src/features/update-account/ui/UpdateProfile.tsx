@@ -1,9 +1,12 @@
 'use client';
 import Image from 'next/image';
-import UpdateButton from '@/features/update-account/ui/UpdateButton';
+import { SubmitButton } from '@/shared/ui';
 import DeleteIcon from '@/assets/icon-delete.svg';
+import { useState } from 'react';
 
 export default function UpdateProfile() {
+  const [isActive, setIsActive] = useState(false);
+  //active function import 예정
   return (
     <div>
       <section className="flex flex-col gap-16 px-28 py-30">
@@ -18,7 +21,7 @@ export default function UpdateProfile() {
           />
           <div className="flex flex-col gap-6">
             <div className="flex items-center gap-12">
-              <UpdateButton type="profile" isActive />
+              <SubmitButton name="이미지 변경" size="sm" isActive={isActive} />
               <DeleteIcon />
             </div>
             <p className="text-text-primary label-small">
