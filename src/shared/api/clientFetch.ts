@@ -17,18 +17,55 @@ const DEFAULT_HEADERS = {
 };
 
 // URL과 쿼리 파라미터를 조합하여 완전한 URL 생성
+// function buildURL(endpoint: string, params?: Record<string, any>) {
+//   console.log('enter buildurl', endpoint, BASE_URL);
+//   const url = new URL(endpoint, BASE_URL);
+//   console.log('after url');
+
+//   if (params) {
+//     Object.entries(params).forEach(([key, value]) => {
+//       if (value !== undefined && value !== null) {
+//         url.searchParams.append(key, String(value));
+//       }
+//     });
+//   }
+//   return url.toString();
+// }
+
 function buildURL(endpoint: string, params?: Record<string, any>) {
-  const url = new URL(endpoint, BASE_URL);
+  let url: URL | string;
 
-  if (params) {
-    Object.entries(params).forEach(([key, value]) => {
-      if (value !== undefined && value !== null) {
-        url.searchParams.append(key, String(value));
-      }
-    });
+  const isAbsoluteBase = BASE_URL && /^https?:\/\//.test(BASE_URL); // 프로토콜이 있는 경우만 절대 경로
+
+  if (isAbsoluteBase) {
+    url = new URL(endpoint, BASE_URL);
+
+    if (params) {
+      Object.entries(params).forEach(([key, value]) => {
+        if (value !== undefined && value !== null) {
+          (url as URL).searchParams.append(key, String(value));
+        }
+      });
+    }
+
+    // console.log('after url (absolute)');
+    return url.toString();
+  } else {
+    // 상대 경로 조합 (쿼리스트링 직접 구성)
+    const query = params
+      ? '?' +
+        Object.entries(params)
+          .filter(([_, value]) => value !== undefined && value !== null)
+          .map(
+            ([key, value]) =>
+              `${encodeURIComponent(key)}=${encodeURIComponent(String(value))}`,
+          )
+          .join('&')
+      : '';
+
+    // console.log('after url (relative)');
+    return `${endpoint}${query}`;
   }
-
-  return url.toString();
 }
 
 async function request<T>(
