@@ -1,7 +1,7 @@
 'use client';
 import { useState } from 'react';
 import { InputField } from './';
-import UpdateButton from './UpdateButton';
+import { SubmitButton } from '@/shared/ui';
 
 export default function UpdateName() {
   const [isActive, setIsActive] = useState(false);
@@ -20,7 +20,7 @@ export default function UpdateName() {
                   <p className="text-text-white body-medium">스터디 닉네임</p>
                 )}
               </div>
-              <UpdateButton type="nickname" isActive />
+              <SubmitButton name="닉네임 수정" size="sm" isActive={isActive} />
             </div>
           </form>
           <div>
