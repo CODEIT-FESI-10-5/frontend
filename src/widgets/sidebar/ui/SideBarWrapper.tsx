@@ -8,9 +8,10 @@ export default function SideBarWrapper({
 }: {
   children: React.ReactNode;
 }) {
-  const pathname = usePathname() as string;
+  const pathname = usePathname();
   const isAuthPage =
-    pathname.startsWith('/auth/login') || pathname.startsWith('/auth/sign-up');
+    pathname?.startsWith('/auth/login') ||
+    pathname?.startsWith('/auth/sign-up');
 
   if (isAuthPage)
     return (
