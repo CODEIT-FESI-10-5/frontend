@@ -59,12 +59,13 @@ export const studyHandlers = [
         );
       }
       // 실제 서비스에서는 파일 저장/URL 반환 등 처리 필요
-      mockStudyGroup.data.studyImageDir = 'uploaded-image-url-or-data'; // 예시
+      const uploadedUrl = 'uploaded-image-url-or-data'; // 예시
+      mockStudyGroup.data.studyImageDir = uploadedUrl;
       return HttpResponse.json({
         message: 'Study image updated successfully',
         study: {
           id: mockStudyGroup.data.studyId,
-          image: mockStudyGroup.data.studyImageDir,
+          image: uploadedUrl,
         },
       });
     } catch {
