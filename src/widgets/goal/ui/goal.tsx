@@ -76,7 +76,7 @@ export default function Goal({ goalId }: { goalId: string }) {
       <>
         <EditGoalTitle goalId={goalId} title={title} setTitle={setTitle} />
         <Link
-          href="/goal/todo/create"
+          href={`/todolist-detail/${goalId}`}
           className="mt-28 flex flex-col items-center justify-center gap-3 rounded-xl border border-dashed border-[#454545] bg-[#2c2c2c] p-8 py-36 text-base font-normal text-[#f5f5f5]"
         >
           <NewTodoIcon width={32} height={32} />
@@ -152,7 +152,7 @@ export default function Goal({ goalId }: { goalId: string }) {
               )}
             </div>
           </div>
-          <Link href="/todolist-detail">
+          <Link href={`/todolist-detail/${goalId}`}>
             <span className="text-text-secondary body-medium mt-28 flex items-center justify-center">
               전체 보기
             </span>
