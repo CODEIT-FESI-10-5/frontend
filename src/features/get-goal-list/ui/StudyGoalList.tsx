@@ -16,7 +16,7 @@ export default function StudyGoalList() {
 
   const mutation = useCreateGoal((newGoal) => {
     setLastVisitedGoalId(currentStudyId, newGoal.id);
-    router.push(`/dashboard/${currentStudyId}/goal/${newGoal.id}`);
+    router.push(`/dashboard/study/${currentStudyId}/goal/${newGoal.id}`);
   });
 
   const { isLoading, data, error } = useGetGoal(1);
@@ -33,7 +33,11 @@ export default function StudyGoalList() {
     <section className="flex flex-col gap-14">
       <div className="flex items-center justify-between">
         <h2 className="text-text-secondary title-small">스터디 목표</h2>
-        <CreateGoalSVG onClick={() => mutation.mutate()} />
+        <CreateGoalSVG
+          onClick={() =>
+            mutation.mutate({ title: '', studyId: Number(currentStudyId) })
+          }
+        />
       </div>
 
       <ul className="py-4">

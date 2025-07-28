@@ -15,7 +15,7 @@ export default function StudyDropDown() {
   //스터디 클릭 시 해당 대시보드로 이동
   const handleClick = (study: StudyItem) => {
     setStudyId(study.id);
-    router.push(`/dashboard/${study.id}`);
+    router.push(`/dashboard/study/${study.id}`);
   };
 
   return (
