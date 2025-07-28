@@ -28,6 +28,7 @@ export default function EditGoalTitle({
           await updateGoalTitle(goalId, newTitle);
           toast.success('제목이 업데이트되었습니다');
         } catch (error) {
+          console.log(error);
           toast.error('제목 업데이트에 실패했습니다');
           // 실패 시 원래 제목으로 되돌리기
           setTitle(title);

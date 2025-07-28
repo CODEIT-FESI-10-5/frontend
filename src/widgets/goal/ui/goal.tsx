@@ -148,7 +148,7 @@ export default function Goal({ goalId }: { goalId: string }) {
                 최근 완료된 투두
               </span>
               {/* 가장 최근 완료된 투두를 정렬 후 todo 컴포넌트 넣음 */}
-              {goal.recentCompletedTodo.content ? (
+              {goal?.recentCompletedTodo?.content ? (
                 <Todo todo={goal.recentCompletedTodo} />
               ) : (
                 <span className="text-text-secondary body-medium">
@@ -161,7 +161,7 @@ export default function Goal({ goalId }: { goalId: string }) {
               <span className="body-medium font-medium text-white">
                 진행중인 투두
               </span>
-              {goal.inProgressTodo.content ? (
+              {goal?.inProgressTodo?.content ? (
                 <Todo todo={goal.inProgressTodo} />
               ) : (
                 <span className="text-text-secondary body-medium">
