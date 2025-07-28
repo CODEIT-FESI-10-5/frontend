@@ -2,7 +2,7 @@ import { http, HttpResponse } from 'msw';
 import { loginSchema } from '../model';
 
 export const loginHandler = [
-  http.post('/api/auth/login', async ({ request }) => {
+  http.post('/api/login', async ({ request }) => {
     const body = await request.json();
     const result = loginSchema.safeParse(body);
 
@@ -13,24 +13,21 @@ export const loginHandler = [
       );
     }
 
-    const { email } = result.data;
-
-    // 더미 유저 정보
-    const user = {
-      id: 'user-1234',
-      email,
-      name: 'minhee',
+    const mockProfile = {
+      email: 'test@example.com',
+      nickname: '정민희',
+      profileImage: '',
     };
 
     // localStorage에 user 정보 저장
     if (typeof window !== 'undefined') {
-      localStorage.setItem('user', JSON.stringify(user));
+      localStorage.setItem('user', JSON.stringify(mockProfile));
     }
 
     return HttpResponse.json(
       {
         message: '로그인 성공',
-        user,
+        data: mockProfile,
       },
       { status: 200 },
     );

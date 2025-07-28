@@ -8,7 +8,7 @@ import {
 
 export const useGetStudy = () => {
   return useQuery<StudyListResponseApi, Error, StudyListResponse>({
-    queryKey: studyQueryKeys.all,
+    queryKey: studyQueryKeys.list(),
     queryFn: getStudyList,
     select: (response: StudyListResponseApi) => {
       const { totalCount, recentStudyId, studyList } = response.data;

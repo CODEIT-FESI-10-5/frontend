@@ -11,7 +11,7 @@ export const mockGoalList: GoalListResponseApi = {
         title: '스프링 부트 마스터하기',
       },
     ],
-    totalCount: 5,
+    totalCount: 0,
   },
   errorMessage: 'string',
   fieldErrors: [
