@@ -16,8 +16,8 @@ export default function UpdateStudyImage({ studyId }: UpdateStudyImageProps) {
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const settingIconRef = useRef<HTMLSpanElement>(null);
   const { open, close } = useModal();
-  const { getStudyRole } = useStudyRoleStore();
-  const userRole = getStudyRole(Number(studyId));
+  const { role } = useStudyRoleStore();
+  const userRole = role;
   const params = useParams();
   const goalId = Array.isArray(params?.goalId)
     ? params.goalId[0]
@@ -59,7 +59,7 @@ export default function UpdateStudyImage({ studyId }: UpdateStudyImageProps) {
           onDeleteBg={handleImageDelete}
         />,
         settingIconRef,
-        { top: 8, left: -100 },
+        { top: 8, left: 0 },
       );
     }
   };

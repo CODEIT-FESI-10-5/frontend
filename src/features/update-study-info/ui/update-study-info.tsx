@@ -12,8 +12,8 @@ export default function UpdateStudyInfo(props: {
 }) {
   const [title, setTitle] = useState<string>(props.title);
   const [description, setDescription] = useState<string>(props.description);
-  const { getStudyRole } = useStudyRoleStore();
-  const userRole = getStudyRole(Number(props.studyId));
+  const { role } = useStudyRoleStore();
+  const userRole = role;
 
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 

@@ -12,17 +12,13 @@ export default function EditGoalTitle(props: {
 }) {
   const params = useParams();
   console.log('EditGoalTitle: params', params);
-  const studyId = Array.isArray(params?.studyId)
-    ? params.studyId[0]
-    : params?.studyId;
 
   const { title, setTitle, goalId } = props;
 
-  const { getStudyRole } = useStudyRoleStore();
-  const userRole = getStudyRole(Number(studyId));
+  const { role } = useStudyRoleStore();
+  const userRole = role;
 
   // 디버깅용 콘솔 출력
-  console.log('EditGoalTitle: studyId', studyId);
   console.log('EditGoalTitle: userRole', userRole);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 

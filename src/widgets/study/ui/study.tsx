@@ -12,7 +12,7 @@ export default function Study({ studyId }: { studyId: string }) {
   const { data: studyGroup, isLoading, error } = useStudyGroup(studyId);
   const { inviteCode, setInviteCode } = useInviteCodeStore();
   // studyGroup의 userRole 정보 store에 저장
-  const { setStudyRole } = useStudyRoleStore();
+  const { role, setStudyRole } = useStudyRoleStore();
 
   useEffect(() => {
     if (studyGroup && studyGroup.inviteLink !== inviteCode) {
@@ -20,16 +20,13 @@ export default function Study({ studyId }: { studyId: string }) {
     }
   }, [studyGroup, setInviteCode, inviteCode]);
 
+  // 스터디 그룹의 userRole을 store에 저장
+  // 이 부분은 스터디 그룹이 변경될 때마다 userRole을 업데이트합니다
   useEffect(() => {
-    if (
-      studyGroup &&
-      studyGroup.userRole &&
-      useStudyRoleStore.getState().getStudyRole(Number(studyGroup.id)) !==
-        studyGroup.userRole
-    ) {
-      setStudyRole(Number(studyGroup.id), studyGroup.userRole);
+    if (studyGroup && studyGroup.userRole !== role) {
+      setStudyRole(studyGroup.userRole);
     }
-  }, [studyGroup?.userRole, studyGroup?.id, setStudyRole]);
+  }, [studyGroup, setStudyRole]);
 
   // 로딩 상태 처리
   if (isLoading) {
