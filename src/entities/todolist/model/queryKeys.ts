@@ -1,3 +1,3 @@
 export const todolistQueryKeys = {
-  todolist: (goalId: string) => [goalId, 'todolist'] as const,
+  todolist: (goalId: string) => ['todolist', goalId] as const,
 } as const;
