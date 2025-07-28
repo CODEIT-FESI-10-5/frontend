@@ -6,6 +6,7 @@ export const mockStudyGroup: StudyGroupResponse = {
   errorMessage: '',
   fieldErrors: [],
   data: {
+    role: 'LEADER',
     studyId: 'study-1',
     title: '스터디 제목이 여기에',
     description: '우리는 어떤 스터디를 같이 하는 모입입니다. 열공!',
