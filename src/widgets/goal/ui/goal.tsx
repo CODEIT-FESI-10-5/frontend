@@ -262,7 +262,7 @@ export function TeamProgressList({
                     <Image
                       width={52}
                       height={52}
-                      src={member.image}
+                      src={member.image || '/images/default-profile.png'}
                       alt={member.name}
                       className={`border-icon-grey-200 rounded-full border-4 object-cover`}
                     />
@@ -273,7 +273,7 @@ export function TeamProgressList({
                     animate={{ height: barHeight }}
                     transition={{ duration: 1 }}
                   >
-                    {isFirst && (
+                    {/* {isFirst && (
                       <Image
                         width={35}
                         height={35}
@@ -281,7 +281,7 @@ export function TeamProgressList({
                         alt="1st place"
                         className="absolute top-0 left-1/2 -translate-x-1/2"
                       />
-                    )}
+                    )} */}
                     <span className="body-small absolute bottom-3 text-white">
                       {member.progress}%
                     </span>
