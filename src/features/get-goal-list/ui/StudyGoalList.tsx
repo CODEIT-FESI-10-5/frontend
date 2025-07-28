@@ -7,10 +7,8 @@ import { useStudyStore } from '@/features/get-study-list/model/useStudyStore';
 import { useRouter } from 'next/navigation';
 import clsx from 'clsx';
 import { useCreateGoal } from '@/features/create-goal/model';
-import { useParams } from 'next/navigation';
 
 export default function StudyGoalList() {
-  const params = useParams();
   const router = useRouter();
   const { setLastVisitedGoalId, getLastVisitedGoalId } = useGoalStore();
   const { currentStudyId } = useStudyStore();
@@ -28,11 +26,7 @@ export default function StudyGoalList() {
 
   const handleClick = (goal: GoalListItem) => {
     setLastVisitedGoalId(currentStudyId, goal.id);
-    if (params?.note !== undefined) {
-      router.push(`/note/${goal.id}`);
-    } else {
-      router.push(`/dashboard/${currentStudyId}/goal/${goal.id}`);
-    }
+    router.push(`/dashboard/${currentStudyId}/goal/${goal.id}`);
   };
 
   return (
