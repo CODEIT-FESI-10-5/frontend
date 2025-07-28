@@ -7,8 +7,10 @@ import { useStudyStore } from '@/features/get-study-list/model/useStudyStore';
 import { useRouter } from 'next/navigation';
 import clsx from 'clsx';
 import { useCreateGoal } from '@/features/create-goal/model';
+import { useParams } from 'next/navigation';
 
 export default function StudyGoalList() {
+  const params = useParams();
   const router = useRouter();
   const { setLastVisitedGoalId, getLastVisitedGoalId } = useGoalStore();
   const { currentStudyId } = useStudyStore();
@@ -16,7 +18,7 @@ export default function StudyGoalList() {
 
   const mutation = useCreateGoal((newGoal) => {
     setLastVisitedGoalId(currentStudyId, newGoal.id);
-    router.push(`/dashboard/study/${currentStudyId}/goal/${newGoal.id}`);
+    router.push(`/dashboard/${currentStudyId}/goal/${newGoal.id}`);
   });
 
   const { isLoading, data, error } = useGetGoal(1);
@@ -26,7 +28,11 @@ export default function StudyGoalList() {
 
   const handleClick = (goal: GoalListItem) => {
     setLastVisitedGoalId(currentStudyId, goal.id);
-    router.push(`/dashboard/study/${currentStudyId}/goal/${goal.id}`);
+    if (params?.note !== undefined) {
+      router.push(`/note/${goal.id}`);
+    } else {
+      router.push(`/dashboard/${currentStudyId}/goal/${goal.id}`);
+    }
   };
 
   return (
@@ -35,33 +41,37 @@ export default function StudyGoalList() {
         <h2 className="text-text-secondary title-small">스터디 목표</h2>
         <CreateGoalSVG
           onClick={() =>
-            mutation.mutate({ title: '', studyId: Number(currentStudyId) })
+            mutation.mutate({
+              title: '스터디 목표를 입력해주세요.',
+              studyId: Number(currentStudyId),
+            })
           }
         />
       </div>
-
-      <ul className="py-4">
-        {data.goals.map((goal) => {
-          const goalItem: GoalListItem = {
-            id: String(goal.id),
-            title: String(goal.title),
-          };
-          return (
-            <li
-              onClick={() => handleClick(goalItem)}
-              key={goalItem.id}
-              className={clsx(
-                'rounded-4 body-medium h-36 w-full px-12 py-7',
-                goalItem.id === currentGoalId
-                  ? 'bg-surface-4 text-text-secondary'
-                  : 'bg-surface-2 text-text-tertiary',
-              )}
-            >
-              <h3 className="flex items-center">{goalItem.title}</h3>
-            </li>
-          );
-        })}
-      </ul>
+      {data && (
+        <ul className="py-4">
+          {data.goals.map((goal) => {
+            const goalItem: GoalListItem = {
+              id: String(goal.id),
+              title: String(goal.title),
+            };
+            return (
+              <li
+                onClick={() => handleClick(goalItem)}
+                key={goalItem.id}
+                className={clsx(
+                  'rounded-4 body-medium h-36 w-full px-12 py-7',
+                  goalItem.id === currentGoalId
+                    ? 'bg-surface-4 text-text-secondary'
+                    : 'bg-surface-2 text-text-tertiary',
+                )}
+              >
+                <h3 className="flex items-center">{goalItem.title}</h3>
+              </li>
+            );
+          })}
+        </ul>
+      )}
     </section>
   );
 }
