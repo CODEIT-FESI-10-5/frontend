@@ -10,6 +10,7 @@ export const myTodolist = {
       completed: true,
       completedAt: new Date('2025-01-10T19:00:00Z'),
       note: true,
+      noteId: '1',
       shared: true,
     },
     {
@@ -19,6 +20,7 @@ export const myTodolist = {
       completed: false,
       completedAt: undefined,
       note: false,
+      noteId: '2',
       shared: true,
     },
     {
@@ -28,6 +30,7 @@ export const myTodolist = {
       completed: false,
       completedAt: undefined,
       note: false,
+      noteId: '3',
       shared: true,
     },
     {
@@ -37,6 +40,7 @@ export const myTodolist = {
       completedAt: new Date(),
       completed: false,
       note: false,
+      noteId: '4',
       shared: false,
     },
     {
@@ -46,6 +50,7 @@ export const myTodolist = {
       completedAt: undefined,
       completed: false,
       note: false,
+      noteId: '5',
       shared: false,
     },
     {
@@ -55,7 +60,15 @@ export const myTodolist = {
       completedAt: undefined,
       completed: false,
       note: false,
+      noteId: '6',
       shared: false,
     },
   ],
+};
+
+export const emptyTodolist = {
+  goalId: 'goal-2',
+  title: '빈 투두리스트 테스트',
+  order: [],
+  todolist: [],
 };
