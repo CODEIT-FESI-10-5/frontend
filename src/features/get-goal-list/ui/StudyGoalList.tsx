@@ -1,14 +1,16 @@
 'use client';
 import CreateGoalSVG from '@/assets/create-goal.svg';
 import { useGetGoal } from '../model/useGetGoal';
-import { GoalListItem } from '@/entities/goal';
+import { GoalListItem, goalQueryKeys } from '@/entities/goal';
 import { useGoalStore } from '../model/useGoalStore';
 import { useStudyStore } from '@/features/get-study-list/model/useStudyStore';
 import { useRouter } from 'next/navigation';
 import clsx from 'clsx';
 import { useCreateGoal } from '@/features/create-goal/model';
+import { useQueryClient } from '@tanstack/react-query';
 
 export default function StudyGoalList() {
+  const queryClient = useQueryClient();
   const router = useRouter();
   const { setLastVisitedGoalId, getLastVisitedGoalId } = useGoalStore();
   const { currentStudyId } = useStudyStore();
@@ -16,6 +18,10 @@ export default function StudyGoalList() {
 
   const mutation = useCreateGoal((newGoal) => {
     setLastVisitedGoalId(currentStudyId, String(newGoal.id));
+    //목표 리스트 쿼리 업데이트
+    queryClient.invalidateQueries({
+      queryKey: goalQueryKeys.list(Number(currentStudyId)),
+    });
     router.push(`/dashboard/study/${currentStudyId}/goal/${newGoal.id}`);
   });
 
