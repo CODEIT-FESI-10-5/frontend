@@ -1,9 +1,8 @@
 'use client';
 
 import { useRef, useState } from 'react';
-import { updateStudyInfo } from '@/features/update-study-info/api';
-import toast from 'react-hot-toast';
 import { useStudyRoleStore } from '@/entities/study/model/useStudyRoleStore';
+import { useUpdateStudyInfoMutation } from '@/features/update-study-info';
 
 export default function UpdateStudyInfo(props: {
   title: string;
@@ -16,20 +15,15 @@ export default function UpdateStudyInfo(props: {
   const userRole = role;
 
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const mutation = useUpdateStudyInfoMutation(props.studyId);
 
   // 2초 디바운스 함수
   const debouncedUpdateInfo = (newTitle: string, newDescription: string) => {
     if (timeoutRef.current) {
       clearTimeout(timeoutRef.current);
     }
-    timeoutRef.current = setTimeout(async () => {
-      try {
-        await updateStudyInfo(props.studyId, newTitle, newDescription);
-        toast.success('정보가 업데이트되었습니다!');
-      } catch (error) {
-        console.error('Error updating study info:', error);
-        toast.error('업데이트에 실패했습니다.');
-      }
+    timeoutRef.current = setTimeout(() => {
+      mutation.mutate({ title: newTitle, description: newDescription });
     }, 2000);
   };
 

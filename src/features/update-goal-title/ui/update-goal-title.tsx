@@ -2,8 +2,7 @@
 
 import { useEffect, useRef } from 'react';
 import { useStudyRoleStore } from '@/entities/study/model/useStudyRoleStore';
-import { updateGoalTitle } from '../api/updateGoalTitle';
-import toast from 'react-hot-toast';
+import { useUpdateGoalTitleMutation } from '../model/useUpdateGoalTitleMutation';
 import { useParams } from 'next/navigation';
 export default function EditGoalTitle(props: {
   title: string;
@@ -21,27 +20,17 @@ export default function EditGoalTitle(props: {
   // 디버깅용 콘솔 출력
   console.log('EditGoalTitle: userRole', userRole);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const mutation = useUpdateGoalTitleMutation(goalId, setTitle);
 
   const debouncedUpdateTitle = (newTitle: string) => {
-    // 이전 타이머가 있다면 취소
     if (timeoutRef.current) {
       clearTimeout(timeoutRef.current);
     }
-
-    // 새로운 타이머 설정 (1.5초 후 API 호출)
-    timeoutRef.current = setTimeout(async () => {
+    timeoutRef.current = setTimeout(() => {
       if (newTitle !== title && newTitle.trim() !== '') {
-        try {
-          await updateGoalTitle(goalId, newTitle);
-          toast.success('제목이 업데이트되었습니다');
-        } catch (error) {
-          console.log(error);
-          toast.error('제목 업데이트에 실패했습니다');
-          // 실패 시 원래 제목으로 되돌리기
-          setTitle(title);
-        }
+        mutation.mutate(newTitle);
       }
-    }, 2000); // 2초 debounce
+    }, 2000);
   };
 
   // input 변경 핸들러

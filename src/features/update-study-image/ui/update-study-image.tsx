@@ -1,7 +1,7 @@
 'use client';
 import { useRef } from 'react';
 import { useStudyRoleStore } from '@/entities/study/model/useStudyRoleStore';
-import { updateStudyImage } from '../api';
+import { useUpdateStudyImageMutation } from '../model/useUpdateStudyImageMutation';
 import toast from 'react-hot-toast';
 import SettingIcon from '@/assets/icon-Settings.svg';
 import { useModal } from '@/shared/lib/utils/useModal';
@@ -13,9 +13,10 @@ interface UpdateStudyImageProps {
 }
 
 export default function UpdateStudyImage({ studyId }: UpdateStudyImageProps) {
+  const { open, close } = useModal();
+  const mutation = useUpdateStudyImageMutation(studyId, close);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const settingIconRef = useRef<HTMLSpanElement>(null);
-  const { open, close } = useModal();
   const { role } = useStudyRoleStore();
   const userRole = role;
   const params = useParams();
@@ -23,24 +24,14 @@ export default function UpdateStudyImage({ studyId }: UpdateStudyImageProps) {
     ? params.goalId[0]
     : params?.goalId;
   // 이미지 변경 핸들러
-  const handleImageChange = async () => {
+  const handleImageChange = () => {
     if (!fileInputRef.current) return;
     const files = fileInputRef.current.files;
     if (!files || files.length === 0) return;
     const imageFile = files[0];
-    // FormData로 이미지 전송
     const formData = new FormData();
     formData.append('image', imageFile);
-    try {
-      await updateStudyImage(studyId, formData);
-      toast.success('이미지가 업데이트되었습니다!');
-      close(); // 모달 닫기
-      // 성공 후 추가 처리(예: 알림, 이미지 미리보기 등)
-    } catch (err) {
-      // 에러 처리
-      console.error(err);
-      toast.error('이미지 업데이트에 실패했습니다.');
-    }
+    mutation.mutate(formData);
   };
 
   // 배경 삭제 핸들러 (API 연동만 비워둠)
