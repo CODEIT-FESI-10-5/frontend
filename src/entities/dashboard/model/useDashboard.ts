@@ -17,7 +17,7 @@ export const useDashboard = (goalId: string) => {
     select: (response: DashboardResponse) => {
       const data = response.data;
       return {
-        ...data,
+        ...data.goal,
       };
     },
   });
