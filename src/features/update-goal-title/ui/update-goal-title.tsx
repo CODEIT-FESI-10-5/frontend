@@ -4,15 +4,26 @@ import { useEffect, useRef } from 'react';
 import { useStudyRoleStore } from '@/entities/study/model/useStudyRoleStore';
 import { updateGoalTitle } from '../api/updateGoalTitle';
 import toast from 'react-hot-toast';
+import { useParams } from 'next/navigation';
 export default function EditGoalTitle(props: {
   title: string;
   setTitle: (newTitle: string) => void;
   goalId: string;
-  studyId: string | number;
 }) {
-  const { title, setTitle, goalId, studyId } = props;
+  const params = useParams();
+  console.log('EditGoalTitle: params', params);
+  const studyId = Array.isArray(params?.studyId)
+    ? params.studyId[0]
+    : params?.studyId;
+
+  const { title, setTitle, goalId } = props;
+
   const { getStudyRole } = useStudyRoleStore();
   const userRole = getStudyRole(Number(studyId));
+
+  // 디버깅용 콘솔 출력
+  console.log('EditGoalTitle: studyId', studyId);
+  console.log('EditGoalTitle: userRole', userRole);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const debouncedUpdateTitle = (newTitle: string) => {
