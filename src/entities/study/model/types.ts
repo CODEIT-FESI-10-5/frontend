@@ -49,6 +49,10 @@ export interface StudyItem {
 }
 
 export interface StudyListResponseApi {
+  httpStatusCode: number;
+  errorCode: string;
+  errorMessage: string;
+  fieldErrors: { field: string; message: string }[];
   data: {
     totalCount: number;
     recentStudyId: number;
