@@ -19,7 +19,7 @@ export default function StudyGoalList() {
     router.push(`/dashboard/study/${currentStudyId}/goal/${newGoal.id}`);
   });
 
-  const { isLoading, data, error } = useGetGoal(1);
+  const { isLoading, data, error } = useGetGoal(Number(currentStudyId));
   if (isLoading) return <div>로딩 중...</div>;
   if (error) return <div>에러 발생</div>;
   if (!data) return <div>스터디가 없습니다.</div>;
