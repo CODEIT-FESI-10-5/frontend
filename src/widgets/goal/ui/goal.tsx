@@ -66,7 +66,7 @@ export default function Goal({ goalId }: { goalId: string }) {
     setTitle(goal.title);
   }
 
-  if (!goal.recentCompletedTodo.content && !goal.recentCompletedTodo.content) {
+  if (!goal?.recentCompletedTodo?.content && !goal?.inProgressTodo?.content) {
     if (!title) {
       return (
         <EditGoalTitle goalId={goalId} title={title} setTitle={setTitle} />
