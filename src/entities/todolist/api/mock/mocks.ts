@@ -4,7 +4,7 @@ export const myTodolist = {
   order: ['todo-1', 'todo-2', 'todo-3', 'todo-4', 'todo-5', 'todo-6'],
   todolist: [
     {
-      id: 'todo-1',
+      todoId: 'todo-1',
       content: '1.튜토리얼 영상 1-3 시청',
       createdAt: new Date('2025-01-10T09:00:00Z'),
       completed: true,
@@ -14,7 +14,7 @@ export const myTodolist = {
       shared: true,
     },
     {
-      id: 'todo-2',
+      todoId: 'todo-2',
       content: '2.사용자 인터뷰 실습 준비',
       createdAt: new Date('2025-01-10T10:00:00Z'),
       completed: false,
@@ -24,7 +24,7 @@ export const myTodolist = {
       shared: true,
     },
     {
-      id: 'todo-3',
+      todoId: 'todo-3',
       content: '3.프로토타입 제작',
       createdAt: new Date('2025-01-10T10:00:00Z'),
       completed: false,
@@ -34,7 +34,7 @@ export const myTodolist = {
       shared: true,
     },
     {
-      id: 'todo-4',
+      todoId: 'todo-4',
       content: '4.주요 단축키 정리 노션에 업로드',
       createdAt: new Date('2025-01-10T10:00:00Z'),
       completedAt: new Date(),
@@ -44,7 +44,7 @@ export const myTodolist = {
       shared: false,
     },
     {
-      id: 'todo-5',
+      todoId: 'todo-5',
       content: '5.키 인사이트 3개 도출해서 슬랙에 공유',
       createdAt: new Date('2025-01-10T10:00:00Z'),
       completedAt: undefined,
@@ -54,7 +54,7 @@ export const myTodolist = {
       shared: false,
     },
     {
-      id: 'todo-6',
+      todoId: 'todo-6',
       content: '6.간단한 모바일 UI 따라 그리기',
       createdAt: new Date('2025-01-10T10:00:00Z'),
       completedAt: undefined,
