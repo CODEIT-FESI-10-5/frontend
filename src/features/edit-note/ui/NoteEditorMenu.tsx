@@ -8,6 +8,7 @@ import {
   ListOrdered,
   Highlighter,
 } from 'lucide-react';
+import { EditorMenuButton } from '@/shared/ui/EditorMenuButton';
 
 interface NoteEditorMenuProps {
   editor: Editor | null;
@@ -18,84 +19,80 @@ export function NoteEditorMenu({ editor }: NoteEditorMenuProps) {
 
   return (
     <div className="mt-2 flex justify-center">
-      <div className="inline-flex gap-1 rounded border border-gray-200 bg-white px-2 py-1 shadow">
+      <div className="inline-flex h-[42px] w-[360px] items-center justify-center gap-2 rounded bg-white px-3 py-2">
         {/* Bold */}
-        <button
-          type="button"
+        <EditorMenuButton
           onClick={() => editor.chain().focus().toggleBold().run()}
-          className={`rounded p-1 ${editor.isActive('bold') ? 'bg-blue-100 text-blue-600' : 'text-gray-600'}`}
+          active={editor.isActive('bold')}
           title="굵게"
         >
-          <Bold size={16} />
-        </button>
+          <Bold size={18} />
+        </EditorMenuButton>
         {/* Italic */}
-        <button
-          type="button"
+        <EditorMenuButton
           onClick={() => editor.chain().focus().toggleItalic().run()}
-          className={`rounded p-1 ${editor.isActive('italic') ? 'bg-blue-100 text-blue-600' : 'text-gray-600'}`}
+          active={editor.isActive('italic')}
           title="기울임"
         >
-          <Italic size={16} />
-        </button>
+          <Italic size={18} />
+        </EditorMenuButton>
         {/* Underline */}
-        <button
-          type="button"
+        <EditorMenuButton
           onClick={() => editor.chain().focus().toggleUnderline().run()}
-          className={`rounded p-1 ${editor.isActive('underline') ? 'bg-blue-100 text-blue-600' : 'text-gray-600'}`}
+          active={editor.isActive('underline')}
           title="밑줄"
         >
-          <UnderlineIcon size={16} />
-        </button>
+          <UnderlineIcon size={18} />
+        </EditorMenuButton>
         {/* Highlight */}
-        <button
-          type="button"
+        <EditorMenuButton
           onClick={() => editor.chain().focus().toggleHighlight().run()}
-          className={`rounded p-1 ${editor.isActive('highlight') ? 'bg-yellow-100 text-yellow-700' : 'text-gray-600'}`}
+          active={editor.isActive('highlight')}
           title="형광펜"
+          className={
+            editor.isActive('highlight') ? 'bg-yellow-100 text-yellow-700' : ''
+          }
         >
-          <Highlighter size={16} />
-        </button>
+          <Highlighter size={18} />
+        </EditorMenuButton>
         {/* Strike */}
-        <button
-          type="button"
+        <EditorMenuButton
           onClick={() => editor.chain().focus().toggleStrike().run()}
-          className={`rounded p-1 ${editor.isActive('strike') ? 'bg-blue-100 text-blue-600' : 'text-gray-600'}`}
+          active={editor.isActive('strike')}
           title="취소선"
         >
-          <Strikethrough size={16} />
-        </button>
+          <Strikethrough size={18} />
+        </EditorMenuButton>
         {/* Heading 1~4 */}
         {([1, 2, 3, 4] as const).map((level) => (
-          <button
+          <EditorMenuButton
             key={level}
-            type="button"
             onClick={() =>
               editor.chain().focus().toggleHeading({ level }).run()
             }
-            className={`rounded p-1 ${editor.isActive('heading', { level }) ? 'bg-blue-100 text-blue-600' : 'text-gray-600'}`}
+            active={editor.isActive('heading', { level })}
             title={`제목 ${level}`}
+            className="text-sm font-semibold"
           >
             {`H${level}`}
-          </button>
+          </EditorMenuButton>
         ))}
         {/* Bullet List */}
-        <button
-          type="button"
+        <EditorMenuButton
           onClick={() => editor.chain().focus().toggleBulletList().run()}
-          className={`rounded p-1 ${editor.isActive('bulletList') ? 'bg-blue-100 text-blue-600' : 'text-gray-600'}`}
+          active={editor.isActive('bulletList')}
           title="글머리 기호 목록"
         >
-          <List size={16} />
-        </button>
+          <List size={18} />
+        </EditorMenuButton>
         {/* Ordered List */}
-        <button
-          type="button"
+        <EditorMenuButton
           onClick={() => editor.chain().focus().toggleOrderedList().run()}
-          className={`rounded p-1 ${editor.isActive('orderedList') ? 'bg-blue-100 text-blue-600' : 'text-gray-600'}`}
+          active={editor.isActive('orderedList')}
           title="번호 매기기 목록"
         >
-          <ListOrdered size={16} />
-        </button>
+          <ListOrdered size={18} />
+        </EditorMenuButton>
       </div>
     </div>
   );

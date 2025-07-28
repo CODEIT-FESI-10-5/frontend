@@ -8,6 +8,7 @@ import { studyHandlers } from '@/entities/study/api';
 import { loginHandler } from '@/features/auth-login/api';
 import { signUpHandler } from '@/features/auth-sign-up/api';
 import { todolistHandlers } from '@/entities/todolist/api/mock';
+import { sidebarJoinStudyHandler } from '@/features/join-study/api/handler';
 import { dashboardHandlers } from '@/entities/dashboard';
 
 export const handlers = [
@@ -22,4 +23,5 @@ export const handlers = [
   ...todolistHandlers,
   ...loginHandler,
   ...signUpHandler,
+  ...sidebarJoinStudyHandler,
 ];

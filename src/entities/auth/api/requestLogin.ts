@@ -1,6 +1,6 @@
 import { clientFetch } from '@/shared/api';
-import { LoginSchema } from '@/features/auth-login';
+import { LoginRequestApi } from '../model';
 
-export const requestLogin = (data: LoginSchema) => {
+export const requestLogin = (data: LoginRequestApi) => {
   return clientFetch.post('/api/login', data);
 };
