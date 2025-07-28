@@ -1,5 +1,6 @@
 'use client';
 import { useRef } from 'react';
+import { useStudyRoleStore } from '@/entities/study/model/useStudyRoleStore';
 import { updateStudyImage } from '../api';
 import toast from 'react-hot-toast';
 import SettingIcon from '@/assets/icon-Settings.svg';
@@ -9,6 +10,8 @@ export default function UpdateStudyImage({ studyId }: { studyId: string }) {
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const settingIconRef = useRef<HTMLSpanElement>(null);
   const { open, close } = useModal();
+  const { getStudyRole } = useStudyRoleStore();
+  const userRole = getStudyRole(Number(studyId));
 
   // 이미지 변경 핸들러
   const handleImageChange = async () => {
@@ -51,6 +54,8 @@ export default function UpdateStudyImage({ studyId }: { studyId: string }) {
       );
     }
   };
+
+  if (userRole !== 'LEADER') return null;
 
   return (
     <>

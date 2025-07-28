@@ -1,18 +1,18 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
+import { useStudyRoleStore } from '@/entities/study/model/useStudyRoleStore';
 import { updateGoalTitle } from '../api/updateGoalTitle';
 import toast from 'react-hot-toast';
-
-export default function EditGoalTitle({
-  title,
-  setTitle,
-  goalId,
-}: {
+export default function EditGoalTitle(props: {
   title: string;
   setTitle: (newTitle: string) => void;
   goalId: string;
+  studyId: string | number;
 }) {
+  const { title, setTitle, goalId, studyId } = props;
+  const { getStudyRole } = useStudyRoleStore();
+  const userRole = getStudyRole(Number(studyId));
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const debouncedUpdateTitle = (newTitle: string) => {
@@ -55,6 +55,13 @@ export default function EditGoalTitle({
 
   {
     /* 스터디 목표 제목 수정 가능하게 input으로 구현 */
+  }
+  if (userRole !== 'LEADER') {
+    return (
+      <span className="headline-large block w-full bg-transparent text-white">
+        {title || '스터디 목표 없음'}
+      </span>
+    );
   }
   return (
     <input

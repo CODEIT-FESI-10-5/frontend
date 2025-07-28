@@ -6,16 +6,30 @@ import StudyInfo from '@/entities/study/ui/studyInfo';
 import UpdateStudyImage from '@/features/update-study-image/ui/update-study-image';
 import { useInviteCodeStore } from '@/entities/dashboard';
 import { useEffect } from 'react';
+import { useStudyRoleStore } from '@/entities/study/model/useStudyRoleStore';
 
 export default function Study({ studyId }: { studyId: string }) {
   const { data: studyGroup, isLoading, error } = useStudyGroup(studyId);
   const { inviteCode, setInviteCode } = useInviteCodeStore();
+  // studyGroup의 userRole 정보 store에 저장
+  const { setStudyRole } = useStudyRoleStore();
 
   useEffect(() => {
     if (studyGroup && studyGroup.inviteLink !== inviteCode) {
       setInviteCode(studyGroup.inviteLink);
     }
   }, [studyGroup, setInviteCode, inviteCode]);
+
+  useEffect(() => {
+    if (
+      studyGroup &&
+      studyGroup.userRole &&
+      useStudyRoleStore.getState().getStudyRole(Number(studyGroup.id)) !==
+        studyGroup.userRole
+    ) {
+      setStudyRole(Number(studyGroup.id), studyGroup.userRole);
+    }
+  }, [studyGroup?.userRole, studyGroup?.id, setStudyRole]);
 
   // 로딩 상태 처리
   if (isLoading) {
