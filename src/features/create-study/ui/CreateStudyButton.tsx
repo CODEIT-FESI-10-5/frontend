@@ -6,8 +6,8 @@ import { useCreateStudy } from '../model/useCreateStudy';
 export default function CreateStudyButton() {
   const router = useRouter();
 
-  const mutation = useCreateStudy((data) => {
-    router.push(`/dashboard/${data.newStudyId}`);
+  const mutation = useCreateStudy((newStudyId) => {
+    router.push(`/dashboard/${newStudyId}`);
   });
 
   return (
