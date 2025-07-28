@@ -3,17 +3,26 @@ export interface Note {
   content: string;
   studyGoalId: number;
   studyGoalTitle: string;
-  todoId: number;
   todoTitle: string;
   createdAt: string;
   updatedAt: string;
 }
 
 export interface NoteResponse {
-  note: Note;
+  httpStatusCode: number;
+  errorCode: string | null;
+  data: {
+    note: Note;
+  };
+  errorMessage: string | null;
 }
 
 export interface NoteListResponse {
-  studyGoalTitle: string;
-  notes: Note[];
+  httpStatusCode: number;
+  errorCode: string | null;
+  data: {
+    studyGoalTitle: string;
+    notes: Note[];
+  };
+  errorMessage: string | null;
 }

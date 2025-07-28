@@ -3,41 +3,38 @@ import { notes } from '@/entities/note/model/mock/notes.mock';
 import { Note } from '@/entities/note/model/types';
 
 export const noteHandlers = [
-  // 노트 목록 조회
-  http.get('/api/notes/:studyGoalId', ({ params }) => {
-    const { studyGoalId } = params;
+  // 노트 목록 조회 (쿼리 파라미터 사용하도록 수정)
+  http.get('/api/notes', ({ request }) => {
+    const url = new URL(request.url);
+    const studyGoalId = url.searchParams.get('studyGoalId');
+    // const noteContent = url.searchParams.get('noteContent'); // 필요시 주석 해제하여 사용
+
     const studyGoalIdNum = Number(studyGoalId);
 
     if (!studyGoalId || isNaN(studyGoalIdNum)) {
       return HttpResponse.json(
-        { message: '유효한 studyGoalId가 필요합니다.' },
+        {
+          httpStatusCode: 400,
+          errorCode: 'INVALID_STUDY_GOAL_ID',
+          data: null,
+          errorMessage: '유효한 studyGoalId가 쿼리 파라미터로 필요합니다.'
+        },
         { status: 400 }
       );
     }
 
     const filteredNotes = notes.filter(note => note.studyGoalId === studyGoalIdNum);
-    const studyGoalTitle = filteredNotes[0]?.studyGoalTitle || '';
+    const studyGoalTitle = filteredNotes.length > 0 ? filteredNotes[0].studyGoalTitle : '';
 
     return HttpResponse.json({
-      studyGoalTitle,
-      notes: filteredNotes
+      httpStatusCode: 200,
+      errorCode: null,
+      data: {
+        studyGoalTitle,
+        notes: filteredNotes
+      },
+      errorMessage: null
     });
-  }),
-
-  // 노트 상세 조회 (기존)
-  http.get('/api/notes/detail/:id', ({ params }) => {
-    const { id } = params;
-    const idNum = Number(id);
-    const note = notes.find(note => note.id === idNum);
-
-    if (!id || isNaN(idNum) || !note) {
-      return HttpResponse.json(
-        { message: '노트를 찾을 수 없습니다.' },
-        { status: 404 }
-      );
-    }
-
-    return HttpResponse.json({ note });
   }),
 
   // 노트 단일 조회 (새로운 엔드포인트)
@@ -48,40 +45,55 @@ export const noteHandlers = [
 
     if (!noteId || isNaN(noteIdNum) || !note) {
       return HttpResponse.json(
-        { message: '노트를 찾을 수 없습니다.' },
+        {
+          httpStatusCode: 404,
+          errorCode: 'NOTE_NOT_FOUND',
+          data: null,
+          errorMessage: '노트를 찾을 수 없습니다.'
+        },
         { status: 404 }
       );
     }
 
     return HttpResponse.json({
-      noteId: note.id,
-      noteContent: note.content,
-      createAt: note.createdAt,
-      updateAt: note.updatedAt,
-      studyGoalTitle: note.studyGoalTitle,
-      todoTitle: note.todoTitle
+      httpStatusCode: 200,
+      errorCode: null,
+      data: {
+        note: note
+      },
+      errorMessage: null
     });
   }),
 
   // 노트 수정
-  http.patch('/api/notes/:id', async ({ params, request }) => {
-    const { id } = params;
-    const idNum = Number(id);
+  http.patch('/api/notes/:noteId', async ({ params, request }) => {
+    const { noteId } = params;
+    const noteIdNum = Number(noteId);
     const body = await request.json() as { content: string };
     const { content } = body;
 
     if (!content) {
       return HttpResponse.json(
-        { message: '내용이 필요합니다.' },
+        {
+          httpStatusCode: 400,
+          errorCode: 'CONTENT_REQUIRED',
+          data: null,
+          errorMessage: '내용이 필요합니다.'
+        },
         { status: 400 }
       );
     }
 
-    const noteIndex = notes.findIndex(note => note.id === idNum);
+    const noteIndex = notes.findIndex(note => note.id === noteIdNum);
 
-    if (!id || isNaN(idNum) || noteIndex === -1) {
+    if (!noteId || isNaN(noteIdNum) || noteIndex === -1) {
       return HttpResponse.json(
-        { message: '노트를 찾을 수 없습니다.' },
+        {
+          httpStatusCode: 404,
+          errorCode: 'NOTE_NOT_FOUND',
+          data: null,
+          errorMessage: '노트를 찾을 수 없습니다.'
+        },
         { status: 404 }
       );
     }
@@ -94,6 +106,13 @@ export const noteHandlers = [
 
     notes[noteIndex] = updatedNote;
 
-    return HttpResponse.json({ note: updatedNote });
+    return HttpResponse.json({
+      httpStatusCode: 200,
+      errorCode: null,
+      data: {
+        note: updatedNote
+      },
+      errorMessage: null
+    });
   }),
 ]; 

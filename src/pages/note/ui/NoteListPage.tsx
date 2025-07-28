@@ -12,11 +12,7 @@ export function NoteListPage() {
   const [selectedGoalId, setSelectedGoalId] = useState<number | null>(null);
 
   const hasStudyGoalId = searchParams?.get('studyGoalId') !== null;
-  const {
-    data: notesData,
-    isLoading,
-    isError,
-  } = useNotesByStudyGoalId(hasStudyGoalId);
+  const { data: notesResponse, isLoading, isError } = useNotesByStudyGoalId();
 
   useEffect(() => {
     const urlStudyGoalId = Number(searchParams?.get('studyGoalId'));
@@ -25,8 +21,8 @@ export function NoteListPage() {
     }
   }, [searchParams, selectedGoalId]);
 
-  const notes = notesData?.notes || [];
-  const studyGoalTitle = notesData?.studyGoalTitle || '';
+  const notes = notesResponse?.data?.notes || [];
+  const studyGoalTitle = notesResponse?.data?.studyGoalTitle || '';
 
   // 목표 선택 핸들러 (임시)
   const studyGoals = [
