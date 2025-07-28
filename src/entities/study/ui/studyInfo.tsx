@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion';
 import type { StudyGroup } from '../model';
 import CopyIcon from '@/assets/copy.svg';
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 import Image from 'next/image';
 import { useModal } from '@/shared/lib/utils/useModal';
 import toast from 'react-hot-toast';
