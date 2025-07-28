@@ -14,7 +14,7 @@ export interface StudyGroupResponse {
     teamProgress: number;
     members: {
       userId: number | string;
-      name: string;
+      nickname: string;
       userImageDir: string;
     }[];
   };
@@ -34,7 +34,7 @@ export interface StudyGroup {
 
 export interface members {
   id: string; // 팀원 아이디
-  name: string; // 팀원 이름
+  nickname: string; // 팀원 이름
   image: string; // 프로필 이미지
 }
 

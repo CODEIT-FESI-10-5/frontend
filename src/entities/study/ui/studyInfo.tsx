@@ -57,7 +57,7 @@ export default function StudyInfo({
                 >
                   <Image
                     src={member.image}
-                    alt={member.name}
+                    alt={member.nickname}
                     fill
                     className="rounded-full object-cover"
                     style={{ objectFit: 'cover' }}
@@ -127,14 +127,14 @@ function ProfileModal({ members }: { members: StudyGroup['members'] }) {
           <li key={member.id} className="flex items-center gap-12">
             <div className="relative h-32 w-32">
               <Image
-                src={member.image}
-                alt={member.name}
+                src={member.image || '/images/default-profile.png'}
+                alt={member.nickname}
                 fill
                 className="rounded-full object-cover"
                 style={{ objectFit: 'cover' }}
               />
             </div>
-            <span className="label-small">{member.name}</span>
+            <span className="label-small">{member.nickname}</span>
           </li>
         ))}
       </ul>
