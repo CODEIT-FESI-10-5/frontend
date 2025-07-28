@@ -12,7 +12,6 @@ export default function Todo({ todo }: { todo: Todo }) {
       <div className="flex items-center justify-center gap-14">
         <UpdateTodoCompletionCheckbox
           completed={todo.completed}
-          goalId={'goal-1'}
           todoId={todo.id}
         />
         <TodoInfo todo={todo} />
@@ -28,7 +27,7 @@ export default function Todo({ todo }: { todo: Todo }) {
             <NewNoteIcon width={32} height={32} />
           )}
         </Link>
-        <DeleteTodoDropDownButton goalId={'goal-1'} todoId={todo.id} />
+        <DeleteTodoDropDownButton todoId={todo.id} />
       </div>
     </div>
   );

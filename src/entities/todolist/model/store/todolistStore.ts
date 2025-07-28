@@ -18,6 +18,7 @@ export interface TodolistAction {
     newPersonal: Todo[],
   ) => void;
   getCurrOrder: () => Array<string>;
+  getTodoCount: () => number;
 }
 
 export const useTodolistStore = create<TodolistState & TodolistAction>()(
@@ -39,6 +40,10 @@ export const useTodolistStore = create<TodolistState & TodolistAction>()(
       getCurrOrder: () => {
         const { done, shared, personal } = get();
         return [...done, ...shared, ...personal].map((todo) => todo.id);
+      },
+      getTodoCount: () => {
+        const { done, shared, personal } = get();
+        return done.length + shared.length + personal.length;
       },
     }),
     {

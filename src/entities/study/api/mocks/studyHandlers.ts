@@ -3,18 +3,18 @@ import { mockStudyGroup } from './mocks';
 
 export const studyHandlers = [
   // Study 조회 API
-  http.get('/study/:studyId', ({ params }) => {
+  http.get('/api/study/:studyId', ({ params }) => {
     const studyId = params.studyId as string;
-    if (studyId !== mockStudyGroup.data.studyId) {
+    if (String(studyId) !== String(mockStudyGroup.data.studyId)) {
       return HttpResponse.json({ error: 'Study not found' }, { status: 404 });
     }
     return HttpResponse.json(mockStudyGroup);
   }),
 
   // Study 기본 정보 수정 API (제목, 설명)
-  http.patch('/study/:studyId/info', async ({ params, request }) => {
+  http.patch('/api/study/:studyId/info', async ({ params, request }) => {
     const { studyId } = params;
-    if (studyId !== mockStudyGroup.data.studyId) {
+    if (String(studyId) !== String(mockStudyGroup.data.studyId)) {
       return HttpResponse.json({ error: 'Study not found' }, { status: 404 });
     }
     try {
@@ -44,9 +44,9 @@ export const studyHandlers = [
   }),
 
   // Study 이미지 수정 API
-  http.patch('/study/:studyId/image', async ({ params, request }) => {
+  http.patch('/api/study/:studyId/image', async ({ params, request }) => {
     const { studyId } = params;
-    if (studyId !== mockStudyGroup.data.studyId) {
+    if (String(studyId) !== String(mockStudyGroup.data.studyId)) {
       return HttpResponse.json({ error: 'Study not found' }, { status: 404 });
     }
     try {

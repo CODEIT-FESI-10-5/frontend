@@ -7,14 +7,13 @@ import {
   TodolistAction,
   useTodolistStore,
 } from '@/entities/todolist/model/store';
-import { useParams } from 'next/navigation';
+import { useRef } from 'react';
 
 interface TodoCardDragGroupProps {
   type: 'personal' | 'shared' | 'done';
 }
 
 export default function TodoCardDragGroup({ type }: TodoCardDragGroupProps) {
-  const params = useParams<{ goalId: string }>();
   const todoGroup = useTodolistStore((state) => state[type]);
   const setFns = {
     personal: (state: TodolistAction) => state.setPersonal,
@@ -25,14 +24,14 @@ export default function TodoCardDragGroup({ type }: TodoCardDragGroupProps) {
   const { getCurrOrder } = useTodolistStore();
   const draggable = !(type === 'done');
   const updateOrder = useUpdateTodoOrderMutation();
-  const handleDrop = () => {
-    console.log('drop elem: post newOrder');
-    if (!params) return;
+  const handleDrop = (targetId: string) => {
     updateOrder.mutate({
-      goalId: params.goalId,
-      newOrder: getCurrOrder(),
+      todoId: targetId,
+      newOrder: getCurrOrder().findIndex((todoId) => todoId === targetId),
     });
   };
+
+  const targetTodo = useRef<string | null>(null);
 
   return (
     <Reorder.Group
@@ -52,7 +51,14 @@ export default function TodoCardDragGroup({ type }: TodoCardDragGroupProps) {
             <Reorder.Item
               value={todo}
               dragListener={draggable}
-              onDragEnd={() => handleDrop()}
+              onDragStart={() => {
+                targetTodo.current = todo.id;
+              }}
+              onDragEnd={() => {
+                if (!targetTodo.current) return;
+                handleDrop(targetTodo.current);
+                targetTodo.current = null;
+              }}
             >
               <Todo todo={todo} />
             </Reorder.Item>

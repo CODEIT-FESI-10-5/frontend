@@ -4,16 +4,17 @@ import { useCreateTodoMutation } from '../model/hooks';
 import ToggleButton from './ToggleButton';
 import ConfirmButton from '@/features/create-todo/ui/ConfirmButton';
 import CheckTodoBlankIcon from '@/assets/check_todo_blank.svg';
+import { useGoalId } from '@/shared/model/useGoalId';
 
 const IS_ADMIN = true;
 
 export default function CreateTodoForm() {
+  const goalId = useGoalId();
   const { content, setContent } = useCreateTodoStore();
   const { isInvalid, setIsInvalid } = useCreateTodoStore();
   const { isShared, toggleIsShared } = useCreateTodoStore();
   const { resetField, toggleEditMode } = useCreateTodoStore();
-
-  const createTodo = useCreateTodoMutation('goal-1');
+  const createTodo = useCreateTodoMutation(goalId);
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (content.trim() === '') {

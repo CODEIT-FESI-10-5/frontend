@@ -5,19 +5,19 @@ import SubmitButton from '@/shared/ui/SubmitButton';
 import TextField from '@/shared/ui/TextField';
 import Link from 'next/link';
 import {
-  SignUpSchema,
-  signUpSchema,
-  useSignUp,
+  SignupSchema,
+  signupSchema,
+  useSignup,
 } from '@/features/auth-sign-up/model';
 
 export default function SignUpForm() {
-  const { mutate } = useSignUp();
+  const { mutate } = useSignup();
   const {
     register,
     handleSubmit,
     formState: { errors, isValid },
-  } = useForm<SignUpSchema>({
-    resolver: zodResolver(signUpSchema),
+  } = useForm<SignupSchema>({
+    resolver: zodResolver(signupSchema),
     defaultValues: {
       email: '',
       name: '',
@@ -27,14 +27,17 @@ export default function SignUpForm() {
     mode: 'onChange',
   });
 
-  const onValid = (data: SignUpSchema) => {
+  const onValid = (data: SignupSchema) => {
     mutate(data);
   };
 
   return (
     <div>
-      <form onSubmit={handleSubmit(onValid)} className="flex flex-col gap-60">
-        <div className="flex flex-col gap-30">
+      <form
+        onSubmit={handleSubmit(onValid)}
+        className="flex w-full flex-col gap-60"
+      >
+        <div className="flex w-full flex-col gap-30">
           <TextField
             label="이메일"
             type="text"
@@ -68,7 +71,12 @@ export default function SignUpForm() {
             errorMessage={errors.confirmPassword?.message}
           />
         </div>
-        <SubmitButton name="회원가입" isActive={isValid} type="submit" />
+        <SubmitButton
+          name="회원가입"
+          isActive={isValid}
+          size="lg"
+          type="submit"
+        />
       </form>
       <div className="mt-24 flex items-start justify-center">
         <Link

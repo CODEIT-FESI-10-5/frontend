@@ -1,6 +1,6 @@
 import { clientFetch } from '@/shared/api';
-import { StudyListResponse } from '../model';
+import { StudyListResponseApi } from '../model';
 
-export const getStudyList = async (): Promise<StudyListResponse> => {
-  return clientFetch.get('api/sidebar/study-list');
+export const getStudyList = async (): Promise<StudyListResponseApi> => {
+  return clientFetch.get('/api/study');
 };

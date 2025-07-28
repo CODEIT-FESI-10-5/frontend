@@ -24,7 +24,6 @@ export default function LoginForm() {
     },
     mode: 'onChange',
   });
-  console.log('login', errors.email?.message);
 
   const onValid = (data: LoginSchema) => {
     mutate(data);
@@ -51,13 +50,18 @@ export default function LoginForm() {
             errorMessage={errors.password?.message}
           />
         </div>
-        <SubmitButton name="로그인" isActive={isValid} type="submit" />
+        <SubmitButton
+          name="로그인"
+          isActive={isValid}
+          size="lg"
+          type="submit"
+        />
       </form>
       <div className="mt-24 flex items-start justify-center">
         <p className="text-text-tertiary label-medium">
           아직 회원이 아닌가요?&nbsp;
           <Link
-            href={'/'}
+            href={'/auth/sign-up'}
             className="text-text-secondary label-medium underline"
           >
             회원가입하기
