@@ -10,7 +10,7 @@ export default function CreateStudyButton() {
   const mutation = useCreateStudy((data) => {
     goalMutation.mutate(
       {
-        title: '목표를 설정해주세요.',
+        title: '스터디 목표를 입력해주세요.',
         studyId: Number(data.newStudyId),
       },
       {
