@@ -9,11 +9,13 @@ export const useUpdateNote = () => {
   return useMutation({
     mutationFn: (noteData: UpdateNoteRequest) => updateNote(noteData),
     onSuccess: (data, variables) => {
+      // 새로운 응답 구조에 맞게 캐시 업데이트
       queryClient.setQueryData(
         noteKeys.detail(variables.id),
         data
       );
 
+      // 노트 목록 쿼리 무효화
       queryClient.invalidateQueries({
         queryKey: noteKeys.lists(),
       });
