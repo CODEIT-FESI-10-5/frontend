@@ -17,6 +17,7 @@ export const useStudyGroup = (studyId: string) => {
     select: (response: StudyGroupResponse) => {
       const d = response.data;
       return {
+        role: d.role,
         id: String(d.studyId),
         title: d.title,
         description: d.description,
