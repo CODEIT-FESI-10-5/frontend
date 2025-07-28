@@ -15,7 +15,7 @@ export default function CreateStudyButton() {
       },
       {
         onSuccess: (newGoal) => {
-          router.push(`/dashboard/${data.newStudyId}/goal/${newGoal.id}`);
+          router.push(`/dashboard/${data.newStudyId}/goal/${newGoal.data.id}`);
         },
       },
     );
