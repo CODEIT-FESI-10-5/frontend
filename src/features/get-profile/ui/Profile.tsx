@@ -25,7 +25,7 @@ export default function Profile() {
   return (
     <div className="bg-surface-4 rounded-6 flex h-79 w-full items-center gap-13 px-14 py-12">
       <Image
-        src={data?.profileImg ?? '/images/default-profile.png'}
+        src={data?.profileImg ? data.profileImg : '/images/default-profile.png'}
         alt="profile"
         width={55}
         height={55}
