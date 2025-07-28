@@ -69,3 +69,19 @@ export const mockDashboard: DashboardResponse = {
     },
   ],
 };
+
+export const noneMockDashboard: DashboardResponse = {
+  httpStatusCode: 200,
+  errorCode: 'DASHBOARD_NOT_FOUND',
+  data: {
+    id: '',
+    title: '',
+    completedCt: '',
+    progress: 0,
+    recentCompletedTodo: null,
+    inProgressTodo: null,
+    teamProgress: [],
+  },
+  errorMessage: '대시보드가 존재하지 않습니다.',
+  fieldErrors: [],
+};

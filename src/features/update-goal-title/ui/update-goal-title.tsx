@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from 'react';
 import { updateGoalTitle } from '../api/updateGoalTitle';
+import toast from 'react-hot-toast';
 
 export default function EditGoalTitle({
   title,
@@ -25,9 +26,10 @@ export default function EditGoalTitle({
       if (newTitle !== title && newTitle.trim() !== '') {
         try {
           await updateGoalTitle(goalId, newTitle);
-          console.log('제목이 성공적으로 업데이트되었습니다:', newTitle);
+          toast.success('제목이 업데이트되었습니다');
         } catch (error) {
-          console.error('제목 업데이트 실패:', error);
+          console.log(error);
+          toast.error('제목 업데이트에 실패했습니다');
           // 실패 시 원래 제목으로 되돌리기
           setTitle(title);
         }

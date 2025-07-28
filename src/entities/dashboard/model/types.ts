@@ -8,8 +8,8 @@ export interface DashboardResponse {
     title: string; // study 이름
     completedCt: string; // 완료 횟수 (4/8)
     progress: number; // 진행도 % (40%)
-    recentCompletedTodo: Todo; // 최근 완료된 todo
-    inProgressTodo: Todo; // 진행 중인 todo
+    recentCompletedTodo: Todo | null; // 최근 완료된 todo
+    inProgressTodo: Todo | null; // 진행 중인 todo
     teamProgress: teamProgress[]; // 팀원 진행도
   };
 }
@@ -19,8 +19,8 @@ export interface Dashboard {
   title: string; // study 이름
   completedCt: string; // 완료 횟수 (4/8)
   progress: number; // 진행도 % (40%)
-  recentCompletedTodo: Todo; // 최근 완료된 todo
-  inProgressTodo: Todo; // 진행 중인 todo
+  recentCompletedTodo: Todo | null; // 최근 완료된 todo
+  inProgressTodo: Todo | null; // 진행 중인 todo
   teamProgress: teamProgress[]; // 팀원 진행도
 }
 
