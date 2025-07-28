@@ -29,3 +29,16 @@ export interface GoalListResponseApi {
     },
   ];
 }
+export interface PostCreateGoalResponse {
+  httpStatusCode: number;
+  errorCode: string;
+  data: {
+    id: number;
+    title: string;
+  };
+  errorMessage: string;
+  fieldErrors: {
+    field: string;
+    message: string;
+  }[];
+}

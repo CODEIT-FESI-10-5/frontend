@@ -2,10 +2,13 @@ import { useMutation } from '@tanstack/react-query';
 import { postCreateGoal } from '@/entities/goal/api/postCreateGoal';
 
 export const useCreateGoal = (
-  onSuccess?: (newGoal: { id: string }) => void,
+  onSuccess?: (newGoal: { id: number; title: string }) => void,
 ) => {
   return useMutation({
     mutationFn: postCreateGoal,
-    onSuccess,
+    onSuccess: (res) => {
+      const { id, title } = res.data;
+      onSuccess?.({ id, title });
+    },
   });
 };

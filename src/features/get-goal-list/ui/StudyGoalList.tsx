@@ -15,7 +15,7 @@ export default function StudyGoalList() {
   const currentGoalId = getLastVisitedGoalId(currentStudyId);
 
   const mutation = useCreateGoal((newGoal) => {
-    setLastVisitedGoalId(currentStudyId, newGoal.id);
+    setLastVisitedGoalId(currentStudyId, String(newGoal.id));
     router.push(`/dashboard/study/${currentStudyId}/goal/${newGoal.id}`);
   });
 
