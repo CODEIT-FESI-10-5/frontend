@@ -4,7 +4,7 @@ import { DashboardResponse } from '@/entities/dashboard';
 export const fetchDashboard = async (
   goalId: string,
 ): Promise<DashboardResponse> => {
-  return clientFetch.get<DashboardResponse>('/dashboard', {
+  return clientFetch.get<DashboardResponse>('/api/dashboard', {
     params: { goalId },
   });
 };
