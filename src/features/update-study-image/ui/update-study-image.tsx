@@ -59,7 +59,7 @@ export default function UpdateStudyImage({ studyId }: UpdateStudyImageProps) {
           onDeleteBg={handleImageDelete}
         />,
         settingIconRef,
-        { top: 8, left: -100 },
+        { top: 8, left: 0 },
       );
     }
   };
