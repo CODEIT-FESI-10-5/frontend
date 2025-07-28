@@ -3,12 +3,15 @@ import { StudyItem } from '@/entities/study/model/types';
 import { useGetStudy, useStudyStore } from '../model';
 import { useRouter } from 'next/navigation';
 import { useGoalStore } from '@/features/get-goal-list/model';
+import { useQueryClient } from '@tanstack/react-query';
+import { goalQueryKeys } from '@/entities/goal';
 
 interface StudyDropDownProps {
   onClick: () => void;
 }
 
 export default function StudyDropDown({ onClick }: StudyDropDownProps) {
+  const queryClient = useQueryClient();
   const router = useRouter();
   const { isLoading, data, error } = useGetStudy();
   const { setStudyId } = useStudyStore();
@@ -23,6 +26,9 @@ export default function StudyDropDown({ onClick }: StudyDropDownProps) {
     setStudyId(study.id);
     const lastVisitedGoal = getLastVisitedGoalId(study.id);
     router.push(`/dashboard/study/${study.id}/goal/${lastVisitedGoal}`);
+    queryClient.invalidateQueries({
+      queryKey: goalQueryKeys.list(Number(study.id)),
+    });
     onClick();
   };
 

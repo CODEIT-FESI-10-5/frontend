@@ -1,14 +1,14 @@
 'use client';
 
-import { useNoteById } from '@/features/get-note/api/getNoteQueries';
+import { useGetNoteById } from '@/features/get-note/api/getNoteQueries';
 import { NoteEditor } from '@/features/edit-note';
 import { useUpdateNote } from '@/features/edit-note/api/useUpdateNoteMutation';
 import NoteListPageIcon from '@/assets/note-list-page-icon.svg';
 
 export function NoteEditPage({ noteId }: { noteId: number }) {
-  const { data: noteData, isLoading, isError } = useNoteById(noteId);
+  const { data: noteResponse, isLoading, isError } = useGetNoteById(noteId);
 
-  const note = noteData?.note;
+  const note = noteResponse?.data?.note;
   const updateNoteMutation = useUpdateNote();
 
   const handleAutoSave = (content: string) => {

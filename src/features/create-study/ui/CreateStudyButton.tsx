@@ -3,8 +3,12 @@ import React from 'react';
 import { useRouter } from 'next/navigation';
 import { useCreateStudy } from '../model/useCreateStudy';
 import { useCreateGoal } from '@/features/create-goal/model';
+import { useQueryClient } from '@tanstack/react-query';
+import { goalQueryKeys } from '@/entities/goal';
+import { studyQueryKeys } from '@/entities/study';
 
 export default function CreateStudyButton() {
+  const queryClient = useQueryClient();
   const router = useRouter();
   const goalMutation = useCreateGoal();
   const mutation = useCreateStudy((data) => {
@@ -15,7 +19,16 @@ export default function CreateStudyButton() {
       },
       {
         onSuccess: (newGoal) => {
-          router.push(`/dashboard/${data.newStudyId}/goal/${newGoal.id}`);
+          //목표 리스트 쿼리 업데이트
+          queryClient.invalidateQueries({
+            queryKey: goalQueryKeys.list(Number(data.newStudyId)),
+          });
+          queryClient.invalidateQueries({
+            queryKey: studyQueryKeys.list(),
+          });
+          router.push(
+            `/dashboard/study/${data.newStudyId}/goal/${newGoal.data.id}`,
+          );
         },
       },
     );

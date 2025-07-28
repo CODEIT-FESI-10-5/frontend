@@ -22,7 +22,7 @@ export default function Todo({ todo }: { todo: Todo }) {
       </div>
       <div className="flex items-center justify-center gap-4">
         <Link
-          href="/note/edit/noteID"
+          href={`/note/edit/${todo.noteId}`}
           className="cursor-pointer transition hover:scale-110"
         >
           {todo.note ? (
