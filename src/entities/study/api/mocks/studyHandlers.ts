@@ -1,5 +1,19 @@
+// 로그인 상태 확인 API
 import { http, HttpResponse } from 'msw';
 import { mockStudyGroup } from './mocks';
+// ...existing code...
+
+// /api/auth/check 핸들러 추가
+export const authHandlers = [
+  http.get('/api/auth/check', ({ request }) => {
+    // 예시: 쿠키에 accessToken이 있으면 로그인 상태로 간주
+    const cookie = request.headers.get('cookie') || '';
+    if (cookie.includes('accessToken=')) {
+      return HttpResponse.json({ isLoggedIn: true });
+    }
+    return HttpResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  }),
+];
 
 export const studyHandlers = [
   // Study 조회 API

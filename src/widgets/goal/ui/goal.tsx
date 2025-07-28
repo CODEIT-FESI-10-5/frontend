@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 
 import NewTodoIcon from '@/assets/todo_new.svg';
@@ -62,9 +62,11 @@ export default function Goal({ goalId }: { goalId: string }) {
 
   // goal이 정의된 이후에만 studyGoal 접근
   // 제목 상태 초기화 (최초 렌더링 시만)
-  if (title === '' && goal.title) {
-    setTitle(goal.title);
-  }
+  useEffect(() => {
+    if (title === '' && goal.title) {
+      setTitle(goal.title);
+    }
+  }, [goal.title, title]);
 
   if (!goal?.recentCompletedTodo?.content && !goal?.inProgressTodo?.content) {
     if (!title) {
