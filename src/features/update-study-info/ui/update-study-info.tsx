@@ -2,6 +2,7 @@
 
 import { useRef, useState } from 'react';
 import { updateStudyInfo } from '@/features/update-study-info/api';
+import toast from 'react-hot-toast';
 
 export default function UpdateStudyInfo(props: {
   title: string;
@@ -21,8 +22,10 @@ export default function UpdateStudyInfo(props: {
     timeoutRef.current = setTimeout(async () => {
       try {
         await updateStudyInfo(props.studyId, newTitle, newDescription);
+        toast.success('정보가 업데이트되었습니다!');
       } catch (error) {
         console.error('Error updating study info:', error);
+        toast.error('업데이트에 실패했습니다.');
       }
     }, 2000);
   };
