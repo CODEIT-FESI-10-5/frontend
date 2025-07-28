@@ -2,12 +2,23 @@
 import React from 'react';
 import { useRouter } from 'next/navigation';
 import { useCreateStudy } from '../model/useCreateStudy';
+import { useCreateGoal } from '@/features/create-goal/model';
 
 export default function CreateStudyButton() {
   const router = useRouter();
-
+  const goalMutation = useCreateGoal();
   const mutation = useCreateStudy((data) => {
-    router.push(`/dashboard/${data.newStudyId}`);
+    goalMutation.mutate(
+      {
+        title: '목표를 설정해주세요.',
+        studyId: Number(data.newStudyId),
+      },
+      {
+        onSuccess: (newGoal) => {
+          router.push(`/dashboard/${data.newStudyId}/goal/${newGoal.id}`);
+        },
+      },
+    );
   });
 
   return (
