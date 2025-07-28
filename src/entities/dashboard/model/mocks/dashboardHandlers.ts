@@ -1,5 +1,5 @@
 import { http, HttpResponse } from 'msw';
-import { mockDashboard } from '@/entities/dashboard';
+import { mockDashboard, noneMockDashboard } from '@/entities/dashboard';
 
 export const dashboardHandlers = [
   //dashboard
@@ -13,8 +13,30 @@ export const dashboardHandlers = [
       );
     }
     // 실제 mockDashboard에서 goalId별 데이터 분기 필요시 여기에 추가
-    return HttpResponse.json(mockDashboard);
+    // return HttpResponse.json(mockDashboard);
+    return HttpResponse.json(noneMockDashboard);
   }),
 
   // dashboard 에있는 goal title 수정
+  http.patch('/api/goals/:goalId', async ({ params, request }) => {
+    const { goalId } = params;
+    let title = '';
+    try {
+      const body = await request.json();
+      if (body && typeof body === 'object' && 'title' in body) {
+        title = body.title;
+      }
+    } catch {
+      // body 파싱 실패
+    }
+    if (!goalId || !title) {
+      return HttpResponse.json(
+        { error: 'goalId and title are required' },
+        { status: 400 },
+      );
+    }
+    // 실제 mockDashboard에서 goalId별 데이터 수정 필요시 여기에 추가
+    return HttpResponse.json(mockDashboard);
+    // return HttpResponse.json(noneMockDashboard);
+  }),
 ];

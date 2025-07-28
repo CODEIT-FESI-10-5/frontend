@@ -4,16 +4,19 @@ import { useStudyGroup } from '@/entities/study/model/useStudyGroup';
 import UpdateStudyInfo from '@/features/update-study-info/ui/update-study-info';
 import StudyInfo from '@/entities/study/ui/studyInfo';
 import UpdateStudyImage from '@/features/update-study-image/ui/update-study-image';
+import { useInviteCodeStore } from '@/entities/dashboard';
+import { useEffect } from 'react';
 
 export default function Study({ studyId }: { studyId: string }) {
   const { data: studyGroup, isLoading, error } = useStudyGroup(studyId);
+  const { inviteCode, setInviteCode } = useInviteCodeStore();
 
-  {
-    /*entities useStudyGroup 으로 데이터 가져오기 */
-  }
-  {
-    /*가져온 데이터를 features로 전달 */
-  }
+  useEffect(() => {
+    if (studyGroup && studyGroup.inviteLink !== inviteCode) {
+      setInviteCode(studyGroup.inviteLink);
+    }
+  }, [studyGroup, setInviteCode, inviteCode]);
+
   // 로딩 상태 처리
   if (isLoading) {
     return (
