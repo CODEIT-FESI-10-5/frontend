@@ -97,11 +97,11 @@ export default function Home() {
   // 스터디 만들기 핸들러
   const handleStudyCreate = async () => {
     try {
-      const res = await clientFetch.get('/api/auth/check');
+      await clientFetch.get('/api/auth/check');
       // 성공적으로 인증된 경우
       console.log('스터디 만들기 가능');
       mutation.mutate();
-    } catch (e) {
+    } catch {
       // 인증되지 않은 경우 로그인 페이지로 리다이렉트
       router.push('/auth/login');
     }
@@ -110,9 +110,9 @@ export default function Home() {
   // 초대코드로 참여하기 핸들러
   const handleJoinStudy = async () => {
     try {
-      const res = await clientFetch.get('/api/auth/check');
+      await clientFetch.get('/api/auth/check');
       open(<JoinStudyModal />);
-    } catch (e) {
+    } catch {
       // 인증되지 않은 경우 로그인 페이지로 리다이렉트
       router.push('/auth/login');
     }
