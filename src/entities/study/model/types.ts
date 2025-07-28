@@ -4,6 +4,7 @@ export interface StudyGroupResponse {
   errorMessage: string;
   fieldErrors: { field: string; message: string }[];
   data: {
+    role: string; // 'LEADER' | 'NORMARL'
     studyId: number | string;
     title: string;
     description: string;
@@ -20,6 +21,7 @@ export interface StudyGroupResponse {
 }
 
 export interface StudyGroup {
+  role: string; // 'LEADER' | 'NORMARL'
   id: string; //study 아이디
   title: string; //study 이름
   description: string; //study 설명
@@ -49,6 +51,10 @@ export interface StudyItem {
 }
 
 export interface StudyListResponseApi {
+  httpStatusCode: number;
+  errorCode: string;
+  errorMessage: string;
+  fieldErrors: { field: string; message: string }[];
   data: {
     totalCount: number;
     recentStudyId: number;

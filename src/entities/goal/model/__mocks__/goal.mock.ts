@@ -1,22 +1,23 @@
-import { GoalListResponse } from '../types';
+import { GoalListResponseApi } from '../types';
 
-export const mockGoalList: GoalListResponse = {
-  goalList: [
+export const mockGoalList: GoalListResponseApi = {
+  httpStatusCode: 0,
+  errorCode: 'string',
+  data: {
+    studyId: 1,
+    goals: [
+      {
+        id: 1,
+        title: '스프링 부트 마스터하기',
+      },
+    ],
+    totalCount: 5,
+  },
+  errorMessage: 'string',
+  fieldErrors: [
     {
-      id: 'goal-001',
-      title: '기초 문법 공부하기',
-    },
-    {
-      id: 'goal-002',
-      title: 'React Hooks 완전 정복',
-    },
-    {
-      id: 'goal-003',
-      title: 'Next.js 라우팅 이해하기',
-    },
-    {
-      id: 'goal-004',
-      title: 'Zustand로 상태 관리',
+      field: 'string',
+      message: 'string',
     },
   ],
 };

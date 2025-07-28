@@ -3,7 +3,7 @@ import { mockDashboard } from '@/entities/dashboard';
 
 export const dashboardHandlers = [
   //dashboard
-  http.get('/dashboard', ({ request }) => {
+  http.get('/api/dashboard', ({ request }) => {
     const url = new URL(request.url);
     const goalId = url.searchParams.get('goalId');
     if (!goalId) {
