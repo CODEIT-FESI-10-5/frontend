@@ -9,12 +9,7 @@ import EditGoalTitle from '@/features/update-goal-title/ui/update-goal-title';
 
 import Todo from '@/widgets/todo/ui/todo';
 import Image from 'next/image';
-import {
-  teamProgress,
-  useDashboard,
-  useInviteCodeStore,
-} from '@/entities/dashboard';
-import toast from 'react-hot-toast';
+import { teamProgress, useDashboard } from '@/entities/dashboard';
 
 // 팀원별 진행도 타입
 export interface TeamProgress {
@@ -74,35 +69,22 @@ export default function Goal({ goalId }: { goalId: string }) {
   if (!goal?.recentCompletedTodo?.content && !goal?.inProgressTodo?.content) {
     if (!title) {
       return (
-        <div className="flex gap-27">
-          <div className="bg-surface-2 border-border-subtle h-[523px] w-full max-w-[537px] rounded-md border p-34">
-            <EditGoalTitle goalId={goalId} title={title} setTitle={setTitle} />
-          </div>
-          {/* 팀원 진행도 */}
-          {/* 팀원별 진행도 컴포넌트 */}
-          <TeamProgressList teamProgress={goal.teamProgress || []} />
-        </div>
+        <EditGoalTitle goalId={goalId} title={title} setTitle={setTitle} />
       );
     }
     return (
-      <div className="flex gap-27">
-        <div className="bg-surface-2 border-border-subtle h-[523px] w-full max-w-[537px] rounded-md border p-34">
-          <EditGoalTitle goalId={goalId} title={title} setTitle={setTitle} />
-          <Link
-            href={`/todolist-detail/${goalId}`}
-            className="mt-28 flex flex-col items-center justify-center gap-3 rounded-xl border border-dashed border-[#454545] bg-[#2c2c2c] p-8 py-36 text-base font-normal text-[#f5f5f5]"
-          >
-            <NewTodoIcon width={32} height={32} />
-            <span className="text-text-primary body-small">
-              세부 투두를 추가해 목표를 구체화해보세요.
-            </span>
-          </Link>
-        </div>
-        {/* 팀원 진행도 */}
-
-        {/* 팀원별 진행도 컴포넌트 */}
-        <TeamProgressList teamProgress={goal.teamProgress || []} />
-      </div>
+      <>
+        <EditGoalTitle goalId={goalId} title={title} setTitle={setTitle} />
+        <Link
+          href="/goal/todo/create"
+          className="mt-28 flex flex-col items-center justify-center gap-3 rounded-xl border border-dashed border-[#454545] bg-[#2c2c2c] p-8 py-36 text-base font-normal text-[#f5f5f5]"
+        >
+          <NewTodoIcon width={32} height={32} />
+          <span className="text-text-primary body-small">
+            세부 투두를 추가해 목표를 구체화해보세요.
+          </span>
+        </Link>
+      </>
     );
   }
 
@@ -177,152 +159,117 @@ export default function Goal({ goalId }: { goalId: string }) {
           </Link>
         </div>
         {/* 팀원 진행도 */}
-
-        {/* 팀원별 진행도 컴포넌트 */}
-        <TeamProgressList teamProgress={goal.teamProgress || []} />
+        <div className="bg-surface-2 border-border-subtle h-[380px] w-full max-w-[423px] rounded-md border p-34">
+          {/* 팀원별 진행도 컴포넌트 */}
+          <TeamProgressList teamProgress={goal.teamProgress || []} />
+        </div>
       </div>
     </>
   );
 }
 
 // 팀 진행도 컴포넌트
-
-// 팀원이 없을 때 안내 UI 추가
 export function TeamProgressList({
   teamProgress,
 }: {
   teamProgress: teamProgress[];
 }) {
-  const { inviteCode } = useInviteCodeStore();
-
-  if (teamProgress.length === 0) {
-    return (
-      <div className="bg-surface-3 border-border-subtle flex h-[204px] w-full max-w-[423px] flex-col gap-18 rounded-md border px-30 py-34">
-        <span className="headline-medium text-text-secondary">팀원 달성률</span>
-        <div className="flex flex-col items-center justify-center gap-24">
-          <span className="label-small text-text-secondary text-center">
-            같이 하면 더 힘이나요.
-            <br />
-            팀원을 초대해 함께 목표를 이뤄볼까요?
-          </span>
-          <div className="relative flex items-center gap-8">
-            <div className="bg-surface-4 text-primary title-medium border-border-emphasis rounded border">
-              <span className="px-20 py-8">{inviteCode}</span>
-              <button
-                className="bg-primary body-medium cursor-pointer rounded-md px-12 py-8 text-nowrap text-white"
-                onClick={() => {
-                  navigator.clipboard.writeText(String(inviteCode));
-                  toast.success('초대 코드가 복사되었습니다!');
-                }}
-              >
-                코드 복사
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  // 기존 팀원 달성률 UI (팀원이 있을 때)
-  // ...existing code...
-  // (아래 기존 코드 유지)
   // 내림차순 정렬 (진행도 높은 순)
   const sorted = [...teamProgress].sort((a, b) => b.progress - a.progress);
+  // 최대 4명만 출력, 부족하면 빈 슬롯 추가
   const maxMembers = 4;
   const filled = sorted.slice(0, maxMembers);
   return (
-    <div className="bg-surface-2 border-border-subtle h-[380px] w-full max-w-[423px] rounded-md border p-34">
-      <div className="flex h-full flex-col justify-between">
-        <div className="flex items-center justify-between">
-          <span className="headline-medium text-white">팀원 달성률</span>
-          <span className="label-small text-text-tertiary">5분전 업데이트</span>
-        </div>
-        <ul className="flex h-full w-full items-end justify-between">
-          {Array.from({ length: maxMembers }).map((_, idx) => {
-            const member = filled[idx];
-            const isFirst = idx === 0;
-            const barColor = isFirst
-              ? 'bg-secondary'
-              : idx === 2
-                ? 'bg-highlight'
-                : 'bg-icon-grey-300';
-            const barHeight = member ? 22 + (member.progress / 100) * 98 : 22;
-            const rankText = `${idx + 1}위`;
-            if (member) {
-              return (
-                <li
-                  key={member.name}
-                  className="relative flex flex-col items-center gap-6"
-                >
-                  <div className="mb-10 flex flex-col items-center justify-center gap-10">
-                    <span className="label-small text-text-secondary max-w-[60px] truncate">
-                      {member.name}
-                    </span>
-                    <Image
-                      width={52}
-                      height={52}
-                      src={member.image}
-                      alt={member.name}
-                      className={`border-icon-grey-200 rounded-full border-4 object-cover`}
-                    />
-                  </div>
-                  <motion.div
-                    className={`bottom-0 flex flex-col items-center justify-end ${barColor} relative w-64 rounded-t-md`}
-                    initial={{ height: 22 }}
-                    animate={{ height: barHeight }}
-                    transition={{ duration: 1 }}
-                  >
-                    {isFirst && (
-                      <Image
-                        width={35}
-                        height={35}
-                        src={'/images/teamprogress-first.png'}
-                        alt="1st place"
-                        className="absolute top-0 left-1/2 -translate-x-1/2"
-                      />
-                    )}
-                    <span className="body-small absolute bottom-3 text-white">
-                      {member.progress}%
-                    </span>
-                  </motion.div>
-                  <span className={`body-medium text-text-primary`}>
-                    {rankText}
-                  </span>
-                </li>
-              );
-            } else {
-              // 빈 슬롯
-              return (
-                <li
-                  key={`empty-${idx}`}
-                  className="relative flex flex-col items-center gap-6"
-                >
-                  <div className="mb-10 flex flex-col items-center justify-center gap-10">
-                    <span className="label-small max-w-[60px] truncate text-transparent select-none">
-                      -
-                    </span>
-                    <div className="border-icon-grey-200 bg-icon-grey-300 h-52 w-52 rounded-full border-4" />
-                  </div>
-                  <motion.div
-                    className={`bg-icon-grey-300 relative bottom-0 flex w-64 flex-col items-center justify-end rounded-t-md`}
-                    initial={{ height: 22 }}
-                    animate={{ height: 22 }}
-                    transition={{ duration: 1 }}
-                  >
-                    <span className="body-small absolute bottom-3 text-white">
-                      0%
-                    </span>
-                  </motion.div>
-                  <span className={`body-medium text-text-primary`}>
-                    {rankText}
-                  </span>
-                </li>
-              );
-            }
-          })}
-        </ul>
+    <div className="flex h-full flex-col justify-between">
+      <div className="flex items-center justify-between">
+        <span className="headline-medium text-white">팀원 달성률</span>
+        {/* TODO 시간 추가해야됨 */}
+        <span className="label-small text-text-tertiary">5분전 업데이트</span>
       </div>
+      <ul className="flex h-full w-full items-end justify-between">
+        {Array.from({ length: maxMembers }).map((_, idx) => {
+          const member = filled[idx];
+          const isFirst = idx === 0;
+          const barColor = isFirst
+            ? 'bg-secondary'
+            : idx === 2
+              ? 'bg-highlight'
+              : 'bg-icon-grey-300';
+          const barHeight = member ? 22 + (member.progress / 100) * 98 : 22;
+          const rankText = `${idx + 1}위`;
+          if (member) {
+            return (
+              <li
+                key={member.name}
+                className="relative flex flex-col items-center gap-6"
+              >
+                <div className="mb-10 flex flex-col items-center justify-center gap-10">
+                  <span className="label-small text-text-secondary max-w-[60px] truncate">
+                    {member.name}
+                  </span>
+                  <Image
+                    width={52}
+                    height={52}
+                    src={member.image}
+                    alt={member.name}
+                    className={`border-icon-grey-200 rounded-full border-4 object-cover`}
+                  />
+                </div>
+                <motion.div
+                  className={`bottom-0 flex flex-col items-center justify-end ${barColor} relative w-64 rounded-t-md`}
+                  initial={{ height: 22 }}
+                  animate={{ height: barHeight }}
+                  transition={{ duration: 1 }}
+                >
+                  {isFirst && (
+                    <Image
+                      width={35}
+                      height={35}
+                      src={'/images/teamprogress-first.png'}
+                      alt="1st place"
+                      className="absolute top-0 left-1/2 -translate-x-1/2"
+                    />
+                  )}
+                  <span className="body-small absolute bottom-3 text-white">
+                    {member.progress}%
+                  </span>
+                </motion.div>
+                <span className={`body-medium text-text-primary`}>
+                  {rankText}
+                </span>
+              </li>
+            );
+          } else {
+            // 빈 슬롯
+            return (
+              <li
+                key={`empty-${idx}`}
+                className="relative flex flex-col items-center gap-6"
+              >
+                <div className="mb-10 flex flex-col items-center justify-center gap-10">
+                  <span className="label-small max-w-[60px] truncate text-transparent select-none">
+                    -
+                  </span>
+                  <div className="border-icon-grey-200 bg-icon-grey-300 h-52 w-52 rounded-full border-4" />
+                </div>
+                <motion.div
+                  className={`bg-icon-grey-300 relative bottom-0 flex w-64 flex-col items-center justify-end rounded-t-md`}
+                  initial={{ height: 22 }}
+                  animate={{ height: 22 }}
+                  transition={{ duration: 1 }}
+                >
+                  <span className="body-small absolute bottom-3 text-white">
+                    0%
+                  </span>
+                </motion.div>
+                <span className={`body-medium text-text-primary`}>
+                  {rankText}
+                </span>
+              </li>
+            );
+          }
+        })}
+      </ul>
     </div>
   );
 }

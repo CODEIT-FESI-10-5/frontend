@@ -39,9 +39,9 @@ export const dashboardHandlers = [
     // goalId에 해당하는 dashboard.data의 title을 변경 (메모리상에서)
     if (
       mockDashboard.data &&
-      String(mockDashboard.data.id) === String(goalId)
+      String(mockDashboard.data.goal.id) === String(goalId)
     ) {
-      mockDashboard.data.title = title;
+      mockDashboard.data.goal.title = title;
     }
     return HttpResponse.json(mockDashboard);
     // return HttpResponse.json(noneMockDashboard);

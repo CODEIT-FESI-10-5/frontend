@@ -56,7 +56,7 @@ export default function StudyInfo({
                   style={{ zIndex: members.length + index }}
                 >
                   <Image
-                    src={member.image}
+                    src={member.image || '/images/default-profile.png'}
                     alt={member.nickname}
                     fill
                     className="rounded-full object-cover"
