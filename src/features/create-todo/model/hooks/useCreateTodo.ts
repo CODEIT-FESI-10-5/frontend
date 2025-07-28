@@ -3,6 +3,7 @@ import { useTodoCustomMutation } from '@/shared/lib/utils/useTodoCustomMutation'
 import { createTodo, newTodoData } from '../../api';
 import { todolistQueryKeys } from '@/entities/todolist/model';
 import toast from 'react-hot-toast';
+import { dashboardQueryKeys } from '@/entities/dashboard';
 
 interface CreateTodoMutationParams {
   newTodo: newTodoData;
@@ -11,7 +12,10 @@ interface CreateTodoMutationParams {
 export const useCreateTodoMutation = (goalId: string) =>
   useTodoCustomMutation<CreateTodoMutationParams, any>(
     ({ newTodo }) => createTodo(goalId, newTodo),
-    [[...todolistQueryKeys.todolist(goalId)]],
+    [
+      [...dashboardQueryKeys.goal(goalId)],
+      [...todolistQueryKeys.todolist(goalId)],
+    ],
     {
       onSuccess: () => {
         toast.success('투두 생성에 성공했습니다');
