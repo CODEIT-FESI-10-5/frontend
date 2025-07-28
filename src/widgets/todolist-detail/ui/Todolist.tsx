@@ -6,12 +6,12 @@ import { useTodolistStore } from '@/entities/todolist/model/store';
 
 export default function Todolist() {
   const { done, shared, personal } = useTodolistStore();
-  const isEditMode = useCreateTodoStore((state) => state.isCreateMode);
+  const isCreateMode = useCreateTodoStore((state) => state.isCreateMode);
 
   return (
     <>
       <AnimatePresence mode="popLayout">
-        {isEditMode && (
+        {isCreateMode && (
           <motion.div
             layout={'position'}
             key="edit-frame"

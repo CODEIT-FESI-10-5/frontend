@@ -1,6 +1,7 @@
 'use client';
 import { useRef } from 'react';
 import { updateStudyImage } from '../api';
+import toast from 'react-hot-toast';
 
 export default function UpdateStudyImage({ studyId }: { studyId: string }) {
   const fileInputRef = useRef<HTMLInputElement | null>(null);
@@ -16,10 +17,12 @@ export default function UpdateStudyImage({ studyId }: { studyId: string }) {
     formData.append('image', imageFile);
     try {
       await updateStudyImage(studyId, formData);
+      toast.success('이미지가 업데이트되었습니다!');
       // 성공 후 추가 처리(예: 알림, 이미지 미리보기 등)
     } catch (err) {
       // 에러 처리
       console.error(err);
+      toast.error('이미지 업데이트에 실패했습니다.');
     }
   };
 

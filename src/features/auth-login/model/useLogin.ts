@@ -1,18 +1,29 @@
 import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
-import { LoginSchema, useProfileStore } from '@/features/auth-login';
+import { LoginSchema } from '@/features/auth-login';
 import { requestLogin } from '@/entities/auth/api';
+
+// {
+//     "httpStatusCode": 200,
+//     "data": {
+//         "email": "sdc9787@qwer.com",
+//         "nickname": "sdc9787",
+//         "profileImg": ""
+//     }
+// }
 
 export function useLogin() {
   const router = useRouter();
-  const setProfile = useProfileStore((state) => state.setProfile);
+  // const setProfile = useProfileStore((state) => state.setProfile);
 
   return useMutation({
     mutationFn: (data: LoginSchema) => requestLogin(data),
-    onSuccess: () => {
-      //   const { userId, name, email, profileImage } = res.data;
-
-      //   setProfile({ userId, name, email, profileImage });
+    onSuccess: (res) => {
+      //localStorage에 email, nickname, profileImg 저장
+      const { email, nickname, profileImg } = res.data;
+      localStorage.setItem('email', email);
+      localStorage.setItem('nickname', nickname);
+      localStorage.setItem('profileImg', profileImg);
 
       router.push('/');
     },

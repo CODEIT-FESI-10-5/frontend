@@ -1,10 +1,11 @@
 import { useQuery } from '@tanstack/react-query';
 import { getGoalList } from '@/entities/goal/api/getGoalList';
-import { GoalListResponse, goalQueryKeys } from '@/entities/goal';
+import { GoalListResponseApi, goalQueryKeys } from '@/entities/goal';
 
-export const useGetGoal = () => {
-  return useQuery<GoalListResponse>({
-    queryKey: goalQueryKeys.list(),
-    queryFn: getGoalList,
+export const useGetGoal = (studyId: number) => {
+  return useQuery<GoalListResponseApi, Error, GoalListResponseApi['data']>({
+    queryKey: goalQueryKeys.list(studyId),
+    queryFn: () => getGoalList(studyId),
+    select: (response) => response.data,
   });
 };

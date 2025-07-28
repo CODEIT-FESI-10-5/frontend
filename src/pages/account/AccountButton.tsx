@@ -1,4 +1,4 @@
-import { cva, type VariantProps } from 'class-variance-authority';
+import { cva } from 'class-variance-authority';
 
 type AccountButtonType = 'logout' | 'delete';
 
@@ -32,7 +32,7 @@ export const accountButtonVariants = cva('rounded-6 h-55 w-full', {
 });
 
 export function AccountButton({ type }: AccountButtonProps) {
-  const { label, action } = typeMap[type];
+  const { label } = typeMap[type];
   return (
     <button className={accountButtonVariants({ variant: type })}>
       {label}

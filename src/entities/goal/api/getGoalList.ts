@@ -1,6 +1,8 @@
 import { clientFetch } from '@/shared/api';
-import { GoalListResponse } from '../model';
+import { GoalListResponseApi } from '../model';
 
-export const getGoalList = async (): Promise<GoalListResponse> => {
-  return clientFetch.get('api/sidebar/goal-list');
+export const getGoalList = async (
+  studyId: number,
+): Promise<GoalListResponseApi> => {
+  return clientFetch.get(`/api/studies/${studyId}/goals`);
 };

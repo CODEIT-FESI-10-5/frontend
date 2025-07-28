@@ -5,5 +5,5 @@ import { clientFetch } from '../../../shared/api';
 export const fetchStudy = async (
   studyId: string,
 ): Promise<StudyGroupResponse> => {
-  return clientFetch.get<StudyGroupResponse>(`/study/${studyId}`);
+  return clientFetch.get<StudyGroupResponse>(`/api/study/${studyId}`);
 };
