@@ -14,6 +14,7 @@ export function useUpdateStudyInfoMutation(studyId: string) {
     }) => updateStudyInfo(studyId, title, description),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['study', 'detail', studyId] });
+      queryClient.invalidateQueries({ queryKey: ['study'] });
       toast.success('정보가 업데이트되었습니다!');
     },
     onError: () => {
