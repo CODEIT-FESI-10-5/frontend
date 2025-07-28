@@ -6,7 +6,7 @@ import {
 
 export const useTodoCustomMutation = <TVariables, TResult, TError = unknown>(
   mutationFn: (variables: TVariables) => Promise<TResult>,
-  invalidateQueryKey?: Array<string>,
+  invalidateQueryKeys?: Array<Array<string>>,
   mutationOptions?: UseMutationOptions<TResult, TError, TVariables>,
 ) => {
   const queryClient = useQueryClient();
@@ -14,9 +14,9 @@ export const useTodoCustomMutation = <TVariables, TResult, TError = unknown>(
     mutationFn,
     ...mutationOptions,
     onSuccess: (data, variables, context) => {
-      if (invalidateQueryKey) {
-        queryClient.invalidateQueries({
-          queryKey: invalidateQueryKey,
+      if (invalidateQueryKeys) {
+        invalidateQueryKeys.forEach((key) => {
+          queryClient.invalidateQueries({ queryKey: key });
         });
       }
       if (mutationOptions?.onSuccess) {
