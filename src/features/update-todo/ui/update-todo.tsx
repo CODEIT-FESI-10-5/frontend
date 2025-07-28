@@ -1,16 +1,16 @@
 import CheckTodoBlankIcon from '@/assets/check_todo_blank.svg';
 import CheckTodoFillIcon from '@/assets/check_todo_fill.svg';
 import { useUpdateTodoMutation } from '../model/hooks/useUpdateTodo';
+import { useGoalId } from '@/shared/model/useGoalId';
 
 export default function UpdateTodoCompletionCheckbox({
   completed,
-  goalId,
   todoId,
 }: {
   completed: boolean;
-  goalId: string;
   todoId: string;
 }) {
+  const goalId = useGoalId();
   const updateTodo = useUpdateTodoMutation(goalId);
 
   return (

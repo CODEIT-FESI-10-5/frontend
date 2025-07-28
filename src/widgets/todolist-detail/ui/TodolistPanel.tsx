@@ -9,9 +9,9 @@ import { useTodolistQuery } from '@/entities/todolist/model/hooks';
 import divideTodoGroup from '@/entities/todolist/lib/utils/divideTodoGroup';
 import { useEffect } from 'react';
 import { useTodolistStore } from '@/entities/todolist/model/store';
-import { useParams } from 'next/navigation';
 import ConfirmButton from '@/features/create-todo/ui/ConfirmButton';
 import toast from 'react-hot-toast';
+import { useGoalId } from '@/shared/model/useGoalId';
 
 function TitleArea({ title = '목표' }: { title?: string }) {
   const toggleEditMode = useCreateTodoStore((state) => state.toggleEditMode);
@@ -42,8 +42,8 @@ function TitleArea({ title = '목표' }: { title?: string }) {
 }
 
 export default function TodolistPanel() {
-  const params = useParams<{ goalId: string }>();
-  const { data, isLoading } = useTodolistQuery(params?.goalId);
+  const goalId = useGoalId();
+  const { data, isLoading } = useTodolistQuery(goalId);
   const { setAllGroup } = useTodolistStore();
 
   useEffect(() => {
@@ -53,12 +53,7 @@ export default function TodolistPanel() {
     setAllGroup(newDone, newShared, newPersonal);
   }, [data, setAllGroup]);
 
-  if (!params || isLoading)
-    return (
-      <>
-        {JSON.stringify(params)} / Loading:{String(isLoading)}
-      </>
-    );
+  if (isLoading) return <>Loading</>;
 
   return (
     <LayoutGroup>
