@@ -8,7 +8,10 @@ export interface LoginRequestApi {
   password: string;
 }
 export interface LoginResponseApi {
-  name: string;
-  email: string;
-  profileImage: string;
+  httpStatusCode: number;
+  data: {
+    email: string;
+    nickname: string;
+    profileImg: string;
+  };
 }
