@@ -6,7 +6,7 @@ export const mockStudyListResponseApi: StudyListResponseApi = {
   errorMessage: '',
   fieldErrors: [],
   data: {
-    totalCount: 0,
+    totalCount: 3,
     recentStudyId: 1,
     studyList: [
       {
@@ -26,6 +26,12 @@ export const mockStudyListResponseApi: StudyListResponseApi = {
         role: 'MEMBER',
         title: '운영체제 스터디',
         description: '매주 운영체제 책 2쪽 보기',
+      },
+      {
+        studyId: 4,
+        role: 'MEMBER',
+        title: '4번 스터디',
+        description: '4번 스터디입니다.',
       },
     ],
   },

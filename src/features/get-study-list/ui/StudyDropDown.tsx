@@ -4,7 +4,11 @@ import { useGetStudy, useStudyStore } from '../model';
 import { useRouter } from 'next/navigation';
 import { useGoalStore } from '@/features/get-goal-list/model';
 
-export default function StudyDropDown() {
+interface StudyDropDownProps {
+  onClick: () => void;
+}
+
+export default function StudyDropDown({ onClick }: StudyDropDownProps) {
   const router = useRouter();
   const { isLoading, data, error } = useGetStudy();
   const { setStudyId } = useStudyStore();
@@ -19,10 +23,11 @@ export default function StudyDropDown() {
     setStudyId(study.id);
     const lastVisitedGoal = getLastVisitedGoalId(study.id);
     router.push(`/dashboard/study/${study.id}/goal/${lastVisitedGoal}`);
+    onClick();
   };
 
   return (
-    <div className="border-border-emphasis bg-surface-4 rounded-6 flex max-h-346 w-296 flex-col items-center justify-start gap-14 overflow-hidden border-1 px-13 py-8">
+    <div className="border-border-emphasis bg-surface-4 rounded-6 scrollbar-hide flex max-h-346 w-296 flex-col items-center justify-start gap-14 overflow-y-auto border-1 px-13 py-8">
       {data &&
         data.studyList.map((study: StudyItem) => (
           <div
