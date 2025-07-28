@@ -11,9 +11,3 @@ export const StudyItemMapper = (item: StudyItemApi): StudyItem => ({
   description: item.description,
   role: item.role,
 });
-
-export const StudyListMapper = (
-  res: StudyListResponseApi,
-): StudyListResponse => ({
-  studyList: res.data.studyList.map(StudyItemMapper),
-});
