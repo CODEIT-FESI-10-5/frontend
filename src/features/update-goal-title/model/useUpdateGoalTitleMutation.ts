@@ -3,6 +3,7 @@ import { updateGoalTitle } from '../api/updateGoalTitle';
 import toast from 'react-hot-toast';
 
 export function useUpdateGoalTitleMutation(
+  studyId: number,
   goalId: string,
   setTitle: (title: string) => void,
 ) {
@@ -11,6 +12,9 @@ export function useUpdateGoalTitleMutation(
     mutationFn: (newTitle: string) => updateGoalTitle(goalId, newTitle),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['dashboard', goalId] });
+      queryClient.invalidateQueries({ queryKey: ['goal', 'list', studyId] });
+      queryClient.invalidateQueries({ queryKey: ['todolist', goalId] });
+
       toast.success('제목이 업데이트되었습니다');
     },
     onError: (error, newTitle) => {

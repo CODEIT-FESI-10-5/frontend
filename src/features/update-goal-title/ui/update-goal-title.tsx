@@ -11,6 +11,10 @@ export default function EditGoalTitle(props: {
 }) {
   const params = useParams();
   console.log('EditGoalTitle: params', params);
+  //studyId는 params에서 가져오고, goalId는 props에서 가져옵니다
+  const studyId = Array.isArray(params?.studyId)
+    ? params.studyId[0]
+    : params?.studyId;
 
   const { title, setTitle, goalId } = props;
 
@@ -20,7 +24,11 @@ export default function EditGoalTitle(props: {
   // 디버깅용 콘솔 출력
   console.log('EditGoalTitle: userRole', userRole);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
-  const mutation = useUpdateGoalTitleMutation(goalId, setTitle);
+  const mutation = useUpdateGoalTitleMutation(
+    Number(studyId),
+    goalId,
+    setTitle,
+  );
 
   const debouncedUpdateTitle = (newTitle: string) => {
     if (timeoutRef.current) {
