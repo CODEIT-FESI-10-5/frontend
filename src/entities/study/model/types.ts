@@ -70,12 +70,6 @@ export interface StudyItemApi {
 }
 
 // 스터디 생성 응답
-export interface CreateStudyResponseApi {
-  httpStatusCode: number;
-  errorCode: string;
-  errorMessage: string;
-  data: {
-    studyId: number;
-  };
-  fieldErrors: { field: string; message: string }[];
+export interface CreateStudyResponse {
+  studyId: string;
 }
