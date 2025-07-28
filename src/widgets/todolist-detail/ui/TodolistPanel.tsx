@@ -43,17 +43,18 @@ function TitleArea({ title = '목표' }: { title?: string }) {
 
 export default function TodolistPanel() {
   const goalId = useGoalId();
-  const { data, isLoading } = useTodolistQuery(goalId);
+  const { data, isLoading, isError } = useTodolistQuery(goalId);
   const { setAllGroup } = useTodolistStore();
 
   useEffect(() => {
     if (!data) return;
     const { newDone, newShared, newPersonal } = divideTodoGroup(data.todolist);
-
     setAllGroup(newDone, newShared, newPersonal);
   }, [data, setAllGroup]);
 
-  if (isLoading) return <>Loading</>;
+  if (isLoading) return <>Todolist - 불러오는 중입니다</>;
+
+  if (isError) return <>Todolist - 불러오는데 실패했습니다</>;
 
   return (
     <LayoutGroup>
