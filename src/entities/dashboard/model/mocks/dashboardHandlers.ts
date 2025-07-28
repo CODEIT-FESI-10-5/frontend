@@ -36,6 +36,13 @@ export const dashboardHandlers = [
       );
     }
     // 실제 mockDashboard에서 goalId별 데이터 수정 필요시 여기에 추가
+    // goalId에 해당하는 dashboard.data의 title을 변경 (메모리상에서)
+    if (
+      mockDashboard.data &&
+      String(mockDashboard.data.id) === String(goalId)
+    ) {
+      mockDashboard.data.title = title;
+    }
     return HttpResponse.json(mockDashboard);
     // return HttpResponse.json(noneMockDashboard);
   }),

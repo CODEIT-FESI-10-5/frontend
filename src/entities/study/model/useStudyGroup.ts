@@ -17,7 +17,7 @@ export const useStudyGroup = (studyId: string) => {
     select: (response: StudyGroupResponse) => {
       const d = response.data;
       return {
-        role: d.role,
+        userRole: d.userRole,
         id: String(d.studyId),
         title: d.title,
         description: d.description,
@@ -27,7 +27,7 @@ export const useStudyGroup = (studyId: string) => {
         inviteLink: d.inviteCode,
         members: d.members.map((m) => ({
           id: String(m.userId),
-          name: m.name,
+          nickname: m.nickname,
           image: m.userImageDir,
         })),
       };

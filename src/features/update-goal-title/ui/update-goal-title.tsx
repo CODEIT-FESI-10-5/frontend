@@ -1,18 +1,29 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
+import { useStudyRoleStore } from '@/entities/study/model/useStudyRoleStore';
 import { updateGoalTitle } from '../api/updateGoalTitle';
 import toast from 'react-hot-toast';
-
-export default function EditGoalTitle({
-  title,
-  setTitle,
-  goalId,
-}: {
+import { useParams } from 'next/navigation';
+export default function EditGoalTitle(props: {
   title: string;
   setTitle: (newTitle: string) => void;
   goalId: string;
 }) {
+  const params = useParams();
+  console.log('EditGoalTitle: params', params);
+  const studyId = Array.isArray(params?.studyId)
+    ? params.studyId[0]
+    : params?.studyId;
+
+  const { title, setTitle, goalId } = props;
+
+  const { getStudyRole } = useStudyRoleStore();
+  const userRole = getStudyRole(Number(studyId));
+
+  // 디버깅용 콘솔 출력
+  console.log('EditGoalTitle: studyId', studyId);
+  console.log('EditGoalTitle: userRole', userRole);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const debouncedUpdateTitle = (newTitle: string) => {
@@ -55,6 +66,13 @@ export default function EditGoalTitle({
 
   {
     /* 스터디 목표 제목 수정 가능하게 input으로 구현 */
+  }
+  if (userRole !== 'LEADER') {
+    return (
+      <span className="headline-large block w-full bg-transparent text-white">
+        {title || '스터디 목표 없음'}
+      </span>
+    );
   }
   return (
     <input
