@@ -2,16 +2,16 @@ import DotsIcon from '@/assets/dots.svg';
 import { useRef } from 'react';
 import { useModal } from '@/shared/lib/utils/useModal';
 import { useDeleteTodoMutation } from '../model/hooks';
+import { useGoalId } from '@/shared/model/useGoalId';
 
 export default function DeleteTodoDropDownButton({
-  goalId,
   todoId,
 }: {
-  goalId: string;
   todoId: string;
 }) {
   const buttonRef = useRef<HTMLButtonElement>(null);
   const { open, close } = useModal();
+  const goalId = useGoalId();
   const deleteTodo = useDeleteTodoMutation(goalId);
   const items = [
     {
