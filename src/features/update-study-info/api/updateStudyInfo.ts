@@ -6,7 +6,7 @@ export const updateStudyInfo = async (
   title: string,
   description: string,
 ) => {
-  return clientFetch.patch(`/study/${groupId}/info`, {
+  return clientFetch.patch(`/api/study/${groupId}/info`, {
     title,
     description,
   });

@@ -23,10 +23,15 @@ export const mockStudyList: StudyListResponse = {
   ],
 };
 
+//
 export const mockStudyListResponseApi: StudyListResponseApi = {
+  httpStatusCode: 200,
+  errorCode: '',
+  errorMessage: '',
+  fieldErrors: [],
   data: {
     totalCount: 3,
-    recentStudyId: 0, // 임의값
+    recentStudyId: 1,
     studyList: [
       {
         studyId: 1,
