@@ -52,7 +52,7 @@ export default function EditGoalTitle(props: {
   {
     /* 스터디 목표 제목 수정 가능하게 input으로 구현 */
   }
-  if (userRole !== 'LEADER') {
+  if (!userRole) {
     return (
       <span className="headline-large block w-full bg-transparent text-white">
         {title || '스터디 목표 없음'}

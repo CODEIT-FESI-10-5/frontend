@@ -23,7 +23,7 @@ export default function Study({ studyId }: { studyId: string }) {
   // 스터디 그룹의 userRole을 store에 저장
   // 이 부분은 스터디 그룹이 변경될 때마다 userRole을 업데이트합니다
   useEffect(() => {
-    if (studyGroup && studyGroup.userRole !== role) {
+    if (studyGroup && (studyGroup.userRole == 'LEADER') !== role) {
       setStudyRole(studyGroup.userRole);
     }
   }, [studyGroup, setStudyRole]);
