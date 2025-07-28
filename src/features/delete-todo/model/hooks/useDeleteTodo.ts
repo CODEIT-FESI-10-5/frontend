@@ -9,5 +9,5 @@ interface DeleteTodoMutationParams {
 export const useDeleteTodoMutation = (goalId: string) =>
   useTodoCustomMutation<DeleteTodoMutationParams, any>(
     ({ todoId }) => deleteTodo(todoId),
-    [...todolistQueryKeys.todolist(goalId)],
+    [[...todolistQueryKeys.todolist(goalId)]],
   );

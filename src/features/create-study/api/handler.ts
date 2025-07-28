@@ -2,7 +2,7 @@ import { http, HttpResponse } from 'msw';
 
 const studyId = 'study-003';
 export const sidebarCreateStudyHandler = [
-  http.get('/api/study/create', () => {
+  http.post('/api/study', () => {
     return HttpResponse.json({ newStudyId: studyId });
   }),
 ];

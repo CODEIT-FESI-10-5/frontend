@@ -2,6 +2,8 @@ import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { LoginSchema } from '@/features/auth-login';
 import { requestLogin } from '@/entities/auth/api';
+import { useStudyStore } from '@/features/get-study-list/model';
+import { useGoalStore } from '@/features/get-goal-list/model';
 
 // {
 //     "httpStatusCode": 200,
@@ -14,6 +16,8 @@ import { requestLogin } from '@/entities/auth/api';
 
 export function useLogin() {
   const router = useRouter();
+  const { currentStudyId } = useStudyStore();
+  const { getLastVisitedGoalId } = useGoalStore();
   // const setProfile = useProfileStore((state) => state.setProfile);
 
   return useMutation({
@@ -24,8 +28,13 @@ export function useLogin() {
       localStorage.setItem('email', email);
       localStorage.setItem('nickname', nickname);
       localStorage.setItem('profileImg', profileImg);
-
-      router.push('/');
+      const goalId = getLastVisitedGoalId(currentStudyId);
+      if (currentStudyId != null && goalId != null) {
+        console.log(currentStudyId, goalId);
+        router.push(`/dashboard/study/${currentStudyId}/goal/${goalId}`);
+      } else {
+        router.push('/');
+      }
     },
     onError: (err) => {
       console.error(err);

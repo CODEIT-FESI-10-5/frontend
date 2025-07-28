@@ -11,7 +11,7 @@ interface CreateTodoMutationParams {
 export const useCreateTodoMutation = (goalId: string) =>
   useTodoCustomMutation<CreateTodoMutationParams, any>(
     ({ newTodo }) => createTodo(goalId, newTodo),
-    [...todolistQueryKeys.todolist(goalId)],
+    [[...todolistQueryKeys.todolist(goalId)]],
     {
       onSuccess: () => {
         toast.success('투두 생성에 성공했습니다');

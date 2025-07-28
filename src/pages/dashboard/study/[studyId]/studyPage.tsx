@@ -12,7 +12,7 @@ export default function StudyGroupLayout({
   const { studyId } = use(params);
 
   return (
-    <div className="border-border-subtle flex flex-col rounded-md border bg-[#171717]">
+    <div className="border-border-subtle flex max-w-[1300px] flex-col rounded-md border bg-[#171717]">
       {/* StudyGroup 컴포넌트 (studyId로 데이터 fetch) */}
       <Study studyId={studyId} />
 

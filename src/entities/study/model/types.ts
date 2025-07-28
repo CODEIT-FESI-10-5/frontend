@@ -40,6 +40,7 @@ export interface members {
 
 // 스터디 목록 응답
 export interface StudyListResponse {
+  totalCount: number;
   studyList: StudyItem[];
 }
 

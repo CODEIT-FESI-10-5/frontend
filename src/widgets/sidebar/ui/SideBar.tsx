@@ -24,7 +24,7 @@ export default function SideBar() {
       </div>
       <div className="flex flex-col gap-16">
         <StudyList onClick={handleClick} isOpen={isOpen} />
-        {isOpen && <StudyDropDown />}
+        {isOpen && <StudyDropDown onClick={handleClick} />}
       </div>
       {!isOpen && <StudyGoalList />}
     </div>

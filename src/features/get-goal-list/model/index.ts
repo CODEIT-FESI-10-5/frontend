@@ -1,2 +1,2 @@
 export * from './useGetGoal';
-export * from './useGetGoal';
+export * from './useGoalStore';

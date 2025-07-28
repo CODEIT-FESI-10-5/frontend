@@ -42,10 +42,12 @@ export const todolistHandlers = [
       completed: false,
       completedAt: new Date(Date.now()),
       note: false,
+      noteId: '1',
       shared: body.shared,
     };
     myTodolist.todolist.push(newTodo);
     myTodolist.order.push(newId);
+
     return HttpResponse.json({ status: 201 });
   }),
 
@@ -56,11 +58,8 @@ export const todolistHandlers = [
       priorityOrder: number;
     };
     const deletedOrder = myTodolist.order.filter((id) => id !== body.todoId);
-    console.log(deletedOrder);
     deletedOrder.splice(body.priorityOrder, 0, body.todoId);
     myTodolist.order = deletedOrder;
-
-    console.log(myTodolist.order);
     return HttpResponse.json({ status: 201 });
   }),
 
@@ -110,7 +109,6 @@ export const todolistHandlers = [
       // 취소: 가장 뒤로 밀려남
       myTodolist.order.push(todoId as string);
     }
-
     return HttpResponse.json({ status: 201 });
   }),
 
@@ -124,7 +122,6 @@ export const todolistHandlers = [
 
     myTodolist.todolist.splice(index, 1);
     myTodolist.order = myTodolist.order.filter((id) => id !== todoId);
-
     return HttpResponse.json({ status: 204 });
   }),
 ];
