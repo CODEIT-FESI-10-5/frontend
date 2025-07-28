@@ -15,12 +15,14 @@ export const todolistHandlers = [
     const todolist = myTodolist.todolist;
 
     const orderedTodolist = order.map((currTodoId) =>
-      todolist.find((todo) => todo.id === currTodoId),
+      todolist.find((todo) => todo.todoId === currTodoId),
     );
 
     const orderedMockData = {
-      title: myTodolist.title,
-      todolist: orderedTodolist,
+      data: {
+        title: myTodolist.title,
+        myTodoList: orderedTodolist,
+      },
     };
 
     return HttpResponse.json(orderedMockData, { status: 200 });
@@ -36,7 +38,7 @@ export const todolistHandlers = [
     const newId = String(idCounter++).repeat(4);
 
     const newTodo = {
-      id: newId,
+      todoId: newId,
       content: body.content,
       createdAt: new Date(Date.now()),
       completed: false,
@@ -57,7 +59,9 @@ export const todolistHandlers = [
       todoId: string;
       priorityOrder: number;
     };
-    const deletedOrder = myTodolist.order.filter((id) => id !== body.todoId);
+    const deletedOrder = myTodolist.order.filter(
+      (todoId) => todoId !== body.todoId,
+    );
     deletedOrder.splice(body.priorityOrder, 0, body.todoId);
     myTodolist.order = deletedOrder;
     return HttpResponse.json({ status: 201 });
@@ -73,7 +77,7 @@ export const todolistHandlers = [
     };
 
     const targetIndexInTodolist = myTodolist.todolist.findIndex(
-      (todo) => todo.id === todoId,
+      (todo) => todo.todoId === todoId,
     );
 
     if (targetIndexInTodolist === -1) {
@@ -97,7 +101,7 @@ export const todolistHandlers = [
     if ((body as { completed: boolean }).completed) {
       const lastCompletedIndex = myTodolist.order.findIndex(
         (currTodoId) =>
-          !myTodolist.todolist.find((todo) => todo.id === currTodoId)
+          !myTodolist.todolist.find((todo) => todo.todoId === currTodoId)
             ?.completed,
       );
       if (lastCompletedIndex < 0) {
@@ -115,13 +119,15 @@ export const todolistHandlers = [
   // DELETE: 투두 삭제
   http.delete('/api/todos/:todoId', async ({ params }) => {
     const { todoId } = params;
-    const index = myTodolist.todolist.findIndex((todo) => todo.id === todoId);
+    const index = myTodolist.todolist.findIndex(
+      (todo) => todo.todoId === todoId,
+    );
     if (index === -1) {
       return HttpResponse.json({ status: 404, message: 'Todo not found' });
     }
 
     myTodolist.todolist.splice(index, 1);
-    myTodolist.order = myTodolist.order.filter((id) => id !== todoId);
+    myTodolist.order = myTodolist.order.filter((todoId) => todoId !== todoId);
     return HttpResponse.json({ status: 204 });
   }),
 ];

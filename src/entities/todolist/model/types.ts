@@ -10,7 +10,34 @@ export interface Todo {
 }
 
 export interface Todolist {
-  goalId: string;
   title: string;
   todolist: Todo[];
+}
+
+export interface FetchTodoListResponse {
+  httpStatusCode: number;
+  errorCode: 'string';
+  data: {
+    title: string;
+    myTodoList: [
+      {
+        todoId: string;
+        content: string;
+        completed: boolean;
+        createdAt: string;
+        completedAt: string;
+        note: string;
+        noteId: string;
+        shared: boolean;
+        priorityOrder: number;
+      },
+    ];
+  };
+  errorMessage: 'string';
+  fieldErrors: [
+    {
+      field: 'string';
+      message: 'string';
+    },
+  ];
 }
