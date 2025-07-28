@@ -10,7 +10,7 @@ export const useJoinStudy = () => {
     onSuccess: (data: { studyId: string }) => {
       router.push(`/dashboard/study/${data.studyId}`);
     },
-    onError: (err) => {
+    onError: () => {
       //toast(errorMessage) 예정;
     },
   });

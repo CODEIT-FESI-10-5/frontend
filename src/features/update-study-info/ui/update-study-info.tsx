@@ -3,13 +3,15 @@
 import { useRef, useState } from 'react';
 import { updateStudyInfo } from '@/features/update-study-info/api';
 import toast from 'react-hot-toast';
-import { studyQueryKeys } from '@/entities/study/model/queryKeys';
+import { studyQueryKeys } from '@/entities/study/model';
+import { useQueryClient } from '@tanstack/react-query';
 
 export default function UpdateStudyInfo(props: {
   title: string;
   description: string;
   studyId: string;
 }) {
+  const queryClient = useQueryClient();
   const [title, setTitle] = useState<string>(props.title);
   const [description, setDescription] = useState<string>(props.description);
 
@@ -23,7 +25,7 @@ export default function UpdateStudyInfo(props: {
     timeoutRef.current = setTimeout(async () => {
       try {
         await updateStudyInfo(props.studyId, newTitle, newDescription);
-        invalidateQueries({ queryKey: studyQueryKeys.list() });
+        queryClient.invalidateQueries({ queryKey: studyQueryKeys.list() });
         toast.success('정보가 업데이트되었습니다!');
       } catch (error) {
         console.error('Error updating study info:', error);
