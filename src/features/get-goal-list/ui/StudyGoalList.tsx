@@ -16,7 +16,7 @@ export default function StudyGoalList() {
 
   const mutation = useCreateGoal((newGoal) => {
     setLastVisitedGoalId(currentStudyId, newGoal.id);
-    router.push(`/dashboard/${currentStudyId}/goal/${newGoal.id}`);
+    router.push(`/dashboard/study/${currentStudyId}/goal/${newGoal.id}`);
   });
 
   const { isLoading, data, error } = useGetGoal(1);
@@ -26,7 +26,7 @@ export default function StudyGoalList() {
 
   const handleClick = (goal: GoalListItem) => {
     setLastVisitedGoalId(currentStudyId, goal.id);
-    router.push(`/dashboard/${currentStudyId}/goal/${goal.id}`);
+    router.push(`/dashboard/study/${currentStudyId}/goal/${goal.id}`);
   };
 
   return (

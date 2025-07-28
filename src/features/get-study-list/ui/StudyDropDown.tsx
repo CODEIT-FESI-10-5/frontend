@@ -2,11 +2,13 @@
 import { StudyItem } from '@/entities/study/model/types';
 import { useGetStudy, useStudyStore } from '../model';
 import { useRouter } from 'next/navigation';
+import { useGoalStore } from '@/features/get-goal-list/model';
 
 export default function StudyDropDown() {
   const router = useRouter();
   const { isLoading, data, error } = useGetStudy();
   const { setStudyId } = useStudyStore();
+  const { getLastVisitedGoalId } = useGoalStore();
 
   if (isLoading) return <div>로딩 중...</div>;
   if (error) return <div>에러 발생</div>;
@@ -15,7 +17,8 @@ export default function StudyDropDown() {
   //스터디 클릭 시 해당 대시보드로 이동
   const handleClick = (study: StudyItem) => {
     setStudyId(study.id);
-    router.push(`/dashboard/study/${study.id}`);
+    const lastVisitedGoal = getLastVisitedGoalId(study.id);
+    router.push(`/dashboard/study/${study.id}/goal/${lastVisitedGoal}`);
   };
 
   return (
