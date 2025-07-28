@@ -55,7 +55,7 @@ export default function UpdateStudyImage({ studyId }: UpdateStudyImageProps) {
     }
   };
 
-  if (userRole !== 'LEADER') {
+  if (!userRole) {
     return (
       <span className="absolute top-10 right-10 z-10 flex items-center gap-4">
         <Link href={goalId ? `/note/${goalId}` : '/note'}>

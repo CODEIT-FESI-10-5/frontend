@@ -48,7 +48,7 @@ export default function UpdateStudyInfo(props: {
       {/* 컨텐츠 */}
       <div className="mb-35 flex flex-col gap-13">
         {/* 스터디 제목/설명: LEADER만 편집, 그 외는 span/div로 표시 */}
-        {userRole === 'LEADER' ? (
+        {userRole ? (
           <>
             <input
               type="text"
