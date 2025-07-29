@@ -20,8 +20,9 @@ export const todolistHandlers = [
 
     const orderedMockData = {
       data: {
-        title: myTodolist.title,
+        goalTitle: myTodolist.goalTitle,
         myTodoList: orderedTodolist,
+        userRole: myTodolist.userRole as 'LEADER' | 'MEMBER',
       },
     };
 
