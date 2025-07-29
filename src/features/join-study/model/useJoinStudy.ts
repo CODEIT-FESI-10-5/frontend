@@ -8,7 +8,7 @@ export const useJoinStudy = () => {
   return useMutation({
     mutationFn: postJoinStudy,
     onSuccess: (data: { studyId: string }) => {
-      router.push(`/dashboard/study/${data.studyId}`);
+      router.push(`/dashboard/study/${data.studyId}/`);
     },
     onError: () => {
       //toast(errorMessage) 예정;
