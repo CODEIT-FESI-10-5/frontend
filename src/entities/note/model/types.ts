@@ -11,9 +11,7 @@ export interface Note {
 export interface NoteResponse {
   httpStatusCode: number;
   errorCode: string | null;
-  data: {
-    note: Note;
-  };
+  data: Note;
   errorMessage: string | null;
 }
 
