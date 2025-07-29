@@ -29,6 +29,11 @@ export interface GoalListResponseApi {
     },
   ];
 }
+export interface PostCreateGoalRequest {
+  title: string;
+  studyId: number;
+}
+
 export interface PostCreateGoalResponse {
   httpStatusCode: number;
   errorCode: string;

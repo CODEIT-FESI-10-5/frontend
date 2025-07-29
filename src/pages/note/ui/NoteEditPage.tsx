@@ -7,8 +7,7 @@ import NoteListPageIcon from '@/assets/note-list-page-icon.svg';
 
 export function NoteEditPage({ noteId }: { noteId: number }) {
   const { data: noteResponse, isLoading, isError } = useGetNoteById(noteId);
-
-  const note = noteResponse?.data?.note;
+  const note = noteResponse?.data;
   const updateNoteMutation = useUpdateNote();
 
   const handleAutoSave = (content: string) => {

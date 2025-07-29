@@ -5,7 +5,6 @@ import { useUpdateStudyImageMutation } from '../model/useUpdateStudyImageMutatio
 import toast from 'react-hot-toast';
 import SettingIcon from '@/assets/icon-Settings.svg';
 import { useModal } from '@/shared/lib/utils/useModal';
-import { useParams } from 'next/navigation';
 import Link from 'next/link';
 
 interface UpdateStudyImageProps {
@@ -19,10 +18,6 @@ export default function UpdateStudyImage({ studyId }: UpdateStudyImageProps) {
   const settingIconRef = useRef<HTMLSpanElement>(null);
   const { role } = useStudyRoleStore();
   const userRole = role;
-  const params = useParams();
-  const goalId = Array.isArray(params?.goalId)
-    ? params.goalId[0]
-    : params?.goalId;
   // 이미지 변경 핸들러
   const handleImageChange = () => {
     if (!fileInputRef.current) return;
@@ -58,7 +53,7 @@ export default function UpdateStudyImage({ studyId }: UpdateStudyImageProps) {
   if (!userRole) {
     return (
       <span className="absolute top-10 right-10 z-10 flex items-center gap-4">
-        <Link href={goalId ? `/note/${goalId}` : '/note'}>
+        <Link href="/note">
           <button className="body-small text-text-primary flex items-center justify-center rounded-full border border-[#a9abb9] px-10 py-6">
             노트 모아보기
           </button>
@@ -80,7 +75,7 @@ export default function UpdateStudyImage({ studyId }: UpdateStudyImageProps) {
         className="absolute top-10 right-10 z-10 flex items-center gap-4"
         ref={settingIconRef}
       >
-        <Link href={goalId ? `/note/${goalId}` : '/note'}>
+        <Link href="/note">
           <button className="body-small text-text-primary flex items-center justify-center rounded-full border border-[#a9abb9] px-10 py-6">
             노트 모아보기
           </button>

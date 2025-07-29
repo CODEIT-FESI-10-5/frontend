@@ -4,7 +4,7 @@ import { useGetGoal } from '../model/useGetGoal';
 import { GoalListItem, goalQueryKeys } from '@/entities/goal';
 import { useGoalStore } from '../model/useGoalStore';
 import { useStudyStore } from '@/features/get-study-list/model/useStudyStore';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 import clsx from 'clsx';
 import { useCreateGoal } from '@/features/create-goal/model';
 import { useQueryClient } from '@tanstack/react-query';
@@ -12,6 +12,7 @@ import { useQueryClient } from '@tanstack/react-query';
 export default function StudyGoalList() {
   const queryClient = useQueryClient();
   const router = useRouter();
+  const pathname = usePathname();
   const { setLastVisitedGoalId, getLastVisitedGoalId } = useGoalStore();
   const { currentStudyId } = useStudyStore();
   const currentGoalId = getLastVisitedGoalId(currentStudyId);
@@ -32,7 +33,12 @@ export default function StudyGoalList() {
 
   const handleClick = (goal: GoalListItem) => {
     setLastVisitedGoalId(currentStudyId, goal.id);
-    router.push(`/dashboard/study/${currentStudyId}/goal/${goal.id}`);
+
+    if (pathname === '/note') {
+      router.push(`/note?studyGoalId=${goal.id}`);
+    } else {
+      router.push(`/dashboard/study/${currentStudyId}/goal/${goal.id}`);
+    }
   };
 
   return (
