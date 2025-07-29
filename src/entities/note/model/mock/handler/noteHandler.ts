@@ -58,9 +58,7 @@ export const noteHandlers = [
     return HttpResponse.json({
       httpStatusCode: 200,
       errorCode: null,
-      data: {
-        note: note
-      },
+      data: note,
       errorMessage: null
     });
   }),
@@ -109,9 +107,7 @@ export const noteHandlers = [
     return HttpResponse.json({
       httpStatusCode: 200,
       errorCode: null,
-      data: {
-        note: updatedNote
-      },
+      data: updatedNote,
       errorMessage: null
     });
   }),
