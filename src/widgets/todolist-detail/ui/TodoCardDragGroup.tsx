@@ -27,7 +27,7 @@ export default function TodoCardDragGroup({ type }: TodoCardDragGroupProps) {
   const handleDrop = (targetId: string) => {
     updateOrder.mutate({
       todoId: targetId,
-      newOrder: getCurrOrder().findIndex((todoId) => todoId === targetId),
+      newOrder: getCurrOrder().findIndex((todoId) => todoId === targetId) + 1,
     });
   };
 

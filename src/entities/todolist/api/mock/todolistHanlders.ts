@@ -62,7 +62,7 @@ export const todolistHandlers = [
     const deletedOrder = myTodolist.order.filter(
       (todoId) => todoId !== body.todoId,
     );
-    deletedOrder.splice(body.priorityOrder, 0, body.todoId);
+    deletedOrder.splice(body.priorityOrder - 1, 0, body.todoId);
     myTodolist.order = deletedOrder;
     return HttpResponse.json({ status: 201 });
   }),
