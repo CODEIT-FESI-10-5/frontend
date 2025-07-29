@@ -25,7 +25,6 @@ export const todolistHandlers = [
         userRole: myTodolist.userRole as 'LEADER' | 'MEMBER',
       },
     };
-
     return HttpResponse.json(orderedMockData, { status: 200 });
   }),
 
@@ -72,7 +71,6 @@ export const todolistHandlers = [
   http.patch('/api/todos/:todoId', async ({ request, params }) => {
     const { todoId } = params;
     const body = (await request.json()) as {
-      goalId: string;
       content: string;
       completed: boolean;
     };

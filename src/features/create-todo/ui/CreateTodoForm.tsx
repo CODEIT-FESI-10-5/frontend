@@ -41,6 +41,7 @@ export default function CreateTodoForm() {
     >
       <CheckTodoBlankIcon width={30} height={30} />
       <input
+        aria-invalid={isInvalid ? 'true' : undefined}
         className={cn(
           'body-medium text-text-secondary placeholder:text-text-tertiary flex-grow',
           'border-border-default outline-none',
