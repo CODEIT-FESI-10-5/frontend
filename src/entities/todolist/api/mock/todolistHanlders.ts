@@ -62,7 +62,7 @@ export const todolistHandlers = [
     const deletedOrder = myTodolist.order.filter(
       (todoId) => todoId !== body.todoId,
     );
-    deletedOrder.splice(body.priorityOrder, 0, body.todoId);
+    deletedOrder.splice(body.priorityOrder - 1, 0, body.todoId);
     myTodolist.order = deletedOrder;
     return HttpResponse.json({ status: 201 });
   }),
@@ -87,6 +87,7 @@ export const todolistHandlers = [
     // 기존 요소를 업데이트
     myTodolist.todolist[targetIndexInTodolist] = {
       ...myTodolist.todolist[targetIndexInTodolist], // 기존 필드 유지
+      content: body.content,
       completed: body.completed, // 변경된 필드 덮어쓰기
       completedAt: new Date(Date.now()),
     };

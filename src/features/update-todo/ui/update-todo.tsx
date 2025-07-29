@@ -4,11 +4,13 @@ import { useUpdateTodoMutation } from '../model/hooks/useUpdateTodo';
 import { useGoalId } from '@/shared/model/useGoalId';
 
 export default function UpdateTodoCompletionCheckbox({
-  completed,
   todoId,
+  completed,
+  content,
 }: {
-  completed: boolean;
   todoId: string;
+  completed: boolean;
+  content: string;
 }) {
   const goalId = useGoalId();
   const updateTodo = useUpdateTodoMutation(goalId);
@@ -16,7 +18,10 @@ export default function UpdateTodoCompletionCheckbox({
   return (
     <button
       onClick={() => {
-        updateTodo.mutate({ todoId, newTodoState: { completed: !completed } });
+        updateTodo.mutate({
+          todoId,
+          newTodoState: { completed: !completed, content },
+        });
       }}
     >
       {completed ? (
