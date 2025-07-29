@@ -6,14 +6,18 @@ export const config = {
 };
 
 export function middleware(req: NextRequest) {
-  // 쿠키에서 accessToken 읽기
   const token = req.cookies.get('accessToken')?.value;
+  const pathname = req.nextUrl.pathname;
 
-  if (token) {
-    // 로그인 상태이면 /redirect로 이동
-    return NextResponse.redirect(new URL('/redirect', req.url));
-  } else {
-    // 로그인 안됐으면 /auth/login으로 이동
+  if (!token) {
+    // 로그인 X
     return NextResponse.redirect(new URL('/auth/login', req.url));
   }
+
+  if (pathname.startsWith('/dashboard')) {
+    // 로그인 상태, dashboard 이동
+    return NextResponse.redirect(new URL('/redirect', req.url));
+  }
+
+  return NextResponse.next();
 }

@@ -22,7 +22,7 @@ export default function RedirectPage() {
         );
       }
     } else {
-      router.push('/');
+      router.push('/redirect');
     }
   }, [currentStudyId, getLastVisitedGoalId, router]);
 
