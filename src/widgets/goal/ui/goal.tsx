@@ -1,6 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import { useProfileStore } from '@/features/auth-login/model/useProfileStore';
 import { useState } from 'react';
 import Link from 'next/link';
 
@@ -194,6 +195,7 @@ export function TeamProgressList({
   teamProgress: teamProgress[];
 }) {
   const { inviteCode } = useInviteCodeStore();
+  const myName = useProfileStore((state) => state.name);
 
   if (teamProgress.length === 0) {
     return (
@@ -242,10 +244,12 @@ export function TeamProgressList({
           {Array.from({ length: maxMembers }).map((_, idx) => {
             const member = filled[idx];
             const isFirst = idx === 0;
-            const barColor = isFirst
-              ? 'bg-secondary'
-              : idx === 2
-                ? 'bg-highlight'
+            // 자기 자신이면 색상 강조
+            const isMe = member && member.name === myName;
+            const barColor = isMe
+              ? 'bg-highlight'
+              : isFirst
+                ? 'bg-secondary'
                 : 'bg-icon-grey-300';
             const barHeight = member ? 22 + (member.progress / 100) * 98 : 22;
             const rankText = `${idx + 1}위`;
@@ -273,15 +277,6 @@ export function TeamProgressList({
                     animate={{ height: barHeight }}
                     transition={{ duration: 1 }}
                   >
-                    {/* {isFirst && (
-                      <Image
-                        width={35}
-                        height={35}
-                        src={'/images/teamprogress-first.png'}
-                        alt="1st place"
-                        className="absolute top-0 left-1/2 -translate-x-1/2"
-                      />
-                    )} */}
                     <span className="body-small absolute bottom-3 text-white">
                       {member.progress}%
                     </span>
