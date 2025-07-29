@@ -87,6 +87,7 @@ export const todolistHandlers = [
     // 기존 요소를 업데이트
     myTodolist.todolist[targetIndexInTodolist] = {
       ...myTodolist.todolist[targetIndexInTodolist], // 기존 필드 유지
+      content: body.content,
       completed: body.completed, // 변경된 필드 덮어쓰기
       completedAt: new Date(Date.now()),
     };

@@ -1,7 +1,7 @@
 import { clientFetch } from '@/shared/api';
 
 export interface newTodoState {
-  content?: string;
+  content: string;
   completed: boolean;
 }
 
