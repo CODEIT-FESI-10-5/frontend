@@ -1,15 +1,20 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-// 검사할 경로 설정
 export const config = {
   matcher: ['/dashboard/:path*', '/account'],
 };
 
-export function middleware(req: NextRequest) {
-  const token = req.cookies.get('accessToken')?.value;
+export async function middleware(req: NextRequest) {
   const pathname = req.nextUrl.pathname;
+  const token = req.cookies.get('accessToken')?.value;
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/check`, {
+    method: 'GET',
+    headers: {
+      cookie: req.headers.get('cookie') || '',
+    },
+  });
 
-  if (!token) {
+  if (!res.ok) {
     // 로그인 X
     return NextResponse.redirect(new URL('/auth/login', req.url));
   }
