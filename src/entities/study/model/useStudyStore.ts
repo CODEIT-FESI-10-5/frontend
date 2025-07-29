@@ -1,10 +1,10 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
-type StudyStore = {
+interface StudyStore {
   currentStudyId: string;
   setStudyId: (id: string) => void;
-};
+}
 
 export const useStudyStore = create<StudyStore>()(
   persist(
