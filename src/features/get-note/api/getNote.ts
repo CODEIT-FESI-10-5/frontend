@@ -5,8 +5,8 @@ import { clientFetch } from '@/shared/api';
 export const getNotesByStudyGoalId = async (studyGoalId: number): Promise<NoteListResponse> => {
   return clientFetch.get<NoteListResponse>('/api/notes', {
     params: {
-      studyGoalId,
-      noteContent: null, // 요청에 따라 noteContent는 null로 고정
+      goalId: studyGoalId,
+      noteContent: null,
     },
   });
 };
