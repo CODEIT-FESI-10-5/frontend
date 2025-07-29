@@ -1,12 +1,6 @@
-import {
-  act,
-  fireEvent,
-  render,
-  screen,
-  waitFor,
-} from '@testing-library/react';
+import { act, fireEvent, screen, waitFor } from '@testing-library/react';
 import TodolistPanel from '../../../widgets/todolist-detail/ui/TodolistPanel';
-import { useParams } from 'next/navigation';
+import { useParams, usePathname } from 'next/navigation';
 import { useCreateTodoStore } from '@/features/create-todo/model/store';
 import CreateTodoForm from '@/features/create-todo/ui/CreateTodoForm';
 import { useCreateTodoMutation } from '@/features/create-todo/model/hooks';
@@ -26,12 +20,13 @@ jest.mock('@/features/create-todo/model/hooks', () => {
   };
 });
 
-describe.skip('투두 상세 페이지 - 새 투두 생성 테스트', () => {
+describe('투두 상세 페이지 - 새 투두 생성 테스트', () => {
   beforeEach(() => {
     // 테스트 전체 적용 모킹값 설정
     (useParams as jest.Mock).mockReturnValue({
       goalId: 'goal-1',
     });
+    (usePathname as jest.Mock).mockReturnValue('/todolist-detail');
 
     useCreateTodoStore.setState({ isCreateMode: false });
   });
@@ -58,10 +53,11 @@ describe.skip('투두 상세 페이지 - 새 투두 생성 테스트', () => {
         personal: Array.from({ length: 10 }, (_, i) => ({
           id: `todo-${i + 1}`,
           content: `테스트 투두 내용 ${i + 1}`,
-          createdAt: new Date(),
+          createdAt: new Date(Date.now()).toISOString(),
           completed: true,
           completedAt: undefined,
-          note: false,
+          note: '',
+          noteId: `${i + 1}`,
           shared: false,
         })),
       });
@@ -84,7 +80,7 @@ describe.skip('투두 상세 페이지 - 새 투두 생성 테스트', () => {
       mutate: mutateMock,
     });
 
-    render(<CreateTodoForm />);
+    renderWithQueryClient(<CreateTodoForm />);
     const input = screen.getByPlaceholderText('입력하세요...');
     const button = screen.getByRole('button', { name: /완료/i });
 

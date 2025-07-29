@@ -26,6 +26,8 @@ describe('투두 상세 페이지 - 투두 완료 여부 갱신 테스트', () =
     // 마지막 투두 선택 해보기
     const todoCards = await screen.findAllByLabelText('todo-card');
     const lastTodoCard = todoCards[todoCards.length - 1];
+    const content =
+      within(lastTodoCard).getByLabelText('todo-content').textContent;
 
     // 마지막 카드 내 체크박스 클릭
     const checkbox = within(lastTodoCard).getByLabelText(
@@ -38,6 +40,7 @@ describe('투두 상세 페이지 - 투두 완료 여부 갱신 테스트', () =
         todoId: 'todo-6',
         newTodoState: {
           completed: true,
+          content,
         },
       }),
     );
@@ -50,6 +53,9 @@ describe('투두 상세 페이지 - 투두 완료 여부 갱신 테스트', () =
     // 마지막 투두 선택 해보기
     const todoCards = await screen.findAllByLabelText('todo-card');
     const firstCompletedTodoCard = todoCards[0];
+    const content = within(firstCompletedTodoCard).getByLabelText(
+      'todo-content',
+    ).textContent;
 
     // 마지막 카드 내 체크박스 클릭
     const checkbox = within(firstCompletedTodoCard).getByLabelText(
@@ -57,11 +63,11 @@ describe('투두 상세 페이지 - 투두 완료 여부 갱신 테스트', () =
     );
     fireEvent.click(checkbox);
 
-    console.log(mutateMock.mock.calls);
     expect(mutateMock).toHaveBeenCalledWith({
       todoId: 'todo-1',
       newTodoState: {
         completed: false,
+        content,
       },
     });
   });
