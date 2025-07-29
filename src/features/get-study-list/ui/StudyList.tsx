@@ -1,7 +1,5 @@
 'use client';
-import { useStudyStore } from '@/features/get-study-list/model';
-import { useGetStudy } from '@/features/get-study-list/model';
-import { StudyItem } from '@/entities/study';
+import { useStudyStore, useGetStudy, StudyItem } from '@/entities/study/model';
 import DropDownIcon from '@/assets/dropdown.svg';
 import DropUpIcon from '@/assets/dropup.svg';
 import { cn } from '@/shared/utils/cn';

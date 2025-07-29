@@ -1,9 +1,9 @@
 'use client';
 import CreateGoalSVG from '@/assets/create-goal.svg';
-import { useGetGoal } from '../model/useGetGoal';
+import { useGetGoal } from '../../../entities/goal/model/useGetGoal';
 import { GoalListItem, goalQueryKeys } from '@/entities/goal';
-import { useGoalStore } from '../model/useGoalStore';
-import { useStudyStore } from '@/features/get-study-list/model/useStudyStore';
+import { useGoalStore } from '../../../entities/goal/model/useGoalStore';
+import { useStudyStore } from '@/entities/study/model/useStudyStore';
 import { useRouter, usePathname } from 'next/navigation';
 import clsx from 'clsx';
 import { useCreateGoal } from '@/features/create-goal/model';
