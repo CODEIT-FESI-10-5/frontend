@@ -6,13 +6,7 @@ export const config = {
 
 export async function middleware(req: NextRequest) {
   const pathname = req.nextUrl.pathname;
-  const token = req.cookies.get('accessToken')?.value;
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/check`, {
-    method: 'GET',
-    headers: {
-      cookie: req.headers.get('cookie') || '',
-    },
-  });
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/check`);
 
   if (!res.ok) {
     // 로그인 X
