@@ -8,12 +8,14 @@ import {
   useTodolistStore,
 } from '@/entities/todolist/model/store';
 import { useRef } from 'react';
+import { useGoalId } from '@/shared/model/useGoalId';
 
 interface TodoCardDragGroupProps {
   type: 'personal' | 'shared' | 'done';
 }
 
 export default function TodoCardDragGroup({ type }: TodoCardDragGroupProps) {
+  const goalId = useGoalId();
   const todoGroup = useTodolistStore((state) => state[type]);
   const setFns = {
     personal: (state: TodolistAction) => state.setPersonal,
@@ -23,7 +25,7 @@ export default function TodoCardDragGroup({ type }: TodoCardDragGroupProps) {
   const setTodoGroup = useTodolistStore((state) => setFns[type](state));
   const { getCurrOrder } = useTodolistStore();
   const draggable = !(type === 'done');
-  const updateOrder = useUpdateTodoOrderMutation();
+  const updateOrder = useUpdateTodoOrderMutation(goalId);
   const handleDrop = (targetId: string) => {
     updateOrder.mutate({
       todoId: targetId,
