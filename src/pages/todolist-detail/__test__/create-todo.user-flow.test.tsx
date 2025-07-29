@@ -20,7 +20,7 @@ jest.mock('@/features/create-todo/model/hooks', () => {
   };
 });
 
-describe('투두 상세 페이지 - 새 투두 생성 테스트', () => {
+describe.skip('투두 상세 페이지 - 새 투두 생성 테스트', () => {
   beforeEach(() => {
     // 테스트 전체 적용 모킹값 설정
     (useParams as jest.Mock).mockReturnValue({

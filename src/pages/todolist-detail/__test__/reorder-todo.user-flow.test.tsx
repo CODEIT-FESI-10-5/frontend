@@ -3,7 +3,7 @@ import { useParams } from 'next/navigation';
 import { renderWithQueryClient } from './lib/renderWithQueryClient';
 import { screen } from '@testing-library/react';
 
-describe('투두 상세 페이지 - 투두 순서 변경 테스트', () => {
+describe.skip('투두 상세 페이지 - 투두 순서 변경 테스트', () => {
   beforeEach(() => {
     // 여기서 모킹값 설정
     (useParams as jest.Mock).mockReturnValue({

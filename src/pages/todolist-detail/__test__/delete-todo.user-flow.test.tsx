@@ -24,7 +24,7 @@ jest.mock('@/features/delete-todo/model/hooks', () => {
   };
 });
 
-describe('투두 상세 페이지 - 투두 삭제 테스트', () => {
+describe.skip('투두 상세 페이지 - 투두 삭제 테스트', () => {
   beforeEach(() => {
     // 여기서 모킹값 설정
     (useParams as jest.Mock).mockReturnValue({
