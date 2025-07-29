@@ -26,8 +26,9 @@ export default function CreateStudyButton() {
           queryClient.invalidateQueries({
             queryKey: studyQueryKeys.list(),
           });
+          console.log(newGoal);
           router.push(
-            `/dashboard/study/${data.newStudyId}/goal/${newGoal.data.id}`,
+            `/dashboard/study/${data.newStudyId}/goal/${String(newGoal.data.id)}`,
           );
         },
       },
