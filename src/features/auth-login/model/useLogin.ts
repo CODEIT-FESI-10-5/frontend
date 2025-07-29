@@ -25,7 +25,7 @@ export function useLogin() {
       localStorage.setItem('nickname', nickname);
       localStorage.setItem('profileImg', profileImg);
 
-      router.push('/');
+      router.push('/redirect');
     },
     onError: (err) => {
       console.error(err);
