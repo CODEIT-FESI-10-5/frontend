@@ -13,7 +13,7 @@ export function useDashboardRedirect() {
 
   // study가 있는지 검사
   const studyId = currentStudyId || studyData?.studyList?.[0]?.id || '';
-  setStudyId(studyId);
+  setStudyId(String(studyId));
 
   // goalId가 있는지 검사 (studyId가 존재하는 경우)
   const { data: goalData } = useGetGoal(Number(studyId), {
