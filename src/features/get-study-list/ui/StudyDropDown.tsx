@@ -1,8 +1,8 @@
 'use client';
 import { StudyItem } from '@/entities/study/model/types';
-import { useGetStudy, useStudyStore } from '../model';
+import { useGetStudy, useStudyStore } from '@/entities/study/model';
 import { useRouter } from 'next/navigation';
-import { useGoalStore } from '@/features/get-goal-list/model';
+import { useGoalStore } from '@/entities/goal/model';
 import { useQueryClient } from '@tanstack/react-query';
 import { goalQueryKeys } from '@/entities/goal';
 
