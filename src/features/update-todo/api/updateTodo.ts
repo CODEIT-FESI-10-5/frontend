@@ -6,15 +6,11 @@ export interface newTodoState {
 }
 
 export const updateTodo = async (
-  goalId: string,
   todoId: string,
   newTodoState: newTodoState,
 ) => {
   const endpoint = `/api/todos/${todoId}`;
-  const parsedResponse = await clientFetch.patch(endpoint, {
-    goalId,
-    ...newTodoState,
-  });
+  const parsedResponse = await clientFetch.patch(endpoint, newTodoState);
 
   return parsedResponse;
 };

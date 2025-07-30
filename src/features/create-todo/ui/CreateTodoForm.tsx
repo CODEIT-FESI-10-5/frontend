@@ -5,11 +5,11 @@ import ToggleButton from './ToggleButton';
 import ConfirmButton from '@/features/create-todo/ui/ConfirmButton';
 import CheckTodoBlankIcon from '@/assets/check_todo_blank.svg';
 import { useGoalId } from '@/shared/model/useGoalId';
-import { useStudyRoleStore } from '@/entities/study/model/useStudyRoleStore';
+import { useTodolistQuery } from '@/entities/todolist/model/hooks';
 
 export default function CreateTodoForm() {
   const goalId = useGoalId();
-  const role = useStudyRoleStore((state) => state.role);
+  const { data } = useTodolistQuery(goalId);
   const { content, setContent } = useCreateTodoStore();
   const { isInvalid, setIsInvalid } = useCreateTodoStore();
   const { isShared, toggleIsShared } = useCreateTodoStore();
@@ -41,6 +41,7 @@ export default function CreateTodoForm() {
     >
       <CheckTodoBlankIcon width={30} height={30} />
       <input
+        aria-invalid={isInvalid ? 'true' : undefined}
         className={cn(
           'body-medium text-text-secondary placeholder:text-text-tertiary flex-grow',
           'border-border-default outline-none',
@@ -57,7 +58,7 @@ export default function CreateTodoForm() {
       />
 
       <div className="flex flex-shrink-0 justify-between gap-9">
-        {role && (
+        {data?.role && (
           <ToggleButton isOn={isShared} toggleSwitch={() => toggleIsShared()}>
             {'공통'}
           </ToggleButton>

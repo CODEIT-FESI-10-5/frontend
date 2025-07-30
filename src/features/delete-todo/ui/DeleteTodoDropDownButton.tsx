@@ -33,6 +33,7 @@ export default function DeleteTodoDropDownButton({
   };
   return (
     <button
+      aria-label="delete-todo-dropdown-btn"
       ref={buttonRef}
       onClick={handleClick}
       className="cursor-pointer transition hover:scale-120"
