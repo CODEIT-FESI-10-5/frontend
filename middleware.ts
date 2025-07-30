@@ -1,6 +1,6 @@
 import { GoalListResponseApi } from '@/entities/goal';
 import { StudyListResponseApi } from '@/entities/study';
-import { serverFetch } from '@/shared/api';
+//import { serverFetch } from '@/shared/api';
 import { NextRequest, NextResponse } from 'next/server';
 
 interface AuthCheckResponse {
@@ -43,13 +43,15 @@ export async function middleware(req: NextRequest) {
       },
     );
     const loginRes: AuthCheckResponse = await res.json();
-    // 로그인 X
+    console.log(loginRes);
+
     if (loginRes.httpStatusCode !== 200) {
       return NextResponse.redirect(new URL('/auth/login', req.url));
     }
   }
   // 로그인 O
   if (isLoginToDashboard) {
+    console.log('로그인O');
     const studyRes = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/api/study`,
       {
@@ -62,7 +64,8 @@ export async function middleware(req: NextRequest) {
     );
 
     if (!studyRes.ok) {
-      return NextResponse.redirect(new URL('/auth/login', req.url));
+      // 스터디 안불러지는 경우 에러처리 필요
+      return NextResponse.redirect(new URL('/', req.url));
     }
 
     const studyListRes: StudyListResponseApi = await studyRes.json();
@@ -81,18 +84,13 @@ export async function middleware(req: NextRequest) {
       );
 
       if (!goalRes.ok) {
-        return NextResponse.redirect(
-          new URL(
-            `/dashboard/study/${studyList.studyList[0].studyId}`,
-            req.url,
-          ),
-        );
+        // 목표 안불러지는 경우 에러처리 필요
+        return NextResponse.redirect(new URL('/', req.url));
       }
-
       const goalListRes: GoalListResponseApi = await goalRes.json();
       const goalList = goalListRes.data;
       if (goalListRes.httpStatusCode === 200 && goalList.totalCount !== 0) {
-        // 1. 스터디O, 목표O
+        // 2. 스터디O, 목표O
         return NextResponse.redirect(
           new URL(
             `/dashboard/study/${studyList.studyList[0].studyId}/goal/${goalList.goals[0].id}`,
