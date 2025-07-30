@@ -12,7 +12,6 @@ export const useTodolistQuery = (goalId?: string) => {
       const myTodoList = response.data.myTodoList;
 
       const parsedMyTodoList = myTodoList.map((todo) => ({
-        // role: todolist.role,
         id: todo.todoId,
         content: todo.content,
         createdAt: todo.createdAt,
@@ -24,8 +23,9 @@ export const useTodolistQuery = (goalId?: string) => {
         // priorityOrder: todo.priorityOrder,
       }));
       return {
-        title: response.data.title ?? null,
+        title: response.data.goalTitle ?? null,
         todolist: parsedMyTodoList,
+        role: response.data.userRole,
       };
     },
   });

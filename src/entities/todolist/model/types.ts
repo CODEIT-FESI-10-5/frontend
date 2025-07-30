@@ -12,13 +12,15 @@ export interface Todo {
 export interface Todolist {
   title: string;
   todolist: Todo[];
+  role: 'MEMBER' | 'LEADER';
 }
 
 export interface FetchTodoListResponse {
   httpStatusCode: number;
   errorCode: 'string';
   data: {
-    title: string;
+    goalTitle: string;
+    userRole: 'MEMBER' | 'LEADER';
     myTodoList: [
       {
         todoId: string;
