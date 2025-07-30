@@ -8,7 +8,7 @@ import { useEffect } from 'react';
 export function useDashboardRedirect() {
   const router = useRouter();
   const { data: studyData } = useGetStudy();
-  const { currentStudyId } = useStudyStore();
+  const { currentStudyId, setStudyId } = useStudyStore();
   const { getLastVisitedGoalId } = useGoalStore();
 
   // study가 있는지 검사
