@@ -12,7 +12,7 @@ export function useDashboardRedirect() {
   const { getLastVisitedGoalId } = useGoalStore();
 
   // study가 있는지 검사
-  const studyId = currentStudyId || studyData?.studyList?.[0]?.id || null;
+  const studyId = currentStudyId || studyData?.studyList?.[0]?.id || '';
 
   // goalId가 있는지 검사 (studyId가 존재하는 경우)
   const { data: goalData } = useGetGoal(Number(studyId), {
@@ -21,6 +21,7 @@ export function useDashboardRedirect() {
   const goalId = studyId ? getLastVisitedGoalId(studyId) : null;
 
   useEffect(() => {
+    setStudyId(String(studyId));
     // 0. 스터디 데이터가 아예 안받아져오는 경우 처리 필요
     if (!studyData) router.push('/');
     // 1. 스터디가 없는 경우 홈으로 이동
@@ -34,9 +35,8 @@ export function useDashboardRedirect() {
     }
     // 3. store에 goal이 없으면 첫번째 goal로 이동
     if (!goalId) {
-      router.replace(
-        `/dashboard/study/${studyId}/goal/${String(goalData?.goals[0].id)}`,
-      );
+      const initialGoalId = String(goalData?.goals[0].id);
+      router.replace(`/dashboard/study/${studyId}/goal/${initialGoalId}`);
       return;
     }
     // 4. 모든 조건이 있는 경우
