@@ -21,7 +21,7 @@ export function useLogin() {
       const { email, nickname, profileImg } = res.data;
       localStorage.setItem('email', email);
       localStorage.setItem('nickname', nickname);
-      localStorage.setItem('profileImg', profileImg);
+      localStorage.setItem('profileImg', profileImg ?? '');
       router.replace('/dashboard');
     },
     onError: (err) => {
