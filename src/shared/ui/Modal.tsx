@@ -55,7 +55,7 @@ export const Modal = () => {
           <div onClick={(e) => e.stopPropagation()}>{content}</div>
         </motion.div>
       </>,
-      document.getElementById('modal-root') || document.body,
+      document.body,
     );
   }
 
