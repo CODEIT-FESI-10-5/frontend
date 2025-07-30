@@ -2,42 +2,37 @@
 import CreateGoalSVG from '@/assets/create-goal.svg';
 import { useGetGoal } from '../../../entities/goal/model/useGetGoal';
 import { GoalListItem, goalQueryKeys } from '@/entities/goal';
-import { useGoalStore } from '../../../entities/goal/model/useGoalStore';
-import { useStudyStore } from '@/entities/study/model/useStudyStore';
-import { useRouter, usePathname } from 'next/navigation';
+import { useRouter, usePathname, useParams } from 'next/navigation';
 import clsx from 'clsx';
-import { useCreateGoal } from '@/features/create-goal/model';
 import { useQueryClient } from '@tanstack/react-query';
+import { useCreateGoal } from '@/features/create-goal/model';
 
 export default function StudyGoalList() {
   const queryClient = useQueryClient();
   const router = useRouter();
   const pathname = usePathname();
-  const { setLastVisitedGoalId, getLastVisitedGoalId } = useGoalStore();
-  const { currentStudyId } = useStudyStore();
-  const currentGoalId = getLastVisitedGoalId(currentStudyId);
-
+  const params = useParams();
+  const studyId = params?.studyId;
+  const goalId = params?.goalId;
+  // 목표 생성
   const mutation = useCreateGoal((newGoal) => {
-    setLastVisitedGoalId(currentStudyId, String(newGoal.id));
-    //목표 리스트 쿼리 업데이트
     queryClient.invalidateQueries({
-      queryKey: goalQueryKeys.list(Number(currentStudyId)),
+      queryKey: goalQueryKeys.list(Number()),
     });
-    router.push(`/dashboard/study/${currentStudyId}/goal/${newGoal.id}`);
+    router.push(`/dashboard/study/${studyId}/goal/${newGoal.id}`);
   });
+  const { isLoading, data, error } = useGetGoal(Number(studyId));
 
-  const { isLoading, data, error } = useGetGoal(Number(currentStudyId));
   if (isLoading) return <div>로딩 중...</div>;
   if (error) return <div>에러 발생</div>;
   if (!data) return <div>스터디가 없습니다.</div>;
 
+  // 목표 이동
   const handleClick = (goal: GoalListItem) => {
-    setLastVisitedGoalId(currentStudyId, goal.id);
-
     if (pathname === '/note') {
       router.push(`/note?studyGoalId=${goal.id}`);
     } else {
-      router.push(`/dashboard/study/${currentStudyId}/goal/${goal.id}`);
+      router.push(`/dashboard/study/${data.studyId}/goal/${goal.id}`);
     }
   };
 
@@ -49,12 +44,12 @@ export default function StudyGoalList() {
           onClick={() =>
             mutation.mutate({
               title: '스터디 목표를 입력해주세요.',
-              studyId: Number(currentStudyId),
+              studyId: Number(data.studyId),
             })
           }
         />
       </div>
-      {currentStudyId !== null && (
+      {studyId != null && (
         <ul className="py-4">
           {data.goals.map((goal) => {
             const goalItem: GoalListItem = {
@@ -67,7 +62,7 @@ export default function StudyGoalList() {
                 key={goalItem.id}
                 className={clsx(
                   'rounded-4 body-medium h-36 w-full px-12 py-7',
-                  goalItem.id === currentGoalId
+                  goalItem.id === goalId
                     ? 'bg-surface-4 text-text-secondary'
                     : 'bg-surface-2 text-text-tertiary',
                 )}

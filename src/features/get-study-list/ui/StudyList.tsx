@@ -1,8 +1,9 @@
 'use client';
-import { useStudyStore, useGetStudy, StudyItem } from '@/entities/study/model';
+import { useGetStudy } from '@/entities/study/model';
 import DropDownIcon from '@/assets/dropdown.svg';
 import DropUpIcon from '@/assets/dropup.svg';
 import { cn } from '@/shared/utils/cn';
+import { useParams } from 'next/navigation';
 
 interface StudyListProps {
   isOpen: boolean;
@@ -10,17 +11,16 @@ interface StudyListProps {
 }
 
 export default function StudyList({ isOpen, onClick }: StudyListProps) {
-  const { currentStudyId } = useStudyStore();
+  const params = useParams();
+  const studyId = params?.studyId;
   const { isLoading, data, error } = useGetStudy();
 
   if (isLoading) return <div>로딩 중...</div>;
   if (error) return <div>에러 발생</div>;
   if (!data) return <div>스터디가 없습니다.</div>;
 
-  // 현재 스터디 저장
-  const currentStudy: StudyItem | null =
-    data.studyList.find((study) => study.id === currentStudyId) ??
-    (data.totalCount > 0 ? data.studyList[0] : null);
+  const currentStudy =
+    data.studyList.find((study) => study.id == studyId) ?? null;
 
   return (
     <section className="flex flex-col gap-14">

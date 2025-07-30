@@ -1,34 +1,48 @@
 'use client';
 import { StudyItem } from '@/entities/study/model/types';
-import { useGetStudy, useStudyStore } from '@/entities/study/model';
+import { useGetStudy } from '@/entities/study/model';
 import { useRouter } from 'next/navigation';
-import { useGoalStore } from '@/entities/goal/model';
 import { useQueryClient } from '@tanstack/react-query';
-import { goalQueryKeys } from '@/entities/goal';
+import { getGoalList, goalQueryKeys } from '@/entities/goal';
 
 interface StudyDropDownProps {
   onClick: () => void;
 }
 
 export default function StudyDropDown({ onClick }: StudyDropDownProps) {
-  const queryClient = useQueryClient();
-  const router = useRouter();
   const { isLoading, data, error } = useGetStudy();
-  const { setStudyId } = useStudyStore();
-  const { getLastVisitedGoalId } = useGoalStore();
-
+  const router = useRouter();
+  const queryClient = useQueryClient();
   if (isLoading) return <div>로딩 중...</div>;
   if (error) return <div>에러 발생</div>;
   if (!data) return <div>스터디가 없습니다.</div>;
 
-  //스터디 클릭 시 해당 대시보드로 이동
-  const handleClick = (study: StudyItem) => {
-    setStudyId(study.id);
-    const lastVisitedGoal = getLastVisitedGoalId(study.id);
-    router.push(`/dashboard/study/${study.id}/goal/${lastVisitedGoal}`);
-    queryClient.invalidateQueries({
-      queryKey: goalQueryKeys.list(Number(study.id)),
-    });
+  const handleClick = async (study: StudyItem) => {
+    try {
+      const goalData = await queryClient.fetchQuery({
+        queryKey: goalQueryKeys.list(Number(study.id)),
+        queryFn: () => getGoalList(Number(study.id)),
+      });
+
+      const goals = goalData.data.goals;
+
+      if (goalData.data.totalCount > 0) {
+        const firstGoalId = goals[0].id;
+        router.push(`/dashboard/study/${study.id}/goal/${firstGoalId}`);
+      } else {
+        router.push(`/dashboard/study/${study.id}`);
+      }
+
+      // 쿼리 무효화
+      queryClient.invalidateQueries({
+        queryKey: goalQueryKeys.list(Number(study.id)),
+      });
+    } catch (err) {
+      console.error('goal 리스트 조회 실패:', err);
+      // fallback 처리
+      router.push(`/dashboard/study/${study.id}`);
+    }
+
     onClick();
   };
 
