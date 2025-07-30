@@ -44,7 +44,7 @@ export async function middleware(req: NextRequest) {
     }
   }
   // 로그인 O
-  if (pathname.startsWith('/dashboard')) {
+  if (isLoginToDashboard) {
     const studyListRes = await serverFetch.get<StudyListResponseApi>(
       '/api/study',
       { cookie },
