@@ -8,12 +8,11 @@ import { useEffect } from 'react';
 export function useDashboardRedirect() {
   const router = useRouter();
   const { data: studyData } = useGetStudy();
-  const { currentStudyId, setStudyId } = useStudyStore();
+  const { currentStudyId } = useStudyStore();
   const { getLastVisitedGoalId } = useGoalStore();
 
   // study가 있는지 검사
-  const studyId = currentStudyId || studyData?.studyList?.[0]?.id || '';
-  setStudyId(studyId);
+  const studyId = currentStudyId || studyData?.studyList?.[0]?.id || null;
 
   // goalId가 있는지 검사 (studyId가 존재하는 경우)
   const { data: goalData } = useGetGoal(Number(studyId), {
@@ -35,8 +34,9 @@ export function useDashboardRedirect() {
     }
     // 3. store에 goal이 없으면 첫번째 goal로 이동
     if (!goalId) {
-      const initialGoalId = String(goalData?.goals[0].id);
-      router.replace(`/dashboard/study/${studyId}/goal/${initialGoalId}`);
+      router.replace(
+        `/dashboard/study/${studyId}/goal/${String(goalData?.goals[0].id)}`,
+      );
       return;
     }
     // 4. 모든 조건이 있는 경우
