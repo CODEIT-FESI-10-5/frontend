@@ -22,7 +22,7 @@ const roboto = Roboto({
 });
 
 export const metadata: Metadata = {
-  title: 'Slid to do',
+  title: 'Modudo',
   description: '코드잇 프론트엔드 단기 심화 과정 10기 5조 프로젝트',
 };
 
