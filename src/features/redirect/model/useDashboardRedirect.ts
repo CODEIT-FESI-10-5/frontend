@@ -21,10 +21,11 @@ export function useDashboardRedirect() {
   const goalId = studyId ? getLastVisitedGoalId(studyId) : null;
 
   useEffect(() => {
+    // 0. 스터디 데이터가 아예 안받아져오는 경우 처리 필요
     if (!studyData) router.push('/');
     // 1. 스터디가 없는 경우 홈으로 이동
     if (studyData?.totalCount === 0) {
-      router.replace('/');
+      router.replace('/dashboard/study');
     }
     // 2. goal 리스트가 없으면 goal 생성 화면으로
     if (goalData && goalData.totalCount === 0) {
