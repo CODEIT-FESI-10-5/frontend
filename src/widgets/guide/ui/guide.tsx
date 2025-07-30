@@ -32,7 +32,7 @@ const content = [
   },
 ];
 
-export default function Home() {
+export default function Guide() {
   const [current, setCurrent] = useState(0);
   const router = useRouter();
   const { open } = useModal();
@@ -135,7 +135,7 @@ export default function Home() {
         {/* 메인 텍스트 + 이미지 슬라이드 */}
         <div className="flex flex-col items-center">
           {/* 텍스트 */}
-          <div className="flex min-h-[90px] w-[600px] flex-col items-center justify-center text-center">
+          <div className="relative flex min-h-[90px] w-[600px] items-center justify-center overflow-hidden text-center">
             <AnimatePresence
               mode="wait"
               initial={false}
@@ -154,7 +154,7 @@ export default function Home() {
                   damping: 30,
                   opacity: { duration: 0.2 },
                 }}
-                className="absolute flex w-full flex-col gap-12"
+                className="absolute inset-0 flex h-full w-full flex-col items-center justify-center gap-12"
               >
                 <h1 className="text-[28px] leading-tight font-bold text-white">
                   {content[current].title}

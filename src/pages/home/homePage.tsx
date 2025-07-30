@@ -1,4 +1,4 @@
-import Home from '@/widgets/home/ui/home';
+import Home from '@/widgets/guide/ui/guide';
 
 export default function HomePage() {
   return <Home />;
