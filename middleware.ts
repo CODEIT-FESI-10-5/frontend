@@ -29,7 +29,6 @@ export const config = {
 export async function middleware(req: NextRequest) {
   const cookie = req.headers.get('cookie') || '';
   const pathname = req.nextUrl.pathname;
-  console.log(cookie);
   const isLoginToDashboard = pathname === '/dashboard';
   const isDashboard = pathname.startsWith('/dashboard/') && !isLoginToDashboard;
   const isNote = pathname.startsWith('/note/');
@@ -39,6 +38,8 @@ export async function middleware(req: NextRequest) {
 
   const needsLoginCheck =
     isDashboard || isNote || isAccount || isRoot || isTodo;
+
+  const needsRoute = isLoginToDashboard || isRoot;
 
   if (needsLoginCheck) {
     const res = await fetch(
@@ -59,8 +60,7 @@ export async function middleware(req: NextRequest) {
     }
   }
   // 로그인 O
-  if (isLoginToDashboard) {
-    console.log('로그인O');
+  if (needsRoute) {
     const studyRes = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/api/study`,
       {
