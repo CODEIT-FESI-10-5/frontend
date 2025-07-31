@@ -1,23 +1,25 @@
 'use client';
-import { StudyItem } from '@/entities/study/model/types';
+import { StudyItem, StudyListResponse } from '@/entities/study/model/types';
 import { useGetStudy } from '@/entities/study/model';
 import { useRouter } from 'next/navigation';
 import { useQueryClient } from '@tanstack/react-query';
 import { getGoalList, goalQueryKeys } from '@/entities/goal';
+import { useStudyStore } from '../model';
 
 interface StudyDropDownProps {
+  data: StudyListResponse;
   onClick: () => void;
 }
 
-export default function StudyDropDown({ onClick }: StudyDropDownProps) {
-  const { isLoading, data, error } = useGetStudy();
+export default function StudyDropDown({ onClick, data }: StudyDropDownProps) {
   const router = useRouter();
   const queryClient = useQueryClient();
-  if (isLoading) return <div>로딩 중...</div>;
-  if (error) return <div>에러 발생</div>;
-  if (!data) return <div>스터디가 없습니다.</div>;
+  const { setStudyId } = useStudyStore();
 
+  // 스터디 선택 시 로직
   const handleClick = async (study: StudyItem) => {
+    // 로컬 스토리지에 스터디 아이디 변경
+    setStudyId(study.id);
     try {
       const goalData = await queryClient.fetchQuery({
         queryKey: goalQueryKeys.list(Number(study.id)),
@@ -42,7 +44,6 @@ export default function StudyDropDown({ onClick }: StudyDropDownProps) {
       // fallback 처리
       router.push(`/dashboard/study/${study.id}`);
     }
-
     onClick();
   };
 

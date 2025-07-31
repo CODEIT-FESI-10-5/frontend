@@ -6,21 +6,31 @@ import { useRouter, usePathname, useParams } from 'next/navigation';
 import clsx from 'clsx';
 import { useQueryClient } from '@tanstack/react-query';
 import { useCreateGoal } from '@/features/create-goal/model';
+import { useEffect } from 'react';
+import { useGoalStore } from '../model';
 
-export default function StudyGoalList() {
+export default function StudyGoalList({ studyId }: { studyId: string | null }) {
   const queryClient = useQueryClient();
   const router = useRouter();
   const pathname = usePathname();
   const params = useParams();
-  const studyId = params?.studyId;
   const goalId = params?.goalId;
+  const { setGoalId } = useGoalStore();
   // 목표 생성
   const mutation = useCreateGoal((newGoal) => {
     queryClient.invalidateQueries({
       queryKey: goalQueryKeys.list(Number()),
     });
+    setGoalId(String(newGoal.id));
     router.push(`/dashboard/study/${studyId}/goal/${newGoal.id}`);
   });
+
+  useEffect(() => {
+    if (goalId) {
+      setGoalId(String(goalId));
+    }
+  }, []);
+
   const { isLoading, data, error } = useGetGoal(Number(studyId));
 
   if (isLoading) return <div>로딩 중...</div>;
@@ -37,7 +47,7 @@ export default function StudyGoalList() {
   };
 
   return (
-    <section className="flex flex-col gap-14">
+    <section className="mt-64 flex flex-col gap-14">
       <div className="flex items-center justify-between">
         <h2 className="text-text-secondary title-small">스터디 목표</h2>
         <CreateGoalSVG
