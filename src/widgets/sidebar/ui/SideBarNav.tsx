@@ -8,7 +8,7 @@ import { useParams, usePathname } from 'next/navigation';
 import { useState, useEffect } from 'react';
 
 export default function SideBarNav() {
-  const { currentStudyId, setStudyId, resetStudyId } = useStudyStore();
+  const { setStudyId } = useStudyStore();
   const { setGoalId, resetGoalId } = useGoalStore();
   const pathname = usePathname();
   const params = useParams();

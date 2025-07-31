@@ -2,11 +2,10 @@
 import CreateGoalSVG from '@/assets/create-goal.svg';
 import { useGetGoal } from '../../../entities/goal/model/useGetGoal';
 import { GoalListItem, goalQueryKeys } from '@/entities/goal';
-import { useRouter, usePathname, useParams } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 import clsx from 'clsx';
 import { useQueryClient } from '@tanstack/react-query';
 import { useCreateGoal } from '@/features/create-goal/model';
-import { useEffect } from 'react';
 import { useGoalStore } from '../model';
 import { useStudyStore } from '@/features/get-study-list/model';
 
