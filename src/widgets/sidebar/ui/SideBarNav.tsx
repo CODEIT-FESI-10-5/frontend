@@ -1,5 +1,6 @@
 'use client';
 import { useGetStudy } from '@/entities/study';
+import { useGoalStore } from '@/features/get-goal-list/model';
 import { StudyGoalList } from '@/features/get-goal-list/ui';
 import { useStudyStore } from '@/features/get-study-list/model';
 import { StudyDropDown, CurrentStudy } from '@/features/get-study-list/ui';
@@ -8,21 +9,28 @@ import { useState, useEffect } from 'react';
 
 export default function SideBarNav() {
   const { currentStudyId, setStudyId, resetStudyId } = useStudyStore();
+  const { setGoalId, resetGoalId } = useGoalStore();
   const pathname = usePathname();
   const params = useParams();
   const [isOpen, setIsOpen] = useState(false);
-
-  // 로컬 스토리지에 스터디 아이디 저장
-  useEffect(() => {
-    if (pathname?.startsWith('/dashboard') && params?.studyId) {
-      setStudyId(String(params.studyId));
-    } else {
-      resetStudyId();
-    }
-  }, []);
+  const studyId = params?.studyId ?? null;
+  const goalId = params?.goalId ?? null;
 
   // 스터디 리스트 패치
   const { isLoading, data: studyData, error } = useGetStudy();
+
+  // 대시보드 진입시 로컬 스토리지에 스터디, 목표 아이디 저장
+  useEffect(() => {
+    if (pathname?.startsWith('/dashboard') && studyId) {
+      if (goalId) {
+        setGoalId(String(goalId));
+        setStudyId(String(studyId));
+      } else {
+        setStudyId(String(studyId));
+        resetGoalId();
+      }
+    }
+  }, [studyId, goalId]);
 
   if (isLoading) return <div>로딩 중...</div>;
   if (error) return <div>에러 발생</div>;
@@ -34,8 +42,8 @@ export default function SideBarNav() {
   };
 
   // 현재 스터디 정보
-  const currentStudy =
-    studyData.studyList.find((study) => study.id == currentStudyId) ?? null;
+  const currentStudy = null;
+  // studyData.studyList.find((study) => study.id == currentStudyId) ?? null;
 
   return (
     <div>
@@ -52,7 +60,7 @@ export default function SideBarNav() {
 
       {/* StudyGoalList */}
       <div className={isOpen ? 'hidden' : ''}>
-        <StudyGoalList studyId={currentStudyId} />
+        <StudyGoalList />
       </div>
     </div>
   );

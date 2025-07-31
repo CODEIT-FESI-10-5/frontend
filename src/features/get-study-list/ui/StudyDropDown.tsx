@@ -3,7 +3,6 @@ import { StudyItem, StudyListResponse } from '@/entities/study/model/types';
 import { useRouter } from 'next/navigation';
 import { useQueryClient } from '@tanstack/react-query';
 import { getGoalList, goalQueryKeys } from '@/entities/goal';
-import { useStudyStore } from '@/features/get-study-list/model';
 
 interface StudyDropDownProps {
   data: StudyListResponse;
@@ -13,12 +12,9 @@ interface StudyDropDownProps {
 export default function StudyDropDown({ onClick, data }: StudyDropDownProps) {
   const router = useRouter();
   const queryClient = useQueryClient();
-  const { setStudyId } = useStudyStore();
 
   // 스터디 선택 시 로직
   const handleClick = async (study: StudyItem) => {
-    // 로컬 스토리지에 스터디 아이디 변경
-    setStudyId(study.id);
     try {
       const goalData = await queryClient.fetchQuery({
         queryKey: goalQueryKeys.list(Number(study.id)),
@@ -27,7 +23,7 @@ export default function StudyDropDown({ onClick, data }: StudyDropDownProps) {
 
       const goals = goalData.data.goals;
 
-      if (goalData.data.totalCount > 0) {
+      if (goalData.data.totalCount !== 0) {
         const firstGoalId = goals[0].id;
         router.push(`/dashboard/study/${study.id}/goal/${firstGoalId}`);
       } else {

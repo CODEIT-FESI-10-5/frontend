@@ -8,30 +8,23 @@ import { useQueryClient } from '@tanstack/react-query';
 import { useCreateGoal } from '@/features/create-goal/model';
 import { useEffect } from 'react';
 import { useGoalStore } from '../model';
+import { useStudyStore } from '@/features/get-study-list/model';
 
-export default function StudyGoalList({ studyId }: { studyId: string | null }) {
+export default function StudyGoalList() {
   const queryClient = useQueryClient();
   const router = useRouter();
   const pathname = usePathname();
-  const params = useParams();
-  const goalId = params?.goalId;
-  const { setGoalId } = useGoalStore();
+  const { currentGoalId, setGoalId } = useGoalStore();
+  const { currentStudyId } = useStudyStore();
   // 목표 생성
   const mutation = useCreateGoal((newGoal) => {
     queryClient.invalidateQueries({
-      queryKey: goalQueryKeys.list(Number(studyId)),
+      queryKey: goalQueryKeys.list(Number(currentStudyId)),
     });
-    setGoalId(String(newGoal.id));
-    router.push(`/dashboard/study/${studyId}/goal/${newGoal.id}`);
+    router.push(`/dashboard/study/${currentStudyId}/goal/${newGoal.id}`);
   });
 
-  useEffect(() => {
-    if (goalId) {
-      setGoalId(String(goalId));
-    }
-  }, []);
-
-  const { isLoading, data, error } = useGetGoal(Number(studyId));
+  const { isLoading, data, error } = useGetGoal(Number(currentStudyId));
 
   if (isLoading) return <div>로딩 중...</div>;
   if (error) return <div>에러 발생</div>;
@@ -40,6 +33,7 @@ export default function StudyGoalList({ studyId }: { studyId: string | null }) {
   // 목표 이동
   const handleClick = (goal: GoalListItem) => {
     if (pathname === '/note') {
+      setGoalId(goal.id);
       router.push(`/note?studyGoalId=${goal.id}`);
     } else {
       router.push(`/dashboard/study/${data.studyId}/goal/${goal.id}`);
@@ -59,7 +53,7 @@ export default function StudyGoalList({ studyId }: { studyId: string | null }) {
           }
         />
       </div>
-      {studyId != null && (
+      {currentStudyId != null && data.totalCount !== 0 ? (
         <ul className="py-4">
           {data.goals.map((goal) => {
             const goalItem: GoalListItem = {
@@ -72,7 +66,7 @@ export default function StudyGoalList({ studyId }: { studyId: string | null }) {
                 key={goalItem.id}
                 className={clsx(
                   'rounded-4 body-medium h-36 w-full px-12 py-7',
-                  goalItem.id === goalId
+                  goalItem.id === currentGoalId
                     ? 'bg-surface-4 text-text-secondary'
                     : 'bg-surface-2 text-text-tertiary',
                 )}
@@ -82,6 +76,10 @@ export default function StudyGoalList({ studyId }: { studyId: string | null }) {
             );
           })}
         </ul>
+      ) : (
+        <p className="text-text-secondary label-small">
+          스터디 목표가 없습니다.
+        </p>
       )}
     </section>
   );

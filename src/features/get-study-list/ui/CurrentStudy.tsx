@@ -17,7 +17,7 @@ export default function CurrentStudy({
   return (
     <section className="flex flex-col gap-14">
       <h2 className="text-text-secondary title-small">현재 스터디</h2>
-      {currentStudy !== null && (
+      {currentStudy !== null ? (
         <div
           onClick={onClick}
           className={cn(
@@ -35,6 +35,8 @@ export default function CurrentStudy({
           </div>
           {isOpen ? <DropUpIcon /> : <DropDownIcon />}
         </div>
+      ) : (
+        <p className="text-text-secondary label-small">스터디가 없습니다.</p>
       )}
     </section>
   );
