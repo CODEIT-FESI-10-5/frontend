@@ -17,13 +17,18 @@ interface AuthCheckResponse {
 }
 
 export const config = {
-  matcher: ['/dashboard/:path*', '/note/:path*', '/account'],
+  matcher: [
+    '/dashboard/:path*',
+    '/note/:path*',
+    '/account',
+    '/todolist-detail/:path*',
+  ],
 };
 
 export async function middleware(req: NextRequest) {
   const cookie = req.headers.get('cookie') || '';
   const pathname = req.nextUrl.pathname;
-
+  console.log(cookie);
   const isLoginToDashboard = pathname === '/dashboard';
   const isDashboard = pathname.startsWith('/dashboard/') && !isLoginToDashboard;
   const isNote = pathname.startsWith('/note/');
