@@ -4,7 +4,6 @@ import { useRouter } from 'next/navigation';
 import { useCreateStudy } from '../model/useCreateStudy';
 import { useQueryClient } from '@tanstack/react-query';
 import { studyQueryKeys } from '@/entities/study';
-import { useStudyStore } from '@/features/get-study-list/model';
 import { goalQueryKeys } from '@/entities/goal';
 
 export default function CreateStudyButton() {
