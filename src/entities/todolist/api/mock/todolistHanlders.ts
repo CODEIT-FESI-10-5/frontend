@@ -162,7 +162,7 @@ export const todolistHandlers = [
 
     targetTodolist.todolist.splice(index, 1);
     targetTodolist.order = targetTodolist.order.filter(
-      (todoId) => todoId !== todoId,
+      (id) => id !== parseInt(todoId),
     );
     return HttpResponse.json({ status: 204 });
   }),
