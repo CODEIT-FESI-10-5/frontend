@@ -3,10 +3,10 @@ import { fetchTodolist } from '../../api/fetchTodolist';
 import { FetchTodoListResponse, Todolist } from '../types';
 import { todolistQueryKeys } from '../queryKeys';
 
-export const useTodolistQuery = (goalId?: string) => {
+export const useTodolistQuery = (goalId: string) => {
   return useQuery<FetchTodoListResponse, Error, Todolist>({
-    queryKey: [...todolistQueryKeys.todolist(goalId as string)],
-    queryFn: () => fetchTodolist(goalId as string),
+    queryKey: [...todolistQueryKeys.todolist(goalId)],
+    queryFn: () => fetchTodolist(goalId),
     enabled: !!goalId,
     select: (response: FetchTodoListResponse) => {
       const myTodoList = response.data.myTodoList;
