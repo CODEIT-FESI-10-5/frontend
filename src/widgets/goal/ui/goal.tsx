@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { useProfileStore } from '@/features/auth-login/model/useProfileStore';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 
 import NewTodoIcon from '@/assets/todo_new.svg';
@@ -39,6 +39,13 @@ export default function Goal({ goalId }: { goalId: string }) {
 
   const { data: goal, isLoading, error } = useDashboard(goalId);
   const [title, setTitle] = useState<string>('');
+
+  useEffect(() => {
+    if (goal) {
+      setTitle(goal.title);
+    }
+  }, [goal]);
+
   if (isLoading) {
     return (
       <div className="flex h-full items-center justify-center">
@@ -64,12 +71,6 @@ export default function Goal({ goalId }: { goalId: string }) {
         <div className="text-gray-500">대시보드를 찾을 수 없습니다.</div>
       </div>
     );
-  }
-
-  // goal이 정의된 이후에만 studyGoal 접근
-  // 제목 상태 초기화 (최초 렌더링 시만)
-  if (title === '' && goal.title) {
-    setTitle(goal.title);
   }
 
   if (!goal?.recentCompletedTodo?.content && !goal?.inProgressTodo?.content) {

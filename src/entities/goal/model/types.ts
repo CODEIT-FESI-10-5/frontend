@@ -13,12 +13,10 @@ export interface GoalListResponseApi {
   errorCode: string;
   data: {
     studyId: number;
-    goals: [
-      {
-        id: number;
-        title: string;
-      },
-    ];
+    goals: {
+      id: number;
+      title: string;
+    }[];
     totalCount: number;
   };
   errorMessage: string;

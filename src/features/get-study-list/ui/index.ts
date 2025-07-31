@@ -1,2 +1,2 @@
-export { default as StudyList } from './StudyList';
+export { default as CurrentStudy } from './CurrentStudy';
 export { default as StudyDropDown } from './StudyDropDown';

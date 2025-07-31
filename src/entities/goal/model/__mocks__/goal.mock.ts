@@ -10,8 +10,12 @@ export const mockGoalList: GoalListResponseApi = {
         id: 1,
         title: '스프링 부트 마스터하기',
       },
+      {
+        id: 2,
+        title: '스프링 부트 마스터하기',
+      },
     ],
-    totalCount: 0,
+    totalCount: 2,
   },
   errorMessage: 'string',
   fieldErrors: [
