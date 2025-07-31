@@ -12,7 +12,7 @@ export const updateTodo = async (
 ) => {
   const endpoint = `/api/todos/${todoId}`;
   const parsedResponse = await clientFetch.patch(endpoint, {
-    goalId,
+    goalId: parseInt(goalId),
     ...newTodoState,
   });
 
