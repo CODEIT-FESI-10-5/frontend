@@ -52,7 +52,7 @@ export default function StudyGoalList() {
           }
         />
       </div>
-      {currentStudyId != null && data.totalCount !== 0 ? (
+      {data.totalCount !== 0 ? (
         <ul className="py-4">
           {data.goals.map((goal) => {
             const goalItem: GoalListItem = {
