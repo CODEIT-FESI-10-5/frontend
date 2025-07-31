@@ -35,7 +35,7 @@ export default function StudyGoalList() {
       setGoalId(goal.id);
       router.push(`/note?studyGoalId=${goal.id}`);
     } else {
-      router.push(`/dashboard/study/${data.studyId}/goal/${goal.id}`);
+      router.push(`/dashboard/study/${currentStudyId}/goal/${goal.id}`);
     }
   };
 
@@ -52,7 +52,7 @@ export default function StudyGoalList() {
           }
         />
       </div>
-      {currentStudyId != null && data.totalCount !== 0 ? (
+      {data.totalCount !== 0 ? (
         <ul className="py-4">
           {data.goals.map((goal) => {
             const goalItem: GoalListItem = {
