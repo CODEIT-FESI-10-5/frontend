@@ -8,7 +8,7 @@ import { useParams, usePathname } from 'next/navigation';
 import { useState, useEffect } from 'react';
 
 export default function SideBarNav() {
-  const { setStudyId } = useStudyStore();
+  const { setStudyId, currentStudyId } = useStudyStore();
   const { setGoalId, resetGoalId } = useGoalStore();
   const pathname = usePathname();
   const params = useParams();
@@ -42,8 +42,8 @@ export default function SideBarNav() {
   };
 
   // 현재 스터디 정보
-  const currentStudy = null;
-  // studyData.studyList.find((study) => study.id == currentStudyId) ?? null;
+  const currentStudy =
+    studyData.studyList.find((study) => study.id == currentStudyId) ?? null;
 
   return (
     <div>
