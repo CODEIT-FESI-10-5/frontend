@@ -19,7 +19,7 @@ export default function StudyGoalList({ studyId }: { studyId: string | null }) {
   // 목표 생성
   const mutation = useCreateGoal((newGoal) => {
     queryClient.invalidateQueries({
-      queryKey: goalQueryKeys.list(Number()),
+      queryKey: goalQueryKeys.list(Number(studyId)),
     });
     setGoalId(String(newGoal.id));
     router.push(`/dashboard/study/${studyId}/goal/${newGoal.id}`);

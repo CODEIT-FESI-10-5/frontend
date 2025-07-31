@@ -1,10 +1,9 @@
 'use client';
 import { StudyItem, StudyListResponse } from '@/entities/study/model/types';
-import { useGetStudy } from '@/entities/study/model';
 import { useRouter } from 'next/navigation';
 import { useQueryClient } from '@tanstack/react-query';
 import { getGoalList, goalQueryKeys } from '@/entities/goal';
-import { useStudyStore } from '../model';
+import { useStudyStore } from '@/features/get-study-list/model';
 
 interface StudyDropDownProps {
   data: StudyListResponse;
