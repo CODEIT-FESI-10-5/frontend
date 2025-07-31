@@ -11,14 +11,15 @@ export const useJoinStudy = () => {
   const router = useRouter();
   return useMutation({
     mutationFn: postJoinStudy,
-    onSuccess: (data: { studyId: string }) => {
+    onSuccess: (res) => {
+      const studyId = res.data.studyId;
       queryClient.invalidateQueries({
         queryKey: studyQueryKeys.list(),
       });
       queryClient.invalidateQueries({
-        queryKey: goalQueryKeys.list(Number(data.studyId)),
+        queryKey: goalQueryKeys.list(studyId),
       });
-      router.push(`/dashboard/study/${data.studyId}`);
+      router.push(`/dashboard/study/${studyId}`);
     },
     onError: (err: unknown) => {
       const error = err as Error & {
