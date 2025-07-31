@@ -33,9 +33,12 @@ export async function middleware(req: NextRequest) {
   const isLoginToDashboard = pathname === '/dashboard';
   const isDashboard = pathname.startsWith('/dashboard/') && !isLoginToDashboard;
   const isNote = pathname.startsWith('/note/');
+  const isTodo = pathname.startsWith('/todolist-detail/');
   const isAccount = pathname === '/account';
+  const isRoot = pathname === '/';
 
-  const needsLoginCheck = isDashboard || isNote || isAccount;
+  const needsLoginCheck =
+    isDashboard || isNote || isAccount || isRoot || isTodo;
 
   if (needsLoginCheck) {
     const res = await fetch(
