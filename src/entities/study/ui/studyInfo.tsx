@@ -31,6 +31,11 @@ export default function StudyInfo({
 
   // 초대코드 복사 핸들러
   const handleCopyInvite = async () => {
+    if (!inviteLink) {
+      toast.error('초대 코드가 없습니다.');
+      return;
+    }
+
     try {
       await navigator.clipboard.writeText(inviteLink);
       toast.success('초대 코드가 복사되었습니다!');

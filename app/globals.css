@@ -93,6 +93,79 @@
   font-weight: 400;
   font-family: 'Noto Sans KR', sans-serif;
 }
+
+/* --------------------------------------------------- */
+/*모바일 폰트 크기*/
+
+@utility m-headline-large {
+  font-size: 1.25rem; /* 20px */
+  line-height: 1.875rem; /* 30px */
+  font-weight: 700;
+  font-family: 'Noto Sans KR', sans-serif;
+}
+@utility m-headline-medium {
+  font-size: 1.125rem; /* 18px */
+  line-height: 1.625rem; /* 26px */
+  font-weight: 700;
+  font-family: 'Noto Sans KR', sans-serif;
+}
+@utility m-headline-small {
+  font-size: 1rem; /* 16px */
+  line-height: 1.4375rem; /* 23px */
+  font-weight: 700;
+  font-family: 'Noto Sans KR', sans-serif;
+}
+@utility m-title-large {
+  font-size: 1rem; /* 16px */
+  line-height: 1.4375rem; /* 23px */
+  font-weight: 700;
+  font-family: 'Noto Sans KR', sans-serif;
+}
+@utility m-title-medium {
+  font-size: 1rem; /* 16px */
+  line-height: 1.4375rem; /* 23px */
+  font-weight: 500;
+  font-family: 'Noto Sans KR', sans-serif;
+}
+@utility m-title-small {
+  font-size: 0.9375rem; /* 15px */
+  line-height: 1.375rem; /* 22px */
+  font-weight: 700;
+  font-family: 'Noto Sans KR', sans-serif;
+}
+@utility m-body-large {
+  font-size: 0.9375rem; /* 15px */
+  line-height: 1.375rem; /* 22px */
+  font-weight: 500;
+  font-family: 'Noto Sans KR', sans-serif;
+}
+@utility m-body-medium {
+  font-size: 0.875rem; /* 14px */
+  line-height: 1.25rem; /* 20px */
+  font-weight: 700;
+  font-family: 'Noto Sans KR', sans-serif;
+}
+@utility m-body-small {
+  font-size: 0.875rem; /* 14px */
+  line-height: 1.25rem; /* 20px */
+  font-weight: 400;
+  font-family: 'Noto Sans KR', sans-serif;
+}
+@utility m-label-medium {
+  font-size: 0.75rem; /* 12px */
+  line-height: 1.0625rem; /* 17px */
+  font-weight: 700;
+  font-family: 'Noto Sans KR', sans-serif;
+}
+@utility m-label-small {
+  font-size: 0.75rem; /* 12px */
+  line-height: 1.0625rem; /* 17px */
+  font-weight: 400;
+  font-family: 'Noto Sans KR', sans-serif;
+}
+
+/* --------------------------------------------------- */
+
 @utility border-1.5 {
   border-width: 1.5px;
 }
