@@ -12,7 +12,7 @@ interface UpdateTodoMutationParams {
 
 export const useUpdateTodoMutation = (goalId: string) =>
   useTodoCustomMutation<UpdateTodoMutationParams, any>(
-    ({ todoId, newTodoState }) => updateTodo(todoId, newTodoState),
+    ({ todoId, newTodoState }) => updateTodo(todoId, goalId, newTodoState),
     [
       [...dashboardQueryKeys.goal(goalId)],
       [...todolistQueryKeys.todolist(goalId)],
