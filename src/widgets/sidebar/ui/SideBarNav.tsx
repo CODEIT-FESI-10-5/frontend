@@ -43,7 +43,8 @@ export default function SideBarNav() {
 
   // 현재 스터디 정보
   const currentStudy =
-    studyData.studyList.find((study) => study.id == currentStudyId) ?? null;
+    studyData.studyList.find((study) => study.id == currentStudyId) ??
+    (studyData.totalCount > 0 ? studyData.studyList[0] : null);
 
   return (
     <div>
