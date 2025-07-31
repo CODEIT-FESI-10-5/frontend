@@ -1,22 +1,19 @@
 'use client';
-import { StudyItem } from '@/entities/study/model/types';
-import { useGetStudy } from '@/entities/study/model';
+import { StudyItem, StudyListResponse } from '@/entities/study/model/types';
 import { useRouter } from 'next/navigation';
 import { useQueryClient } from '@tanstack/react-query';
 import { getGoalList, goalQueryKeys } from '@/entities/goal';
 
 interface StudyDropDownProps {
+  data: StudyListResponse;
   onClick: () => void;
 }
 
-export default function StudyDropDown({ onClick }: StudyDropDownProps) {
-  const { isLoading, data, error } = useGetStudy();
+export default function StudyDropDown({ onClick, data }: StudyDropDownProps) {
   const router = useRouter();
   const queryClient = useQueryClient();
-  if (isLoading) return <div>로딩 중...</div>;
-  if (error) return <div>에러 발생</div>;
-  if (!data) return <div>스터디가 없습니다.</div>;
 
+  // 스터디 선택 시 로직
   const handleClick = async (study: StudyItem) => {
     try {
       const goalData = await queryClient.fetchQuery({
@@ -26,7 +23,7 @@ export default function StudyDropDown({ onClick }: StudyDropDownProps) {
 
       const goals = goalData.data.goals;
 
-      if (goalData.data.totalCount > 0) {
+      if (goalData.data.totalCount !== 0) {
         const firstGoalId = goals[0].id;
         router.push(`/dashboard/study/${study.id}/goal/${firstGoalId}`);
       } else {
@@ -42,7 +39,6 @@ export default function StudyDropDown({ onClick }: StudyDropDownProps) {
       // fallback 처리
       router.push(`/dashboard/study/${study.id}`);
     }
-
     onClick();
   };
 
