@@ -57,7 +57,17 @@ export function NoteEditor({ initialNote, onAutoSave }: NoteEditorProps) {
 
   useEffect(() => {
     if (editor && initialNote) {
-      editor.commands.setContent(initialNote.content);
+      const { from, to } = editor.state.selection;
+
+      editor.commands.setContent(initialNote.content, {
+        emitUpdate: false,
+        parseOptions: {
+          preserveWhitespace: 'full',
+        },
+        errorOnInvalidContent: true,
+      });
+
+      editor.commands.setTextSelection({ from, to });
     }
   }, [editor, initialNote]);
 
@@ -91,10 +101,10 @@ export function NoteEditor({ initialNote, onAutoSave }: NoteEditorProps) {
 
   return (
     <div className="space-y-6">
-      <div className="rounded-md bg-surface-3">
+      <div className="bg-surface-3 rounded-md">
         <EditorContent
           editor={editor}
-          className="h-[300px] overflow-y-auto px-36 py-34 focus:outline-none text-white"
+          className="h-[300px] overflow-y-auto px-36 py-34 text-white focus:outline-none"
         />
         <NoteEditorMenu editor={editor} />
       </div>
@@ -108,7 +118,9 @@ export function NoteEditor({ initialNote, onAutoSave }: NoteEditorProps) {
               <span className="text-text-tertiary body-medium">작성 중...</span>
             )}
             {status === 'saved' && (
-              <span className="body-medium text-highlight">자동 저장되었습니다.</span>
+              <span className="body-medium text-highlight">
+                자동 저장되었습니다.
+              </span>
             )}
           </span>
         )}
