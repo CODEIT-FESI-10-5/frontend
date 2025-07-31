@@ -21,6 +21,7 @@ export default function JoinStudyModal() {
   });
   const onValid = ({ inviteCode }: JoinStudySchema) => {
     mutate(inviteCode);
+    close();
   };
   return (
     <div className="rounded-12 bg-surface-2 border-border-emphasis relative flex h-420 max-w-642 flex-col gap-30 border-1 px-100 py-68">

@@ -74,3 +74,14 @@ export interface StudyItemApi {
 export interface CreateStudyResponse {
   studyId: string;
 }
+
+//스터디 참여 응답
+export interface JoinStudyResponseApi {
+  httpStatusCode: number;
+  errorCode: string;
+  data: {
+    studyId: number;
+  };
+  errorMessage: string;
+  fieldErrors: { field: string; message: string }[];
+}
