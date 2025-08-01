@@ -27,6 +27,10 @@ export const config = {
 };
 
 export async function middleware(req: NextRequest) {
+  if (process.env.NODE_ENV === 'development') {
+    return NextResponse.next();
+  }
+
   const cookie = req.headers.get('cookie') || '';
   const pathname = req.nextUrl.pathname;
   console.log(cookie);
