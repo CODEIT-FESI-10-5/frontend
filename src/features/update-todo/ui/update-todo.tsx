@@ -26,9 +26,9 @@ export default function UpdateTodoCompletionCheckbox({
       }}
     >
       {completed ? (
-        <CheckTodoFillIcon width={30} height={30} />
+        <CheckTodoFillIcon className="h-24 w-24 md:h-[30px] md:w-[30px]" />
       ) : (
-        <CheckTodoBlankIcon width={30} height={30} />
+        <CheckTodoBlankIcon className="h-24 w-24 md:h-[30px] md:w-[30px]" />
       )}
     </button>
   );

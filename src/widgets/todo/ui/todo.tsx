@@ -7,14 +7,24 @@ import UpdateTodoCompletionCheckbox from '@/features/update-todo/ui/update-todo'
 import DeleteTodoDropDownButton from '@/features/delete-todo/ui/DeleteTodoDropDownButton';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { cn } from '@/shared/lib/utils/cn';
 
-export default function Todo({ todo }: { todo: Todo }) {
+export default function Todo({
+  todo,
+  inProgress,
+}: {
+  todo: Todo;
+  inProgress?: boolean;
+}) {
   const pathname = usePathname();
   const isDashboard = pathname?.startsWith('/dashboard');
   return (
     <div
       aria-label="todo-card"
-      className="bg-surface-4 text-text-primary flex h-72 w-full items-center justify-between rounded-lg px-18"
+      className={cn(
+        'text-text-primary flex h-70 w-full items-center justify-between rounded-lg px-12 md:h-72 md:px-14',
+        `${inProgress ? 'bg-secondary' : 'bg-surface-4'}`,
+      )}
     >
       <div className="flex items-center justify-center gap-14">
         <UpdateTodoCompletionCheckbox
@@ -30,9 +40,9 @@ export default function Todo({ todo }: { todo: Todo }) {
           className="cursor-pointer transition hover:scale-110"
         >
           {todo.note ? (
-            <NoteIcon width={32} height={32} />
+            <NoteIcon className="h-26 w-26 md:h-32 md:w-32" />
           ) : (
-            <NewNoteIcon width={32} height={32} />
+            <NewNoteIcon className="h-26 w-26 md:h-32 md:w-32" />
           )}
         </Link>
         {!isDashboard && <DeleteTodoDropDownButton todoId={todo.id} />}

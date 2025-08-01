@@ -36,11 +36,11 @@ export default function RootLayout({
       <body className={`${notoSansKR.variable} ${roboto.variable} antialiased`}>
         <MswProvider>
           <QueryProvider>
-            <SideBarWrapper>
-              {children}
-              <Modal />
-              <CustomToast />
-            </SideBarWrapper>
+            {/* <SideBarWrapper> */}
+            {children}
+            <Modal />
+            <CustomToast />
+            {/* </SideBarWrapper> */}
           </QueryProvider>
         </MswProvider>
       </body>
