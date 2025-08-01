@@ -7,15 +7,15 @@ import NoteOpenIcon from '@/assets/note-open.svg';
 import parse from 'html-react-parser';
 import { AnimatePresence, motion } from 'framer-motion';
 
-interface NoteCardProps {
+interface NoteItemProps {
   note: Note;
 }
 
-export function NoteCard({ note }: NoteCardProps) {
+export function NoteItem({ note }: NoteItemProps) {
   const [isExpanded, setIsExpanded] = useState(false);
   const router = useRouter();
 
-  const handleCardClick = () => {
+  const handleNoteItemClick = () => {
     setIsExpanded(!isExpanded);
   };
 
@@ -27,7 +27,7 @@ export function NoteCard({ note }: NoteCardProps) {
   return (
     <div
       className="bg-surface-2 cursor-pointer rounded-lg px-16 py-12"
-      onClick={handleCardClick}
+      onClick={handleNoteItemClick}
     >
       <div className="flex flex-col">
         <div className="flex items-center justify-between">

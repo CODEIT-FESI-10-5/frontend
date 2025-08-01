@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { NoteCard } from '@/entities/note/ui/NoteCard';
+import { NoteItem } from '@/entities/note/ui/NoteItem';
 import { useNotesByStudyGoalId } from '@/features/get-note/api/getNoteQueries';
 import NoteListPageIcon from '@/assets/note-list-page-icon.svg';
 
@@ -76,7 +76,7 @@ export function NoteListPage() {
             ) : (
               <div className="space-y-12">
                 {notes.map((note) => (
-                  <NoteCard key={note.id} note={note} />
+                  <NoteItem key={note.id} note={note} />
                 ))}
               </div>
             )}

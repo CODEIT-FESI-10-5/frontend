@@ -1,1 +1,0 @@
-export { NoteCard } from '../../entities/note/ui/NoteCard';
