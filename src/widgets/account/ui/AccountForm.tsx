@@ -1,10 +1,8 @@
 'use client';
 
-import {
-  UpdateName,
-  UpdateProfile,
-  UpdatePassword,
-} from '@/features/update-account/ui';
+import UpdateName from '@/features/update-account/ui/UpdateName';
+import UpdatePassword from '@/features/update-account/ui/UpdatePassword';
+import UpdateProfile from '@/features/update-account/ui/UpdateProfile';
 
 export default function AccountForm() {
   return (
