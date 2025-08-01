@@ -8,12 +8,8 @@ import CloseIcon from '@/assets/icon-close.svg';
 import { useDrawerStore } from '@/shared/model';
 
 export default function SideBarInfo() {
-  const { close, isOpen } = useDrawerStore();
+  const { close } = useDrawerStore();
 
-  const handleClick = () => {
-    close();
-    console.log(isOpen);
-  };
   const pathname = usePathname() as string;
   const isNotePage = pathname.startsWith('/note');
 
@@ -21,7 +17,7 @@ export default function SideBarInfo() {
     <div>
       <div className="mb-28 flex items-center justify-between">
         <Image src="/images/logo.png" alt="logo" width={115} height={28} />
-        <CloseIcon className="h-26 w-26 xl:hidden" onClick={handleClick} />
+        <CloseIcon className="h-26 w-26 xl:hidden" onClick={close} />
       </div>
       {isNotePage ? <NoteInfo /> : <ProfileInfo />}
     </div>
