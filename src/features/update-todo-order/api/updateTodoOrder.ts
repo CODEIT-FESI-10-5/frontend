@@ -9,7 +9,7 @@ export const updateTodoOrder = async ({
 }) => {
   const endpoint = '/api/todos/priority';
   const parsedResponse = await clientFetch.patch(endpoint, {
-    todoId,
+    todoId: parseInt(todoId),
     priorityOrder: newOrder,
   });
 

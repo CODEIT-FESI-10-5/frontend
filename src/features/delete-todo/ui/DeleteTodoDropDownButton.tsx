@@ -38,7 +38,7 @@ export default function DeleteTodoDropDownButton({
       onClick={handleClick}
       className="cursor-pointer transition hover:scale-120"
     >
-      <DotsIcon width={32} height={32} />
+      <DotsIcon className="h-26 w-26 md:h-32 md:w-32" />
     </button>
   );
 }

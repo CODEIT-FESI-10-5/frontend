@@ -1,3 +1,5 @@
-export default function Home() {
-  return <></>;
+import GuidePage from '@/pages/guide/guidePage';
+
+export default function Guide() {
+  return <GuidePage />;
 }

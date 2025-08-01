@@ -1,4 +1,4 @@
-import { Todo } from '@/entities/todo/model/types';
+import { Todo } from '../../model';
 
 export default function divideTodoGroup(orderedTodolist: Array<Todo>) {
   const newShared: Array<Todo> = [];

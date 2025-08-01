@@ -60,7 +60,7 @@ export default function EditGoalTitle(props: {
   }
   if (!userRole) {
     return (
-      <span className="headline-large block w-full bg-transparent text-white">
+      <span className="m-headline-medium md:headline-large block w-full bg-transparent text-white">
         {title || '스터디 목표 없음'}
       </span>
     );
@@ -68,7 +68,7 @@ export default function EditGoalTitle(props: {
   return (
     <input
       type="text"
-      className="headline-large placeholeder:text-text-tertiary w-full bg-transparent text-white focus:outline-none"
+      className="m-headline-medium md:headline-large placeholeder:text-text-tertiary w-full bg-transparent text-white focus:outline-none"
       value={title}
       onChange={handleTitleChange}
       placeholder="스터디 목표를 입력..."

@@ -76,7 +76,7 @@ export default function UpdateStudyImage({ studyId }: UpdateStudyImageProps) {
         ref={settingIconRef}
       >
         <Link href="/note">
-          <button className="body-small text-text-primary flex items-center justify-center rounded-full border border-[#a9abb9] px-10 py-6">
+          <button className="m-label-small md:body-small text-text-primary flex items-center justify-center rounded-full border border-[#a9abb9] px-8 py-4 md:px-10 md:py-6">
             노트 모아보기
           </button>
         </Link>
