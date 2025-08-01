@@ -1,1 +1,1 @@
-export { NoteCard } from './ui/NoteCard';
+export { NoteCard } from '../../entities/note/ui/NoteCard';

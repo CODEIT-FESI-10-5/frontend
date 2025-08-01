@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { NoteCard } from '@/features/get-note/ui/NoteCard';
+import { NoteCard } from '@/entities/note/ui/NoteCard';
 import { useNotesByStudyGoalId } from '@/features/get-note/api/getNoteQueries';
 import NoteListPageIcon from '@/assets/note-list-page-icon.svg';
 
