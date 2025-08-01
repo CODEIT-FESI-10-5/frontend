@@ -1,3 +1,5 @@
+'use client';
+
 import { useMutation } from '@tanstack/react-query';
 import { LoginSchema } from '@/features/auth-login';
 import { requestLogin } from '@/entities/auth/api';
