@@ -8,11 +8,18 @@ import { useRouter } from 'next/navigation';
 import { useCreateStudy } from '@/features/create-study/model';
 import JoinStudyModal from '@/features/join-study/ui/JoinStudyModal';
 import { useModal } from '@/shared/lib/utils/useModal';
+import { cn } from '@/shared/lib/utils/cn';
 
 const images = [
-  '/images/home-1.png',
-  '/images/home-2.png',
-  '/images/home-3.png',
+  '/images/guide/guide_1.png',
+  '/images/guide/guide_2.png',
+  '/images/guide/guide_3.png',
+];
+
+const mobileImages = [
+  '/images/guide/m_guide_1.png',
+  '/images/guide/m_guide_2.png',
+  '/images/guide/m_guide_3.png',
 ];
 
 const content = [
@@ -31,6 +38,21 @@ const content = [
     description: '투두별로 노트를 작성할 수 있습니다. 언제든 다시 복습하세요!',
   },
 ];
+
+// 모바일에서만 ,와 . 기준으로 줄바꿈하는 함수
+function getMobileDescriptionLines(text: string): string[] {
+  return text
+    .split(/([,.])/)
+    .reduce<string[]>((acc, cur) => {
+      if (cur === ',' || cur === '.') {
+        if (acc.length > 0) acc[acc.length - 1] += cur;
+      } else {
+        acc.push(cur);
+      }
+      return acc;
+    }, [])
+    .map((line) => line.trim());
+}
 
 export default function Guide() {
   const [current, setCurrent] = useState(0);
@@ -117,23 +139,48 @@ export default function Guide() {
   };
 
   return (
-    <div className="flex h-[822px] w-[1046px] flex-col items-center justify-between rounded-lg bg-[#3e4044] px-25 py-25">
+    <div
+      className={cn(
+        'flex h-full w-full flex-col items-center justify-between overflow-hidden bg-[#3e4044]',
+        'p-20',
+        'sm: sm:m-30 sm:max-h-[822px] sm:max-w-[1046px] sm:rounded-lg sm:p-25',
+      )}
+    >
       {/* 로고 */}
-      <div className="flex w-full justify-start">
+      <div
+        className={cn(
+          `flex w-full`,
+          'mt-60 justify-center',
+          'sm:mt-0 sm:justify-start',
+        )}
+      >
         <Image
           src="/images/logo.png"
           alt="Modudo"
           width={100}
           height={40}
           style={{ height: 'auto', width: 'auto' }}
+          className={cn()} // 향후 반응형 필요시 cn 사용
         />
       </div>
 
-      <div>
+      <div className="w-full sm:w-[600px]">
         {/* 메인 텍스트 + 이미지 슬라이드 */}
-        <div className="flex flex-col items-center">
+        <div
+          className={cn(
+            'flex w-full flex-col items-center',
+            'gap-20',
+            'sm:gap-0',
+          )}
+        >
           {/* 텍스트 */}
-          <div className="relative flex min-h-[90px] w-[600px] items-center justify-center overflow-hidden text-center">
+          <div
+            className={cn(
+              'relative flex min-h-[90px] w-full items-center justify-center overflow-hidden text-center',
+              '',
+              '',
+            )}
+          >
             <AnimatePresence
               mode="wait"
               initial={false}
@@ -154,18 +201,42 @@ export default function Guide() {
                 }}
                 className="absolute inset-0 flex h-full w-full flex-col items-center justify-center gap-12"
               >
-                <h1 className="text-[28px] leading-tight font-bold text-white">
+                <h1
+                  className={cn(
+                    'leading-tight font-bold text-white',
+                    'm-headline-large',
+                    'sm:text-[28px]',
+                  )}
+                >
                   {content[current].title}
                 </h1>
-                <p className="text-text-primary text-base font-normal">
-                  {content[current].description}
+                <p
+                  className={cn(
+                    'text-text-primary font-normal',
+                    'm-body-small text-balance',
+                    'sm:text-base',
+                  )}
+                >
+                  {/* 모바일: 줄바꿈, 데스크탑: 그대로 */}
+                  <span className={cn('block sm:hidden')}>
+                    {getMobileDescriptionLines(
+                      content[current].description,
+                    ).map((line, idx) => (
+                      <span key={idx} style={{ display: 'block' }}>
+                        {line}
+                      </span>
+                    ))}
+                  </span>
+                  <span className={cn('hidden sm:inline')}>
+                    {content[current].description}
+                  </span>
                 </p>
               </motion.div>
             </AnimatePresence>
           </div>
           {/* 이미지 슬라이드 */}
-          <div className="relative">
-            <div className="relative h-[400px] w-[600px]">
+          <div className="relative w-full">
+            <div className={cn('h-[355px] sm:h-[400px]')}>
               <motion.div
                 className="h-full w-full cursor-grab overflow-hidden rounded-xl active:cursor-grabbing"
                 drag="x"
@@ -190,12 +261,29 @@ export default function Guide() {
                     }}
                     className="absolute inset-0 flex items-center justify-center"
                   >
+                    {/* 데스크탑용 이미지 */}
                     <Image
                       src={images[current]}
-                      alt={`홈 예시 ${current + 1}`}
+                      alt={`guide_${current + 1}`}
                       fill
                       sizes="(max-width: 600px) 100vw, 600px"
-                      className="pointer-events-none object-contain select-none"
+                      className={cn(
+                        'pointer-events-none object-contain select-none',
+                        'hidden sm:block lg:block',
+                      )}
+                      priority
+                      draggable={false}
+                    />
+                    {/* 모바일용 이미지 */}
+                    <Image
+                      src={mobileImages[current]}
+                      alt={`m_guide_${current + 1}`}
+                      fill
+                      sizes="(max-width: 600px) 100vw, 600px"
+                      className={cn(
+                        'pointer-events-none object-contain select-none',
+                        'block sm:hidden',
+                      )}
                       priority
                       draggable={false}
                     />
@@ -204,13 +292,16 @@ export default function Guide() {
               </motion.div>
             </div>
             {/* 도트 인디케이터 */}
-            <div className="absolute bottom-20 left-1/2 flex -translate-x-1/2 justify-center gap-10">
+            <div className="absolute left-1/2 flex -translate-x-1/2 justify-center gap-10 sm:bottom-20">
               {images.map((_, idx) => (
                 <motion.button
                   key={idx}
-                  className={`h-10 w-10 rounded-full transition-all duration-300 ${
-                    current === idx ? 'bg-[#D9D9D9]' : 'bg-[#555555] opacity-40'
-                  }`}
+                  className={cn(
+                    'h-10 w-10 rounded-full transition-all duration-300',
+                    current === idx
+                      ? 'bg-[#D9D9D9]'
+                      : 'bg-[#555555] opacity-40',
+                  )}
                   onClick={() => handleDotClick(idx)}
                   whileHover={{ scale: 1.2 }}
                   whileTap={{ scale: 0.9 }}
@@ -223,9 +314,15 @@ export default function Guide() {
       </div>
 
       {/* 버튼 영역 */}
-      <div className="mb-50 flex w-full items-center justify-center gap-16">
+      <div
+        className={cn(
+          'flex w-full items-center justify-center gap-16',
+          'mt-50 flex-col',
+          'sm:mt-0 sm:mb-50 sm:flex-row',
+        )}
+      >
         <motion.button
-          className="title-small h-[96px] max-w-[331px] flex-1 cursor-pointer rounded-lg bg-[#6366f1] px-6 py-5 text-white transition-colors duration-200 hover:bg-[#5856eb]"
+          className="title-small bg-primary h-[96px] w-full flex-1 cursor-pointer rounded-lg py-12 text-white transition-colors duration-200 hover:bg-[#6c79e8] sm:max-w-[331px]"
           whileTap={{ scale: 0.98 }}
           onClick={handleStudyCreate}
         >
@@ -233,7 +330,7 @@ export default function Guide() {
         </motion.button>
 
         <motion.button
-          className="title-small border-primary h-[96px] max-w-[331px] flex-1 cursor-pointer rounded-lg border px-6 py-5 text-white transition-colors duration-200 hover:bg-[#3a3a4a]"
+          className="title-small border-primary h-[96px] w-full flex-1 cursor-pointer rounded-lg border py-12 text-white transition-colors duration-200 hover:bg-[#3a3a4a] sm:max-w-[331px]"
           whileTap={{ scale: 0.98 }}
           onClick={handleJoinStudy}
         >
