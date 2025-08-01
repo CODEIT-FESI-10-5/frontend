@@ -2,6 +2,7 @@
 
 import { usePathname } from 'next/navigation';
 import SideBar from './SideBar';
+import AppBar from '../../../shared/ui/AppBar';
 
 export default function SideBarWrapper({
   children,
@@ -16,13 +17,13 @@ export default function SideBarWrapper({
 
   if (isAuthPage)
     return (
-      <div className="flex h-screen w-screen items-center justify-center">
+      <div className="box-border flex h-screen w-screen items-center justify-center">
         {children}
       </div>
     );
 
   return (
-    <main className="ml-348 h-full rounded-md p-36">
+    <main className="flex h-full w-screen xl:ml-348 xl:p-36">
       <SideBar />
       {children}
     </main>
