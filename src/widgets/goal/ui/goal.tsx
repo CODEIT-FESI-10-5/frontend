@@ -112,12 +112,12 @@ export default function Goal({ goalId }: { goalId: string }) {
   return (
     <>
       <div className="flex flex-col gap-16 md:flex-row md:gap-27">
-        <div className="bg-surface-2 border-border-subtle h-[523px] w-full max-w-[537px] rounded-lg border px-18 py-26 md:p-34">
+        <div className="bg-surface-2 border-border-subtle w-full max-w-[537px] rounded-lg border px-18 py-26 md:p-34">
           <div className="mb-28 flex flex-col gap-8">
             {/* 스터디 목표 제목 수정 가능하게 input으로 구현 */}
             <EditGoalTitle goalId={goalId} title={title} setTitle={setTitle} />
             {/* 왼쪽 텍스트 + 진행도 메시지 */}
-            <div className="label-small text-text-primary flex items-center gap-4">
+            <div className="m-label-small md:label-small text-text-primary flex items-center gap-4">
               <span>{goal.completedCt} 완료</span>
               <span className="text-text-tertiary">|</span>
               <span>{getProgressMessage(goal.progress)}</span>
@@ -125,7 +125,7 @@ export default function Goal({ goalId }: { goalId: string }) {
           </div>
           {/* Progress 바 */}
           {/* Progress 바와 텍스트를 포함하는 컨테이너 */}
-          <div className="mb-48 h-23 overflow-hidden rounded-full bg-[#5a5a5a] md:h-28">
+          <div className="mb-32 h-23 overflow-hidden rounded-full bg-[#5a5a5a] md:mb-48 md:h-28">
             <motion.div
               className="to-highlight relative h-full rounded-full bg-gradient-to-r from-[#ff7333]"
               initial={{ width: 0 }}
@@ -143,7 +143,7 @@ export default function Goal({ goalId }: { goalId: string }) {
             </motion.div>
           </div>
           {/* Todo List 리스트 항목 추가 */}
-          <div className="flex flex-col gap-32">
+          <div className="flex flex-col gap-20 md:gap-32">
             {/*최근 완료된 투두 */}
             <div className="flex flex-col gap-12">
               <span className="body-medium font-medium text-white">
@@ -173,7 +173,7 @@ export default function Goal({ goalId }: { goalId: string }) {
             </div>
           </div>
           <Link href={`/todolist-detail/${goalId}`}>
-            <span className="text-text-secondary body-medium mt-28 flex items-center justify-center">
+            <span className="text-text-secondary m-body-small md:body-medium mt-20 flex items-center justify-center md:mt-28">
               전체 보기
             </span>
           </Link>
