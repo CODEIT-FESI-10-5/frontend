@@ -76,8 +76,8 @@ export default function Goal({ goalId }: { goalId: string }) {
   if (!goal?.recentCompletedTodo?.content && !goal?.inProgressTodo?.content) {
     if (!title) {
       return (
-        <div className="flex gap-27">
-          <div className="bg-surface-2 border-border-subtle h-[523px] w-full max-w-[537px] rounded-md border p-34">
+        <div className="flex flex-col gap-16 md:flex-row md:gap-27">
+          <div className="bg-surface-2 border-border-subtle h-[203px] w-full max-w-[537px] rounded-lg border px-18 py-26 md:h-[523px] md:p-34">
             <EditGoalTitle goalId={goalId} title={title} setTitle={setTitle} />
           </div>
           {/* 팀원 진행도 */}
@@ -87,15 +87,15 @@ export default function Goal({ goalId }: { goalId: string }) {
       );
     }
     return (
-      <div className="flex gap-27">
-        <div className="bg-surface-2 border-border-subtle h-[523px] w-full max-w-[537px] rounded-md border p-34">
+      <div className="flex flex-col gap-16 md:flex-row md:gap-27">
+        <div className="bg-surface-2 border-border-subtle h-[203px] w-full max-w-[537px] rounded-lg border px-18 py-26 md:h-[523px] md:p-34">
           <EditGoalTitle goalId={goalId} title={title} setTitle={setTitle} />
           <Link
             href={`/todolist-detail/${goalId}`}
-            className="mt-28 flex flex-col items-center justify-center gap-3 rounded-xl border border-dashed border-[#454545] bg-[#2c2c2c] p-8 py-36 text-base font-normal text-[#f5f5f5]"
+            className="mt-20 flex flex-col items-center justify-center gap-3 rounded-xl border border-dashed border-[#454545] bg-[#2c2c2c] px-18 py-24 text-base font-normal text-[#f5f5f5] md:mt-28"
           >
             <NewTodoIcon width={32} height={32} />
-            <span className="text-text-primary body-small">
+            <span className="text-text-primary m-body-large md:body-small">
               세부 투두를 추가해 목표를 구체화해보세요.
             </span>
           </Link>
@@ -111,8 +111,8 @@ export default function Goal({ goalId }: { goalId: string }) {
   //Todo 리스트 있을때
   return (
     <>
-      <div className="flex gap-27">
-        <div className="bg-surface-2 border-border-subtle h-[523px] w-full max-w-[537px] rounded-md border p-34">
+      <div className="flex flex-col gap-16 md:flex-row md:gap-27">
+        <div className="bg-surface-2 border-border-subtle h-[523px] w-full max-w-[537px] rounded-lg border px-18 py-26 md:p-34">
           <div className="mb-28 flex flex-col gap-8">
             {/* 스터디 목표 제목 수정 가능하게 input으로 구현 */}
             <EditGoalTitle goalId={goalId} title={title} setTitle={setTitle} />
@@ -200,10 +200,12 @@ export function TeamProgressList({
 
   if (teamProgress.length === 0) {
     return (
-      <div className="bg-surface-3 border-border-subtle flex h-[204px] w-full max-w-[423px] flex-col gap-18 rounded-md border px-30 py-34">
-        <span className="headline-medium text-text-secondary">팀원 달성률</span>
+      <div className="bg-surface-3 border-border-subtle flex h-[204px] w-full max-w-[423px] flex-col gap-18 rounded-lg border px-18 py-26 md:px-30 md:py-34">
+        <span className="m-headline-medium md:headline-medium text-text-secondary">
+          팀원 달성률
+        </span>
         <div className="flex flex-col items-center justify-center gap-24">
-          <span className="label-small text-text-secondary text-center">
+          <span className="m-label-small md:label-small text-text-secondary text-center">
             같이 하면 더 힘이나요.
             <br />
             팀원을 초대해 함께 목표를 이뤄볼까요?
@@ -212,7 +214,7 @@ export function TeamProgressList({
             <div className="bg-surface-4 text-primary title-medium border-border-emphasis rounded border">
               <span className="px-20 py-8">{inviteCode}</span>
               <button
-                className="bg-primary body-medium cursor-pointer rounded-md px-12 py-8 text-nowrap text-white"
+                className="bg-primary m-body-small md:body-medium cursor-pointer rounded-sm px-16 py-10 text-nowrap text-white"
                 onClick={() => {
                   navigator.clipboard.writeText(String(inviteCode));
                   toast.success('초대 코드가 복사되었습니다!');
@@ -239,7 +241,7 @@ export function TeamProgressList({
       <div className="flex h-full flex-col justify-between">
         <div className="flex items-center justify-between">
           <span className="headline-medium text-white">팀원 달성률</span>
-          <span className="label-small text-text-tertiary">5분전 업데이트</span>
+          {/* <span className="label-small text-text-tertiary">5분전 업데이트</span> */}
         </div>
         <ul className="flex h-full w-full items-end justify-between">
           {Array.from({ length: maxMembers }).map((_, idx) => {
