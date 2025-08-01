@@ -26,7 +26,7 @@ export default function Todo({
         `${inProgress ? 'bg-secondary' : 'bg-surface-4'}`,
       )}
     >
-      <div className="flex items-center justify-center gap-14">
+      <div className="flex min-w-0 items-center justify-center gap-14">
         <UpdateTodoCompletionCheckbox
           todoId={todo.id}
           completed={todo.completed}

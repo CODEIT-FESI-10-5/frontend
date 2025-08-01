@@ -111,8 +111,8 @@ export default function Goal({ goalId }: { goalId: string }) {
   //Todo 리스트 있을때
   return (
     <>
-      <div className="flex flex-col gap-16 md:flex-row md:gap-27">
-        <div className="bg-surface-2 border-border-subtle w-full max-w-[537px] rounded-lg border px-18 py-26 md:p-34">
+      <div className="flex min-w-0 flex-col gap-16 md:flex-row md:gap-27">
+        <div className="bg-surface-2 border-border-subtle w-full max-w-[537px] min-w-0 rounded-lg border px-18 py-26 md:p-34">
           <div className="mb-28 flex flex-col gap-8">
             {/* 스터디 목표 제목 수정 가능하게 input으로 구현 */}
             <EditGoalTitle goalId={goalId} title={title} setTitle={setTitle} />
@@ -143,9 +143,9 @@ export default function Goal({ goalId }: { goalId: string }) {
             </motion.div>
           </div>
           {/* Todo List 리스트 항목 추가 */}
-          <div className="flex flex-col gap-20 md:gap-32">
+          <div className="flex min-w-0 flex-col gap-20 md:gap-32">
             {/*최근 완료된 투두 */}
-            <div className="flex flex-col gap-12">
+            <div className="flex min-w-0 flex-col gap-12">
               <span className="body-medium font-medium text-white">
                 최근 완료된 투두
               </span>
@@ -159,7 +159,7 @@ export default function Goal({ goalId }: { goalId: string }) {
               )}
             </div>
             {/*진행중인 투두 */}
-            <div className="flex flex-col gap-12">
+            <div className="flex min-w-0 flex-col gap-12">
               <span className="body-medium font-medium text-white">
                 진행중인 투두
               </span>
