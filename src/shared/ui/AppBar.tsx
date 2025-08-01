@@ -1,6 +1,6 @@
 'use client';
 import { usePathname } from 'next/navigation';
-import { useDrawerStore } from '@/widgets/sidebar/ui/model';
+import { useDrawerStore } from '@/shared/model';
 import BackIcon from '@/assets/icon-back2.svg';
 import CloseIcon from '@/assets/icon-close.svg';
 import MenuIcon from '@/assets/icon-menu.svg';

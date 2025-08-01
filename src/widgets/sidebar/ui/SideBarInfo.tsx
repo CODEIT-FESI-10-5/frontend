@@ -5,7 +5,7 @@ import { Profile } from '@/features/get-profile/ui';
 import { JoinStudyButton } from '@/features/join-study/ui';
 import Image from 'next/image';
 import CloseIcon from '@/assets/icon-close.svg';
-import { useDrawerStore } from './model';
+import { useDrawerStore } from '@/shared/model';
 
 export default function SideBarInfo() {
   const { close, isOpen } = useDrawerStore();
