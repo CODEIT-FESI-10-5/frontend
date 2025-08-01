@@ -9,12 +9,12 @@ export default function TodoInfo({ todo }: { todo: Todo }) {
     return (
       <div className="flex flex-col gap-4">
         {/*투두 내용*/}
-        <div className="body-medium flex items-center justify-start gap-6 line-through">
+        <div className="m-body-large md:body-medium flex items-center justify-start gap-6 line-through">
           {todo.shared && <SharedText />}
           <div aria-label="todo-content">{todo.content}</div>
         </div>
         {/*완료 일자*/}
-        <div className="text-text-primary label-medium">
+        <div className="text-text-primary m-label-small md:label-medium">
           완료일시:
           {todo.completedAt
             ? dayjs(todo.completedAt).format(' YYYY.MM.DD H:mm')
@@ -28,7 +28,7 @@ export default function TodoInfo({ todo }: { todo: Todo }) {
   return (
     <div className="flex flex-col">
       {/*투두 내용*/}
-      <div className="body-medium flex items-center justify-center gap-6">
+      <div className="m-body-large md:body-medium flex items-center justify-center gap-6">
         {todo.shared && <SharedText />}
         <div aria-label="todo-content">{todo.content}</div>
       </div>

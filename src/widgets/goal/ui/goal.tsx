@@ -125,7 +125,7 @@ export default function Goal({ goalId }: { goalId: string }) {
           </div>
           {/* Progress 바 */}
           {/* Progress 바와 텍스트를 포함하는 컨테이너 */}
-          <div className="mb-48 h-28 overflow-hidden rounded-full bg-[#5a5a5a]">
+          <div className="mb-48 h-23 overflow-hidden rounded-full bg-[#5a5a5a] md:h-28">
             <motion.div
               className="to-highlight relative h-full rounded-full bg-gradient-to-r from-[#ff7333]"
               initial={{ width: 0 }}
@@ -137,7 +137,7 @@ export default function Goal({ goalId }: { goalId: string }) {
               }}
               style={{ minWidth: '10%' }}
             >
-              <div className="body-small pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 font-bold text-white">
+              <div className="m-label-medium md:body-small pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 font-bold text-white">
                 {Math.round(goal.progress)}%
               </div>
             </motion.div>
@@ -164,7 +164,7 @@ export default function Goal({ goalId }: { goalId: string }) {
                 진행중인 투두
               </span>
               {goal?.inProgressTodo?.content ? (
-                <Todo todo={goal.inProgressTodo} />
+                <Todo todo={goal.inProgressTodo} inProgress={true} />
               ) : (
                 <span className="text-text-secondary body-medium">
                   진행중인 투두가 없습니다.
