@@ -68,7 +68,7 @@ export default function EditGoalTitle(props: {
   return (
     <input
       type="text"
-      className="headline-large placeholeder:text-text-tertiary w-full bg-transparent focus:outline-none"
+      className="headline-large placeholeder:text-text-tertiary w-full bg-transparent text-white focus:outline-none"
       value={title}
       onChange={handleTitleChange}
       placeholder="스터디 목표를 입력..."

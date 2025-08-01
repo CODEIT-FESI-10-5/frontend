@@ -8,11 +8,13 @@ import { useQueryClient } from '@tanstack/react-query';
 import { useCreateGoal } from '@/features/create-goal/model';
 import { useGoalStore } from '../model';
 import { useStudyStore } from '@/features/get-study-list/model';
+import { useStudyRoleStore } from '@/entities/study/model/useStudyRoleStore';
 
 export default function StudyGoalList() {
   const queryClient = useQueryClient();
   const router = useRouter();
   const pathname = usePathname();
+  const { role } = useStudyRoleStore();
   const { currentGoalId, setGoalId } = useGoalStore();
   const { currentStudyId } = useStudyStore();
   // 목표 생성
@@ -35,7 +37,7 @@ export default function StudyGoalList() {
       setGoalId(goal.id);
       router.push(`/note?studyGoalId=${goal.id}`);
     } else {
-      router.push(`/dashboard/study/${data.studyId}/goal/${goal.id}`);
+      router.push(`/dashboard/study/${currentStudyId}/goal/${goal.id}`);
     }
   };
 
@@ -43,16 +45,18 @@ export default function StudyGoalList() {
     <section className="mt-64 flex flex-col gap-14">
       <div className="flex items-center justify-between">
         <h2 className="text-text-secondary title-small">스터디 목표</h2>
-        <CreateGoalSVG
-          onClick={() =>
-            mutation.mutate({
-              title: '스터디 목표를 입력해주세요.',
-              studyId: Number(data.studyId),
-            })
-          }
-        />
+        {role === true && (
+          <CreateGoalSVG
+            onClick={() =>
+              mutation.mutate({
+                title: '스터디 목표를 입력해주세요.',
+                studyId: Number(data.studyId),
+              })
+            }
+          />
+        )}
       </div>
-      {currentStudyId != null && data.totalCount !== 0 ? (
+      {data.totalCount !== 0 ? (
         <ul className="py-4">
           {data.goals.map((goal) => {
             const goalItem: GoalListItem = {

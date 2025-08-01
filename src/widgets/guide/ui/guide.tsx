@@ -90,9 +90,7 @@ export default function Guide() {
       paginate(-1);
     }
   };
-  const mutation = useCreateStudy((data) => {
-    router.push(`/dashboard/${data.newStudyId}`);
-  });
+  const mutation = useCreateStudy();
 
   // 스터디 만들기 핸들러
   const handleStudyCreate = async () => {

@@ -1,7 +1,10 @@
 import { clientFetch } from '@/shared/api';
+import { JoinStudyResponseApi } from '../model';
 
 export const postJoinStudy = async (
   inviteCode: string,
-): Promise<{ studyId: string }> => {
-  return clientFetch.post('api/study/join', { inviteCode });
+): Promise<JoinStudyResponseApi> => {
+  return clientFetch.post<JoinStudyResponseApi>('api/study/join', {
+    inviteCode,
+  });
 };

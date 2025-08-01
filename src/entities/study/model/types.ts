@@ -71,6 +71,23 @@ export interface StudyItemApi {
 }
 
 // 스터디 생성 응답
-export interface CreateStudyResponse {
-  studyId: string;
+export interface CreateStudyResponseApi {
+  httpStatusCode: number;
+  errorCode: string;
+  data: {
+    studyId: number;
+  };
+  errorMessage: string;
+  fieldErrors: { field: string; message: string }[];
+}
+
+//스터디 참여 응답
+export interface JoinStudyResponseApi {
+  httpStatusCode: number;
+  errorCode: string;
+  data: {
+    studyId: number;
+  };
+  errorMessage: string;
+  fieldErrors: { field: string; message: string }[];
 }
