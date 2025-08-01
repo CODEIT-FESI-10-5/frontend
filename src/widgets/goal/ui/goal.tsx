@@ -237,10 +237,12 @@ export function TeamProgressList({
   const maxMembers = 4;
   const filled = sorted.slice(0, maxMembers);
   return (
-    <div className="bg-surface-2 border-border-subtle h-[380px] w-full max-w-[423px] rounded-md border p-34">
+    <div className="bg-surface-2 border-border-subtle h-[380px] w-full max-w-[423px] rounded-md border px-16 py-26 md:p-34">
       <div className="flex h-full flex-col justify-between">
         <div className="flex items-center justify-between">
-          <span className="headline-medium text-white">팀원 달성률</span>
+          <span className="m-headline-medium md:headline-medium text-white">
+            팀원 달성률
+          </span>
           {/* <span className="label-small text-text-tertiary">5분전 업데이트</span> */}
         </div>
         <ul className="flex h-full w-full items-end justify-between">
