@@ -18,11 +18,11 @@ interface AuthCheckResponse {
 
 export const config = {
   matcher: [
-    // '/dashboard/:path*',
-    // '/note/:path*',
-    // '/account',
-    // '/todolist-detail/:path*',
-    // '/',
+    '/dashboard/:path*',
+    '/note/:path*',
+    '/account',
+    '/todolist-detail/:path*',
+    '/',
   ],
 };
 
