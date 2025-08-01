@@ -18,7 +18,7 @@ export const mockDashboard: DashboardResponse = {
       progress: 50,
       recentCompletedTodo: {
         id: '1',
-        content: 'JPA 실습 과제 제출',
+        content: 'JPA 실습 과제 제출123123123123123',
         createdAt: '2024-02-01T09:00:00',
         completed: true,
         completedAt: '2024-02-01T18:00:00',
@@ -28,7 +28,7 @@ export const mockDashboard: DashboardResponse = {
       },
       inProgressTodo: {
         id: '2',
-        content: '스프링 시큐리티 문서 읽기',
+        content: '스프링 시큐리티 문서 읽기13123123123213',
         createdAt: '2024-02-02T10:00:00',
         completed: false,
         completedAt: undefined,
