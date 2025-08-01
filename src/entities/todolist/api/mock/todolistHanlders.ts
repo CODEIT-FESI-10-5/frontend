@@ -3,7 +3,7 @@ import { myTodolists } from './mocks';
 
 export const todolistHandlers = [
   // GET: 투두 리스트 내 투두 전체 가져오기
-  http.get('/api/todos', ({ request }) => {
+  http.get(`${process.env.NEXT_PUBLIC_API_URL}/api/todos`, ({ request }) => {
     const goalId = new URL(request.url).searchParams.get('goalId') as string;
     const mockData = myTodolists;
     if (!mockData) {
