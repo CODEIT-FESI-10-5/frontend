@@ -7,6 +7,7 @@ import UpdateStudyImage from '@/features/update-study-image/ui/update-study-imag
 import { useInviteCodeStore } from '@/entities/dashboard';
 import { useEffect } from 'react';
 import { useStudyRoleStore } from '@/entities/study/model/useStudyRoleStore';
+import { cn } from '@/shared/utils/cn';
 
 export default function Study({ studyId }: { studyId: string }) {
   const { data: studyGroup, isLoading, error } = useStudyGroup(studyId);
@@ -66,7 +67,11 @@ export default function Study({ studyId }: { studyId: string }) {
         backgroundRepeat: 'no-repeat',
         backgroundPosition: 'center',
       }}
-      className="relative px-54 pt-44 pb-32 text-white"
+      className={cn(
+        'relative text-white',
+        'px-18 pt-74 pb-34',
+        'sm:px-54 sm:pt-44 sm:pb-32',
+      )}
     >
       <UpdateStudyInfo
         studyId={studyGroup.id}

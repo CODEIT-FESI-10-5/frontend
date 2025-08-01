@@ -54,23 +54,23 @@ export default function UpdateStudyInfo(props: {
               type="text"
               value={title}
               onChange={handleTitleChange}
-              className="headline-large w-full border-none bg-transparent placeholder-gray-300 outline-none"
+              className="m-headline-large md:headline-large w-full border-none bg-transparent placeholder-gray-300 outline-none"
               placeholder="스터디 제목을 입력하세요..."
             />
             <textarea
               value={description}
               onChange={handleDescriptionChange}
-              className="label-small text-text-primary w-full resize-none border-none placeholder-gray-300 outline-none"
+              className="m-body-small md:label-small text-text-primary w-full resize-none border-none placeholder-gray-300 outline-none"
               placeholder="스터디 목표나 응원 메세지를 적어주세요..."
               rows={1}
             />
           </>
         ) : (
           <>
-            <span className="headline-large block w-full bg-transparent text-white">
+            <span className="m-headline-large md:headline-large block w-full bg-transparent text-white">
               {title || '스터디 제목 없음'}
             </span>
-            <div className="label-small text-text-primary block w-full whitespace-pre-line">
+            <div className="m-body-small md:label-small text-text-primary block w-full whitespace-pre-line">
               {description || '스터디 목표나 응원 메세지가 없습니다.'}
             </div>
           </>
