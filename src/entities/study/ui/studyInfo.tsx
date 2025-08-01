@@ -58,7 +58,7 @@ export default function StudyInfo({
               {members.slice(0, 4).map((member, index) => (
                 <div
                   key={member.id}
-                  className="border-text-secondary relative h-26 w-26 overflow-hidden rounded-full border-2 sm:h-32 sm:w-32"
+                  className="border-text-secondary relative h-26 w-26 overflow-hidden rounded-full border-2 md:h-32 md:w-32"
                   style={{ zIndex: members.length + index }}
                 >
                   <Image
@@ -72,8 +72,8 @@ export default function StudyInfo({
               ))}
               {/* 추가 멤버가 있을 경우 +숫자 표시 */}
               {members.length > 4 && (
-                <div className="border-text-secondary z-30 flex h-26 w-26 items-center justify-center rounded-full border-2 bg-gray-600 sm:h-32 sm:w-32">
-                  <span className="m-label-medium sm:label-large text-white">
+                <div className="border-text-secondary z-30 flex h-26 w-26 items-center justify-center rounded-full border-2 bg-gray-600 md:h-32 md:w-32">
+                  <span className="m-label-medium md:label-large text-white">
                     +{members.length - 4}
                   </span>
                 </div>
@@ -82,7 +82,7 @@ export default function StudyInfo({
             {/* 멤버 수 텍스트 */}
             <span
               ref={memberTextRef}
-              className="text-text-primary m-label-small sm:label-small cursor-pointer underline"
+              className="text-text-primary m-label-small md:label-small cursor-pointer underline"
               onClick={handleMemberTextClick}
             >
               {members.length}명 참여중
@@ -90,15 +90,15 @@ export default function StudyInfo({
           </div>
           {/* 팀원 진행도 % */}
           <div className="text-text-primary flex items-center justify-center gap-6 px-10">
-            <span className="m-title-medium sm:headline-medium">
+            <span className="m-title-medium md:headline-medium">
               {teamProgress}%
             </span>
-            <span className="m-label-small sm:label-small">달성중</span>
+            <span className="m-label-small md:label-small">달성중</span>
           </div>
         </div>
         {/* Progress 바 */}
         {/* Progress Bar Container */}
-        <div className="h-10 w-full overflow-hidden rounded-full bg-[#e1e1e1] backdrop-blur-sm sm:h-14">
+        <div className="h-10 w-full overflow-hidden rounded-full bg-[#e1e1e1] backdrop-blur-md md:h-14">
           {/* Animated Progress Fill */}
           <motion.div
             className="from-secondary to-primary h-full rounded-full bg-gradient-to-r shadow-lg"
@@ -112,22 +112,22 @@ export default function StudyInfo({
           />
         </div>
       </div>
-      <div className={cn('', 'hidden', 'w-220 sm:block')}></div>
+      <div className={cn('', 'hidden', 'w-220 md:block')}></div>
 
       {/*초대 링크 */}
       <div
         className={cn(
           'bg-tertiary text-text-secondary hover:bg-tertiary/80 absolute flex cursor-pointer gap-6 rounded-md',
           'right-18 -bottom-18 px-12 py-8',
-          'sm:right-20 sm:-bottom-26 sm:px-18 sm:py-14',
+          'md:right-20 md:-bottom-26 md:px-18 md:py-14',
         )}
         onClick={handleCopyInvite}
         title="클릭 시 복사"
       >
-        <span className={cn('', 'm-body-large', 'sm:title-medium')}>
+        <span className={cn('', 'm-body-large', 'md:title-medium')}>
           초대 코드 {inviteLink}
         </span>
-        <CopyIcon width={24} height={24} className={cn('hidden', 'sm:block')} />
+        <CopyIcon width={24} height={24} className={cn('hidden', 'md:block')} />
       </div>
     </div>
   );
