@@ -1,10 +1,6 @@
 import { clientFetch } from '@/shared/api';
 import { NoteResponse } from '@/entities/note/model/types';
-
-export interface UpdateNoteRequest {
-  id: number;
-  content: string;
-}
+import { UpdateNoteRequest } from '@/entities/note/model/types';
 
 export const updateNote = async (
   noteData: UpdateNoteRequest,
