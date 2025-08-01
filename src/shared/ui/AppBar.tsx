@@ -14,7 +14,8 @@ export default function AppBar({ pageName }: AppBarProps) {
   const router = useRouter();
 
   const handleBack = () => {
-    router.back();
+    //router.back();
+    open();
   };
 
   const isNote = pathname === '/note';
