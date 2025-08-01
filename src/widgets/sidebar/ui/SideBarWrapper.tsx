@@ -2,7 +2,6 @@
 
 import { usePathname } from 'next/navigation';
 import SideBar from './SideBar';
-import AppBar from '../../../shared/ui/AppBar';
 
 export default function SideBarWrapper({
   children,
