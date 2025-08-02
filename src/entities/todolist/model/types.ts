@@ -7,6 +7,7 @@ export interface Todo {
   note: string; // note 여부
   noteId: string; // 노트 아이디
   shared: boolean; //  공통 todo 여부
+  priorityOrder: number;
 }
 
 export interface Todolist {

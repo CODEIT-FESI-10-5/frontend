@@ -2,13 +2,14 @@
 
 import { AnimatePresence, motion, Reorder } from 'framer-motion';
 import { useUpdateTodoOrderMutation } from '@/features/update-todo-order/model/hooks';
-import Todo from '@/widgets/todo/ui/todo';
+import TodoCard from '@/widgets/todo/ui/TodoCard';
 import {
   TodolistAction,
   useTodolistStore,
 } from '@/entities/todolist/model/store';
 import { useRef } from 'react';
 import { useGoalId } from '@/shared/model/useGoalId';
+import { Todo } from '@/entities/todolist/model';
 
 interface TodoCardDragGroupProps {
   type: 'personal' | 'shared' | 'done';
@@ -23,17 +24,21 @@ export default function TodoCardDragGroup({ type }: TodoCardDragGroupProps) {
     done: (state: TodolistAction) => state.setDone,
   };
   const setTodoGroup = useTodolistStore((state) => setFns[type](state));
-  const { getCurrOrder } = useTodolistStore();
   const draggable = !(type === 'done');
   const updateOrder = useUpdateTodoOrderMutation(goalId);
   const handleDrop = (targetId: string) => {
+    const dropIndex = todoGroup.findIndex(
+      (todo) => todo.id === targetTodo.current,
+    );
+    const targetPriorityOrder = prevSnapshot.current[dropIndex].priorityOrder;
     updateOrder.mutate({
       todoId: targetId,
-      newOrder: getCurrOrder().findIndex((todoId) => todoId === targetId) + 1,
+      newOrder: targetPriorityOrder,
     });
   };
 
   const targetTodo = useRef<string | null>(null);
+  const prevSnapshot = useRef<Todo[]>([]);
 
   return (
     <Reorder.Group
@@ -55,14 +60,16 @@ export default function TodoCardDragGroup({ type }: TodoCardDragGroupProps) {
               dragListener={draggable}
               onDragStart={() => {
                 targetTodo.current = todo.id;
+                prevSnapshot.current = [...todoGroup];
               }}
               onDragEnd={() => {
                 if (!targetTodo.current) return;
                 handleDrop(targetTodo.current);
                 targetTodo.current = null;
+                prevSnapshot.current = [];
               }}
             >
-              <Todo todo={todo} />
+              <TodoCard todo={todo} />
             </Reorder.Item>
           </motion.div>
         ))}
