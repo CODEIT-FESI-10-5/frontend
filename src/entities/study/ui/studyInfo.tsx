@@ -148,7 +148,7 @@ function ProfileModal({ members }: { members: StudyGroup['members'] }) {
                 style={{ objectFit: 'cover' }}
               />
             </div>
-            <span className="label-small">{member.nickname}</span>
+            <span className="label-small text-white">{member.nickname}</span>
           </li>
         ))}
       </ul>
