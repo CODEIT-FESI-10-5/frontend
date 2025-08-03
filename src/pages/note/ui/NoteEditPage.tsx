@@ -1,8 +1,7 @@
 'use client';
 
-import { useGetNoteById } from '@/features/get-note/api/getNoteQueries';
 import { NoteEditor } from '@/features/edit-note';
-import { useUpdateNote } from '@/features/edit-note/api/useUpdateNoteMutation';
+import { useGetNoteById, useUpdateNote } from '@/entities/note/api/noteQueries';
 import NoteListPageIcon from '@/assets/note-list-page-icon.svg';
 
 export function NoteEditPage({ noteId }: { noteId: number }) {
