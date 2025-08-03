@@ -11,7 +11,7 @@ interface NoteListProps {
   notes: Note[];
 }
 
-export const NoteList = ({ title, notes }: NoteListProps) => {
+export function NoteList({ title, notes }: NoteListProps) {
   const [expandedNoteId, setExpandedNoteId] = useState<string | number | null>(
     null,
   );
