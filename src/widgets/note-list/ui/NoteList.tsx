@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { NoteItem } from '@/entities/note/ui/NoteItem';
 import { Note } from '@/entities/note/model/types';
 import { EditNoteButton } from '@/features/edit-note';
-import NoteListPageIcon from '@/assets/note-list-page-icon.svg';
+import NoteIcon from '@/assets/note-icon.svg';
 
 interface NoteListProps {
   title: string;
@@ -23,7 +23,7 @@ export const NoteList = ({ title, notes }: NoteListProps) => {
   return (
     <section>
       <div className="mb-24 flex items-center gap-4">
-        <NoteListPageIcon />
+        <NoteIcon />
         <h1 className="headline-large text-2xl text-white">{title}</h1>
       </div>
 

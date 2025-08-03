@@ -2,7 +2,7 @@
 
 import { NoteEditor } from '@/features/edit-note';
 import { useGetNoteById, useUpdateNote } from '@/entities/note/api/noteQueries';
-import NoteListPageIcon from '@/assets/note-list-page-icon.svg';
+import NoteIcon from '@/assets/note-icon.svg';
 
 export function NoteEditPage({ noteId }: { noteId: number }) {
   const { data: noteResponse, isLoading, isError } = useGetNoteById(noteId);
@@ -49,7 +49,7 @@ export function NoteEditPage({ noteId }: { noteId: number }) {
         {note ? (
           <div>
             <div className="mb-6 flex items-center gap-4">
-              <NoteListPageIcon />
+              <NoteIcon />
               <h1 className="headline-large text-2xl text-white">
                 {note.studyGoalTitle}
               </h1>
