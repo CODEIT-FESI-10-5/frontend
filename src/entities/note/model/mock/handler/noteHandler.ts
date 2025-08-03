@@ -1,6 +1,6 @@
 import { http, HttpResponse } from 'msw';
-import { notes } from '@/entities/note/model/mock/notes.mock';
-import { Note } from '@/entities/note/model/types';
+import { notes } from '../../mock/notes.mock';
+import { Note } from '../../../model/types';
 
 export const noteHandlers = [
   // 노트 목록 조회 (쿼리 파라미터 사용하도록 수정)
