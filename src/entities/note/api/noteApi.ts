@@ -1,6 +1,5 @@
 import { clientFetch } from '@/shared/api';
-import { NoteListResponse, NoteResponse } from '@/entities/note/model/types';
-import { UpdateNoteRequest } from '@/entities/note/model/types';
+import { NoteListResponse, NoteResponse, UpdateNoteRequest } from '../model/types';
 
 // 노트 목록 조회
 export const getNoteListByStudyGoalId = async (studyGoalId: number): Promise<NoteListResponse> => {

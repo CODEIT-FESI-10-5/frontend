@@ -1,7 +1,7 @@
 'use client';
 
 import { ReactNode } from 'react';
-import { Note } from '@/entities/note/model/types';
+import { Note } from '../model/types';
 import NoteOpenIcon from '@/assets/note-open.svg';
 import parse from 'html-react-parser';
 import { AnimatePresence, motion } from 'framer-motion';

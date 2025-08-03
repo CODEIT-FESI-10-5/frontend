@@ -4,9 +4,9 @@ import {
   getNoteById,
   getNoteListByStudyGoalId,
   patchNote,
-} from '@/entities/note/api/noteApi';
-import { NoteListResponse, UpdateNoteRequest } from '@/entities/note/model/types';
-import { noteKeys } from '@/entities/note/model/queryKeys';
+} from '../api/noteApi';
+import { NoteListResponse, UpdateNoteRequest } from '../model/types';
+import { noteKeys } from '../model/queryKeys';
 
 // 노트 목록 데이터 가져오기
 export const useNotesByStudyGoalId = () => {
