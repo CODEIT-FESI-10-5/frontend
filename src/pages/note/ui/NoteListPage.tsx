@@ -1,7 +1,7 @@
 'use client';
 
 import { useSearchParams } from 'next/navigation';
-import { useNotesByStudyGoalId } from '@/features/get-note/api/getNoteQueries';
+import { useNotesByStudyGoalId } from '@/entities/note/api/noteQueries';
 import { NoteList } from '@/widgets/note-list';
 
 export function NoteListPage() {
