@@ -2,8 +2,8 @@ import { useQuery } from '@tanstack/react-query';
 import { useSearchParams } from 'next/navigation';
 import {
   getNoteById,
-  getNotesByStudyGoalId,
-} from '@/features/get-note/api/getNote';
+  getNoteListByStudyGoalId,
+} from '@/entities/note/api/noteApi';
 import { type NoteListResponse } from '@/entities/note/model/types';
 import { noteKeys } from '@/entities/note/model/queryKeys';
 
@@ -15,7 +15,7 @@ export const useNotesByStudyGoalId = () => {
 
   return useQuery<NoteListResponse>({
     queryKey: noteKeys.list(studyGoalId),
-    queryFn: () => getNotesByStudyGoalId(studyGoalId),
+    queryFn: () => getNoteListByStudyGoalId(studyGoalId),
     enabled: !isNaN(studyGoalId) && studyGoalId > 0,
   });
 };
