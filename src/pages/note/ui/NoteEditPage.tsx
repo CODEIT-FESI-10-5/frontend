@@ -1,6 +1,6 @@
 'use client';
 
-import { NoteEditor } from '@/features/edit-note';
+import { NoteEditor } from '@/features/update-note/ui/NoteEditor';
 import { useGetNoteById, useUpdateNote } from '@/entities/note/api/noteQueries';
 import NoteIcon from '@/assets/note-icon.svg';
 
