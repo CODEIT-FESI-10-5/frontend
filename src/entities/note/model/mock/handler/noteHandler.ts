@@ -7,7 +7,6 @@ export const noteHandlers = [
   http.get('/api/notes', ({ request }) => {
     const url = new URL(request.url);
     const studyGoalId = url.searchParams.get('studyGoalId');
-    // const noteContent = url.searchParams.get('noteContent'); // 필요시 주석 해제하여 사용
 
     const studyGoalIdNum = Number(studyGoalId);
 
