@@ -38,14 +38,14 @@ export function NoteEditPage({ noteId }: { noteId: number }) {
   }
 
   return (
-    <div className="bg-surface-1 border-border-subtle max-w-[1208px] rounded-lg border">
+    <div className="bg-surface-1 border-border-subtle w-full max-w-[1208px] rounded-lg border">
       <div className="border-border-subtle border px-22 py-12">
         <h1 className="text-text-tertiary headline-medium text-lg">
           노트 작성
         </h1>
       </div>
 
-      <div className="container mx-auto px-30 py-34">
+      <div className="px-30 py-34">
         {note ? (
           <div>
             <div className="mb-6 flex items-center gap-4">
