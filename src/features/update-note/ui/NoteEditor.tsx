@@ -104,7 +104,7 @@ export function NoteEditor({ initialNote, onAutoSave }: NoteEditorProps) {
       <div className="bg-surface-3 rounded-md">
         <EditorContent
           editor={editor}
-          className="h-[300px] overflow-y-auto px-36 py-34 text-white focus:outline-none"
+          className="h-[300px] overflow-y-auto px-16 py-34 text-white focus:outline-none md:px-36"
         />
         <NoteEditorMenu editor={editor} />
       </div>
