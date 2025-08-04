@@ -30,6 +30,7 @@ export default function SideBarWrapper({
 
   // 동적 경로 패턴들
   const validDynamicPatterns = [
+    /^\/dashboard\/study\/[^/]+$/, // /dashboard/study/[studyId]
     /^\/dashboard\/study\/[^/]+\/goal\/[^/]+$/, // /dashboard/study/[studyId]/goal/[goalId]
     /^\/note\/edit\/[^/]+$/, // /note/edit/[noteId]
     /^\/todolist-detail\/[^/]+$/, // /todolist-detail/[goalId]
