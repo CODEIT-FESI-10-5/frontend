@@ -104,7 +104,7 @@ export default function Goal({ goalId }: { goalId: string }) {
   return (
     <>
       <div className="flex min-w-0 flex-col gap-16 md:flex-row md:gap-27">
-        <div className="bg-surface-2 border-border-subtle w-full max-w-[537px] min-w-0 rounded-lg border px-18 py-26 md:p-34">
+        <div className="bg-surface-2 border-border-subtle w-full min-w-0 rounded-lg border px-18 py-26 md:max-w-[537px] md:p-34">
           <div className="mb-28 flex flex-col gap-8">
             {/* 스터디 목표 제목 수정 가능하게 input으로 구현 */}
             <EditGoalTitle goalId={goalId} title={title} setTitle={setTitle} />
@@ -192,7 +192,7 @@ export function TeamProgressList({
 
   if (teamProgress.length === 0) {
     return (
-      <div className="bg-surface-3 border-border-subtle flex h-[204px] w-full max-w-[423px] flex-col gap-18 rounded-lg border px-18 py-26 md:px-30 md:py-34">
+      <div className="bg-surface-3 border-border-subtle flex h-[204px] w-full flex-col gap-18 rounded-lg border px-18 py-26 md:max-w-[423px] md:px-30 md:py-34">
         <span className="m-headline-medium md:headline-medium text-text-secondary">
           팀원 달성률
         </span>
@@ -229,7 +229,7 @@ export function TeamProgressList({
   const maxMembers = 4;
   const filled = sorted.slice(0, maxMembers);
   return (
-    <div className="bg-surface-2 border-border-subtle h-[380px] w-full max-w-[423px] rounded-md border px-16 py-26 md:p-34">
+    <div className="bg-surface-2 border-border-subtle h-[380px] w-full rounded-md border px-16 py-26 md:max-w-[423px] md:p-34">
       <div className="flex h-full flex-col justify-between">
         <div className="flex items-center justify-between">
           <span className="m-headline-medium md:headline-medium text-white">
@@ -237,7 +237,7 @@ export function TeamProgressList({
           </span>
           {/* <span className="label-small text-text-tertiary">5분전 업데이트</span> */}
         </div>
-        <ul className="flex h-full w-full items-end justify-between">
+        <ul className="flex h-full w-full items-end justify-around md:justify-between">
           {Array.from({ length: maxMembers }).map((_, idx) => {
             const member = filled[idx];
             const isFirst = idx === 0;
