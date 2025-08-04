@@ -26,39 +26,31 @@ const content = [
   {
     title: '공통 투두와 나의 투두를 한눈에 관리',
     description:
+      '스터디 목표를 위해 공통 투두를 세우고,\n개인 진도도 한 곳에서 관리해요.',
+    desktopDescription:
       '스터디 목표를 위해 공통 투두를 세우고, 개인 진도도 한 곳에서 관리해요.',
   },
   {
     title: '스터디 목표를 정하고 함께 진도 나가기',
     description:
-      '같은 목표를 갖고 함께 진도를 나가요. 팀원과 달성률을 공유하며 동기부여를 받을 수 있어요.',
+      '같은 목표를 갖고 함께 진도를 나가요.\n팀원과 달성률을 공유하며 동기부여를 받을 수 있어요.',
+    desktopDescription:
+      '같은 목표를 갖고 함께 진도를 나가요.\n팀원과 달성률을 공유하며 동기부여를 받을 수 있어요.',
   },
   {
     title: '공부 내용을 나만의 노트로 저장',
-    description: '투두별로 노트를 작성할 수 있습니다. 언제든 다시 복습하세요!',
+    description: '투두별로 노트를 작성할 수 있습니다.\n언제든 다시 복습하세요!',
+    desktopDescription:
+      '투두별로 노트를 작성할 수 있습니다. 언제든 다시 복습하세요!',
   },
 ];
-
-// 모바일에서만 ,와 . 기준으로 줄바꿈하는 함수
-function getMobileDescriptionLines(text: string): string[] {
-  return text
-    .split(/([,.])/)
-    .reduce<string[]>((acc, cur) => {
-      if (cur === ',' || cur === '.') {
-        if (acc.length > 0) acc[acc.length - 1] += cur;
-      } else {
-        acc.push(cur);
-      }
-      return acc;
-    }, [])
-    .map((line) => line.trim());
-}
 
 export default function Guide() {
   const [current, setCurrent] = useState(0);
   const router = useRouter();
-  const { open } = useModal();
+  const [slideDirection, setSlideDirection] = useState(0);
 
+  // 슬라이드 애니메이션 설정
   const slideVariants = {
     enter: (direction: number) => ({
       x: direction > 0 ? 300 : -300,
@@ -74,8 +66,7 @@ export default function Guide() {
     }),
   };
 
-  const [slideDirection, setSlideDirection] = useState(0);
-
+  // 슬라이드 페이지네이션 함수
   const paginate = (newDirection: number) => {
     setSlideDirection(newDirection);
     setCurrent((prev) => {
@@ -87,12 +78,14 @@ export default function Guide() {
     });
   };
 
+  // 도트 클릭 핸들러
   const handleDotClick = (idx: number) => {
     const direction = idx > current ? 1 : -1;
     setSlideDirection(direction);
     setCurrent(idx);
   };
 
+  // 드래그 종료 핸들러
   const handleDragEnd = (
     event: MouseEvent | TouchEvent | PointerEvent,
     info: PanInfo,
@@ -112,46 +105,21 @@ export default function Guide() {
       paginate(-1);
     }
   };
-  const mutation = useCreateStudy();
-
-  // 스터디 만들기 핸들러
-  const handleStudyCreate = async () => {
-    try {
-      await clientFetch.get('/api/auth/check');
-      // 성공적으로 인증된 경우
-      console.log('스터디 만들기 가능');
-      mutation.mutate();
-    } catch {
-      // 인증되지 않은 경우 로그인 페이지로 리다이렉트
-      router.push('/auth/login');
-    }
-  };
-
-  // 초대코드로 참여하기 핸들러
-  const handleJoinStudy = async () => {
-    try {
-      await clientFetch.get('/api/auth/check');
-      open(<JoinStudyModal />);
-    } catch {
-      // 인증되지 않은 경우 로그인 페이지로 리다이렉트
-      router.push('/auth/login');
-    }
-  };
 
   return (
     <div
       className={cn(
-        'flex h-full w-full flex-col items-center justify-between overflow-hidden bg-[#3e4044]',
+        'flex h-full w-full flex-col items-center justify-center overflow-hidden bg-[#3e4044]',
         'p-20',
-        'sm: sm:m-30 sm:max-h-[822px] sm:max-w-[1046px] sm:rounded-lg sm:p-25',
+        'sm: sm:m-30 sm:max-h-[822px] sm:max-w-[1046px] sm:justify-between sm:rounded-lg sm:p-25',
       )}
     >
       {/* 로고 */}
       <div
         className={cn(
           `flex w-full`,
-          'mt-60 justify-center',
-          'sm:mt-0 sm:justify-start',
+          'mb-60 justify-center',
+          'sm:mb-0 sm:justify-start',
         )}
       >
         <Image
@@ -163,9 +131,8 @@ export default function Guide() {
           className={cn()} // 향후 반응형 필요시 cn 사용
         />
       </div>
-
+      {/* 메인 텍스트 + 이미지 슬라이드 */}
       <div className="w-full sm:w-[600px]">
-        {/* 메인 텍스트 + 이미지 슬라이드 */}
         <div
           className={cn(
             'flex w-full flex-col items-center',
@@ -212,23 +179,17 @@ export default function Guide() {
                 </h1>
                 <p
                   className={cn(
-                    'text-text-primary font-normal',
+                    'text-text-primary font-normal whitespace-pre-line',
                     'm-body-small text-balance',
                     'sm:text-base',
                   )}
                 >
-                  {/* 모바일: 줄바꿈, 데스크탑: 그대로 */}
+                  {/* 모바일: description, 데스크탑: desktopDescription */}
                   <span className={cn('block sm:hidden')}>
-                    {getMobileDescriptionLines(
-                      content[current].description,
-                    ).map((line, idx) => (
-                      <span key={idx} style={{ display: 'block' }}>
-                        {line}
-                      </span>
-                    ))}
+                    {content[current].description}
                   </span>
                   <span className={cn('hidden sm:inline')}>
-                    {content[current].description}
+                    {content[current].desktopDescription}
                   </span>
                 </p>
               </motion.div>
@@ -317,24 +278,16 @@ export default function Guide() {
       <div
         className={cn(
           'flex w-full items-center justify-center gap-16',
-          'mt-50 flex-col',
+          'mt-70 flex-col',
           'sm:mt-0 sm:mb-50 sm:flex-row',
         )}
       >
         <motion.button
-          className="title-small bg-primary h-[96px] w-full flex-1 cursor-pointer rounded-lg py-12 text-white transition-colors duration-200 hover:bg-[#6c79e8] sm:max-w-[331px]"
+          className="body-medium bg-primary w-full flex-1 cursor-pointer rounded-md py-16 text-white transition-colors duration-200 hover:bg-[#6c79e8] sm:max-w-[442px]"
           whileTap={{ scale: 0.98 }}
-          onClick={handleStudyCreate}
+          onClick={() => router.push('/auth/login')}
         >
-          스터디 만들기 (팀장으로 시작)
-        </motion.button>
-
-        <motion.button
-          className="title-small border-primary h-[96px] w-full flex-1 cursor-pointer rounded-lg border py-12 text-white transition-colors duration-200 hover:bg-[#3a3a4a] sm:max-w-[331px]"
-          whileTap={{ scale: 0.98 }}
-          onClick={handleJoinStudy}
-        >
-          초대코드로 참여하기
+          로그인하고 시작하기
         </motion.button>
       </div>
     </div>
