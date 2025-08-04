@@ -14,7 +14,14 @@ export default function SideBarWrapper({
     pathname === '/auth/sign-up' ||
     pathname === '/';
 
-  if (isAuthPage)
+  // 404 페이지인지 확인 (존재하지 않는 경로)
+  const isNotFoundPage =
+    pathname &&
+    !pathname.match(
+      /^\/($|auth\/|dashboard|note|profile|todo|todolist-detail)/,
+    );
+
+  if (isAuthPage || isNotFoundPage)
     return (
       <div className="box-border flex h-screen w-screen items-center justify-center">
         {children}
