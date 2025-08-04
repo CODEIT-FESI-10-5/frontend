@@ -1,5 +1,5 @@
 import { AccountForm } from '@/widgets/account/ui';
-import { AccountButton } from './AccountButton';
+import { Button } from '@/shared/ui';
 import { AppBar } from '@/shared/ui';
 
 export default function AccountPage() {
@@ -24,8 +24,8 @@ function AccountContents() {
   return (
     <div className="flex flex-col gap-18">
       <AccountForm />
-      <AccountButton type="logout" />
-      <AccountButton type="delete" />
+      <Button label="로그아웃" size="lg" theme="surface" type="submit" />
+      <Button label="회원탈퇴" size="lg" theme="surface" type="submit" />
     </div>
   );
 }
