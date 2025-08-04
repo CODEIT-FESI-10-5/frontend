@@ -51,7 +51,7 @@ export default function Study({ studyId }: { studyId: string }) {
     notFound();
   }
 
-  const hasImage = !studyGroup.image;
+  const hasImage = studyGroup.image;
   return (
     <div
       style={
