@@ -51,14 +51,21 @@ export default function Study({ studyId }: { studyId: string }) {
     notFound();
   }
 
+  const hasImage = !studyGroup.image;
   return (
     <div
-      style={{
-        backgroundImage: `linear-gradient(to bottom, rgba(0,0,0,0.45), rgba(0,0,0,0.45)), url(${studyGroup.image})`,
-        backgroundSize: 'cover',
-        backgroundRepeat: 'no-repeat',
-        backgroundPosition: 'center',
-      }}
+      style={
+        hasImage
+          ? {
+              backgroundImage: `linear-gradient(to bottom, rgba(0,0,0,0.45), rgba(0,0,0,0.45)), url(${studyGroup.image})`,
+              backgroundSize: 'cover',
+              backgroundRepeat: 'no-repeat',
+              backgroundPosition: 'center',
+            }
+          : {
+              backgroundColor: '#3E4044',
+            }
+      }
       className={cn(
         'relative text-white',
         'px-18 pt-74 pb-34',
