@@ -1,10 +1,23 @@
+'use client';
+
 import Image from 'next/image';
-import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { cn } from '@/shared/lib/utils/cn';
 
 export default function NotFound() {
+  const router = useRouter();
+
+  const handleGoBack = () => {
+    // 히스토리가 있으면 뒤로가기, 없으면 홈으로 이동
+    if (window.history.length > 1) {
+      router.back();
+    } else {
+      router.push('/');
+    }
+  };
+
   return (
-    <div className="flex min-h-screen w-full flex-col items-center justify-center bg-[#212529] px-20">
+    <div className="bg-surface-4 flex min-h-screen w-full flex-col items-center justify-center px-20">
       {/* 404 이미지 */}
       <div className="mb-40">
         <Image
@@ -44,19 +57,18 @@ export default function NotFound() {
         </div>
 
         {/* 버튼 영역 */}
-        <div className="flex flex-col gap-12 sm:flex-row sm:gap-16">
-          <Link href="/">
-            <button
-              className={cn(
-                'bg-primary transition-colors duration-200 hover:bg-[#6c79e8]',
-                'rounded-lg px-32 py-16 font-medium text-white',
-                'text-[14px] sm:text-[16px]',
-                'min-w-[180px]',
-              )}
-            >
-              돌아가기
-            </button>
-          </Link>
+        <div className="flex w-full flex-col gap-12 sm:flex-row sm:justify-center sm:gap-16">
+          <button
+            onClick={handleGoBack}
+            className={cn(
+              'bg-primary transition-colors duration-200 hover:bg-[#6c79e8]',
+              'rounded-lg px-32 py-16 font-medium text-white',
+              'text-[14px] sm:text-[16px]',
+              'w-full sm:w-auto sm:min-w-[378px]',
+            )}
+          >
+            뒤로가기
+          </button>
         </div>
       </div>
 
