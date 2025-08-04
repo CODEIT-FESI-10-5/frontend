@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { useProfileStore } from '@/features/auth-login/model/useProfileStore';
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import { notFound } from 'next/navigation';
 
 import NewTodoIcon from '@/assets/todo_new.svg';
 import EditGoalTitle from '@/features/update-goal-title/ui/update-goal-title';
@@ -55,22 +56,13 @@ export default function Goal({ goalId }: { goalId: string }) {
   }
 
   if (error) {
-    return (
-      <div className="flex h-full items-center justify-center">
-        <div className="text-red-500">
-          대시보드를 불러오는 중 에러가 발생했습니다:{' '}
-          {error instanceof Error ? error.message : '알 수 없는 에러'}
-        </div>
-      </div>
-    );
+    // 404 페이지로 리다이렉트
+    notFound();
   }
 
   if (!goal) {
-    return (
-      <div className="flex h-full items-center justify-center">
-        <div className="text-gray-500">대시보드를 찾을 수 없습니다.</div>
-      </div>
-    );
+    // 404 페이지로 리다이렉트
+    notFound();
   }
 
   if (!goal?.recentCompletedTodo?.content && !goal?.inProgressTodo?.content) {

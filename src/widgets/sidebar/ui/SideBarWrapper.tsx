@@ -15,11 +15,30 @@ export default function SideBarWrapper({
     pathname === '/';
 
   // 404 페이지인지 확인 (존재하지 않는 경로)
+  const validPaths = [
+    '/',
+    '/auth/login',
+    '/auth/sign-up',
+    '/dashboard',
+    '/dashboard/study',
+    '/note',
+    '/profile',
+    '/todo',
+    '/todolist-detail',
+    '/account',
+  ];
+
+  // 동적 경로 패턴들
+  const validDynamicPatterns = [
+    /^\/dashboard\/study\/[^/]+\/goal\/[^/]+$/, // /dashboard/study/[studyId]/goal/[goalId]
+    /^\/note\/edit\/[^/]+$/, // /note/edit/[noteId]
+    /^\/todolist-detail\/[^/]+$/, // /todolist-detail/[goalId]
+  ];
+
   const isNotFoundPage =
     pathname &&
-    !pathname.match(
-      /^\/($|auth\/|dashboard|note|profile|todo|todolist-detail)/,
-    );
+    !validPaths.includes(pathname) &&
+    !validDynamicPatterns.some((pattern) => pattern.test(pathname));
 
   if (isAuthPage || isNotFoundPage)
     return (
