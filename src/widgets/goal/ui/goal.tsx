@@ -68,8 +68,8 @@ export default function Goal({ goalId }: { goalId: string }) {
   if (!goal?.recentCompletedTodo?.content && !goal?.inProgressTodo?.content) {
     if (!title) {
       return (
-        <div className="flex flex-col gap-16 md:flex-row md:gap-27">
-          <div className="bg-surface-2 border-border-subtle h-[203px] w-full max-w-[537px] rounded-lg border px-18 py-26 md:h-[523px] md:p-34">
+        <div className="flex min-w-0 flex-col gap-16 md:flex-row md:gap-27">
+          <div className="bg-surface-2 border-border-subtle h-[203px] w-full min-w-0 rounded-lg border px-18 py-26 md:h-[523px] md:p-34">
             <EditGoalTitle goalId={goalId} title={title} setTitle={setTitle} />
           </div>
           {/* 팀원 진행도 */}
@@ -79,8 +79,8 @@ export default function Goal({ goalId }: { goalId: string }) {
       );
     }
     return (
-      <div className="flex flex-col gap-16 md:flex-row md:gap-27">
-        <div className="bg-surface-2 border-border-subtle h-[203px] w-full max-w-[537px] rounded-lg border px-18 py-26 md:h-[523px] md:p-34">
+      <div className="flex min-w-0 flex-col gap-16 md:flex-row md:gap-27">
+        <div className="bg-surface-2 border-border-subtle h-[203px] w-full min-w-0 rounded-lg border px-18 py-26 md:h-[523px] md:p-34">
           <EditGoalTitle goalId={goalId} title={title} setTitle={setTitle} />
           <Link
             href={`/todolist-detail/${goalId}`}

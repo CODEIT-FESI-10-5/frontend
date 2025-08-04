@@ -49,9 +49,12 @@ export default function SideBarWrapper({
     );
 
   return (
-    <main className="flex h-full xl:ml-348 xl:p-36">
+    <main className="flex h-full w-dvw xl:p-36">
       <SideBar />
-      {children}
+      <div className="flex w-full">
+        <div className="xl:w-348"></div>
+        <div className="w-full flex-1">{children}</div>
+      </div>
     </main>
   );
 }
