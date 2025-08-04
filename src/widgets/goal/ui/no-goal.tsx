@@ -32,7 +32,7 @@ export default function NoGoal() {
   };
 
   return (
-    <div className="flex flex-col gap-16 md:flex-row md:gap-27">
+    <div className="flex flex-col gap-16 md:gap-27 not-only-of-type:md:flex-row">
       <div className="bg-surface-2 border-border-subtle h-[300px] w-full rounded-lg border md:h-[523px] md:p-34">
         <div className="text-text-secondary flex h-full flex-col items-center justify-center gap-14">
           {/*todo featue 공용 create-goal 로 대체 */}
