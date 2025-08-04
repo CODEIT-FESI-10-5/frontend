@@ -66,16 +66,6 @@ export function NoteItem({
                     )}
                   </div>
                 </div>
-                <div className="text-text-tertiary mt-2 text-sm">
-                  <span>
-                    생성일: {new Date(note.createdAt).toLocaleDateString()}
-                  </span>
-                  {note.updatedAt !== note.createdAt && (
-                    <span className="ml-4">
-                      수정일: {new Date(note.updatedAt).toLocaleDateString()}
-                    </span>
-                  )}
-                </div>
               </div>
             </motion.div>
           )}
