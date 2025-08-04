@@ -18,7 +18,7 @@ export default function Onboarding() {
   };
 
   return (
-    <div className="w-full rounded-lg text-white">
+    <div className="flex h-[90dvh] w-full items-center justify-center rounded-lg text-white">
       {/* 데스크톱 버전 - 좌우 배치 */}
       <div className="hidden h-full md:flex md:items-center md:justify-center md:px-16">
         <div className="flex max-w-6xl items-center gap-30">
