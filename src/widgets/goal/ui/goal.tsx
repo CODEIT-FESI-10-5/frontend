@@ -8,7 +8,7 @@ import Link from 'next/link';
 import NewTodoIcon from '@/assets/todo_new.svg';
 import EditGoalTitle from '@/features/update-goal-title/ui/update-goal-title';
 
-import Todo from '@/widgets/todo/ui/todo';
+import Todo from '@/widgets/todo/ui/TodoCard';
 import Image from 'next/image';
 import {
   teamProgress,

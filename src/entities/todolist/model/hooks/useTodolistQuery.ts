@@ -20,7 +20,7 @@ export const useTodolistQuery = (goalId: string) => {
         note: todo.note,
         noteId: todo.noteId,
         shared: todo.shared,
-        // priorityOrder: todo.priorityOrder,
+        priorityOrder: todo.priorityOrder,
       }));
       return {
         title: response.data.goalTitle ?? null,

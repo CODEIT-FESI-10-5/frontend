@@ -61,8 +61,8 @@ export default function TodolistPanel() {
       <motion.div
         layout
         className={cn(
-          'relative flex w-740 flex-col',
-          'bg-surface-2 rounded-sm px-34 py-40 text-black shadow-lg',
+          'relative flex w-full max-w-740 flex-col',
+          'bg-surface-2 rounded-sm px-34 py-40',
         )}
       >
         <TitleArea title={data?.title} />

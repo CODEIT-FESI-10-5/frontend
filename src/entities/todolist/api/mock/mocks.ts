@@ -2,7 +2,6 @@ interface MyTodolists {
   goalId: number;
   goalTitle: string;
   userRole: string;
-  order: number[];
   count: number;
   todolist: Array<{
     todoId: number;
@@ -13,6 +12,7 @@ interface MyTodolists {
     note: string;
     noteId: number;
     shared: boolean;
+    priorityOrder: number;
   }>;
 }
 
@@ -21,7 +21,6 @@ export const myTodolists: MyTodolists[] = [
     goalId: 1,
     goalTitle: '피그마 툴 익히기',
     userRole: 'LEADER',
-    order: [1, 2, 3, 4, 5, 6],
     count: 6,
     todolist: [
       {
@@ -33,6 +32,7 @@ export const myTodolists: MyTodolists[] = [
         note: '1번 투두 노트 테스트',
         noteId: 1,
         shared: true,
+        priorityOrder: 1,
       },
       {
         todoId: 2,
@@ -43,6 +43,7 @@ export const myTodolists: MyTodolists[] = [
         note: '',
         noteId: 2,
         shared: true,
+        priorityOrder: 2,
       },
       {
         todoId: 3,
@@ -53,6 +54,7 @@ export const myTodolists: MyTodolists[] = [
         note: '',
         noteId: 3,
         shared: true,
+        priorityOrder: 3,
       },
       {
         todoId: 4,
@@ -63,6 +65,7 @@ export const myTodolists: MyTodolists[] = [
         note: '',
         noteId: 4,
         shared: false,
+        priorityOrder: 4,
       },
       {
         todoId: 5,
@@ -73,6 +76,7 @@ export const myTodolists: MyTodolists[] = [
         note: '',
         noteId: 5,
         shared: false,
+        priorityOrder: 5,
       },
       {
         todoId: 6,
@@ -83,6 +87,7 @@ export const myTodolists: MyTodolists[] = [
         note: '',
         noteId: 6,
         shared: false,
+        priorityOrder: 6,
       },
     ],
   },
@@ -91,7 +96,6 @@ export const myTodolists: MyTodolists[] = [
     goalTitle: 'Husky 익히기',
     userRole: 'MEMBER',
     count: 0,
-    order: [],
     todolist: [],
   },
 ];

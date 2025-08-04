@@ -23,11 +23,10 @@ export const todolistHandlers = [
       );
     }
 
-    const order = targetTodolist.order;
     const todolist = targetTodolist.todolist;
 
-    const orderedTodolist = order.map((currTodoId) =>
-      todolist.find((todo) => todo.todoId === currTodoId),
+    const orderedTodolist = todolist.sort(
+      (a, b) => a.priorityOrder - b.priorityOrder,
     );
 
     const orderedMockData = {
@@ -58,6 +57,9 @@ export const todolistHandlers = [
     }
 
     targetTodolist.count += 1;
+    const maxPO = Math.max(
+      ...targetTodolist.todolist.map((todo) => todo.priorityOrder),
+    );
     const newId = targetTodolist.count;
     const newTodo = {
       todoId: newId,
@@ -68,9 +70,9 @@ export const todolistHandlers = [
       note: '',
       noteId: 1,
       shared: shared,
+      priorityOrder: maxPO + 1,
     };
 
-    targetTodolist.order.push(newId);
     targetTodolist.todolist.push(newTodo);
 
     return HttpResponse.json({ status: 201 });
@@ -82,13 +84,39 @@ export const todolistHandlers = [
       todoId: number;
       priorityOrder: number;
     };
+    const { todoId, priorityOrder } = body;
 
     const targetTodolist = myTodolists[0];
-    const deletedOrder = targetTodolist.order.filter(
-      (todoId) => todoId !== body.todoId,
-    );
-    deletedOrder.splice(body.priorityOrder - 1, 0, body.todoId);
-    targetTodolist.order = deletedOrder;
+    const targetTodoPrevOrder = targetTodolist.todolist.find(
+      (todo) => todo.todoId === todoId,
+    )?.priorityOrder;
+    if (!targetTodoPrevOrder) {
+      return HttpResponse.json(
+        { error: `Mock todolist에서 todoId:${todoId}를 찾을 수 없습니다` },
+        { status: 404 },
+      );
+    }
+
+    // 앞 -> 뒤로 순서 옮기기
+    if (targetTodoPrevOrder < priorityOrder) {
+      targetTodolist.todolist.forEach((todo) => {
+        if (todo.priorityOrder <= priorityOrder) {
+          todo.priorityOrder -= 1;
+        }
+      });
+    } else if (targetTodoPrevOrder > priorityOrder) {
+      targetTodolist.todolist.forEach((todo) => {
+        if (todo.priorityOrder >= priorityOrder) {
+          todo.priorityOrder += 1;
+        }
+      });
+    }
+    targetTodolist.todolist.forEach((todo) => {
+      if (todo.todoId == todoId) {
+        todo.priorityOrder = priorityOrder;
+      }
+    });
+
     return HttpResponse.json({ status: 201 });
   }),
 
@@ -108,43 +136,50 @@ export const todolistHandlers = [
         { status: 404 },
       );
     }
-    const targetIndexInTodolist = targetTodolist.todolist.findIndex(
+    const targetTodoIndex = targetTodolist.todolist.findIndex(
       (todo) => todo.todoId === parseInt(todoId),
     );
 
-    if (targetIndexInTodolist === -1) {
+    if (targetTodoIndex === -1) {
       return HttpResponse.json({ status: 404, message: 'Todo not found' });
     }
 
     // 기존 요소를 업데이트
-    targetTodolist.todolist[targetIndexInTodolist] = {
-      ...targetTodolist.todolist[targetIndexInTodolist], // 기존 필드 유지
+    targetTodolist.todolist[targetTodoIndex] = {
+      ...targetTodolist.todolist[targetTodoIndex], // 기존 필드 유지
       content: body.content,
       completed: body.completed, // 변경된 필드 덮어쓰기
       completedAt: String(Date.now()),
     };
 
     // 순서 반영하기
-    const targetIndexInOrder = targetTodolist.order.findIndex(
-      (currTodoId) => currTodoId === parseInt(todoId),
-    );
-    targetTodolist.order.splice(targetIndexInOrder, 1);
-
     // 완료: 가장 앞으로 당겨오되 완료된 투두중 가장 뒤에 배치
     if ((body as { completed: boolean }).completed) {
-      const lastCompletedIndex = targetTodolist.order.findIndex(
-        (currTodoId) =>
-          !targetTodolist.todolist.find((todo) => todo.todoId === currTodoId)
-            ?.completed,
+      const completedTodos = targetTodolist.todolist.filter(
+        (todo) => todo.completed,
       );
-      if (lastCompletedIndex < 0) {
-        targetTodolist.order.push(parseInt(todoId));
+      if (completedTodos.length > 0) {
+        const lastOrderOfCompleted =
+          Math.max(...completedTodos.map((todo) => todo.priorityOrder)) + 1;
+        targetTodolist.todolist.forEach((todo) => {
+          if (todo.priorityOrder >= lastOrderOfCompleted) {
+            todo.priorityOrder += 1;
+          }
+        });
+        targetTodolist.todolist[targetTodoIndex].priorityOrder =
+          lastOrderOfCompleted;
       } else {
-        targetTodolist.order.splice(lastCompletedIndex, 0, parseInt(todoId));
+        targetTodolist.todolist.forEach((todo) => {
+          todo.priorityOrder += 1;
+        });
+        targetTodolist.todolist[targetTodoIndex].priorityOrder =
+          Math.min(...completedTodos.map((todo) => todo.priorityOrder)) - 1;
       }
     } else {
       // 취소: 가장 뒤로 밀려남
-      targetTodolist.order.push(parseInt(todoId));
+      targetTodolist.todolist[targetTodoIndex].priorityOrder =
+        Math.max(...targetTodolist.todolist.map((todo) => todo.priorityOrder)) +
+        1;
     }
     return HttpResponse.json({ status: 201 });
   }),
@@ -161,9 +196,6 @@ export const todolistHandlers = [
     }
 
     targetTodolist.todolist.splice(index, 1);
-    targetTodolist.order = targetTodolist.order.filter(
-      (id) => id !== parseInt(todoId),
-    );
     return HttpResponse.json({ status: 204 });
   }),
 ];
