@@ -3,11 +3,7 @@
 import Image from 'next/image';
 import { useState } from 'react';
 import { motion, AnimatePresence, PanInfo } from 'framer-motion';
-import { clientFetch } from '@/shared/api';
 import { useRouter } from 'next/navigation';
-import { useCreateStudy } from '@/features/create-study/model';
-import JoinStudyModal from '@/features/join-study/ui/JoinStudyModal';
-import { useModal } from '@/shared/lib/utils/useModal';
 import { cn } from '@/shared/lib/utils/cn';
 
 const images = [
