@@ -1,21 +1,25 @@
 'use client';
 import { useState } from 'react';
-import { InputField } from './';
+import { TextField } from '@/shared/ui';
 import { Button } from '@/shared/ui';
 
 export default function UpdateName() {
-  const [isActive] = useState(false);
+  const [isActive, setIsActive] = useState(false);
+
   return (
     <div>
       <section className="flex flex-col gap-16 px-28 py-30">
         <h2 className="text-text-white body-medium">개인정보</h2>
         <div className="flex flex-col gap-20">
-          <form className="flex flex-col">
+          <form className="flex flex-col gap-4">
             <label className="label-large text-text-tertiary">닉네임</label>
-            <div className="flex items-center justify-between">
-              <div className="w-376">
+            <div className="flex items-center justify-between gap-10">
+              <div className="flex-1">
                 {isActive ? (
-                  <InputField />
+                  <TextField
+                    placeholder="닉네임을 입력해주세요."
+                    error={false}
+                  />
                 ) : (
                   <p className="text-text-white body-medium">스터디 닉네임</p>
                 )}
@@ -25,7 +29,8 @@ export default function UpdateName() {
                 size="xs"
                 isActive={isActive}
                 theme="primary"
-                type="submit"
+                type="button"
+                onClick={() => setIsActive(!isActive)}
               />
             </div>
           </form>
