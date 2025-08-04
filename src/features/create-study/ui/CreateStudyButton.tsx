@@ -1,16 +1,25 @@
 'use client';
 import React from 'react';
 import { useCreateStudy } from '../model/useCreateStudy';
+import { Button } from '@/shared/ui';
+import { useDrawerStore } from '@/shared/model';
 
 export default function CreateStudyButton() {
   const mutation = useCreateStudy();
+  const { close } = useDrawerStore();
+  const handleClick = () => {
+    mutation.mutate();
+    close();
+  };
 
   return (
-    <button
-      onClick={() => mutation.mutate()}
-      className="bg-primary title-small text-text-white rounded-6 h-50 w-143"
-    >
-      스터디 만들기
-    </button>
+    <Button
+      label="스터디 만들기"
+      size="md"
+      theme="primary"
+      className="w-143"
+      type="submit"
+      onClick={handleClick}
+    />
   );
 }

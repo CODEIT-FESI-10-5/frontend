@@ -3,6 +3,7 @@ import { StudyItem, StudyListResponse } from '@/entities/study/model/types';
 import { useRouter } from 'next/navigation';
 import { useQueryClient } from '@tanstack/react-query';
 import { getGoalList, goalQueryKeys } from '@/entities/goal';
+import { useDrawerStore } from '@/shared/model';
 
 interface StudyDropDownProps {
   data: StudyListResponse;
@@ -12,6 +13,7 @@ interface StudyDropDownProps {
 export default function StudyDropDown({ onClick, data }: StudyDropDownProps) {
   const router = useRouter();
   const queryClient = useQueryClient();
+  const { close } = useDrawerStore();
 
   // 스터디 선택 시 로직
   const handleClick = async (study: StudyItem) => {
@@ -40,6 +42,7 @@ export default function StudyDropDown({ onClick, data }: StudyDropDownProps) {
       router.push(`/dashboard/study/${study.id}`);
     }
     onClick();
+    close();
   };
 
   return (

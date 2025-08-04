@@ -1,6 +1,6 @@
 'use client';
 import Image from 'next/image';
-import { SubmitButton } from '@/shared/ui';
+import { Button } from '@/shared/ui';
 import DeleteIcon from '@/assets/icon-delete.svg';
 import { useState } from 'react';
 
@@ -21,7 +21,13 @@ export default function UpdateProfile() {
           />
           <div className="flex flex-col gap-6">
             <div className="flex items-center gap-12">
-              <SubmitButton name="이미지 변경" size="sm" isActive={isActive} />
+              <Button
+                label="이미지 변경"
+                size="xs"
+                isActive={isActive}
+                theme="primary"
+                type="submit"
+              />
               <DeleteIcon />
             </div>
             <p className="text-text-primary label-small">
