@@ -38,17 +38,17 @@ export function NoteListPage() {
   }
 
   return (
-    <div className="bg-surface-1 w-full max-w-[1208px] rounded-lg border">
+    <div className="bg-surface-1 border-border-subtle w-full max-w-[1208px] rounded-lg border">
       <div className="border-border-subtle border px-22 py-12">
         <h1 className="text-text-tertiary headline-medium text-lg">
           노트 모아보기
         </h1>
       </div>
-      <div className="container w-full px-30 py-34">
+      <div className="px-30 py-34">
         {hasStudyGoalId ? (
           <NoteList title={studyGoalTitle} notes={notes} />
         ) : (
-          <div className="w-full py-12 text-center">
+          <div className="py-12 text-center">
             <div className="mb-4 text-lg text-gray-500">
               학습 목표를 선택하여 노트를 확인하세요.
             </div>
