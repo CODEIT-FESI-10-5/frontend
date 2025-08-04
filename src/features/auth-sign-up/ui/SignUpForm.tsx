@@ -35,7 +35,7 @@ export default function SignUpForm() {
     <div>
       <form
         onSubmit={handleSubmit(onValid)}
-        className="flex w-full flex-col gap-60"
+        className="flex w-full flex-col gap-30 md:gap-60"
       >
         <div className="flex w-full flex-col gap-30">
           <TextField

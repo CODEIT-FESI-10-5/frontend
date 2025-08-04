@@ -8,7 +8,7 @@ interface SubmitButtonProps
 }
 
 const lgVariants = cva(
-  'rounded-6 flex items-center body-medium justify-center w-442 h-54',
+  'rounded-6 flex items-center body-medium justify-center w-full max-w-442 h-54',
   {
     variants: {
       isActive: {

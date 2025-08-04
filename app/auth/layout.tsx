@@ -1,11 +1,20 @@
+import Image from 'next/image';
 export default function AuthLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   return (
-    <div className="flex h-full w-full items-center justify-center">
-      <div className="bg-surface-2 flex h-auto w-642 items-center justify-center px-100 py-68">
+    <div className="flex h-full w-full max-w-screen items-start justify-center overflow-y-scroll px-24 py-32 md:items-center md:p-0">
+      <div className="md:bg-surface-2 rounded-12 flex w-327 flex-col items-start justify-center gap-28 overflow-y-auto md:h-auto md:w-642 md:px-100 md:py-68">
+        <div className="relative h-24 w-94 md:h-36 md:w-153">
+          <Image
+            src="/images/logo.png"
+            alt="logo"
+            fill
+            className="object-contain"
+          />
+        </div>
         <div className="h-full w-full">{children}</div>
       </div>
     </div>
