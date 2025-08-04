@@ -42,16 +42,17 @@ export default function NoGoal() {
                 className="cursor-pointer"
                 onClick={handleCreateGoal}
               />
-              <span className="body-medium text-text-secondary">
+              <span className="md:body-medium m-body-medium text-text-secondary">
                 스터디 목표를 추가해 주세요.
               </span>
             </>
           ) : (
             <>
-              <CreateGoalIcon className="opacity-50" />
-              <div className="text-center">
-                <span className="block">아직 스터디 목표가 없습니다.</span>
-                <span className="text-text-tertiary body-medium">
+              <div className="flex flex-col items-center justify-center">
+                <span className="md:title-medium m-title-medium">
+                  아직 스터디 목표가 없습니다.
+                </span>
+                <span className="text-text-tertiary md:body-medium m-body-medium">
                   스터디장이 목표를 추가할 때까지 기다려주세요.
                 </span>
               </div>
