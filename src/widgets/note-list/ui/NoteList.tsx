@@ -49,4 +49,4 @@ export function NoteList({ title, notes }: NoteListProps) {
       )}
     </section>
   );
-};
+}
