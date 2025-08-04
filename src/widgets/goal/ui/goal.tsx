@@ -237,7 +237,7 @@ export function TeamProgressList({
           </span>
           {/* <span className="label-small text-text-tertiary">5분전 업데이트</span> */}
         </div>
-        <ul className="md: flex h-full w-full items-end justify-around md:justify-between">
+        <ul className="flex h-full w-full items-end justify-around md:justify-between">
           {Array.from({ length: maxMembers }).map((_, idx) => {
             const member = filled[idx];
             const isFirst = idx === 0;
