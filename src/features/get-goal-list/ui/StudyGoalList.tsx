@@ -9,11 +9,13 @@ import { useCreateGoal } from '@/features/create-goal/model';
 import { useGoalStore } from '../model';
 import { useStudyStore } from '@/features/get-study-list/model';
 import { useStudyRoleStore } from '@/entities/study/model/useStudyRoleStore';
+import { useDrawerStore } from '@/shared/model';
 
 export default function StudyGoalList() {
   const queryClient = useQueryClient();
   const router = useRouter();
   const pathname = usePathname();
+  const { close } = useDrawerStore();
   const { role } = useStudyRoleStore();
   const { currentGoalId, setGoalId } = useGoalStore();
   const { currentStudyId } = useStudyStore();
@@ -35,8 +37,10 @@ export default function StudyGoalList() {
   const handleClick = (goal: GoalListItem) => {
     if (pathname === '/note') {
       setGoalId(goal.id);
+      close();
       router.push(`/note?studyGoalId=${goal.id}`);
     } else {
+      close();
       router.push(`/dashboard/study/${currentStudyId}/goal/${goal.id}`);
     }
   };
