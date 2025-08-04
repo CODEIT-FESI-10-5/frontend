@@ -24,3 +24,8 @@ export interface NoteListResponse {
   };
   errorMessage: string | null;
 }
+
+export interface UpdateNoteRequest {
+  id: number;
+  content: string;
+}

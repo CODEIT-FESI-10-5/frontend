@@ -1,33 +1,28 @@
 'use client';
 
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { type Note } from '@/entities/note/model/types';
+import { ReactNode } from 'react';
+import { Note } from '../model/types';
 import NoteOpenIcon from '@/assets/note-open.svg';
 import parse from 'html-react-parser';
 import { AnimatePresence, motion } from 'framer-motion';
 
-interface NoteCardProps {
+interface NoteItemProps {
   note: Note;
+  isExpanded: boolean;
+  onToggle: () => void;
+  actions: ReactNode;
 }
 
-export function NoteCard({ note }: NoteCardProps) {
-  const [isExpanded, setIsExpanded] = useState(false);
-  const router = useRouter();
-
-  const handleCardClick = () => {
-    setIsExpanded(!isExpanded);
-  };
-
-  const handleEditClick = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    router.push(`/note/edit/${note.id}`);
-  };
-
+export function NoteItem({
+  note,
+  isExpanded,
+  onToggle,
+  actions,
+}: NoteItemProps) {
   return (
     <div
       className="bg-surface-2 cursor-pointer rounded-lg px-16 py-12"
-      onClick={handleCardClick}
+      onClick={onToggle}
     >
       <div className="flex flex-col">
         <div className="flex items-center justify-between">
@@ -39,10 +34,7 @@ export function NoteCard({ note }: NoteCardProps) {
                   color: isExpanded ? '#7380E9' : '#fff',
                 }}
                 transition={{ duration: 0.4, ease: 'easeInOut' }}
-                style={{
-                  display: 'inline-block',
-                  color: isExpanded ? '#7380E9' : '#fff',
-                }}
+                style={{ display: 'inline-block' }}
               >
                 <NoteOpenIcon />
               </motion.span>
@@ -50,19 +42,7 @@ export function NoteCard({ note }: NoteCardProps) {
             <h3 className="text-lg font-semibold">{note.todoTitle}</h3>
           </div>
           <AnimatePresence initial={false}>
-            {isExpanded && (
-              <motion.button
-                onClick={handleEditClick}
-                className="text-text-primary border-border-emphasis hover:bg-surface-1 cursor-pointer rounded-md border px-10 py-10 text-sm transition-colors"
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.95 }}
-                transition={{ duration: 0.25, ease: 'easeInOut' }}
-                whileHover={{ scale: 1.05 }}
-              >
-                노트 수정
-              </motion.button>
-            )}
+            {isExpanded && actions}
           </AnimatePresence>
         </div>
         <AnimatePresence initial={false}>
