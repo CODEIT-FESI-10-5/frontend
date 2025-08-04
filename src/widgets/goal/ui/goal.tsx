@@ -56,10 +56,12 @@ export default function Goal({ goalId }: { goalId: string }) {
   }
 
   if (error) {
+    // 404 페이지로 리다이렉트
     notFound();
   }
 
   if (!goal) {
+    // 404 페이지로 리다이렉트
     notFound();
   }
 
