@@ -55,6 +55,18 @@ export function NoteEditor({ initialNote, onAutoSave }: NoteEditorProps) {
     immediatelyRender: false,
   });
 
+  // 에디터가 준비되면 자동으로 focus
+  useEffect(() => {
+    if (editor) {
+      const timer = setTimeout(() => {
+        editor.commands.focus('end');
+      }, 100);
+
+      return () => clearTimeout(timer);
+    }
+  }, [editor]);
+
+  // 초기 노트 내용 설정 및 커서 위치 설정
   useEffect(() => {
     if (editor && initialNote) {
       const { from, to } = editor.state.selection;
@@ -71,6 +83,7 @@ export function NoteEditor({ initialNote, onAutoSave }: NoteEditorProps) {
     }
   }, [editor, initialNote]);
 
+  // 상태 메시지 표시 및 페이드 아웃
   useEffect(() => {
     if (status === 'typing') {
       setShowStatus(true);
@@ -90,6 +103,7 @@ export function NoteEditor({ initialNote, onAutoSave }: NoteEditorProps) {
     };
   }, [status]);
 
+  // 타이머 정리
   useEffect(() => {
     return () => {
       if (timerRef.current) clearTimeout(timerRef.current);
