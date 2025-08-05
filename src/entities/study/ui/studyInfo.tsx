@@ -8,6 +8,7 @@ import Image from 'next/image';
 import { useModal } from '@/shared/lib/utils/useModal';
 import toast from 'react-hot-toast';
 import { cn } from '@/shared/lib/utils/cn';
+import CloseIcon from '@/assets/icon-close.svg';
 
 export default function StudyInfo({
   members,
@@ -22,11 +23,23 @@ export default function StudyInfo({
   const { open } = useModal();
 
   const handleMemberTextClick = () => {
-    if (memberTextRef.current && members.length > 0) {
-      open(<ProfileModal members={members} />, memberTextRef, {
-        top: 8,
-        left: 0,
-      });
+    if (members.length > 0) {
+      // 모바일에서는 하단 모달, 데스크톱에서는 위치 기반 모달
+      const isMobile = window.innerWidth < 768; // md breakpoint
+
+      if (isMobile) {
+        open(
+          <ProfileModal members={members} />,
+          undefined,
+          undefined,
+          'bottom',
+        );
+      } else {
+        open(<ProfileModal members={members} />, memberTextRef, {
+          top: 8,
+          left: 0,
+        });
+      }
     }
   };
 
@@ -134,12 +147,21 @@ export default function StudyInfo({
 }
 
 function ProfileModal({ members }: { members: StudyGroup['members'] }) {
+  const { close } = useModal();
+
   return (
-    <div className="bg-surface-4 border-border-emphasis rounded-md border px-20 py-24 shadow-lg">
+    <div className="bg-surface-4 flex flex-col gap-24 rounded-t-2xl p-24 shadow-lg md:hidden">
+      {/* 모바일용 하단 모달 헤더 */}
+      <div className="flex items-center justify-between">
+        <h3 className="m-title-medium text-white">팀원 목록</h3>
+        <CloseIcon width={24} height={24} onClick={close} />
+      </div>
+
+      {/* 멤버 리스트 */}
       <ul className="flex flex-col gap-14">
         {members.map((member) => (
           <li key={member.id} className="flex items-center gap-12">
-            <div className="relative h-32 w-32">
+            <div className="relative h-40 w-40">
               <Image
                 src={member.image || '/images/default-profile.png'}
                 alt={member.nickname}
@@ -148,7 +170,7 @@ function ProfileModal({ members }: { members: StudyGroup['members'] }) {
                 style={{ objectFit: 'cover' }}
               />
             </div>
-            <span className="label-small text-white">{member.nickname}</span>
+            <span className="m-body-small text-white">{member.nickname}</span>
           </li>
         ))}
       </ul>

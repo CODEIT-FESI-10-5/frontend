@@ -49,11 +49,11 @@ export default function NoGoal() {
           ) : (
             <>
               <div className="flex flex-col items-center justify-center">
-                <span className="md:title-medium m-title-medium">
-                  아직 스터디 목표가 없습니다.
+                <span className="text-text-tertiary md:body-medium m-body-medium">
+                  스터디장이 스터디 목표를 설정 중이에요.
                 </span>
                 <span className="text-text-tertiary md:body-medium m-body-medium">
-                  스터디장이 목표를 추가할 때까지 기다려주세요.
+                  조금만 기다려 주세요!
                 </span>
               </div>
             </>

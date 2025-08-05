@@ -68,7 +68,7 @@ export default function Goal({ goalId }: { goalId: string }) {
     if (!title) {
       return (
         <div className="flex min-w-0 flex-col gap-16 md:flex-row md:gap-27">
-          <div className="bg-surface-2 border-border-subtle h-[203px] w-full min-w-0 rounded-lg border px-18 py-26 md:h-[523px] md:p-34">
+          <div className="bg-surface-2 border-border-subtle h-[200px] w-full min-w-0 rounded-lg border px-18 py-26 md:h-[523px] md:max-w-[537px] md:p-34">
             <EditGoalTitle goalId={goalId} title={title} setTitle={setTitle} />
           </div>
           {/* 팀원 진행도 */}
@@ -79,14 +79,14 @@ export default function Goal({ goalId }: { goalId: string }) {
     }
     return (
       <div className="flex min-w-0 flex-col gap-16 md:flex-row md:gap-27">
-        <div className="bg-surface-2 border-border-subtle h-[203px] w-full min-w-0 rounded-lg border px-18 py-26 md:h-[523px] md:p-34">
+        <div className="bg-surface-2 border-border-subtle h-[200px] w-full min-w-0 rounded-lg border px-18 py-26 md:h-[523px] md:max-w-[537px] md:p-34">
           <EditGoalTitle goalId={goalId} title={title} setTitle={setTitle} />
           <Link
             href={`/todolist-detail/${goalId}`}
             className="mt-20 flex flex-col items-center justify-center gap-3 rounded-xl border border-dashed border-[#454545] bg-[#2c2c2c] px-18 py-24 text-base font-normal text-[#f5f5f5] md:mt-28"
           >
             <NewTodoIcon width={32} height={32} />
-            <span className="text-text-primary m-body-large md:body-small">
+            <span className="text-text-primary m-body-large md:body-small text-nowrap">
               세부 투두를 추가해 목표를 구체화해보세요.
             </span>
           </Link>
