@@ -8,7 +8,7 @@ import toast from 'react-hot-toast';
 
 interface UseCustomMutationArgs<TVariables, TResult, TError> {
   mutationFn: (variables: TVariables) => Promise<TResult>;
-  invalidateQueryKeys?: Array<Array<string>>;
+  invalidateQueryKeys?: Array<Array<string | number | object>>;
   mutationOptions?: UseMutationOptions<TResult, TError, TVariables>;
   successMessage?: string;
 }
@@ -22,7 +22,7 @@ export const useCustomMutation = <TVariables, TResult, TError = ApiError>(
 
   return useMutation({
     mutationFn,
-    // ...mutationOptions,
+    ...mutationOptions,
     onSuccess: (data, variables, context) => {
       if (mutationOptions?.onSuccess) {
         mutationOptions.onSuccess(data, variables, context);
@@ -39,7 +39,10 @@ export const useCustomMutation = <TVariables, TResult, TError = ApiError>(
         (error as ApiError)?.body?.errorMessage ?? '알 수 없는 에러입니다';
       toast.error(errorMessage);
     },
-    onSettled: () => {
+    onSettled: (data, error, variables, context) => {
+      if (mutationOptions?.onSettled) {
+        mutationOptions.onSettled(data, error, variables, context);
+      }
       if (invalidateQueryKeys) {
         invalidateQueryKeys.forEach((key) => {
           queryClient.invalidateQueries({ queryKey: key });
