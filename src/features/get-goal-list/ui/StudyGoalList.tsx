@@ -39,7 +39,7 @@ export default function StudyGoalList() {
     <section className="mt-64 flex flex-col gap-14">
       <div className="flex items-center justify-between">
         <h2 className="text-text-secondary title-small">스터디 목표</h2>
-        <CreateGoalButton studyId={data.studyId} />
+        {role && <CreateGoalButton studyId={data.studyId} />}
       </div>
       {data.totalCount !== 0 ? (
         <ul className="py-4">
