@@ -19,7 +19,7 @@ function TitleArea({ title = '목표' }: { title?: string }) {
   return (
     <motion.div
       layout={'position'}
-      className="mb-40 flex w-full items-center justify-between"
+      className="mb-26 flex w-full items-center justify-between md:mb-40"
     >
       <p className="m-headline-medium md:headline-large font-bold text-white">
         {title}
@@ -64,7 +64,7 @@ export default function TodolistPanel() {
         <AppBar pageName="투두 상세" />
         <motion.div
           layout
-          className="relative flex flex-col rounded-sm px-34 py-40"
+          className="relative flex flex-col rounded-sm px-16 py-18 md:px-34 md:py-40"
         >
           <TitleArea title={data?.title} />
           <Todolist />
