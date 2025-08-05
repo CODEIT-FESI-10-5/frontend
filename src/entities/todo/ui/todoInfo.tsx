@@ -10,8 +10,11 @@ export default function TodoInfo({ todo }: { todo: Todo }) {
       <div className="flex min-w-0 flex-col gap-4">
         {/*투두 내용*/}
         <div className="m-body-large md:body-medium flex min-w-0 items-center justify-start gap-6 line-through">
-          {todo.shared && <SharedText />}
-          <span aria-label="todo-content" className="min-w-0 flex-1 truncate">
+          <span
+            aria-label="todo-content"
+            className="line-clamp-2 min-w-0 flex-1 text-balance"
+          >
+            {todo.shared && <>[공통] </>}
             {todo.content}
           </span>
         </div>
@@ -31,15 +34,14 @@ export default function TodoInfo({ todo }: { todo: Todo }) {
     <div className="flex min-w-0 flex-col">
       {/*투두 내용*/}
       <div className="m-body-large md:body-medium flex min-w-0 items-center justify-center gap-6">
-        {todo.shared && <SharedText />}
-        <span aria-label="todo-content" className="min-w-0 flex-1 truncate">
+        <span
+          aria-label="todo-content"
+          className="line-clamp-2 min-w-0 flex-1 text-balance"
+        >
+          {todo.shared && <>[공통] </>}
           {todo.content}
         </span>
       </div>
     </div>
   );
-}
-
-function SharedText() {
-  return <span>[공통]</span>;
 }

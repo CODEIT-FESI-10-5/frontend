@@ -1,5 +1,5 @@
 import { http, HttpResponse } from 'msw';
-import { mockDashboard, noneMockDashboard } from '@/entities/dashboard';
+import { mockDashboard } from '@/entities/dashboard';
 
 export const dashboardHandlers = [
   //dashboard
@@ -13,8 +13,8 @@ export const dashboardHandlers = [
       );
     }
     // 실제 mockDashboard에서 goalId별 데이터 분기 필요시 여기에 추가
-    // return HttpResponse.json(mockDashboard);
-    return HttpResponse.json(noneMockDashboard);
+    return HttpResponse.json(mockDashboard);
+    // return HttpResponse.json(noneMockDashboard);
   }),
 
   // dashboard 에있는 goal title 수정

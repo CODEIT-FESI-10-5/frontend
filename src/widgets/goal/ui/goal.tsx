@@ -1,7 +1,6 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { useProfileStore } from '@/features/auth-login/model/useProfileStore';
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
@@ -188,7 +187,7 @@ export function TeamProgressList({
   teamProgress: teamProgress[];
 }) {
   const { inviteCode } = useInviteCodeStore();
-  const myName = useProfileStore((state) => state.name);
+  const myName = localStorage.getItem('nickname');
 
   if (teamProgress.length === 0) {
     return (
