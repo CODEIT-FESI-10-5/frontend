@@ -23,7 +23,7 @@ export default function UpdateName() {
               <Button
                 label="닉네임 수정"
                 size="xs"
-                isActive={isActive}
+                disabled={!isActive}
                 theme="primary"
                 type="submit"
               />
