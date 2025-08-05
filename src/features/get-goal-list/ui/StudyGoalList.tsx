@@ -1,31 +1,21 @@
 'use client';
-import CreateGoalSVG from '@/assets/create-goal.svg';
 import { useGetGoal } from '../../../entities/goal/model/useGetGoal';
-import { GoalListItem, goalQueryKeys } from '@/entities/goal';
+import { GoalListItem } from '@/entities/goal';
 import { useRouter, usePathname } from 'next/navigation';
 import clsx from 'clsx';
-import { useQueryClient } from '@tanstack/react-query';
-import { useCreateGoal } from '@/features/create-goal/model';
 import { useGoalStore } from '../model';
 import { useStudyStore } from '@/features/get-study-list/model';
 import { useStudyRoleStore } from '@/entities/study/model/useStudyRoleStore';
 import { useDrawerStore } from '@/shared/model';
+import CreateGoalButton from '@/features/create-goal/ui/CreateGoalButton';
 
 export default function StudyGoalList() {
-  const queryClient = useQueryClient();
   const router = useRouter();
   const pathname = usePathname();
   const { close } = useDrawerStore();
   const { role } = useStudyRoleStore();
   const { currentGoalId, setGoalId } = useGoalStore();
   const { currentStudyId } = useStudyStore();
-  // 목표 생성
-  const mutation = useCreateGoal((newGoal) => {
-    queryClient.invalidateQueries({
-      queryKey: goalQueryKeys.list(Number(currentStudyId)),
-    });
-    router.push(`/dashboard/study/${currentStudyId}/goal/${newGoal.id}`);
-  });
 
   const { isLoading, data, error } = useGetGoal(Number(currentStudyId));
 
@@ -49,16 +39,7 @@ export default function StudyGoalList() {
     <section className="mt-64 flex flex-col gap-14">
       <div className="flex items-center justify-between">
         <h2 className="text-text-secondary title-small">스터디 목표</h2>
-        {role === true && (
-          <CreateGoalSVG
-            onClick={() =>
-              mutation.mutate({
-                title: '스터디 목표를 입력해주세요.',
-                studyId: Number(data.studyId),
-              })
-            }
-          />
-        )}
+        <CreateGoalButton studyId={data.studyId} />
       </div>
       {data.totalCount !== 0 ? (
         <ul className="py-4">
