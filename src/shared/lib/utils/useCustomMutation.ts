@@ -39,7 +39,10 @@ export const useCustomMutation = <TVariables, TResult, TError = ApiError>(
         (error as ApiError)?.body?.errorMessage ?? '알 수 없는 에러입니다';
       toast.error(errorMessage);
     },
-    onSettled: () => {
+    onSettled: (data, error, variables, context) => {
+      if (mutationOptions?.onSettled) {
+        mutationOptions.onSettled(data, error, variables, context);
+      }
       if (invalidateQueryKeys) {
         invalidateQueryKeys.forEach((key) => {
           queryClient.invalidateQueries({ queryKey: key });
