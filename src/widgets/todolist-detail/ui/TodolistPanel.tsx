@@ -1,6 +1,5 @@
 'use client';
 
-import { cn } from '@/shared/lib/utils/cn';
 import { LayoutGroup, motion } from 'framer-motion';
 import NewTodo from '@/assets/new-todo.svg';
 import { useCreateTodoStore } from '../../../features/create-todo/model/store';
@@ -12,6 +11,7 @@ import { useTodolistStore } from '@/entities/todolist/model/store';
 import ConfirmButton from '@/features/create-todo/ui/ConfirmButton';
 import toast from 'react-hot-toast';
 import { useGoalId } from '@/shared/model/useGoalId';
+import { AppBar } from '@/shared/ui';
 
 function TitleArea({ title = '목표' }: { title?: string }) {
   const toggleEditMode = useCreateTodoStore((state) => state.toggleEditMode);
@@ -19,9 +19,11 @@ function TitleArea({ title = '목표' }: { title?: string }) {
   return (
     <motion.div
       layout={'position'}
-      className="mb-40 flex w-full justify-between"
+      className="mb-40 flex w-full items-center justify-between"
     >
-      <p className="headline-large font-bold text-white">{title}</p>
+      <p className="m-headline-medium md:headline-large font-bold text-white">
+        {title}
+      </p>
       <ConfirmButton
         aria-label="open-todo-form-btn"
         size="lg"
@@ -57,17 +59,17 @@ export default function TodolistPanel() {
   if (isError) return <>Todolist - 불러오는데 실패했습니다</>;
 
   return (
-    <LayoutGroup>
-      <motion.div
-        layout
-        className={cn(
-          'relative flex w-full max-w-740 flex-col',
-          'bg-surface-2 rounded-sm px-34 py-40',
-        )}
-      >
-        <TitleArea title={data?.title} />
-        <Todolist />
-      </motion.div>
-    </LayoutGroup>
+    <div className="bg-surface-2 flex min-h-screen w-full flex-col rounded-sm xl:min-h-fit xl:max-w-740">
+      <LayoutGroup>
+        <AppBar pageName="투두 상세" />
+        <motion.div
+          layout
+          className="relative flex flex-col rounded-sm px-34 py-40"
+        >
+          <TitleArea title={data?.title} />
+          <Todolist />
+        </motion.div>
+      </LayoutGroup>
+    </div>
   );
 }
