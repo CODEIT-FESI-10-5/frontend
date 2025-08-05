@@ -14,7 +14,7 @@ export default function UpdatePassword() {
           <Button
             label="비밀번호 변경"
             size="xs"
-            disabled={isActive}
+            disabled={!isActive}
             theme="primary"
             type="submit"
           />

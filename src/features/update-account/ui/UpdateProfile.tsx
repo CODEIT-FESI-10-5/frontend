@@ -24,7 +24,7 @@ export default function UpdateProfile() {
               <Button
                 label="이미지 변경"
                 size="xs"
-                disabled={isActive}
+                disabled={!isActive}
                 theme="primary"
                 type="submit"
               />
