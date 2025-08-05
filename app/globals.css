@@ -228,6 +228,14 @@ body {
   margin: 0.25em 0;
 }
 
+.ProseMirror p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  float: left;
+  color: #adb5bd;
+  pointer-events: none;
+  height: 0;
+}
+
 /* prose 커스텀: NoteCard에서 h1~h4, bold에 text-text-primary 적용 */
 .prose h1,
 .prose h2,
