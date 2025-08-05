@@ -49,7 +49,7 @@ function DeleteModal({
   items: Array<{ name: string; handleClick: () => void }>;
 }) {
   return (
-    <div className="text-surface-3 m-body-medium md:body-medium overflow-hidden rounded-md bg-white">
+    <div className="text-surface-3 m-body-medium md:body-medium overflow-hidden rounded-md bg-white shadow-lg">
       <ul className="flex flex-col gap-14">
         {items.map((item, idx) => (
           <button
