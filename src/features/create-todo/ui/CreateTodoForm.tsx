@@ -37,7 +37,7 @@ export default function CreateTodoForm() {
   return (
     <form
       onSubmit={handleSubmit}
-      className="bg-surface-4 mb-16 flex h-72 min-w-650 items-center justify-between gap-14 rounded-lg p-16"
+      className="bg-surface-4 mb-16 flex h-72 w-full items-center justify-between gap-14 rounded-lg p-16"
     >
       <CheckTodoBlankIcon width={30} height={30} />
       <input

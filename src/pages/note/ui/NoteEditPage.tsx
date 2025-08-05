@@ -1,9 +1,8 @@
 'use client';
 
-import { useGetNoteById } from '@/features/get-note/api/getNoteQueries';
-import { NoteEditor } from '@/features/edit-note';
-import { useUpdateNote } from '@/features/edit-note/api/useUpdateNoteMutation';
-import NoteListPageIcon from '@/assets/note-list-page-icon.svg';
+import { NoteEditor } from '@/features/update-note/ui/NoteEditor';
+import { useGetNoteById, useUpdateNote } from '@/entities/note/api/noteQueries';
+import NoteIcon from '@/assets/note-icon.svg';
 
 export function NoteEditPage({ noteId }: { noteId: number }) {
   const { data: noteResponse, isLoading, isError } = useGetNoteById(noteId);
@@ -39,23 +38,23 @@ export function NoteEditPage({ noteId }: { noteId: number }) {
   }
 
   return (
-    <div className="bg-surface-1 border-border-subtle max-w-[1208px] rounded-lg border">
-      <div className="border-border-subtle border px-22 py-12">
-        <h1 className="text-text-tertiary headline-medium text-lg">
+    <div className="md:bg-surface-1 md:border-border-subtle w-full max-w-[1208px] rounded-lg md:border">
+      <div className="border-border-subtle hidden border px-22 py-12 md:block">
+        <h1 className="text-text-tertiary m-headline-medium">
           노트 작성
         </h1>
       </div>
 
-      <div className="container mx-auto px-30 py-34">
+      <div className="px-30 py-34">
         {note ? (
           <div>
             <div className="mb-6 flex items-center gap-4">
-              <NoteListPageIcon />
-              <h1 className="headline-large text-2xl text-white">
+              <NoteIcon />
+              <h1 className="m-headline-medium md:headline-large text-white">
                 {note.studyGoalTitle}
               </h1>
             </div>
-            <p className="body-medium mb-24 text-white">
+            <p className="m-body-small md:body-medium mb-24 text-white">
               현재 투두: {note.todoTitle}
             </p>
             <NoteEditor initialNote={note} onAutoSave={handleAutoSave} />

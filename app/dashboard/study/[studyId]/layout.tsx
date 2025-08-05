@@ -1,4 +1,4 @@
-import StudyGroupLayout from '@/pages/dashboard/study/[studyId]/studyPage';
+import StudyGroupLayout from '@/pages/dashboard/study/[studyId]/studyLayout';
 
 interface StudyGroupLayoutProps {
   children: React.ReactNode;

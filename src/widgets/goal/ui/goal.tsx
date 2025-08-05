@@ -4,11 +4,12 @@ import { motion } from 'framer-motion';
 import { useProfileStore } from '@/features/auth-login/model/useProfileStore';
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import { notFound } from 'next/navigation';
 
 import NewTodoIcon from '@/assets/todo_new.svg';
 import EditGoalTitle from '@/features/update-goal-title/ui/update-goal-title';
 
-import Todo from '@/widgets/todo/ui/todo';
+import Todo from '@/widgets/todo/ui/TodoCard';
 import Image from 'next/image';
 import {
   teamProgress,
@@ -55,29 +56,20 @@ export default function Goal({ goalId }: { goalId: string }) {
   }
 
   if (error) {
-    return (
-      <div className="flex h-full items-center justify-center">
-        <div className="text-red-500">
-          대시보드를 불러오는 중 에러가 발생했습니다:{' '}
-          {error instanceof Error ? error.message : '알 수 없는 에러'}
-        </div>
-      </div>
-    );
+    // 404 페이지로 리다이렉트
+    notFound();
   }
 
   if (!goal) {
-    return (
-      <div className="flex h-full items-center justify-center">
-        <div className="text-gray-500">대시보드를 찾을 수 없습니다.</div>
-      </div>
-    );
+    // 404 페이지로 리다이렉트
+    notFound();
   }
 
   if (!goal?.recentCompletedTodo?.content && !goal?.inProgressTodo?.content) {
     if (!title) {
       return (
-        <div className="flex gap-27">
-          <div className="bg-surface-2 border-border-subtle h-[523px] w-full max-w-[537px] rounded-md border p-34">
+        <div className="flex min-w-0 flex-col gap-16 md:flex-row md:gap-27">
+          <div className="bg-surface-2 border-border-subtle h-[203px] w-full min-w-0 rounded-lg border px-18 py-26 md:h-[523px] md:p-34">
             <EditGoalTitle goalId={goalId} title={title} setTitle={setTitle} />
           </div>
           {/* 팀원 진행도 */}
@@ -87,15 +79,15 @@ export default function Goal({ goalId }: { goalId: string }) {
       );
     }
     return (
-      <div className="flex gap-27">
-        <div className="bg-surface-2 border-border-subtle h-[523px] w-full max-w-[537px] rounded-md border p-34">
+      <div className="flex min-w-0 flex-col gap-16 md:flex-row md:gap-27">
+        <div className="bg-surface-2 border-border-subtle h-[203px] w-full min-w-0 rounded-lg border px-18 py-26 md:h-[523px] md:p-34">
           <EditGoalTitle goalId={goalId} title={title} setTitle={setTitle} />
           <Link
             href={`/todolist-detail/${goalId}`}
-            className="mt-28 flex flex-col items-center justify-center gap-3 rounded-xl border border-dashed border-[#454545] bg-[#2c2c2c] p-8 py-36 text-base font-normal text-[#f5f5f5]"
+            className="mt-20 flex flex-col items-center justify-center gap-3 rounded-xl border border-dashed border-[#454545] bg-[#2c2c2c] px-18 py-24 text-base font-normal text-[#f5f5f5] md:mt-28"
           >
             <NewTodoIcon width={32} height={32} />
-            <span className="text-text-primary body-small">
+            <span className="text-text-primary m-body-large md:body-small">
               세부 투두를 추가해 목표를 구체화해보세요.
             </span>
           </Link>
@@ -111,13 +103,13 @@ export default function Goal({ goalId }: { goalId: string }) {
   //Todo 리스트 있을때
   return (
     <>
-      <div className="flex gap-27">
-        <div className="bg-surface-2 border-border-subtle h-[523px] w-full max-w-[537px] rounded-md border p-34">
+      <div className="flex min-w-0 flex-col gap-16 md:flex-row md:gap-27">
+        <div className="bg-surface-2 border-border-subtle w-full min-w-0 rounded-lg border px-18 py-26 md:max-w-[537px] md:p-34">
           <div className="mb-28 flex flex-col gap-8">
             {/* 스터디 목표 제목 수정 가능하게 input으로 구현 */}
             <EditGoalTitle goalId={goalId} title={title} setTitle={setTitle} />
             {/* 왼쪽 텍스트 + 진행도 메시지 */}
-            <div className="label-small text-text-primary flex items-center gap-4">
+            <div className="m-label-small md:label-small text-text-primary flex items-center gap-4">
               <span>{goal.completedCt} 완료</span>
               <span className="text-text-tertiary">|</span>
               <span>{getProgressMessage(goal.progress)}</span>
@@ -125,7 +117,7 @@ export default function Goal({ goalId }: { goalId: string }) {
           </div>
           {/* Progress 바 */}
           {/* Progress 바와 텍스트를 포함하는 컨테이너 */}
-          <div className="mb-48 h-28 overflow-hidden rounded-full bg-[#5a5a5a]">
+          <div className="mb-32 h-23 overflow-hidden rounded-full bg-[#5a5a5a] md:mb-48 md:h-28">
             <motion.div
               className="to-highlight relative h-full rounded-full bg-gradient-to-r from-[#ff7333]"
               initial={{ width: 0 }}
@@ -137,15 +129,15 @@ export default function Goal({ goalId }: { goalId: string }) {
               }}
               style={{ minWidth: '10%' }}
             >
-              <div className="body-small pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 font-bold text-white">
+              <div className="m-label-medium md:body-small pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 font-bold text-white">
                 {Math.round(goal.progress)}%
               </div>
             </motion.div>
           </div>
           {/* Todo List 리스트 항목 추가 */}
-          <div className="flex flex-col gap-32">
+          <div className="flex min-w-0 flex-col gap-20 md:gap-32">
             {/*최근 완료된 투두 */}
-            <div className="flex flex-col gap-12">
+            <div className="flex min-w-0 flex-col gap-12">
               <span className="body-medium font-medium text-white">
                 최근 완료된 투두
               </span>
@@ -159,12 +151,12 @@ export default function Goal({ goalId }: { goalId: string }) {
               )}
             </div>
             {/*진행중인 투두 */}
-            <div className="flex flex-col gap-12">
+            <div className="flex min-w-0 flex-col gap-12">
               <span className="body-medium font-medium text-white">
                 진행중인 투두
               </span>
               {goal?.inProgressTodo?.content ? (
-                <Todo todo={goal.inProgressTodo} />
+                <Todo todo={goal.inProgressTodo} inProgress={true} />
               ) : (
                 <span className="text-text-secondary body-medium">
                   진행중인 투두가 없습니다.
@@ -173,7 +165,7 @@ export default function Goal({ goalId }: { goalId: string }) {
             </div>
           </div>
           <Link href={`/todolist-detail/${goalId}`}>
-            <span className="text-text-secondary body-medium mt-28 flex items-center justify-center">
+            <span className="text-text-secondary m-body-small md:body-medium mt-20 flex items-center justify-center md:mt-28">
               전체 보기
             </span>
           </Link>
@@ -200,10 +192,12 @@ export function TeamProgressList({
 
   if (teamProgress.length === 0) {
     return (
-      <div className="bg-surface-3 border-border-subtle flex h-[204px] w-full max-w-[423px] flex-col gap-18 rounded-md border px-30 py-34">
-        <span className="headline-medium text-text-secondary">팀원 달성률</span>
+      <div className="bg-surface-3 border-border-subtle flex h-[204px] w-full flex-col gap-18 rounded-lg border px-18 py-26 md:max-w-[423px] md:px-30 md:py-34">
+        <span className="m-headline-medium md:headline-medium text-text-secondary">
+          팀원 달성률
+        </span>
         <div className="flex flex-col items-center justify-center gap-24">
-          <span className="label-small text-text-secondary text-center">
+          <span className="m-label-small md:label-small text-text-secondary text-center">
             같이 하면 더 힘이나요.
             <br />
             팀원을 초대해 함께 목표를 이뤄볼까요?
@@ -212,7 +206,7 @@ export function TeamProgressList({
             <div className="bg-surface-4 text-primary title-medium border-border-emphasis rounded border">
               <span className="px-20 py-8">{inviteCode}</span>
               <button
-                className="bg-primary body-medium cursor-pointer rounded-md px-12 py-8 text-nowrap text-white"
+                className="bg-primary m-body-small md:body-medium cursor-pointer rounded-sm px-16 py-10 text-nowrap text-white"
                 onClick={() => {
                   navigator.clipboard.writeText(String(inviteCode));
                   toast.success('초대 코드가 복사되었습니다!');
@@ -235,13 +229,15 @@ export function TeamProgressList({
   const maxMembers = 4;
   const filled = sorted.slice(0, maxMembers);
   return (
-    <div className="bg-surface-2 border-border-subtle h-[380px] w-full max-w-[423px] rounded-md border p-34">
+    <div className="bg-surface-2 border-border-subtle h-[380px] w-full rounded-md border px-16 py-26 md:max-w-[423px] md:p-34">
       <div className="flex h-full flex-col justify-between">
         <div className="flex items-center justify-between">
-          <span className="headline-medium text-white">팀원 달성률</span>
-          <span className="label-small text-text-tertiary">5분전 업데이트</span>
+          <span className="m-headline-medium md:headline-medium text-white">
+            팀원 달성률
+          </span>
+          {/* <span className="label-small text-text-tertiary">5분전 업데이트</span> */}
         </div>
-        <ul className="flex h-full w-full items-end justify-between">
+        <ul className="flex h-full w-full items-end justify-around md:justify-between">
           {Array.from({ length: maxMembers }).map((_, idx) => {
             const member = filled[idx];
             const isFirst = idx === 0;

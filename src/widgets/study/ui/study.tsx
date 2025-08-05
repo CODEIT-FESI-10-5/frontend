@@ -7,6 +7,8 @@ import UpdateStudyImage from '@/features/update-study-image/ui/update-study-imag
 import { useInviteCodeStore } from '@/entities/dashboard';
 import { useEffect } from 'react';
 import { useStudyRoleStore } from '@/entities/study/model/useStudyRoleStore';
+import { cn } from '@/shared/utils/cn';
+import { notFound } from 'next/navigation';
 
 export default function Study({ studyId }: { studyId: string }) {
   const { data: studyGroup, isLoading, error } = useStudyGroup(studyId);
@@ -39,34 +41,36 @@ export default function Study({ studyId }: { studyId: string }) {
 
   // 에러 처리
   if (error) {
-    return (
-      <div className="flex min-h-screen items-center justify-center">
-        <div className="text-red-500">
-          에러 발생:{' '}
-          {error instanceof Error ? error.message : '알 수 없는 에러'}
-        </div>
-      </div>
-    );
+    // 404 페이지로 리다이렉트
+    notFound();
   }
 
   // 스터디 그룹이 없을 경우 처리
   if (!studyGroup) {
-    return (
-      <div className="flex min-h-screen items-center justify-center">
-        <div className="text-gray-500">스터디 그룹을 찾을 수 없습니다.</div>
-      </div>
-    );
+    // 404 페이지로 리다이렉트
+    notFound();
   }
 
+  const hasImage = studyGroup.image;
   return (
     <div
-      style={{
-        backgroundImage: `linear-gradient(to bottom, rgba(0,0,0,0.45), rgba(0,0,0,0.45)), url(${studyGroup.image})`,
-        backgroundSize: 'cover',
-        backgroundRepeat: 'no-repeat',
-        backgroundPosition: 'center',
-      }}
-      className="relative px-54 pt-44 pb-32 text-white"
+      style={
+        hasImage
+          ? {
+              backgroundImage: `linear-gradient(to bottom, rgba(0,0,0,0.45), rgba(0,0,0,0.45)), url(${studyGroup.image})`,
+              backgroundSize: 'cover',
+              backgroundRepeat: 'no-repeat',
+              backgroundPosition: 'center',
+            }
+          : {
+              backgroundColor: '#3E4044',
+            }
+      }
+      className={cn(
+        'relative text-white',
+        'px-18 pt-74 pb-34',
+        'sm:px-54 sm:pt-44 sm:pb-32',
+      )}
     >
       <UpdateStudyInfo
         studyId={studyGroup.id}

@@ -1,7 +1,8 @@
 'use client';
 import Image from 'next/image';
 import SettingIcon from '@/assets/profile-settings.svg';
-import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useDrawerStore } from '@/shared/model';
 
 export default function Profile() {
   // const { isLoading, data, error } = useGetProfileQuery();
@@ -12,6 +13,10 @@ export default function Profile() {
   // localStorage.setItem('nickname', nickname);
   // localStorage.setItem('profileImg', profileImg);
   //localstorage에서 프로필 정보 가져오기
+
+  const { close } = useDrawerStore();
+  const router = useRouter();
+
   const data: {
     email: string | null;
     nickname: string | null;
@@ -20,6 +25,11 @@ export default function Profile() {
     email: localStorage.getItem('email'),
     nickname: localStorage.getItem('nickname'),
     profileImg: localStorage.getItem('profileImg'),
+  };
+
+  const handleClick = () => {
+    close();
+    router.push('/account');
   };
 
   return (
@@ -41,10 +51,10 @@ export default function Profile() {
           {data?.email}
         </p>
       </div>
-      <div className="ml-auto flex h-full w-full justify-end">
-        <Link href="/account">
+      <div className="ml-auto flex h-full w-full items-start justify-end">
+        <button onClick={handleClick}>
           <SettingIcon />
-        </Link>
+        </button>
       </div>
     </div>
   );

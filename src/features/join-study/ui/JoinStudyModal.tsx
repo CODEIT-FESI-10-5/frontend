@@ -1,7 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { joinStudySchema, JoinStudySchema, useJoinStudy } from '../model';
 import { useForm } from 'react-hook-form';
-import { SubmitButton, TextField } from '@/shared/ui';
+import { Button, TextField } from '@/shared/ui';
 import CloseIcon from '@/assets/icon-close.svg';
 import { useModal } from '@/shared/lib/utils/useModal';
 
@@ -24,7 +24,7 @@ export default function JoinStudyModal() {
     close();
   };
   return (
-    <div className="rounded-12 bg-surface-2 border-border-emphasis relative flex h-420 max-w-642 flex-col gap-30 border-1 px-100 py-68">
+    <div className="rounded-12 bg-surface-2 border-border-emphasis relative flex h-303 w-325 flex-col gap-30 border-1 px-24 py-40 md:h-420 md:w-642 md:px-100 md:py-68">
       <CloseIcon
         className="absolute top-30 right-30 h-30 w-30"
         onClick={close}
@@ -39,7 +39,7 @@ export default function JoinStudyModal() {
       </div>
       <form
         onSubmit={handleSubmit(onValid)}
-        className="flex h-165 flex-col justify-between"
+        className="flex h-165 w-full flex-col justify-between"
       >
         <TextField
           label=""
@@ -49,8 +49,14 @@ export default function JoinStudyModal() {
           errorMessage={errors.inviteCode?.message}
           {...register('inviteCode', { required: true })}
         />
-        <SubmitButton name="확인" size="lg" isActive={isValid} />
-      </form>{' '}
+        <Button
+          label="확인"
+          size="lg"
+          isActive={isValid}
+          theme="primary"
+          type="submit"
+        />
+      </form>
     </div>
   );
 }
