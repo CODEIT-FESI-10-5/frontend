@@ -1,7 +1,7 @@
 'use client';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import SubmitButton from '@/shared/ui/SubmitButton';
+import { Button } from '@/shared/ui';
 import TextField from '@/shared/ui/TextField';
 import Link from 'next/link';
 import {
@@ -71,9 +71,10 @@ export default function SignUpForm() {
             errorMessage={errors.confirmPassword?.message}
           />
         </div>
-        <SubmitButton
-          name="회원가입"
-          isActive={isValid}
+        <Button
+          label="회원가입"
+          theme="primary"
+          disabled={!isValid}
           size="lg"
           type="submit"
         />

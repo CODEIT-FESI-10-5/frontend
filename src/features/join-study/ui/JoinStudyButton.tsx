@@ -11,12 +11,6 @@ export default function JoinStudyButton() {
   };
 
   return (
-    // <button
-    //   className="bg-secondary title-small text-text-white rounded-6 h-50 w-143"
-    //   onClick={handleClick}
-    // >
-    //   코드로 가입하기
-    // </button>
     <Button
       label="코드로 가입하기"
       size="md"

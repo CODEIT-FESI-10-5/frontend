@@ -7,7 +7,7 @@ import { useDrawerStore } from '@/shared/model';
 export default function CreateStudyButton() {
   const mutation = useCreateStudy();
   const { close } = useDrawerStore();
-  const handleClick = () => {
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     mutation.mutate();
     close();
   };
@@ -18,7 +18,7 @@ export default function CreateStudyButton() {
       size="md"
       theme="primary"
       className="w-143"
-      type="submit"
+      type="button"
       onClick={handleClick}
     />
   );

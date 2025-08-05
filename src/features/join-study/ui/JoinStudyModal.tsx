@@ -52,7 +52,7 @@ export default function JoinStudyModal() {
         <Button
           label="확인"
           size="lg"
-          isActive={isValid}
+          disabled={isValid}
           theme="primary"
           type="submit"
         />

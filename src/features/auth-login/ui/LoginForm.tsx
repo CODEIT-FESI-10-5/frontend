@@ -1,7 +1,7 @@
 'use client';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import SubmitButton from '@/shared/ui/SubmitButton';
+import { Button } from '@/shared/ui';
 import TextField from '@/shared/ui/TextField';
 import Link from 'next/link';
 import {
@@ -50,9 +50,10 @@ export default function LoginForm() {
             errorMessage={errors.password?.message}
           />
         </div>
-        <SubmitButton
-          name="로그인"
-          isActive={isValid}
+        <Button
+          label="로그인"
+          disabled={!isValid}
+          theme="primary"
           size="lg"
           type="submit"
         />
