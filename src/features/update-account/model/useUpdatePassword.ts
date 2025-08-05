@@ -11,12 +11,11 @@ export function useUpdatePassword() {
     mutationFn: (data: UpdatePasswordSchema) => {
       const requestData: UpdatePasswordRequestApi = {
         currentPassword: data.currentPassword,
-        password: data.password,
-        confirmPassword: data.password,
+        newPassword: data.password,
       };
       return updatePassword(requestData);
     },
-    onSuccess: () => {
+    onSuccess: (res) => {
       toast.success('비밀번호가 변경되었습니다.');
     },
     onError: () => {

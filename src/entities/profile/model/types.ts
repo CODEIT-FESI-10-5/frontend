@@ -1,7 +1,6 @@
 export interface UpdatePasswordRequestApi {
   currentPassword: string;
-  password: string;
-  confirmPassword: string;
+  newPassword: string;
 }
 
 // 닉네임 변경

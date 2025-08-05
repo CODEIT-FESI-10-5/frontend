@@ -10,6 +10,7 @@ import { signUpHandler } from '@/features/auth-sign-up/api';
 import { todolistHandlers } from '@/entities/todolist/api/mock';
 import { sidebarJoinStudyHandler } from '@/features/join-study/api/handler';
 import { dashboardHandlers } from '@/entities/dashboard';
+import { accountHandler } from '@/features/update-account/api/handler';
 
 export const handlers = [
   ...sidebarProfileHandler,
@@ -24,4 +25,5 @@ export const handlers = [
   ...loginHandler,
   ...signUpHandler,
   ...sidebarJoinStudyHandler,
+  ...accountHandler,
 ];

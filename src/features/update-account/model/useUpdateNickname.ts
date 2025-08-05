@@ -14,10 +14,13 @@ export function useUpdateNickname() {
       };
       return updateNickname(requestData);
     },
-    onSuccess: () => {
+    onSuccess: (res) => {
+      const nickname = res.data.nickname;
+      localStorage.setItem('nickname', nickname);
       toast.success('닉네임이 변경되었습니다.');
     },
-    onError: () => {
+    onError: (res) => {
+      console.log(res);
       toast.error('닉네임 변경에 실패했습니다.');
     },
   });

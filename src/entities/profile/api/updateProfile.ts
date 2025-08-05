@@ -8,6 +8,6 @@ export const updateProfile = async (data: UpdateProfileRequestApi) => {
   if (data.profileImageAction === 'UPLOAD' && data.newImageFile) {
     formData.append('newImageFile', data.newImageFile);
   }
-  console.log(formData);
+
   return clientFetch.patch('/api/user/profileImg', formData);
 };
