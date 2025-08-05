@@ -6,6 +6,7 @@ export interface TodolistState {
   done: Todo[];
   shared: Todo[];
   personal: Todo[];
+  inProgressTodoId: string | undefined;
 }
 
 export interface TodolistAction {
@@ -17,6 +18,7 @@ export interface TodolistAction {
     newShared: Todo[],
     newPersonal: Todo[],
   ) => void;
+  setInProgressTodoId: (foundTodoId: string | undefined) => void;
   getCurrOrder: () => Array<string>;
   getTodoCount: () => number;
 }
@@ -36,6 +38,10 @@ export const useTodolistStore = create<TodolistState & TodolistAction>()(
           done: [...newDone],
           shared: [...newShared],
           personal: [...newPersonal],
+        })),
+      setInProgressTodoId: (foundTodoId: string | undefined) =>
+        set(() => ({
+          inProgressTodoId: foundTodoId,
         })),
       getCurrOrder: () => {
         const { done, shared, personal } = get();

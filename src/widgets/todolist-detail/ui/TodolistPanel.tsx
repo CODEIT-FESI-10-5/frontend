@@ -12,6 +12,7 @@ import ConfirmButton from '@/features/create-todo/ui/ConfirmButton';
 import toast from 'react-hot-toast';
 import { useGoalId } from '@/shared/model/useGoalId';
 import { AppBar } from '@/shared/ui';
+import findInProgressTodoId from '@/entities/todolist/lib/utils/findInProgressTodo';
 
 function TitleArea({ title = '목표' }: { title?: string }) {
   const toggleEditMode = useCreateTodoStore((state) => state.toggleEditMode);
@@ -46,30 +47,36 @@ function TitleArea({ title = '목표' }: { title?: string }) {
 export default function TodolistPanel() {
   const goalId = useGoalId();
   const { data, isLoading, isError } = useTodolistQuery(goalId);
-  const { setAllGroup } = useTodolistStore();
+  const { setAllGroup, setInProgressTodoId } = useTodolistStore();
 
   useEffect(() => {
     if (!data) return;
     const { newDone, newShared, newPersonal } = divideTodoGroup(data.todolist);
     setAllGroup(newDone, newShared, newPersonal);
-  }, [data, setAllGroup]);
+    const inProgressTodoId = findInProgressTodoId([
+      ...newDone,
+      ...newShared,
+      ...newPersonal,
+    ]);
+    setInProgressTodoId(inProgressTodoId);
+  }, [data, setAllGroup, setInProgressTodoId]);
 
   if (isLoading) return <>Todolist - 불러오는 중입니다</>;
 
   if (isError) return <>Todolist - 불러오는데 실패했습니다</>;
 
   return (
-    <div className="bg-surface-2 flex min-h-screen w-full flex-col rounded-sm xl:min-h-fit xl:max-w-740">
-      <LayoutGroup>
+    <LayoutGroup>
+      <motion.div
+        layout
+        className="bg-surface-2 flex min-h-screen w-full flex-col rounded-sm xl:min-h-fit xl:max-w-740"
+      >
         <AppBar pageName="투두 상세" />
-        <motion.div
-          layout
-          className="relative flex flex-col rounded-sm px-16 py-18 md:px-34 md:py-40"
-        >
+        <div className="relative flex flex-col rounded-sm px-16 py-18 md:px-34 md:py-40">
           <TitleArea title={data?.title} />
           <Todolist />
-        </motion.div>
-      </LayoutGroup>
-    </div>
+        </div>
+      </motion.div>
+    </LayoutGroup>
   );
 }

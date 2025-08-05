@@ -24,6 +24,7 @@ export default function TodoCardDragGroup({ type }: TodoCardDragGroupProps) {
     done: (state: TodolistAction) => state.setDone,
   };
   const setTodoGroup = useTodolistStore((state) => setFns[type](state));
+  const inProgressTodoId = useTodolistStore((state) => state.inProgressTodoId);
   const draggable = !(type === 'done');
   const updateOrder = useUpdateTodoOrderMutation(goalId);
   const handleDrop = (targetId: string) => {
@@ -69,7 +70,7 @@ export default function TodoCardDragGroup({ type }: TodoCardDragGroupProps) {
                 prevSnapshot.current = [];
               }}
             >
-              <TodoCard todo={todo} />
+              <TodoCard todo={todo} inProgress={todo.id === inProgressTodoId} />
             </Reorder.Item>
           </motion.div>
         ))}
