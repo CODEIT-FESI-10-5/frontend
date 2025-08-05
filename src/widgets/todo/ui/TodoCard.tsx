@@ -22,7 +22,7 @@ export default function TodoCard({
     <div
       aria-label="todo-card"
       className={cn(
-        'text-text-primary flex h-70 w-full items-center justify-between rounded-lg px-12 md:h-72 md:px-14',
+        'text-text-primary flex min-h-72 w-full items-center justify-between rounded-lg px-12 py-14 md:px-14',
         `${inProgress ? 'bg-secondary' : 'bg-surface-4'}`,
       )}
     >
