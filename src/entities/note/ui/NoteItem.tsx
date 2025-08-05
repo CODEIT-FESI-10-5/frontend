@@ -41,9 +41,7 @@ export function NoteItem({
             </span>
             <h3 className="text-lg font-semibold">{note.todoTitle}</h3>
           </div>
-          <AnimatePresence initial={false}>
-            {isExpanded && actions}
-          </AnimatePresence>
+          <div className="hidden md:block">{isExpanded && actions}</div>
         </div>
         <AnimatePresence initial={false}>
           {isExpanded && (
@@ -66,20 +64,13 @@ export function NoteItem({
                     )}
                   </div>
                 </div>
-                <div className="text-text-tertiary mt-2 text-sm">
-                  <span>
-                    생성일: {new Date(note.createdAt).toLocaleDateString()}
-                  </span>
-                  {note.updatedAt !== note.createdAt && (
-                    <span className="ml-4">
-                      수정일: {new Date(note.updatedAt).toLocaleDateString()}
-                    </span>
-                  )}
-                </div>
               </div>
             </motion.div>
           )}
         </AnimatePresence>
+        <div className="md:hidden">
+          {isExpanded && <div className="mt-16 w-full">{actions}</div>}
+        </div>
       </div>
     </div>
   );
