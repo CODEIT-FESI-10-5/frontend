@@ -37,28 +37,44 @@ export default function CreateTodoForm() {
   return (
     <form
       onSubmit={handleSubmit}
-      className="bg-surface-4 mb-16 flex h-72 w-full items-center justify-between gap-14 rounded-lg p-16"
+      className={cn(
+        'bg-surface-4 jutify-between mb-16 flex h-fit min-h-72 w-full items-center rounded-lg border',
+        'm-body-large md:body-medium gap-14 px-12 py-14 md:px-14',
+        data?.role === 'LEADER' ? 'flex-col md:flex-row' : '',
+        isInvalid ? 'border-highlight' : 'border-surface-4',
+      )}
     >
-      <CheckTodoBlankIcon width={30} height={30} />
-      <input
-        aria-invalid={isInvalid ? 'true' : undefined}
-        className={cn(
-          'body-medium text-text-secondary placeholder:text-text-tertiary flex-grow',
-          'border-border-default outline-none',
-          {
-            'border-frame-error placeholder:text-red-300': isInvalid,
-          },
-        )}
-        type="text"
-        placeholder="입력하세요..."
-        value={content}
-        onChange={(e) => {
-          setContent(e.target.value);
-        }}
-      />
+      <div
+        className={cn('flex min-w-0 flex-grow gap-14', {
+          'self-start md:self-center': data?.role === 'LEADER',
+        })}
+      >
+        <CheckTodoBlankIcon className="h-24 w-24 flex-shrink-0 md:h-[30px] md:w-[30px]" />
+        <input
+          aria-invalid={isInvalid ? 'true' : undefined}
+          className={cn(
+            'min-w-0 flex-shrink-1 flex-grow text-white outline-none',
+            isInvalid
+              ? 'placeholder:text-highlight'
+              : 'placeholder:text-text-tertiary',
+          )}
+          type="text"
+          placeholder="입력하세요..."
+          maxLength={30}
+          value={content}
+          onChange={(e) => {
+            setContent(e.target.value);
+          }}
+        />
+      </div>
 
-      <div className="flex flex-shrink-0 justify-between gap-9">
-        {data?.role && (
+      <div
+        className={cn(
+          'flex flex-shrink-0 justify-end gap-9',
+          data?.role === 'LEADER' ? 'self-end md:self-center' : '',
+        )}
+      >
+        {data?.role === 'LEADER' && (
           <ToggleButton isOn={isShared} toggleSwitch={() => toggleIsShared()}>
             {'공통'}
           </ToggleButton>
