@@ -1,8 +1,7 @@
 import { cva } from 'class-variance-authority';
 import { cn } from '../utils/cn';
 
-interface SubmitButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   label: React.ReactNode;
   size: 'lg' | 'md' | 'sm' | 'xs';
   theme: 'primary' | 'tertiary' | 'highlight' | 'surface';
@@ -44,7 +43,7 @@ export default function Button({
   className,
   disabled = false,
   ...props
-}: SubmitButtonProps) {
+}: ButtonProps) {
   return (
     <button
       {...props}
