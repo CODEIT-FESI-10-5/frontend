@@ -192,7 +192,14 @@ export const todolistHandlers = [
       (todo) => todo.todoId === parseInt(todoId),
     );
     if (index === -1) {
-      return HttpResponse.json({ status: 404, message: 'Todo not found' });
+      return new HttpResponse(
+        JSON.stringify({
+          httpStatusCode: 404,
+          errorCode: 'NOT_FOUND',
+          errorMessage: '투두를 찾을 수 없습니다.',
+        }),
+        { status: 404 },
+      );
     }
 
     targetTodolist.todolist.splice(index, 1);
