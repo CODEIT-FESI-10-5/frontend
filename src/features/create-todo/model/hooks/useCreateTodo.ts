@@ -1,8 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useTodoCustomMutation } from '@/shared/lib/utils/useTodoCustomMutation';
+import { useCustomMutation } from '@/shared/lib/utils/useCustomMutation';
 import { createTodo, newTodoData } from '../../api';
 import { todolistQueryKeys } from '@/entities/todolist/model';
-import toast from 'react-hot-toast';
 import { dashboardQueryKeys } from '@/entities/dashboard';
 
 interface CreateTodoMutationParams {
@@ -10,18 +9,11 @@ interface CreateTodoMutationParams {
 }
 
 export const useCreateTodoMutation = (goalId: string) =>
-  useTodoCustomMutation<CreateTodoMutationParams, any>(
-    ({ newTodo }) => createTodo(goalId, newTodo),
-    [
+  useCustomMutation<CreateTodoMutationParams, any>({
+    mutationFn: ({ newTodo }) => createTodo(goalId, newTodo),
+    invalidateQueryKeys: [
       [...dashboardQueryKeys.goal(goalId)],
       [...todolistQueryKeys.todolist(goalId)],
     ],
-    {
-      onSuccess: () => {
-        toast.success('투두 생성에 성공했습니다');
-      },
-      onError: () => {
-        toast.error('투두 생성에 실패했습니다');
-      },
-    },
-  );
+    successMessage: '투두 생성에 성공했습니다',
+  });

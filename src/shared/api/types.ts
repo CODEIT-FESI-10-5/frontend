@@ -13,10 +13,13 @@ export interface PaginatedResponse<T> {
   totalPages: number;
 }
 
-export interface ApiError {
-  message: string;
-  code?: string;
+export interface ApiError extends Error {
   status: number;
+  body: {
+    httpStatusCode: number;
+    errorMessage: string;
+    errorCode?: string;
+  };
 }
 
 // HTTP 메서드 타입
