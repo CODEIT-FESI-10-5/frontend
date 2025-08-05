@@ -44,10 +44,14 @@ export const Modal = () => {
       >
         <motion.div
           className="w-full max-w-md"
-          initial={{ opacity: 0, y: 100 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: 100 }}
-          transition={{ type: 'spring', damping: 25, stiffness: 500 }}
+          initial={{ y: '100%' }}
+          animate={{ y: 0 }}
+          exit={{ y: '100%' }}
+          transition={{
+            type: 'tween',
+            duration: 0.23,
+            ease: [0.25, 0.46, 0.45, 0.94], // easeOutQuart
+          }}
         >
           <div onClick={(e) => e.stopPropagation()}>{content}</div>
         </motion.div>

@@ -8,6 +8,7 @@ import Image from 'next/image';
 import { useModal } from '@/shared/lib/utils/useModal';
 import toast from 'react-hot-toast';
 import { cn } from '@/shared/lib/utils/cn';
+import CloseIcon from '@/assets/icon-close.svg';
 
 export default function StudyInfo({
   members,
@@ -146,33 +147,33 @@ export default function StudyInfo({
 }
 
 function ProfileModal({ members }: { members: StudyGroup['members'] }) {
+  const { close } = useModal();
+
   return (
-    <div className="bg-surface-4 border-border-emphasis rounded-md border shadow-lg md:px-20 md:py-24">
+    <div className="bg-surface-4 flex flex-col gap-24 rounded-t-2xl p-24 shadow-lg md:hidden">
       {/* 모바일용 하단 모달 헤더 */}
-      <div className="border-border-emphasis flex items-center justify-between border-b px-20 py-16 md:hidden">
-        <h3 className="title-medium text-white">팀원 목록</h3>
-        <div className="bg-surface-3 h-4 w-40 rounded-full"></div>
+      <div className="flex items-center justify-between">
+        <h3 className="m-title-medium text-white">팀원 목록</h3>
+        <CloseIcon width={24} height={24} onClick={close} />
       </div>
 
       {/* 멤버 리스트 */}
-      <div className="px-20 py-24 md:px-0 md:py-0">
-        <ul className="flex flex-col gap-14">
-          {members.map((member) => (
-            <li key={member.id} className="flex items-center gap-12">
-              <div className="relative h-32 w-32">
-                <Image
-                  src={member.image || '/images/default-profile.png'}
-                  alt={member.nickname}
-                  fill
-                  className="rounded-full object-cover"
-                  style={{ objectFit: 'cover' }}
-                />
-              </div>
-              <span className="label-small text-white">{member.nickname}</span>
-            </li>
-          ))}
-        </ul>
-      </div>
+      <ul className="flex flex-col gap-14">
+        {members.map((member) => (
+          <li key={member.id} className="flex items-center gap-12">
+            <div className="relative h-40 w-40">
+              <Image
+                src={member.image || '/images/default-profile.png'}
+                alt={member.nickname}
+                fill
+                className="rounded-full object-cover"
+                style={{ objectFit: 'cover' }}
+              />
+            </div>
+            <span className="m-body-small text-white">{member.nickname}</span>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
