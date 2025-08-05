@@ -29,7 +29,7 @@ export function NoteEditor({ initialNote, onAutoSave }: NoteEditorProps) {
       }),
       Underline,
       Highlight,
-      Placeholder.configure({ placeholder: '노트 내용을 입력하세요...' }),
+      Placeholder.configure({ placeholder: '노트를 적어주세요!' }),
     ],
     content: initialNote?.content || '',
     onUpdate: ({ editor }) => {
