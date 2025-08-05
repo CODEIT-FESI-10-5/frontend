@@ -1,3 +1,3 @@
-export * from './UpdateProfile';
-export * from './UpdateName';
-export * from './UpdatePassword';
+export { default as UpdateProfile } from './UpdateProfile';
+export { default as UpdateNickname } from './UpdateNickname';
+export { default as UpdatePassword } from './UpdatePassword';

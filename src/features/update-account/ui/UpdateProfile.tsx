@@ -3,13 +3,19 @@ import Image from 'next/image';
 import { Button } from '@/shared/ui';
 import DeleteIcon from '@/assets/icon-delete.svg';
 import { useState, useRef } from 'react';
+import { useChangeProfile } from '../model';
 
 export default function UpdateProfile() {
+  const profileImg = localStorage.getItem('profileImg');
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const [imageSrc, setImageSrc] = useState('/images/default-profile.png');
-  const [uploadedImage, setUploadedImage] = useState<File | null>(null);
-  const [isActive, setIsActive] = useState(false);
+  const [imageSrc, setImageSrc] = useState(
+    profileImg ? profileImg : '/images/default-profile.png',
+  );
+
+  const { mutate: changeProfileImage } = useChangeProfile((newProfileUrl) => {
+    setImageSrc(newProfileUrl);
+  });
 
   // 이미지 업로드
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -19,18 +25,21 @@ export default function UpdateProfile() {
       const reader = new FileReader();
       reader.onloadend = () => {
         setImageSrc(reader.result as string);
-        setUploadedImage(file);
-        setIsActive(true);
       };
+      changeProfileImage({
+        profileImageAction: 'UPLOAD',
+        newImageFile: file,
+      });
       reader.readAsDataURL(file);
     }
   };
 
   // 이미지 삭제
-  const handleDeleteImage = () => {
+  const handleDeleteImage = (e: React.ChangeEvent<HTMLInputElement>) => {
     setImageSrc('/images/default-profile.png');
-    setUploadedImage(null);
-    setIsActive(true);
+    changeProfileImage({
+      profileImageAction: 'RESET',
+    });
   };
 
   return (
@@ -50,7 +59,6 @@ export default function UpdateProfile() {
               <Button
                 label="이미지 변경"
                 size="xs"
-                isActive={isActive}
                 theme="primary"
                 type="button"
                 onClick={() => fileInputRef.current?.click()}

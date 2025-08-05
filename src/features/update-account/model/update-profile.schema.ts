@@ -14,3 +14,9 @@ export const changePasswordSchema = z
   });
 
 export type ChangePasswordSchema = z.infer<typeof changePasswordSchema>;
+
+export const changeNicknameSchema = z.object({
+  nickname: z.string().max(10, { message: '닉네임을 10자 내로 적어주세요.' }),
+});
+
+export type ChangeNicknameSchema = z.infer<typeof changeNicknameSchema>;
