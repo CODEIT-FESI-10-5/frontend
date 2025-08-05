@@ -4,7 +4,6 @@ import { cn } from '../utils/cn';
 interface SubmitButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   label: React.ReactNode;
-  isActive?: boolean;
   size: 'lg' | 'md' | 'sm' | 'xs';
   theme: 'primary' | 'tertiary' | 'highlight' | 'surface';
   className?: string;
@@ -40,10 +39,10 @@ const disabledVariants = cva('', {
 
 export default function Button({
   label,
-  isActive = true,
   size,
   theme,
   className,
+  disabled = false,
   ...props
 }: SubmitButtonProps) {
   return (
@@ -51,7 +50,7 @@ export default function Button({
       {...props}
       className={cn(
         buttonVariants({ size, theme }),
-        !isActive && disabledVariants({ size }),
+        disabled && disabledVariants({ size }),
         className,
       )}
     >
