@@ -1,12 +1,38 @@
 'use client';
 
-import { useSearchParams } from 'next/navigation';
+import { useSearchParams, useRouter } from 'next/navigation';
 import { useNotesByStudyGoalId } from '@/entities/note/api/noteQueries';
 import { NoteList } from '@/widgets/note-list';
+import { useGetGoal } from '@/entities/goal/model/useGetGoal';
+import { useStudyStore } from '@/features/get-study-list/model';
+import { useGoalStore } from '@/features/get-goal-list/model';
+import { useEffect } from 'react';
 
 export function NoteListPage() {
   const searchParams = useSearchParams();
-  const hasStudyGoalId = searchParams?.get('studyGoalId') !== null;
+  const router = useRouter();
+
+  // useStudyStore에서 현재 스터디 아이디를 가져옴
+  const { currentStudyId } = useStudyStore();
+
+  // useGoalStore에서 현재 목표 아이디를 가져옴
+  const { setGoalId } = useGoalStore();
+
+  const studyGoalIdParam = searchParams?.get('studyGoalId');
+  const hasStudyGoalId = studyGoalIdParam !== null;
+
+  // 목표 목록 가져오기
+  const { data: goalData } = useGetGoal(Number(currentStudyId));
+
+  // studyGoalId가 없고 목표가 있을 때 첫 번째 목표로 자동 이동
+  useEffect(() => {
+    if (!hasStudyGoalId && goalData && goalData.goals.length > 0) {
+      const firstGoalId = goalData.goals[0].id;
+      setGoalId(String(firstGoalId));
+      router.replace(`/note?studyGoalId=${firstGoalId}`);
+    }
+  }, [hasStudyGoalId, goalData, router, setGoalId]);
+
   const { data: notesResponse, isLoading, isError } = useNotesByStudyGoalId();
 
   const notes = notesResponse?.data?.notes || [];
@@ -50,7 +76,7 @@ export function NoteListPage() {
         ) : (
           <div className="py-12 text-center">
             <div className="mb-4 text-gray-500">
-              학습 목표를 선택하여 노트를 확인하세요.
+              생성된 목표가 없습니다.
             </div>
           </div>
         )}
