@@ -22,11 +22,23 @@ export default function StudyInfo({
   const { open } = useModal();
 
   const handleMemberTextClick = () => {
-    if (memberTextRef.current && members.length > 0) {
-      open(<ProfileModal members={members} />, memberTextRef, {
-        top: 8,
-        left: 0,
-      });
+    if (members.length > 0) {
+      // 모바일에서는 하단 모달, 데스크톱에서는 위치 기반 모달
+      const isMobile = window.innerWidth < 768; // md breakpoint
+
+      if (isMobile) {
+        open(
+          <ProfileModal members={members} />,
+          undefined,
+          undefined,
+          'bottom',
+        );
+      } else {
+        open(<ProfileModal members={members} />, memberTextRef, {
+          top: 8,
+          left: 0,
+        });
+      }
     }
   };
 
@@ -135,23 +147,32 @@ export default function StudyInfo({
 
 function ProfileModal({ members }: { members: StudyGroup['members'] }) {
   return (
-    <div className="bg-surface-4 border-border-emphasis rounded-md border px-20 py-24 shadow-lg">
-      <ul className="flex flex-col gap-14">
-        {members.map((member) => (
-          <li key={member.id} className="flex items-center gap-12">
-            <div className="relative h-32 w-32">
-              <Image
-                src={member.image || '/images/default-profile.png'}
-                alt={member.nickname}
-                fill
-                className="rounded-full object-cover"
-                style={{ objectFit: 'cover' }}
-              />
-            </div>
-            <span className="label-small text-white">{member.nickname}</span>
-          </li>
-        ))}
-      </ul>
+    <div className="bg-surface-4 border-border-emphasis rounded-md border shadow-lg md:px-20 md:py-24">
+      {/* 모바일용 하단 모달 헤더 */}
+      <div className="border-border-emphasis flex items-center justify-between border-b px-20 py-16 md:hidden">
+        <h3 className="title-medium text-white">팀원 목록</h3>
+        <div className="bg-surface-3 h-4 w-40 rounded-full"></div>
+      </div>
+
+      {/* 멤버 리스트 */}
+      <div className="px-20 py-24 md:px-0 md:py-0">
+        <ul className="flex flex-col gap-14">
+          {members.map((member) => (
+            <li key={member.id} className="flex items-center gap-12">
+              <div className="relative h-32 w-32">
+                <Image
+                  src={member.image || '/images/default-profile.png'}
+                  alt={member.nickname}
+                  fill
+                  className="rounded-full object-cover"
+                  style={{ objectFit: 'cover' }}
+                />
+              </div>
+              <span className="label-small text-white">{member.nickname}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 }
