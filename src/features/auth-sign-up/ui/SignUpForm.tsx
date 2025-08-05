@@ -82,7 +82,7 @@ export default function SignUpForm() {
       <div className="mt-24 flex items-start justify-center">
         <Link
           href={'/auth/login'}
-          className="text-text-secondary label-medium underline"
+          className="text-text-secondary label-small underline"
         >
           로그인
         </Link>

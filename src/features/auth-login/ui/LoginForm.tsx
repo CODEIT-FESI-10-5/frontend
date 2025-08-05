@@ -59,11 +59,11 @@ export default function LoginForm() {
         />
       </form>
       <div className="mt-24 flex items-start justify-center">
-        <p className="text-text-tertiary label-medium">
+        <p className="text-text-tertiary label-small">
           아직 회원이 아닌가요?&nbsp;
           <Link
             href={'/auth/sign-up'}
-            className="text-text-secondary label-medium underline"
+            className="text-text-secondary label-small underline"
           >
             회원가입하기
           </Link>
