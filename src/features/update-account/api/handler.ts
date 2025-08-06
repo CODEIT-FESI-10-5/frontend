@@ -33,12 +33,11 @@ export const accountHandler = [
     return HttpResponse.json(mockUpdatePasswordResponse);
   }),
 
-  http.patch('/api/user/nickname', async ({ request }) => {
-    const body = await request.json();
+  http.patch('/api/user/nickname', async () => {
     return HttpResponse.json(mockUpdateNicknameResponse);
   }),
 
-  http.patch('/api/user/profileImg', async ({ request }) => {
+  http.patch('/api/user/profileImg', async () => {
     return HttpResponse.json(mockUpdateProfileResponse);
   }),
 ];
