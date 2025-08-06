@@ -8,6 +8,7 @@ interface LoadingState {
 
 export const useLoadingStore = create<LoadingState>((set) => {
   let timeoutId: NodeJS.Timeout | null = null;
+  let startTime: number | null = null;
 
   return {
     isLoading: false,
@@ -17,14 +18,19 @@ export const useLoadingStore = create<LoadingState>((set) => {
         clearTimeout(timeoutId);
         timeoutId = null;
       }
+      startTime = Date.now();
       set({ isLoading: true });
     },
     stopLoading: () => {
-      // 1.5초 후 로딩 상태 종료
+      const minLoadingTime = 1500;
+      const elapsedTime = startTime ? Date.now() - startTime : 0;
+      const remainingTime = Math.max(0, minLoadingTime - elapsedTime);
+
       timeoutId = setTimeout(() => {
         set({ isLoading: false });
         timeoutId = null;
-      }, 1500);
+        startTime = null;
+      }, remainingTime);
     },
   };
 }); 
