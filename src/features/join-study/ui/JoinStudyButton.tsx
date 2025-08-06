@@ -16,6 +16,7 @@ export default function JoinStudyButton() {
       size="md"
       theme="tertiary"
       type="button"
+      className="w-144"
       onClick={handleClick}
     />
   );
