@@ -5,7 +5,6 @@ import {
   UpdatePassword,
   UpdateProfile,
 } from '@/features/update-account/ui';
-import { Button } from '@/shared/ui';
 
 export default function AccountForm() {
   return (
