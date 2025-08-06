@@ -43,7 +43,7 @@ export default function SideBarWrapper({
 
   if (isAuthPage || isNotFoundPage)
     return (
-      <main className="box-border flex h-screen w-dvw items-center justify-center">
+      <main className="box-border flex h-dvh w-dvw items-center justify-center">
         {children}
       </main>
     );

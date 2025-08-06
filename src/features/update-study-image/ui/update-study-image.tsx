@@ -6,6 +6,7 @@ import toast from 'react-hot-toast';
 import SettingIcon from '@/assets/icon-Settings.svg';
 import { useModal } from '@/shared/lib/utils/useModal';
 import Link from 'next/link';
+import { cn } from '@/shared/lib/utils/cn';
 
 interface UpdateStudyImageProps {
   studyId: string;
@@ -52,9 +53,17 @@ export default function UpdateStudyImage({ studyId }: UpdateStudyImageProps) {
 
   if (!userRole) {
     return (
-      <span className="absolute top-10 right-10 z-10 flex items-center gap-4">
+      <span
+        className={cn('absolute top-10 right-10 z-10 flex items-center gap-4')}
+      >
         <Link href="/note">
-          <button className="body-small text-text-primary flex items-center justify-center rounded-full border border-[#a9abb9] px-10 py-6">
+          <button
+            className={cn(
+              'text-text-primary flex items-center justify-center rounded-full border border-[#a9abb9]',
+              'm-label-small px-8 py-4',
+              'md:body-small md:px-10 md:py-6',
+            )}
+          >
             노트 모아보기
           </button>
         </Link>
@@ -72,20 +81,28 @@ export default function UpdateStudyImage({ studyId }: UpdateStudyImageProps) {
         onChange={handleImageChange}
       />
       <span
-        className="absolute top-10 right-10 z-10 flex items-center gap-4"
+        className={cn('absolute top-10 right-10 z-10 flex items-center gap-4')}
         ref={settingIconRef}
       >
         <Link href="/note">
-          <button className="m-label-small md:body-small text-text-primary flex items-center justify-center rounded-full border border-[#a9abb9] px-8 py-4 md:px-10 md:py-6">
+          <button
+            className={cn(
+              'text-text-primary flex items-center justify-center rounded-full border border-[#a9abb9]',
+              'm-label-small px-8 py-4',
+              'md:body-small md:px-10 md:py-6',
+            )}
+          >
             노트 모아보기
           </button>
         </Link>
         <button
           onClick={handleSettingIconClick}
-          className="p-2 transition-all duration-200 hover:cursor-pointer disabled:opacity-50"
+          className={cn(
+            'p-2 transition-all duration-200 hover:cursor-pointer disabled:opacity-50',
+          )}
           title="배경 이미지 설정"
         >
-          <SettingIcon />
+          <SettingIcon className={cn('', 'h-26 w-26', 'md:h-34 md:w-34')} />
         </button>
       </span>
     </>
@@ -101,15 +118,27 @@ function SettingModal({
   onDeleteBg: () => void;
 }) {
   return (
-    <div className="flex flex-col rounded-xl border border-[#d4d4d4] bg-white text-nowrap text-[#353535] shadow-lg">
+    <div
+      className={cn(
+        'flex flex-col rounded-xl border border-[#d4d4d4] bg-white text-nowrap text-[#353535] shadow-lg',
+      )}
+    >
       <button
-        className="body-medium cursor-pointer border-b px-30 py-14"
+        className={cn(
+          'cursor-pointer border-b px-30 py-14',
+          'm-body-large',
+          'body-medium',
+        )}
         onClick={onChangeBg}
       >
         배경 변경
       </button>
       <button
-        className="body-medium cursor-pointer px-30 py-14"
+        className={cn(
+          'cursor-pointer px-30 py-14',
+          'm-body-large',
+          'body-medium',
+        )}
         onClick={onDeleteBg}
       >
         배경 삭제

@@ -1,12 +1,13 @@
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useSearchParams } from 'next/navigation';
 import {
   getNoteById,
   getNoteListByStudyGoalId,
   patchNote,
 } from '../api/noteApi';
-import { NoteListResponse, UpdateNoteRequest } from '../model/types';
+import { NoteListResponse, NoteResponse, UpdateNoteRequest } from '../model/types';
 import { noteKeys } from '../model/queryKeys';
+import { useCustomMutation } from '@/shared/lib/utils/useCustomMutation';
 
 // 노트 목록 데이터 가져오기
 export const useNotesByStudyGoalId = () => {
@@ -30,25 +31,21 @@ export const useGetNoteById = (noteId: number) => {
 };
 
 // 노트 수정
-export const useUpdateNote = () => {
+export const useUpdateNoteMutation = () => {
   const queryClient = useQueryClient();
 
-  return useMutation({
+  return useCustomMutation<UpdateNoteRequest, NoteResponse>({
     mutationFn: (noteData: UpdateNoteRequest) => patchNote(noteData),
-    onSuccess: (data, variables) => {
-      // 새로운 응답 구조에 맞게 캐시 업데이트
-      queryClient.setQueryData(
-        noteKeys.detail(variables.id),
-        data
-      );
-
-      // 노트 목록 쿼리 무효화
-      queryClient.invalidateQueries({
-        queryKey: noteKeys.lists(),
-      });
-    },
-    onError: (error) => {
-      console.error('노트 수정 실패:', error);
+    invalidateQueryKeys: [[...noteKeys.lists()]],
+    // successMessage: '노트가 수정되었습니다!',
+    mutationOptions: {
+      onSuccess: (data, variables) => {
+        // 새로운 응답 구조에 맞게 캐시 업데이트
+        queryClient.setQueryData(
+          noteKeys.detail(variables.id),
+          data
+        );
+      },
     },
   });
 };

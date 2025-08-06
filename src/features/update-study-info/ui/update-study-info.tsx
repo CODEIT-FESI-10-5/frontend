@@ -3,6 +3,7 @@
 import { useRef, useState } from 'react';
 import { useStudyRoleStore } from '@/entities/study/model/useStudyRoleStore';
 import { useUpdateStudyInfoMutation } from '@/features/update-study-info';
+import { cn } from '@/shared/lib/utils/cn';
 
 export default function UpdateStudyInfo(props: {
   title: string;
@@ -46,7 +47,7 @@ export default function UpdateStudyInfo(props: {
   return (
     <div>
       {/* 컨텐츠 */}
-      <div className="mb-35 flex flex-col gap-13">
+      <div className={cn('mb-35 flex flex-col gap-13')}>
         {/* 스터디 제목/설명: LEADER만 편집, 그 외는 span/div로 표시 */}
         {userRole ? (
           <>
@@ -54,23 +55,43 @@ export default function UpdateStudyInfo(props: {
               type="text"
               value={title}
               onChange={handleTitleChange}
-              className="m-headline-large md:headline-large w-full border-none bg-transparent placeholder-gray-300 outline-none"
+              className={cn(
+                'w-full border-none bg-transparent placeholder-gray-300 outline-none',
+                'm-headline-large',
+                'md:headline-large',
+              )}
               placeholder="스터디 제목을 입력하세요..."
             />
             <textarea
               value={description}
               onChange={handleDescriptionChange}
-              className="m-body-small md:label-small text-text-primary w-full resize-none border-none placeholder-gray-300 outline-none"
+              className={cn(
+                'text-text-primary w-full resize-none border-none placeholder-gray-300 outline-none',
+                'm-body-small',
+                'md:label-small',
+              )}
               placeholder="스터디 목표나 응원 메세지를 적어주세요..."
               rows={1}
             />
           </>
         ) : (
           <>
-            <span className="m-headline-large md:headline-large block w-full bg-transparent text-white">
+            <span
+              className={cn(
+                'block w-full bg-transparent text-white',
+                'm-headline-large',
+                'md:headline-large',
+              )}
+            >
               {title || '스터디 제목 없음'}
             </span>
-            <div className="m-body-small md:label-small text-text-primary block w-full whitespace-pre-line">
+            <div
+              className={cn(
+                'text-text-primary block w-full whitespace-pre-line',
+                'm-body-small',
+                'md:label-small',
+              )}
+            >
               {description || '스터디 목표나 응원 메세지가 없습니다.'}
             </div>
           </>

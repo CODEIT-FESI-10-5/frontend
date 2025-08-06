@@ -9,6 +9,7 @@ import { useModal } from '@/shared/lib/utils/useModal';
 import toast from 'react-hot-toast';
 import { cn } from '@/shared/lib/utils/cn';
 import CloseIcon from '@/assets/icon-close.svg';
+import { Button } from '@/shared/ui';
 
 export default function StudyInfo({
   members,
@@ -71,7 +72,11 @@ export default function StudyInfo({
               {members.slice(0, 4).map((member, index) => (
                 <div
                   key={member.id}
-                  className="border-text-secondary relative h-26 w-26 overflow-hidden rounded-full border-2 md:h-32 md:w-32"
+                  className={cn(
+                    'border-text-secondary relative overflow-hidden rounded-full border-2',
+                    'h-26 w-26',
+                    'md:h-32 md:w-32',
+                  )}
                   style={{ zIndex: members.length + index }}
                 >
                   <Image
@@ -85,8 +90,20 @@ export default function StudyInfo({
               ))}
               {/* 추가 멤버가 있을 경우 +숫자 표시 */}
               {members.length > 4 && (
-                <div className="border-text-secondary z-30 flex h-26 w-26 items-center justify-center rounded-full border-2 bg-gray-600 md:h-32 md:w-32">
-                  <span className="m-label-medium md:label-large text-white">
+                <div
+                  className={cn(
+                    'border-text-secondary z-30 flex items-center justify-center rounded-full border-2 bg-gray-600',
+                    'h-26 w-26',
+                    'md:h-32 md:w-32',
+                  )}
+                >
+                  <span
+                    className={cn(
+                      'text-white',
+                      'm-label-medium',
+                      'md:label-large',
+                    )}
+                  >
                     +{members.length - 4}
                   </span>
                 </div>
@@ -95,26 +112,44 @@ export default function StudyInfo({
             {/* 멤버 수 텍스트 */}
             <span
               ref={memberTextRef}
-              className="text-text-primary m-label-small md:label-small cursor-pointer underline"
+              className={cn(
+                'text-text-primary cursor-pointer underline',
+                'm-label-small',
+                'md:label-small',
+              )}
               onClick={handleMemberTextClick}
             >
               {members.length}명 참여중
             </span>
           </div>
           {/* 팀원 진행도 % */}
-          <div className="text-text-primary flex items-center justify-center gap-6 px-10">
-            <span className="m-title-medium md:headline-medium">
+          <div
+            className={cn(
+              'text-text-primary flex items-center justify-center gap-6 px-10',
+            )}
+          >
+            <span className={cn('', 'm-title-medium', 'md:headline-medium')}>
               {teamProgress}%
             </span>
-            <span className="m-label-small md:label-small">달성중</span>
+            <span className={cn('', 'm-label-small', 'md:label-small')}>
+              달성중
+            </span>
           </div>
         </div>
         {/* Progress 바 */}
         {/* Progress Bar Container */}
-        <div className="h-10 w-full overflow-hidden rounded-full bg-[#e1e1e1] backdrop-blur-md md:h-14">
+        <div
+          className={cn(
+            'w-full overflow-hidden rounded-full bg-[#e1e1e1] backdrop-blur-md',
+            'h-10',
+            'md:h-14',
+          )}
+        >
           {/* Animated Progress Fill */}
           <motion.div
-            className="from-secondary to-primary h-full rounded-full bg-gradient-to-r shadow-lg"
+            className={cn(
+              'from-secondary to-primary h-full rounded-full bg-gradient-to-r shadow-lg',
+            )}
             initial={{ width: 0 }}
             animate={{ width: `${teamProgress}%` }}
             transition={{
@@ -125,23 +160,36 @@ export default function StudyInfo({
           />
         </div>
       </div>
-      <div className={cn('', 'hidden', 'w-220 md:block')}></div>
+      <div className={cn('', 'hidden w-220', 'md:block')}></div>
 
-      {/*초대 링크 */}
-      <div
+      {/*초대 링크 버튼 - 공용 Button 컴포넌트 사용*/}
+      <Button
+        label={
+          <span
+            className={cn(
+              'flex items-center gap-6',
+              'm-body-large',
+              'md:title-medium',
+            )}
+          >
+            {`초대 코드 ${inviteLink}`}
+            <CopyIcon
+              width={24}
+              height={24}
+              className={cn('', 'hidden', 'md:block')}
+            />
+          </span>
+        }
+        theme="tertiary"
+        size="md"
         className={cn(
-          'bg-tertiary text-text-secondary hover:bg-tertiary/80 absolute flex cursor-pointer gap-6 rounded-md',
-          'right-18 -bottom-18 px-12 py-8',
-          'md:right-20 md:-bottom-26 md:px-18 md:py-14',
+          'absolute right-18 -bottom-18 h-auto px-14 py-8',
+          '',
+          'md:right-20 md:-bottom-26',
         )}
         onClick={handleCopyInvite}
         title="클릭 시 복사"
-      >
-        <span className={cn('', 'm-body-large', 'md:title-medium')}>
-          초대 코드 {inviteLink}
-        </span>
-        <CopyIcon width={24} height={24} className={cn('hidden', 'md:block')} />
-      </div>
+      />
     </div>
   );
 }
@@ -150,27 +198,35 @@ function ProfileModal({ members }: { members: StudyGroup['members'] }) {
   const { close } = useModal();
 
   return (
-    <div className="bg-surface-4 flex flex-col gap-24 rounded-t-2xl p-24 shadow-lg md:hidden">
+    <div
+      className={cn(
+        'bg-surface-4 flex flex-col gap-24 rounded-t-2xl p-24 shadow-lg',
+        '',
+        'md:hidden',
+      )}
+    >
       {/* 모바일용 하단 모달 헤더 */}
-      <div className="flex items-center justify-between">
-        <h3 className="m-title-medium text-white">팀원 목록</h3>
+      <div className={cn('flex items-center justify-between')}>
+        <h3 className={cn('text-white', 'm-title-medium', '')}>팀원 목록</h3>
         <CloseIcon width={24} height={24} onClick={close} />
       </div>
 
       {/* 멤버 리스트 */}
-      <ul className="flex flex-col gap-14">
+      <ul className={cn('flex flex-col gap-14')}>
         {members.map((member) => (
-          <li key={member.id} className="flex items-center gap-12">
-            <div className="relative h-40 w-40">
+          <li key={member.id} className={cn('flex items-center gap-12')}>
+            <div className={cn('relative', 'h-40 w-40', '')}>
               <Image
                 src={member.image || '/images/default-profile.png'}
                 alt={member.nickname}
                 fill
-                className="rounded-full object-cover"
+                className={cn('rounded-full object-cover')}
                 style={{ objectFit: 'cover' }}
               />
             </div>
-            <span className="m-body-small text-white">{member.nickname}</span>
+            <span className={cn('text-white', 'm-body-small', '')}>
+              {member.nickname}
+            </span>
           </li>
         ))}
       </ul>
