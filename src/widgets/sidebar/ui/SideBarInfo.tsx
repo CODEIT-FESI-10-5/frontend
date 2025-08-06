@@ -6,6 +6,7 @@ import { JoinStudyButton } from '@/features/join-study/ui';
 import Image from 'next/image';
 import CloseIcon from '@/assets/icon-close.svg';
 import { useDrawerStore } from '@/shared/model';
+import { useStudyStore } from '@/features/get-study-list/model';
 
 export default function SideBarInfo() {
   const { close } = useDrawerStore();

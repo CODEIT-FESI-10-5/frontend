@@ -7,7 +7,7 @@ interface CreateGoalButtonProps {
 }
 
 export default function CreateGoalButton({ studyId }: CreateGoalButtonProps) {
-  const mutation = useCreateGoal();
+  const mutation = useCreateGoal(studyId);
 
   return (
     <button
