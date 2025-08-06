@@ -5,15 +5,6 @@ import { useRouter } from 'next/navigation';
 import { useDrawerStore } from '@/shared/model';
 
 export default function Profile() {
-  // const { isLoading, data, error } = useGetProfileQuery();
-  // if (isLoading) return <div>로딩중</div>;
-  // if (error) return <div>오류발생</div>;
-
-  //   localStorage.setItem('email', email);
-  // localStorage.setItem('nickname', nickname);
-  // localStorage.setItem('profileImg', profileImg);
-  //localstorage에서 프로필 정보 가져오기
-
   const { close } = useDrawerStore();
   const router = useRouter();
 
