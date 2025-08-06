@@ -16,7 +16,7 @@ export default function Onboarding() {
   };
 
   const handleCreateClick = () => {
-    mutation.mutate();
+    mutation.mutate(null);
   };
 
   return (

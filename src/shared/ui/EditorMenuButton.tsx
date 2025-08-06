@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 
 import { cva } from 'class-variance-authority';
-import { cn } from '@/shared/utils/cn';
+import { cn } from '../lib/utils/cn';
 
 interface EditorMenuButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
