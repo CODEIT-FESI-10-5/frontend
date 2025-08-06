@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { useModal } from '@/shared/lib/utils/useModal';
 import JoinStudyModal from '@/features/join-study/ui/JoinStudyModal';
 import { useCreateStudy } from '@/features/create-study/model/useCreateStudy';
+import { Button } from '@/shared/ui';
 
 export default function Onboarding() {
   const { open } = useModal();
@@ -32,19 +33,21 @@ export default function Onboarding() {
             </div>
 
             <div className="flex flex-col gap-16">
-              <button
-                className="bg-primary w-full cursor-pointer rounded-md px-48 py-16 text-white transition-colors hover:bg-[#5d6dd4]"
+              <Button
+                label="스터디 만들기 (팀장으로 시작)"
+                size="lg"
+                theme="primary"
                 onClick={handleCreateClick}
               >
                 스터디 만들기 (팀장으로 시작)
-              </button>
+              </Button>
               {/* 초대 모달 */}
-              <button
-                className="bg-tertiary w-full cursor-pointer rounded-md px-48 py-16 text-white transition-colors hover:bg-[#1f2553]"
+              <Button
+                label="초대코드로 가입하기"
+                size="lg"
+                theme="tertiary"
                 onClick={handleJoinClick}
-              >
-                초대코드로 가입하기
-              </button>
+              />
             </div>
           </div>
 
@@ -79,18 +82,18 @@ export default function Onboarding() {
         </div>
 
         <div className="flex w-full max-w-sm flex-col gap-16">
-          <button
-            className="rounded-8 bg-primary w-full cursor-pointer px-24 py-16 text-white transition-colors hover:bg-[#5d6dd4]"
+          <Button
+            label="스터디 만들기(팀장으로 시작)"
+            size="lg"
+            theme="primary"
             onClick={handleCreateClick}
-          >
-            스터디 만들기(팀장으로 시작)
-          </button>
-          <button
-            className="rounded-8 bg-tertiary w-full cursor-pointer px-24 py-16 text-white transition-colors hover:bg-[#1f2553]"
+          />
+          <Button
+            label="초대코드로 가입하기"
+            size="lg"
+            theme="tertiary"
             onClick={handleJoinClick}
-          >
-            초대코드로 가입하기
-          </button>
+          />
         </div>
       </div>
     </div>
