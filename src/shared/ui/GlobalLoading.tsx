@@ -1,10 +1,10 @@
 'use client';
 
-import { useLoading } from '@/app/query-provider';
+import { useLoadingStore } from '@/shared/model/useLoadingStore';
 import { createPortal } from 'react-dom';
 
 export function GlobalLoading() {
-  const { isLoading } = useLoading();
+  const { isLoading } = useLoadingStore();
 
   if (!isLoading) return null;
 

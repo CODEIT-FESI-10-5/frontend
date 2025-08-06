@@ -5,6 +5,7 @@ import {
   useQueryClient,
 } from '@tanstack/react-query';
 import toast from 'react-hot-toast';
+import { useLoadingStore } from '@/shared/model/useLoadingStore';
 
 interface UseCustomMutationArgs<TVariables, TResult, TError> {
   mutationFn: (variables: TVariables) => Promise<TResult>;
@@ -17,12 +18,22 @@ export const useCustomMutation = <TVariables, TResult, TError = ApiError>(
   args: UseCustomMutationArgs<TVariables, TResult, TError>,
 ) => {
   const queryClient = useQueryClient();
+  const { startLoading, stopLoading } = useLoadingStore();
   const { mutationFn, invalidateQueryKeys, mutationOptions, successMessage } =
     args;
 
   return useMutation({
     mutationFn,
     ...mutationOptions,
+    onMutate: (variables) => {
+      // 로딩 상태 시작
+      startLoading();
+
+      // 기존 onMutate가 있다면 실행
+      if (mutationOptions?.onMutate) {
+        return mutationOptions.onMutate(variables);
+      }
+    },
     onSuccess: (data, variables, context) => {
       if (mutationOptions?.onSuccess) {
         mutationOptions.onSuccess(data, variables, context);
@@ -40,6 +51,9 @@ export const useCustomMutation = <TVariables, TResult, TError = ApiError>(
       toast.error(errorMessage);
     },
     onSettled: (data, error, variables, context) => {
+      // 로딩 상태 종료
+      stopLoading();
+
       if (mutationOptions?.onSettled) {
         mutationOptions.onSettled(data, error, variables, context);
       }
