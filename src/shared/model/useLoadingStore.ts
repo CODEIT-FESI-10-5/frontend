@@ -2,7 +2,6 @@ import { create } from 'zustand';
 
 interface LoadingState {
   isLoading: boolean;
-  setIsLoading: (loading: boolean) => void;
   startLoading: () => void;
   stopLoading: () => void;
 }
@@ -12,7 +11,6 @@ export const useLoadingStore = create<LoadingState>((set) => {
 
   return {
     isLoading: false,
-    setIsLoading: (loading) => set({ isLoading: loading }),
     startLoading: () => {
       // 이전 timeout이 있다면 클리어
       if (timeoutId) {
