@@ -1,7 +1,6 @@
 import { StudyItem } from '@/entities/study/model';
 import DropDownIcon from '@/assets/dropdown.svg';
 import DropUpIcon from '@/assets/dropup.svg';
-import { cn } from '@/shared/utils/cn';
 
 interface CurrentStudyProps {
   isOpen: boolean;

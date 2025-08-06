@@ -9,7 +9,7 @@ import {
   Highlighter,
 } from 'lucide-react';
 import { EditorMenuButton } from '@/shared/ui/EditorMenuButton';
-import { cn } from '@/shared/utils/cn';
+import { cn } from '@/shared/lib/utils/cn';
 
 interface NoteEditorMenuProps {
   editor: Editor | null;
@@ -20,7 +20,7 @@ export function NoteEditorMenu({ editor }: NoteEditorMenuProps) {
 
   return (
     <div className="mt-2 flex justify-center">
-      <div className="flex w-full items-center justify-center gap-1 rounded bg-white px-2 py-2 max-w-[360px] sm:gap-2 sm:px-3">
+      <div className="flex w-full max-w-[360px] items-center justify-center gap-1 rounded bg-white px-2 py-2 sm:gap-2 sm:px-3">
         <div className="flex w-full items-center justify-center gap-1 overflow-x-auto sm:w-auto sm:gap-2">
           {/* Bold */}
           <EditorMenuButton

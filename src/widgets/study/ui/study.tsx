@@ -7,8 +7,8 @@ import UpdateStudyImage from '@/features/update-study-image/ui/update-study-imag
 import { useInviteCodeStore } from '@/entities/dashboard';
 import { useEffect } from 'react';
 import { useStudyRoleStore } from '@/entities/study/model/useStudyRoleStore';
-import { cn } from '@/shared/utils/cn';
 import { notFound } from 'next/navigation';
+import { cn } from '@/shared/lib/utils/cn';
 
 export default function Study({ studyId }: { studyId: string }) {
   const { data: studyGroup, isLoading, error } = useStudyGroup(studyId);

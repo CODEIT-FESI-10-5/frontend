@@ -1,7 +1,7 @@
-import { cn } from '@/shared/utils/cn';
 import { ReactNode } from 'react';
 import CheckSquareBlankIcon from '@/assets/check_square_blank.svg';
 import CheckSquareFillPrimaryIcon from '@/assets/check-square-fill-primary.svg';
+import { cn } from '@/shared/lib/utils/cn';
 
 interface ToggleButtonProp {
   type?: 'sm' | 'md' | 'lg';

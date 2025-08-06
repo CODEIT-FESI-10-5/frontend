@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import SideBarInfo from '@/widgets/sidebar/ui/SideBarInfo';
 import SideBarNav from './SideBarNav';
 import { useDrawerStore } from '@/shared/model';
-import { cn } from '@/shared/utils/cn';
+import { cn } from '@/shared/lib/utils/cn';
 
 export default function SideBar() {
   const { isOpen, close } = useDrawerStore();

@@ -1,7 +1,8 @@
 'use client';
-import { cn } from '@/shared/utils/cn';
+
 import { cva } from 'class-variance-authority';
 import React from 'react';
+import { cn } from '../lib/utils/cn';
 
 interface TextFieldProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: string;
