@@ -1,13 +1,13 @@
 'use client';
 
 import { NoteEditor } from '@/features/update-note/ui/NoteEditor';
-import { useGetNoteById, useUpdateNote } from '@/entities/note/api/noteQueries';
+import { useGetNoteById, useUpdateNoteMutation } from '@/entities/note/api/noteQueries';
 import NoteIcon from '@/assets/note-icon.svg';
 
 export function NoteEditPage({ noteId }: { noteId: number }) {
   const { data: noteResponse, isLoading, isError } = useGetNoteById(noteId);
   const note = noteResponse?.data;
-  const updateNoteMutation = useUpdateNote();
+  const updateNoteMutation = useUpdateNoteMutation();
 
   const handleAutoSave = (content: string) => {
     if (!note) return;
