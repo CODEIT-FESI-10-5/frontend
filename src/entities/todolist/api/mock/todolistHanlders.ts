@@ -155,8 +155,6 @@ export const todolistHandlers = [
 
     // mockDashboard 업데이트
     if (mockDashboard.data?.goal) {
-      const updatedTodo = targetTodolist.todolist[targetTodoIndex];
-
       // 완료된 투두들과 진행중인 투두들 분류
       const completedTodos = targetTodolist.todolist.filter(
         (todo) => todo.completed,
