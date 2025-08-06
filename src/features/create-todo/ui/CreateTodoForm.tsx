@@ -64,6 +64,9 @@ export default function CreateTodoForm() {
           maxLength={30}
           value={content}
           onChange={(e) => {
+            if (e.target.value && isInvalid) {
+              setIsInvalid(false);
+            }
             setContent(e.target.value);
           }}
         />
