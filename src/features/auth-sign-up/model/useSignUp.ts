@@ -1,15 +1,15 @@
 'use client';
 
-import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { requestSignup } from '@/entities/auth/api';
 import { SignupRequestApi } from '@/entities/auth/model';
 import { SignupSchema } from './sign-up.schema';
+import { useCustomMutation } from '@/shared/lib/utils/useCustomMutation';
 
 export function useSignup() {
   const router = useRouter();
 
-  return useMutation({
+  return useCustomMutation({
     mutationFn: (data: SignupSchema) => {
       const requestData: SignupRequestApi = {
         nickname: data.name,
@@ -18,12 +18,10 @@ export function useSignup() {
       };
       return requestSignup(requestData);
     },
-    onSuccess: () => {
-      router.push('/auth/login');
-    },
-    onError: (err) => {
-      console.error(err);
-      alert('회원가입에 실패했습니다.');
+    mutationOptions: {
+      onSuccess: () => {
+        router.push('/auth/login');
+      },
     },
   });
 }

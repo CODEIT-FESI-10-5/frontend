@@ -8,7 +8,7 @@ export default function CreateStudyButton() {
   const mutation = useCreateStudy();
   const { close } = useDrawerStore();
   const handleClick = () => {
-    mutation.mutate();
+    mutation.mutate(null);
     close();
   };
 

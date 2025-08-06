@@ -30,7 +30,9 @@ export default function TextField({
   return (
     <div className="flex w-full flex-col gap-11">
       {label && (
-        <label className="text-text-tertiary label-small">{label}</label>
+        <label className="text-text-tertiary m-body-small md:label-small">
+          {label}
+        </label>
       )}
       <input className={cn(textFieldVariants({ error }))} {...props}></input>
       {error && (

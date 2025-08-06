@@ -1,5 +1,6 @@
 import { http, HttpResponse } from 'msw';
 import { myTodolists } from './mocks';
+import { mockDashboard } from '@/entities/dashboard/model/mocks/mocks';
 
 export const todolistHandlers = [
   // GET: 투두 리스트 내 투두 전체 가져오기
@@ -151,6 +152,75 @@ export const todolistHandlers = [
       completed: body.completed, // 변경된 필드 덮어쓰기
       completedAt: String(Date.now()),
     };
+
+    // mockDashboard 업데이트
+    if (mockDashboard.data?.goal) {
+      const updatedTodo = targetTodolist.todolist[targetTodoIndex];
+
+      // 완료된 투두들과 진행중인 투두들 분류
+      const completedTodos = targetTodolist.todolist.filter(
+        (todo) => todo.completed,
+      );
+      const inProgressTodos = targetTodolist.todolist.filter(
+        (todo) => !todo.completed,
+      );
+
+      // 최근 완료된 투두 업데이트 (가장 최근에 완료된 것)
+      if (completedTodos.length > 0) {
+        const mostRecentCompleted = completedTodos.reduce((latest, current) => {
+          return current.completedAt &&
+            (!latest.completedAt || current.completedAt > latest.completedAt)
+            ? current
+            : latest;
+        });
+
+        mockDashboard.data.goal.recentCompletedTodo = {
+          id: String(mostRecentCompleted.todoId),
+          content: mostRecentCompleted.content,
+          createdAt: mostRecentCompleted.createdAt,
+          completed: true,
+          completedAt: mostRecentCompleted.completedAt,
+          note: mostRecentCompleted.note,
+          noteId: String(mostRecentCompleted.noteId),
+          shared: mostRecentCompleted.shared,
+        };
+      } else {
+        mockDashboard.data.goal.recentCompletedTodo = null;
+      }
+
+      // 진행중인 투두 업데이트 (우선순위가 가장 높은 것)
+      if (inProgressTodos.length > 0) {
+        const highestPriorityTodo = inProgressTodos.reduce(
+          (highest, current) => {
+            return current.priorityOrder < highest.priorityOrder
+              ? current
+              : highest;
+          },
+        );
+
+        mockDashboard.data.goal.inProgressTodo = {
+          id: String(highestPriorityTodo.todoId),
+          content: highestPriorityTodo.content,
+          createdAt: highestPriorityTodo.createdAt,
+          completed: false,
+          completedAt: undefined,
+          note: highestPriorityTodo.note,
+          noteId: String(highestPriorityTodo.noteId),
+          shared: highestPriorityTodo.shared,
+        };
+      } else {
+        mockDashboard.data.goal.inProgressTodo = null;
+      }
+
+      // 진행도 업데이트
+      const totalTodos = targetTodolist.todolist.length;
+      const completedCount = completedTodos.length;
+      const progress =
+        totalTodos > 0 ? Math.round((completedCount / totalTodos) * 100) : 0;
+
+      mockDashboard.data.goal.progress = progress;
+      mockDashboard.data.goal.completedCt = `${completedCount}/${totalTodos}`;
+    }
 
     // 순서 반영하기
     // 완료: 가장 앞으로 당겨오되 완료된 투두중 가장 뒤에 배치

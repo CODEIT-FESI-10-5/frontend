@@ -6,6 +6,7 @@ import {
 } from '@tanstack/react-query';
 import toast from 'react-hot-toast';
 import { useLoadingStore } from '@/shared/model/useLoadingStore';
+import { useEffect, useRef } from 'react';
 
 interface UseCustomMutationArgs<TVariables, TResult, TError> {
   mutationFn: (variables: TVariables) => Promise<TResult>;
@@ -18,9 +19,23 @@ export const useCustomMutation = <TVariables, TResult, TError = ApiError>(
   args: UseCustomMutationArgs<TVariables, TResult, TError>,
 ) => {
   const queryClient = useQueryClient();
-  const { startLoading, stopLoading } = useLoadingStore();
+  const { isLoading, startLoading, stopLoading } = useLoadingStore();
   const { mutationFn, invalidateQueryKeys, mutationOptions, successMessage } =
     args;
+
+  const pendingInvalidationRef = useRef<Array<
+    Array<string | number | object>
+  > | null>(null);
+
+  // isLoading이 false가 되면 pending된 invalidation 실행
+  useEffect(() => {
+    if (!isLoading && pendingInvalidationRef.current) {
+      pendingInvalidationRef.current.forEach((key) => {
+        queryClient.invalidateQueries({ queryKey: key });
+      });
+      pendingInvalidationRef.current = null;
+    }
+  }, [isLoading, queryClient]);
 
   return useMutation({
     mutationFn,
@@ -57,10 +72,10 @@ export const useCustomMutation = <TVariables, TResult, TError = ApiError>(
       if (mutationOptions?.onSettled) {
         mutationOptions.onSettled(data, error, variables, context);
       }
+
+      // invalidateQueries를 pending 상태로 저장
       if (invalidateQueryKeys) {
-        invalidateQueryKeys.forEach((key) => {
-          queryClient.invalidateQueries({ queryKey: key });
-        });
+        pendingInvalidationRef.current = invalidateQueryKeys;
       }
     },
   });
