@@ -1,18 +1,18 @@
+'use client';
+
 import { updateProfile } from '@/entities/profile/api';
 import { UpdateProfileRequestApi } from '@/entities/profile/model';
-import { useMutation } from '@tanstack/react-query';
-import toast from 'react-hot-toast';
+import { useCustomMutation } from '@/shared/lib/utils/useCustomMutation';
 
 export function useUpdateProfile() {
-  return useMutation({
+  return useCustomMutation({
     mutationFn: (data: UpdateProfileRequestApi) => updateProfile(data),
-    onSuccess: (res) => {
-      const newProfileUrl = res.data.profileImg;
-      localStorage.setItem('profileImg', newProfileUrl);
-      toast.success('이미지가 변경되었습니다.');
-    },
-    onError: () => {
-      toast.error('이미지 업로드에 실패했습니다.');
+    successMessage: '이미지가 변경되었습니다.',
+    mutationOptions: {
+      onSuccess: (res) => {
+        const newProfileUrl = res.data.profileImg;
+        localStorage.setItem('profileImg', newProfileUrl);
+      },
     },
   });
 }
