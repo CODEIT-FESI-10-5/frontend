@@ -9,6 +9,7 @@ import { useModal } from '@/shared/lib/utils/useModal';
 import toast from 'react-hot-toast';
 import { cn } from '@/shared/lib/utils/cn';
 import CloseIcon from '@/assets/icon-close.svg';
+import { Button } from '@/shared/ui';
 
 export default function StudyInfo({
   members,
@@ -127,21 +128,32 @@ export default function StudyInfo({
       </div>
       <div className={cn('', 'hidden', 'w-220 md:block')}></div>
 
-      {/*초대 링크 */}
-      <div
+      {/*초대 링크 버튼 - 공용 Button 컴포넌트 사용*/}
+      <Button
+        label={
+          <span
+            className={cn(
+              'flex items-center gap-6',
+              'm-body-large md:title-medium',
+            )}
+          >
+            {`초대 코드 ${inviteLink}`}
+            <CopyIcon
+              width={24}
+              height={24}
+              className={cn('hidden md:block')}
+            />
+          </span>
+        }
+        theme="tertiary"
+        size="md"
         className={cn(
-          'bg-tertiary text-text-secondary hover:bg-tertiary/80 absolute flex cursor-pointer gap-6 rounded-md',
-          'right-18 -bottom-18 px-12 py-8',
-          'md:right-20 md:-bottom-26 md:px-18 md:py-14',
+          'absolute right-18 -bottom-18 md:right-20 md:-bottom-26',
+          'h-auto px-14 py-8',
         )}
         onClick={handleCopyInvite}
         title="클릭 시 복사"
-      >
-        <span className={cn('', 'm-body-large', 'md:title-medium')}>
-          초대 코드 {inviteLink}
-        </span>
-        <CopyIcon width={24} height={24} className={cn('hidden', 'md:block')} />
-      </div>
+      />
     </div>
   );
 }
