@@ -4,7 +4,7 @@ import { cva } from 'class-variance-authority';
 import React from 'react';
 
 interface TextFieldProps extends React.InputHTMLAttributes<HTMLInputElement> {
-  label: string;
+  label?: string;
   error?: boolean;
   errorMessage?: string;
 }
@@ -29,7 +29,9 @@ export default function TextField({
 }: TextFieldProps) {
   return (
     <div className="flex w-full flex-col gap-11">
-      <label className="text-text-tertiary label-small">{label}</label>
+      {label && (
+        <label className="text-text-tertiary label-small">{label}</label>
+      )}
       <input className={cn(textFieldVariants({ error }))} {...props}></input>
       {error && (
         <span className="text-highlight label-small">{errorMessage}</span>

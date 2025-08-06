@@ -1,15 +1,21 @@
-'use client';
-
-import UpdateName from '@/features/update-account/ui/UpdateName';
-import UpdatePassword from '@/features/update-account/ui/UpdatePassword';
-import UpdateProfile from '@/features/update-account/ui/UpdateProfile';
+import DeleteAccountButton from '@/features/delete-account/ui/DeleteAccountButton';
+import LogoutButton from '@/features/logout/ui/LogoutButton';
+import {
+  UpdateNickname,
+  UpdatePassword,
+  UpdateProfile,
+} from '@/features/update-account/ui';
 
 export default function AccountForm() {
   return (
-    <div className="bg-surface-2 border-border-subtle rounded-6 flex w-full flex-col border-1">
-      <UpdateProfile />
-      <UpdateName />
-      <UpdatePassword />
+    <div className="flex flex-col gap-18">
+      <div className="bg-surface-2 border-border-subtle rounded-6 flex w-full flex-col border-1">
+        <UpdateProfile />
+        <UpdateNickname />
+        <UpdatePassword />
+      </div>
+      <LogoutButton />
+      <DeleteAccountButton />
     </div>
   );
 }
