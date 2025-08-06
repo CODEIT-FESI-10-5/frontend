@@ -11,7 +11,7 @@ export default function SideBar() {
   return (
     <>
       {/* 데스크탑 UI */}
-      <div className="bg-surface-2 fixed left-0 hidden h-auto min-h-screen w-348 flex-col gap-64 overflow-y-scroll p-26 xl:flex">
+      <div className="bg-surface-2 scrollbar-hide left-0 hidden h-auto min-h-screen w-348 flex-col gap-64 p-26 not-visited:overflow-y-scroll xl:flex">
         <SideBarInfo />
         <SideBarNav />
       </div>

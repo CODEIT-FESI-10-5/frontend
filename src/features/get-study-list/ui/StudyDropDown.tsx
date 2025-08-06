@@ -46,7 +46,7 @@ export default function StudyDropDown({ onClick, data }: StudyDropDownProps) {
   };
 
   return (
-    <div className="border-border-emphasis bg-surface-4 rounded-6 scrollbar-hide mt-12 flex w-296 flex-col items-center justify-start gap-14 border-1 px-13 py-8 xl:max-h-346">
+    <div className="border-border-emphasis bg-surface-4 rounded-6 scrollbar-hide mt-12 flex w-296 flex-col items-center justify-start gap-14 border-1 px-13 py-8 xl:max-h-346 xl:overflow-y-scroll">
       {data &&
         data.studyList.map((study: StudyItem) => (
           <div
