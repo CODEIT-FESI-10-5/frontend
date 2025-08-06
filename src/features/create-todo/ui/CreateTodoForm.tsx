@@ -1,11 +1,12 @@
 import { cn } from '@/shared/lib/utils/cn';
 import { useCreateTodoStore } from '@/features/create-todo/model/store/createTodoStore';
 import { useCreateTodoMutation } from '../model/hooks';
-import ToggleButton from './ToggleButton';
-import ConfirmButton from '@/features/create-todo/ui/ConfirmButton';
 import CheckTodoBlankIcon from '@/assets/check_todo_blank.svg';
 import { useGoalId } from '@/shared/model/useGoalId';
 import { useTodolistQuery } from '@/entities/todolist/model/hooks';
+import { Button } from '@/shared/ui';
+import CheckSquareBlankIcon from '@/assets/check_square_blank.svg';
+import CheckSquareFillPrimaryIcon from '@/assets/check-square-fill-primary.svg';
 
 export default function CreateTodoForm() {
   const goalId = useGoalId();
@@ -70,18 +71,41 @@ export default function CreateTodoForm() {
 
       <div
         className={cn(
-          'flex flex-shrink-0 justify-end gap-9',
+          'flex w-185 flex-shrink-0 justify-end gap-9',
           data?.role === 'LEADER' ? 'self-end md:self-center' : '',
         )}
       >
         {data?.role === 'LEADER' && (
-          <ToggleButton isOn={isShared} toggleSwitch={() => toggleIsShared()}>
-            {'공통'}
-          </ToggleButton>
+          // <ToggleButton isOn={isShared} toggleSwitch={() => toggleIsShared()}>
+          //   {'공통'}
+          // </ToggleButton>
+          <Button
+            label={
+              <>
+                {isShared ? (
+                  <CheckSquareFillPrimaryIcon width={28} height={28} />
+                ) : (
+                  <CheckSquareBlankIcon width={28} height={28} />
+                )}
+                {'공통'}
+              </>
+            }
+            size={'sm'}
+            theme={'surface'}
+            onClick={() => toggleIsShared()}
+            className="flex-1"
+          />
         )}
-        <ConfirmButton size="md" color="bg-primary">
+        {/* <ConfirmButton size="md" color="bg-primary">
           {'완료'}
-        </ConfirmButton>
+        </ConfirmButton> */}
+        <Button
+          label={'완료'}
+          size={'sm'}
+          theme={'primary'}
+          type="submit"
+          className="flex-1"
+        />
       </div>
     </form>
   );
