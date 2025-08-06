@@ -1,8 +1,16 @@
 import { http, HttpResponse } from 'msw';
 
-const studyId = '3';
+const mockCreateStudyResponse = {
+  httpStatusCode: 200,
+  errorCode: null,
+  data: {
+    studyId: 3,
+  },
+  errorMessage: null,
+  fieldErrors: [],
+};
 export const sidebarCreateStudyHandler = [
   http.post('/api/study', () => {
-    return HttpResponse.json({ newStudyId: studyId });
+    return HttpResponse.json(mockCreateStudyResponse);
   }),
 ];

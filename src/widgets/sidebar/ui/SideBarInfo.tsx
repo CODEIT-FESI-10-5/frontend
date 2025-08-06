@@ -1,7 +1,7 @@
 'use client';
 import { usePathname } from 'next/navigation';
 import { CreateStudyButton } from '@/features/create-study/ui';
-import { Profile } from '@/features/get-profile/ui';
+import { Profile } from '@/entities/auth/ui';
 import { JoinStudyButton } from '@/features/join-study/ui';
 import Image from 'next/image';
 import CloseIcon from '@/assets/icon-close.svg';
