@@ -1,5 +1,5 @@
 'use client';
-import { useGetGoal } from '../../../entities/goal/model/useGetGoal';
+import { useGetGoal } from '@/entities/goal/model/useGetGoal';
 import { GoalListItem } from '@/entities/goal';
 import { useRouter, usePathname } from 'next/navigation';
 import clsx from 'clsx';

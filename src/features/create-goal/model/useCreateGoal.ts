@@ -1,26 +1,23 @@
 'use client';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { postCreateGoal } from '@/entities/goal/api/postCreateGoal';
-import {
-  goalQueryKeys,
-  PostCreateGoalRequest,
-  PostCreateGoalResponse,
-} from '@/entities/goal';
+import { goalQueryKeys } from '@/entities/goal';
 import { useRouter } from 'next/navigation';
 import { useStudyStore } from '@/features/get-study-list/model';
+import { useCustomMutation } from '@/shared/lib/utils/useCustomMutation';
 
 export const useCreateGoal = () => {
   const router = useRouter();
-  const queryClient = useQueryClient();
   const { currentStudyId } = useStudyStore();
-  return useMutation<PostCreateGoalResponse, Error, PostCreateGoalRequest>({
+
+  return useCustomMutation({
     mutationFn: postCreateGoal,
-    onSuccess: (res) => {
-      const newGoalId = res.data.id;
-      queryClient.invalidateQueries({
-        queryKey: goalQueryKeys.list(Number(currentStudyId)),
-      });
-      router.push(`/dashboard/study/${currentStudyId}/goal/${newGoalId}`);
+    invalidateQueryKeys: [[goalQueryKeys.list(Number(currentStudyId))]],
+    mutationOptions: {
+      onSuccess: (res) => {
+        const newGoalId = res.data.id;
+        console.log('rounted');
+        router.push(`/dashboard/study/${currentStudyId}/goal/${newGoalId}`);
+      },
     },
   });
 };

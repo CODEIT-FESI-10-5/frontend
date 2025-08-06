@@ -1,37 +1,27 @@
 'use client';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useQueryClient } from '@tanstack/react-query';
 import { postJoinStudy } from '@/entities/study/api';
 import { useRouter } from 'next/navigation';
-import toast from 'react-hot-toast';
 import { studyQueryKeys } from '@/entities/study';
 import { goalQueryKeys } from '@/entities/goal';
+import { useCustomMutation } from '@/shared/lib/utils/useCustomMutation';
 
 export const useJoinStudy = () => {
   const queryClient = useQueryClient();
   const router = useRouter();
-  return useMutation({
+  return useCustomMutation({
     mutationFn: postJoinStudy,
-    onSuccess: (res) => {
-      const studyId = res.data.studyId;
-      queryClient.invalidateQueries({
-        queryKey: studyQueryKeys.list(),
-      });
-      queryClient.invalidateQueries({
-        queryKey: goalQueryKeys.list(studyId),
-      });
-      router.push(`/dashboard/study/${studyId}`);
-    },
-    onError: (err: unknown) => {
-      const error = err as Error & {
-        status?: number;
-        body?: {
-          errorCode?: string;
-          errorMessage?: string;
-        };
-      };
-      const errorMessage = error.body?.errorMessage;
-
-      toast.error(errorMessage ?? '알 수 없는 오류가 발생했습니다.');
+    mutationOptions: {
+      onSuccess: (res) => {
+        const studyId = res.data.studyId;
+        queryClient.invalidateQueries({
+          queryKey: studyQueryKeys.list(),
+        });
+        queryClient.invalidateQueries({
+          queryKey: goalQueryKeys.list(studyId),
+        });
+        router.push(`/dashboard/study/${studyId}`);
+      },
     },
   });
 };
