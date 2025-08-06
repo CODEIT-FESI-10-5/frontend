@@ -11,7 +11,7 @@ export default function SideBar() {
   return (
     <>
       {/* 데스크탑 UI */}
-      <div className="bg-surface-2 fixed top-0 bottom-0 left-0 hidden w-348 flex-col gap-64 p-26 xl:flex">
+      <div className="bg-surface-2 fixed left-0 hidden h-auto min-h-screen w-348 flex-col gap-64 overflow-y-scroll p-26 xl:flex">
         <SideBarInfo />
         <SideBarNav />
       </div>
@@ -31,7 +31,7 @@ export default function SideBar() {
             <motion.div
               key="sidebar"
               className={cn(
-                'bg-surface-2 fixed top-0 bottom-0 left-0 z-20 flex w-335 gap-64 p-18 not-first-of-type:flex-col xl:w-348 xl:p-26',
+                'bg-surface-2 scrollbar-hide fixed top-0 bottom-0 left-0 z-20 flex w-335 gap-64 overflow-y-scroll p-18 not-first-of-type:flex-col xl:w-348 xl:p-26',
               )}
               initial={{ x: '-100%' }}
               animate={{ x: 0 }}
