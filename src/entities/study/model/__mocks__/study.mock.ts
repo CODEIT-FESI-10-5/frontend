@@ -33,6 +33,18 @@ export const mockStudyListResponseApi: StudyListResponseApi = {
         title: '4번 스터디',
         description: '4번 스터디입니다.',
       },
+      {
+        studyId: 5,
+        role: 'MEMBER',
+        title: '5번 스터디',
+        description: '5번 스터디입니다.',
+      },
+      {
+        studyId: 6,
+        role: 'MEMBER',
+        title: '6번 스터디',
+        description: '6번 스터디입니다.',
+      },
     ],
   },
 };
