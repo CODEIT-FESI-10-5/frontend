@@ -198,26 +198,64 @@ export default function Goal({ goalId }: { goalId: string }) {
                 최근 완료된 투두
               </span>
               {/* 가장 최근 완료된 투두를 정렬 후 todo 컴포넌트 넣음 */}
-              {goal?.recentCompletedTodo?.content ? (
-                <Todo todo={goal.recentCompletedTodo} />
-              ) : (
-                <span className={cn('text-text-secondary', 'body-medium', '')}>
-                  최근 완료된 투두가 없습니다.
-                </span>
-              )}
+              <motion.div
+                key={goal?.recentCompletedTodo?.id || 'empty-completed'}
+                initial={{ opacity: 0, y: 20, scale: 0.95 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: -20, scale: 0.95 }}
+                transition={{
+                  duration: 0.5,
+                  ease: [0.4, 0, 0.2, 1],
+                }}
+              >
+                {goal?.recentCompletedTodo?.content ? (
+                  <motion.div
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.3, delay: 0.1 }}
+                  >
+                    <Todo todo={goal.recentCompletedTodo} />
+                  </motion.div>
+                ) : (
+                  <span
+                    className={cn('text-text-secondary', 'body-medium', '')}
+                  >
+                    최근 완료된 투두가 없습니다.
+                  </span>
+                )}
+              </motion.div>
             </div>
             {/*진행중인 투두 */}
             <div className={cn('flex min-w-0 flex-col gap-12')}>
               <span className={cn('font-medium text-white', 'body-medium', '')}>
                 진행중인 투두
               </span>
-              {goal?.inProgressTodo?.content ? (
-                <Todo todo={goal.inProgressTodo} inProgress={true} />
-              ) : (
-                <span className={cn('text-text-secondary', 'body-medium', '')}>
-                  진행중인 투두가 없습니다.
-                </span>
-              )}
+              <motion.div
+                key={goal?.inProgressTodo?.id || 'empty-progress'}
+                initial={{ opacity: 0, y: 20, scale: 0.95 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: -20, scale: 0.95 }}
+                transition={{
+                  duration: 0.5,
+                  ease: [0.4, 0, 0.2, 1],
+                }}
+              >
+                {goal?.inProgressTodo?.content ? (
+                  <motion.div
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.3, delay: 0.1 }}
+                  >
+                    <Todo todo={goal.inProgressTodo} inProgress={true} />
+                  </motion.div>
+                ) : (
+                  <span
+                    className={cn('text-text-secondary', 'body-medium', '')}
+                  >
+                    진행중인 투두가 없습니다.
+                  </span>
+                )}
+              </motion.div>
             </div>
           </div>
           <Link href={`/todolist-detail/${goalId}`}>
