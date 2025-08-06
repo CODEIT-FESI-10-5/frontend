@@ -4,6 +4,7 @@ import { useEffect, useRef } from 'react';
 import { useStudyRoleStore } from '@/entities/study/model/useStudyRoleStore';
 import { useUpdateGoalTitleMutation } from '../model/useUpdateGoalTitleMutation';
 import { useParams } from 'next/navigation';
+import { cn } from '@/shared/lib/utils/cn';
 export default function EditGoalTitle(props: {
   title: string;
   setTitle: (newTitle: string) => void;
@@ -60,7 +61,13 @@ export default function EditGoalTitle(props: {
   }
   if (!userRole) {
     return (
-      <span className="m-headline-medium md:headline-large block w-full bg-transparent text-white">
+      <span
+        className={cn(
+          'block w-full bg-transparent text-white',
+          'm-headline-medium',
+          'md:headline-large',
+        )}
+      >
         {title || '스터디 목표 없음'}
       </span>
     );
@@ -68,7 +75,11 @@ export default function EditGoalTitle(props: {
   return (
     <input
       type="text"
-      className="m-headline-medium md:headline-large placeholeder:text-text-tertiary w-full bg-transparent text-white focus:outline-none"
+      className={cn(
+        'placeholeder:text-text-tertiary w-full bg-transparent text-white focus:outline-none',
+        'm-headline-medium',
+        'md:headline-large',
+      )}
       value={title}
       onChange={handleTitleChange}
       placeholder="스터디 목표를 입력..."

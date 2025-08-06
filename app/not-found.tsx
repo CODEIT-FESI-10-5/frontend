@@ -17,7 +17,7 @@ export default function NotFound() {
   };
 
   return (
-    <div className="bg-surface-2 flex min-h-screen w-full flex-col items-center justify-center px-20">
+    <div className="bg-surface-2 flex h-full w-full flex-col items-center justify-center">
       {/* 404 이미지 */}
       <div className="">
         <Image

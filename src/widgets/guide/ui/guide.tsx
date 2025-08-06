@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { motion, AnimatePresence, PanInfo } from 'framer-motion';
 import { useRouter } from 'next/navigation';
 import { cn } from '@/shared/lib/utils/cn';
+import { Button } from '@/shared/ui';
 
 const images = [
   '/images/guide/guide_1.png',
@@ -278,13 +279,15 @@ export default function Guide() {
           'sm:mt-0 sm:mb-50 sm:flex-row',
         )}
       >
-        <motion.button
-          className="body-medium bg-primary w-full flex-1 cursor-pointer rounded-md py-16 text-white transition-colors duration-200 hover:bg-[#6c79e8] sm:max-w-[442px]"
-          whileTap={{ scale: 0.98 }}
+        <Button
+          label="로그인하고 시작하기"
+          size="lg"
+          theme="primary"
+          className="w-full flex-1 text-white sm:max-w-[442px]"
           onClick={() => router.push('/auth/login')}
         >
           로그인하고 시작하기
-        </motion.button>
+        </Button>
       </div>
     </div>
   );

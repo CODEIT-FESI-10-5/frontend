@@ -32,11 +32,7 @@ export default function Study({ studyId }: { studyId: string }) {
 
   // 로딩 상태 처리
   if (isLoading) {
-    return (
-      <div className="flex min-h-screen items-center justify-center">
-        <div className="text-lg">로딩 중...</div>
-      </div>
-    );
+    return <></>;
   }
 
   // 에러 처리
