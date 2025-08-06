@@ -1,6 +1,5 @@
 'use client';
 
-import { cn } from '@/shared/lib/utils/cn';
 import { LayoutGroup, motion } from 'framer-motion';
 import NewTodo from '@/assets/new-todo.svg';
 import { useCreateTodoStore } from '../../../features/create-todo/model/store';
@@ -12,6 +11,8 @@ import { useTodolistStore } from '@/entities/todolist/model/store';
 import ConfirmButton from '@/features/create-todo/ui/ConfirmButton';
 import toast from 'react-hot-toast';
 import { useGoalId } from '@/shared/model/useGoalId';
+import { AppBar } from '@/shared/ui';
+import findInProgressTodoId from '@/entities/todolist/lib/utils/findInProgressTodo';
 
 function TitleArea({ title = '목표' }: { title?: string }) {
   const toggleEditMode = useCreateTodoStore((state) => state.toggleEditMode);
@@ -19,9 +20,11 @@ function TitleArea({ title = '목표' }: { title?: string }) {
   return (
     <motion.div
       layout={'position'}
-      className="mb-40 flex w-full justify-between"
+      className="mb-26 flex w-full items-center justify-between md:mb-40"
     >
-      <p className="headline-large font-bold text-white">{title}</p>
+      <p className="m-headline-medium md:headline-large font-bold text-white">
+        {title}
+      </p>
       <ConfirmButton
         aria-label="open-todo-form-btn"
         size="lg"
@@ -44,13 +47,19 @@ function TitleArea({ title = '목표' }: { title?: string }) {
 export default function TodolistPanel() {
   const goalId = useGoalId();
   const { data, isLoading, isError } = useTodolistQuery(goalId);
-  const { setAllGroup } = useTodolistStore();
+  const { setAllGroup, setInProgressTodoId } = useTodolistStore();
 
   useEffect(() => {
     if (!data) return;
     const { newDone, newShared, newPersonal } = divideTodoGroup(data.todolist);
     setAllGroup(newDone, newShared, newPersonal);
-  }, [data, setAllGroup]);
+    const inProgressTodoId = findInProgressTodoId([
+      ...newDone,
+      ...newShared,
+      ...newPersonal,
+    ]);
+    setInProgressTodoId(inProgressTodoId);
+  }, [data, setAllGroup, setInProgressTodoId]);
 
   if (isLoading) return <>Todolist - 불러오는 중입니다</>;
 
@@ -60,13 +69,13 @@ export default function TodolistPanel() {
     <LayoutGroup>
       <motion.div
         layout
-        className={cn(
-          'relative flex w-full max-w-740 flex-col',
-          'bg-surface-2 rounded-sm px-34 py-40',
-        )}
+        className="bg-surface-2 flex min-h-screen w-full flex-col rounded-sm xl:min-h-fit xl:max-w-740"
       >
-        <TitleArea title={data?.title} />
-        <Todolist />
+        <AppBar pageName="투두 상세" />
+        <div className="relative flex flex-col rounded-sm px-16 py-18 md:px-34 md:py-40">
+          <TitleArea title={data?.title} />
+          <Todolist />
+        </div>
       </motion.div>
     </LayoutGroup>
   );

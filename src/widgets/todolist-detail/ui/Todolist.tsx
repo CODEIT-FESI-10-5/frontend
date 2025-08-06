@@ -38,7 +38,7 @@ export default function Todolist() {
               exit={{ opacity: 0 }}
               className="bg-surface-4 text-text-primary flex h-72 w-full items-center justify-center rounded-lg px-18"
             >
-              <span className="text-text-primary body-small">
+              <span className="text-text-tertiary m-body-large md:body-medium">
                 세부 투두를 추가해 목표를 구체화해보세요.
               </span>
             </motion.div>

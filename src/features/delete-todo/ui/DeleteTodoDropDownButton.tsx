@@ -49,12 +49,12 @@ function DeleteModal({
   items: Array<{ name: string; handleClick: () => void }>;
 }) {
   return (
-    <div className="bg-surface-4 border-border-emphasis overflow-hidden rounded-md border shadow-lg">
+    <div className="text-surface-3 m-body-medium md:body-medium overflow-hidden rounded-md bg-white shadow-lg">
       <ul className="flex flex-col gap-14">
         {items.map((item, idx) => (
           <button
             key={idx.toString() + item.name}
-            className="hover:bg-surface-3 cursor-pointer items-center justify-center px-24 py-12 transition"
+            className="cursor-pointer items-center justify-center px-24 py-12 transition"
             onClick={item.handleClick}
           >
             {item.name}
