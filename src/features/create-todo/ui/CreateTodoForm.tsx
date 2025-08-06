@@ -71,40 +71,35 @@ export default function CreateTodoForm() {
 
       <div
         className={cn(
-          'flex w-185 flex-shrink-0 justify-end gap-9',
+          'flex shrink-0 justify-end gap-9',
           data?.role === 'LEADER' ? 'self-end md:self-center' : '',
         )}
       >
         {data?.role === 'LEADER' && (
-          // <ToggleButton isOn={isShared} toggleSwitch={() => toggleIsShared()}>
-          //   {'공통'}
-          // </ToggleButton>
           <Button
             label={
-              <>
+              <div className="flex items-center justify-center gap-2">
                 {isShared ? (
                   <CheckSquareFillPrimaryIcon width={28} height={28} />
                 ) : (
                   <CheckSquareBlankIcon width={28} height={28} />
                 )}
                 {'공통'}
-              </>
+              </div>
             }
             size={'sm'}
-            theme={'surface'}
+            theme={'emphasis'}
             onClick={() => toggleIsShared()}
-            className="flex-1"
+            type="button"
+            className="w-88 px-14"
           />
         )}
-        {/* <ConfirmButton size="md" color="bg-primary">
-          {'완료'}
-        </ConfirmButton> */}
         <Button
           label={'완료'}
           size={'sm'}
           theme={'primary'}
           type="submit"
-          className="flex-1"
+          className="w-88"
         />
       </div>
     </form>
