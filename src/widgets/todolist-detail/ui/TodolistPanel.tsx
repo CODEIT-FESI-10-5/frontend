@@ -8,10 +8,9 @@ import { useTodolistQuery } from '@/entities/todolist/model/hooks';
 import divideTodoGroup from '@/entities/todolist/lib/utils/divideTodoGroup';
 import { useEffect } from 'react';
 import { useTodolistStore } from '@/entities/todolist/model/store';
-import ConfirmButton from '@/features/create-todo/ui/ConfirmButton';
 import toast from 'react-hot-toast';
 import { useGoalId } from '@/shared/model/useGoalId';
-import { AppBar } from '@/shared/ui';
+import { AppBar, Button } from '@/shared/ui';
 import findInProgressTodoId from '@/entities/todolist/lib/utils/findInProgressTodo';
 
 function TitleArea({ title = '목표' }: { title?: string }) {
@@ -25,10 +24,16 @@ function TitleArea({ title = '목표' }: { title?: string }) {
       <p className="m-headline-medium md:headline-large font-bold text-white">
         {title}
       </p>
-      <ConfirmButton
+      <Button
         aria-label="open-todo-form-btn"
-        size="lg"
-        color="bg-highlight"
+        label={
+          <div className="flex items-center justify-center gap-4">
+            <NewTodo width={20} height={20} />
+            {'세부 투두 생성'}
+          </div>
+        }
+        size={'xs'}
+        theme={'highlight'}
         onClick={() => {
           if (getTodoCount() >= 10) {
             toast.error('투두는 최대 10개까지 생성 가능합니다');
@@ -36,10 +41,7 @@ function TitleArea({ title = '목표' }: { title?: string }) {
           }
           toggleEditMode();
         }}
-      >
-        <NewTodo width={24} height={24} />
-        <p className="label-small">세부 투두 생성</p>
-      </ConfirmButton>
+      />
     </motion.div>
   );
 }
