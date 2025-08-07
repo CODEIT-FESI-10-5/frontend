@@ -36,13 +36,7 @@ export default function Goal({ goalId }: { goalId: string }) {
   }, [goal]);
 
   if (isLoading) {
-    return (
-      <div className={cn('flex h-full items-center justify-center')}>
-        <div className={cn('text-white', 'text-lg', '')}>
-          대시보드 로딩 중...
-        </div>
-      </div>
-    );
+    return <></>;
   }
 
   if (error) {

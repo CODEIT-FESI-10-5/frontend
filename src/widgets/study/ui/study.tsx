@@ -9,12 +9,15 @@ import { useEffect } from 'react';
 import { useStudyRoleStore } from '@/entities/study/model/useStudyRoleStore';
 import { notFound } from 'next/navigation';
 import { cn } from '@/shared/lib/utils/cn';
+import MenuIcon from '@/assets/icon-menu.svg';
+import { useDrawerStore } from '@/shared/model';
 
 export default function Study({ studyId }: { studyId: string }) {
   const { data: studyGroup, isLoading, error } = useStudyGroup(studyId);
   const { inviteCode, setInviteCode } = useInviteCodeStore();
   // studyGroup의 userRole 정보 store에 저장
   const { role, setStudyRole } = useStudyRoleStore();
+  const { isOpen, open, close } = useDrawerStore();
 
   useEffect(() => {
     if (studyGroup && studyGroup.inviteLink !== inviteCode) {
@@ -48,6 +51,7 @@ export default function Study({ studyId }: { studyId: string }) {
   }
 
   const hasImage = studyGroup.image;
+
   return (
     <div
       style={
@@ -68,6 +72,14 @@ export default function Study({ studyId }: { studyId: string }) {
         'sm:px-54 sm:pt-44 sm:pb-32',
       )}
     >
+      {/* 모바일 환경에서만 보이는 메뉴 아이콘 */}
+      <MenuIcon
+        width={24}
+        height={24}
+        onClick={isOpen ? close : open}
+        className="absolute top-16 left-18 cursor-pointer sm:hidden"
+      />
+
       <UpdateStudyInfo
         studyId={studyGroup.id}
         title={studyGroup.title}

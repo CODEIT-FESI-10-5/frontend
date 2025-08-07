@@ -92,7 +92,7 @@ export default function StudyInfo({
               {members.length > 4 && (
                 <div
                   className={cn(
-                    'border-text-secondary z-30 flex items-center justify-center rounded-full border-2 bg-gray-600',
+                    'border-text-secondary z-10 flex items-center justify-center rounded-full border-2 bg-gray-600',
                     'h-26 w-26',
                     'md:h-32 md:w-32',
                   )}
