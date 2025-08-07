@@ -5,6 +5,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { getGoalList, goalQueryKeys } from '@/entities/goal';
 import { useDrawerStore } from '@/shared/model';
 import { useStudyStore } from '../model';
+import { studyQueryKeys } from '@/entities/study';
 
 interface StudyDropDownProps {
   data: StudyListResponse;
@@ -37,6 +38,9 @@ export default function StudyDropDown({ onClick, data }: StudyDropDownProps) {
       // 쿼리 무효화
       queryClient.invalidateQueries({
         queryKey: goalQueryKeys.list(Number(study.id)),
+      });
+      queryClient.invalidateQueries({
+        queryKey: studyQueryKeys.list(),
       });
     } catch (err) {
       console.error('goal 리스트 조회 실패:', err);

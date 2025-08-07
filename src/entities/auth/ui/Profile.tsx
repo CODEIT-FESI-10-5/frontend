@@ -3,20 +3,14 @@ import Image from 'next/image';
 import SettingIcon from '@/assets/profile-settings.svg';
 import { useRouter } from 'next/navigation';
 import { useDrawerStore } from '@/shared/model';
+import { useProfileStore } from '@/entities/profile/model';
 
 export default function Profile() {
+  const currentNickname = useProfileStore((state) => state.currentNickname);
+  const currentEmail = useProfileStore((state) => state.currentEmail);
+  const currentProfileImg = useProfileStore((state) => state.currentProfileImg);
   const { close } = useDrawerStore();
   const router = useRouter();
-
-  const data: {
-    email: string | null;
-    nickname: string | null;
-    profileImg: string | null;
-  } = {
-    email: localStorage.getItem('email'),
-    nickname: localStorage.getItem('nickname'),
-    profileImg: localStorage.getItem('profileImg'),
-  };
 
   const handleClick = () => {
     close();
@@ -27,8 +21,8 @@ export default function Profile() {
     <div className="bg-surface-4 rounded-6 flex h-79 w-full items-center gap-13 px-14 py-12">
       <Image
         src={
-          data?.profileImg?.trim()
-            ? data.profileImg
+          currentProfileImg?.trim()
+            ? currentProfileImg
             : '/images/default-profile.png'
         }
         alt="profile"
@@ -37,9 +31,9 @@ export default function Profile() {
         className="rounded-100"
       />
       <div className="h-43">
-        <p className="title-small text-text-secondary">{data?.nickname}</p>
+        <p className="title-small text-text-secondary">{currentNickname}</p>
         <p className="label-small text-text-secondary max-w-170 truncate">
-          {data?.email}
+          {currentEmail}
         </p>
       </div>
       <div className="ml-auto flex h-full w-full items-start justify-end">
