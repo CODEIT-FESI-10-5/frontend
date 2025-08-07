@@ -21,7 +21,7 @@ export function NoteItem({
 }: NoteItemProps) {
   return (
     <div
-      className="bg-surface-2 cursor-pointer rounded-lg px-16 py-12"
+      className="bg-surface-2 cursor-pointer rounded-lg px-16 py-12 min-h-64"
       onClick={onToggle}
     >
       <div className="flex flex-col">
