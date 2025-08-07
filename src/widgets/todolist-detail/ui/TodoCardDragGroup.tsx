@@ -27,18 +27,21 @@ export default function TodoCardDragGroup({ type }: TodoCardDragGroupProps) {
   const inProgressTodoId = useTodolistStore((state) => state.inProgressTodoId);
   const draggable = !(type === 'done');
   const updateOrder = useUpdateTodoOrderMutation(goalId);
-  const handleDrop = (targetId: string) => {
-    const dropIndex = todoGroup.findIndex(
-      (todo) => todo.id === targetTodo.current,
-    );
+  const handleDrop = (targetTodoId: string, prevPriorityOrder: number) => {
+    const dropIndex = todoGroup.findIndex((todo) => todo.id === targetTodoId);
     const targetPriorityOrder = prevSnapshot.current[dropIndex].priorityOrder;
-    updateOrder.mutate({
-      todoId: targetId,
-      newOrder: targetPriorityOrder,
-    });
+    if (targetPriorityOrder !== prevPriorityOrder) {
+      updateOrder.mutate({
+        todoId: targetTodoId,
+        newOrder: targetPriorityOrder,
+      });
+    }
   };
 
-  const targetTodo = useRef<string | null>(null);
+  const targetTodo = useRef<{
+    targetTodoId: string;
+    prevPriorityOrder: number;
+  } | null>(null);
   const prevSnapshot = useRef<Todo[]>([]);
 
   return (
@@ -60,12 +63,18 @@ export default function TodoCardDragGroup({ type }: TodoCardDragGroupProps) {
               value={todo}
               dragListener={draggable}
               onDragStart={() => {
-                targetTodo.current = todo.id;
+                targetTodo.current = {
+                  targetTodoId: todo.id,
+                  prevPriorityOrder: todo.priorityOrder,
+                };
                 prevSnapshot.current = [...todoGroup];
               }}
               onDragEnd={() => {
                 if (!targetTodo.current) return;
-                handleDrop(targetTodo.current);
+                handleDrop(
+                  targetTodo.current.targetTodoId,
+                  targetTodo.current.prevPriorityOrder,
+                );
                 targetTodo.current = null;
                 prevSnapshot.current = [];
               }}

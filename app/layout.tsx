@@ -6,7 +6,7 @@ import SideBarWrapper from '@/widgets/sidebar/ui/SideBarWrapper';
 import './globals.css';
 import { Modal } from '@/shared/ui/Modal';
 import CustomToast from '@/shared/ui/CustomToast';
-import { GlobalLoading } from '@/shared/ui/GlobalLoading';
+import { GlobalLoadingInteractionBlock } from '@/shared/ui/GlobalLoadingInteractionBlock';
 
 const notoSansKR = Noto_Sans_KR({
   variable: '--font-noto-sans-kr',
@@ -41,7 +41,7 @@ export default function RootLayout({
               {children}
               <Modal />
               <CustomToast />
-              <GlobalLoading />
+              <GlobalLoadingInteractionBlock />
             </SideBarWrapper>
           </QueryProvider>
         </MswProvider>
