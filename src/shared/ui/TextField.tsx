@@ -11,7 +11,7 @@ interface TextFieldProps extends React.InputHTMLAttributes<HTMLInputElement> {
 }
 
 const textFieldVariants = cva(
-  'bg-surface-3 rounded-6 h-51 w-full max-w-442 p-16 outline-none',
+  'bg-surface-3 rounded-6 h-51 w-full max-w-442 p-16 outline-none m-body-small md:label-small',
   {
     variants: {
       error: {
@@ -37,7 +37,9 @@ export default function TextField({
       )}
       <input className={cn(textFieldVariants({ error }))} {...props}></input>
       {error && (
-        <span className="text-highlight label-small">{errorMessage}</span>
+        <span className="text-highlight m-body-small md:label-small">
+          {errorMessage}
+        </span>
       )}
     </div>
   );
