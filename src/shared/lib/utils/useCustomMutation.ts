@@ -15,7 +15,7 @@ interface UseCustomMutationArgs<TVariables, TResult, TError> {
 }
 
 interface MutationContext {
-  toastId: string;
+  toastId?: string;
 }
 
 export const useCustomMutation = <TVariables, TResult, TError = ApiError>(
@@ -52,8 +52,10 @@ export const useCustomMutation = <TVariables, TResult, TError = ApiError>(
         mutationOptions.onMutate(variables);
       }
 
-      const toastId = toast.loading('응답을 기다리는중...');
-      return { toastId };
+      if (successMessage) {
+        const toastId = toast.loading('응답을 기다리는중...');
+        return { toastId };
+      }
     },
     onSuccess: (data, variables, context) => {
       if (mutationOptions?.onSuccess) {
