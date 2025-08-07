@@ -33,4 +33,4 @@ export const useLoadingStore = create<LoadingState>((set) => {
       }, remainingTime);
     },
   };
-}); 
+});
