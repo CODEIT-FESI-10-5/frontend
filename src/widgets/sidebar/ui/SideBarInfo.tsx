@@ -6,6 +6,8 @@ import { JoinStudyButton } from '@/features/join-study/ui';
 import Image from 'next/image';
 import CloseIcon from '@/assets/icon-close.svg';
 import { useDrawerStore } from '@/shared/model';
+import Link from 'next/link';
+import { Suspense } from 'react';
 
 export default function SideBarInfo() {
   const { close } = useDrawerStore();
@@ -16,7 +18,9 @@ export default function SideBarInfo() {
   return (
     <div>
       <div className="mb-28 flex items-center justify-between">
-        <Image src="/images/logo.png" alt="logo" width={115} height={28} />
+        <Link href="/">
+          <Image src="/images/logo.png" alt="logo" width={115} height={28} />
+        </Link>
         <CloseIcon className="h-26 w-26 xl:hidden" onClick={close} />
       </div>
       {isNotePage ? <NoteInfo /> : <ProfileInfo />}
@@ -27,7 +31,9 @@ export default function SideBarInfo() {
 function ProfileInfo() {
   return (
     <div>
-      <Profile />
+      <Suspense fallback={<div>loading...</div>}>
+        <Profile />
+      </Suspense>
       <div className="mt-24 flex justify-between">
         <CreateStudyButton />
         <JoinStudyButton />
