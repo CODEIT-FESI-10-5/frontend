@@ -3,6 +3,9 @@ import type { NextConfig } from 'next';
 const nextConfig: NextConfig = {
   /* config options here */
   // TurboPack 설정
+  images: {
+    domains: ['api.modudo.shop'],
+  },
   experimental: {
     turbo: {
       rules: {
@@ -42,6 +45,7 @@ const nextConfig: NextConfig = {
       },
     );
     fileLoaderRule.exclude = /\.svg$/i;
+
     return config;
   },
 };
