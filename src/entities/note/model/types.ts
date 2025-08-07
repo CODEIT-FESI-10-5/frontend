@@ -1,7 +1,7 @@
 export interface Note {
   id: number;
   content: string;
-  studyGoalId: number;
+  goalId: number;
   studyGoalTitle: string;
   todoTitle: string;
   createdAt: string;

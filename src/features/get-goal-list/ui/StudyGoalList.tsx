@@ -28,7 +28,7 @@ export default function StudyGoalList() {
     if (pathname === '/note') {
       setGoalId(goal.id);
       close();
-      router.push(`/note?studyGoalId=${goal.id}`);
+      router.push(`/note?goalId=${goal.id}`);
     } else {
       close();
       router.push(`/dashboard/study/${currentStudyId}/goal/${goal.id}`);
