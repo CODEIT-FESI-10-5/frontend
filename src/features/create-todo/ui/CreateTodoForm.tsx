@@ -7,6 +7,7 @@ import { useTodolistQuery } from '@/entities/todolist/model/hooks';
 import { Button } from '@/shared/ui';
 import CheckSquareBlankIcon from '@/assets/check_square_blank.svg';
 import CheckSquareFillPrimaryIcon from '@/assets/check-square-fill-primary.svg';
+import { motion, useAnimate } from 'framer-motion';
 
 export default function CreateTodoForm() {
   const goalId = useGoalId();
@@ -16,10 +17,22 @@ export default function CreateTodoForm() {
   const { isShared, toggleIsShared } = useCreateTodoStore();
   const { resetField, toggleEditMode } = useCreateTodoStore();
   const createTodo = useCreateTodoMutation(goalId);
+
+  const [scope, animate] = useAnimate();
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (content.trim() === '') {
       setIsInvalid(true); // 경고 테두리
+      animate(
+        scope.current,
+        {
+          x: [0, -3, 3, -3, 3, 0],
+        },
+        {
+          velocity: 100,
+          ease: 'easeOut',
+        },
+      );
       return; // 서버 요청 중단
     }
 
@@ -36,7 +49,15 @@ export default function CreateTodoForm() {
   };
 
   return (
-    <form
+    <motion.form
+      ref={scope}
+      // transition={{
+      //   type: 'spring',
+      //   stiffness: 300,
+      //   damping: 10,
+      //   mass: 0.5,
+      //   velocity: 100000,
+      // }}
       onSubmit={handleSubmit}
       className={cn(
         'bg-surface-4 jutify-between mb-16 flex h-fit min-h-72 w-full items-center rounded-lg border',
@@ -105,6 +126,6 @@ export default function CreateTodoForm() {
           className="w-88"
         />
       </div>
-    </form>
+    </motion.form>
   );
 }
