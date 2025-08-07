@@ -24,9 +24,8 @@ export default function CustomToast() {
             alignItems: 'center',
             justifyContent: 'center',
             width: '442px',
-            height: '44px',
             borderRadius: '4px',
-            padding: '10px 20px',
+            padding: '6px 20px',
             whiteSpace: 'nowrap',
           },
 
