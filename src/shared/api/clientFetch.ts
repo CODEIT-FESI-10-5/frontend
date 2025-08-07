@@ -33,7 +33,7 @@ const DEFAULT_HEADERS: { 'Content-Type'?: string } = {
 // }
 
 // 토큰 재발급 상태 관리
-let isRefreshing = false; //
+let isRefreshing = false;
 let refreshPromise: Promise<boolean> | null = null;
 
 // 로그인 페이지로 리다이렉트
