@@ -6,7 +6,7 @@ export const notes: Note[] = [
   {
     id: 1,
     content: 'HTML의 기본 구조와 태그들에 대해 학습했습니다. 시맨틱 태그와 폼 요소의 활용법을 익혔습니다.',
-    studyGoalId: 1,
+    goalId: 1,
     studyGoalTitle: '웹 개발 기초 마스터',
     todoTitle: 'HTML 마스터하기',
     createdAt: '2024-01-15T10:00:00Z',
@@ -16,7 +16,7 @@ export const notes: Note[] = [
   {
     id: 2,
     content: 'CSS의 선택자와 박스 모델에 대해 학습했습니다. Flexbox와 Grid 레이아웃을 활용한 반응형 디자인을 실습했습니다.',
-    studyGoalId: 1,
+    goalId: 1,
     studyGoalTitle: '웹 개발 기초 마스터',
     todoTitle: 'CSS 완벽 정복',
     createdAt: '2024-01-16T14:30:00Z',
@@ -25,7 +25,7 @@ export const notes: Note[] = [
   {
     id: 3,
     content: 'JavaScript의 변수, 함수, 객체에 대해 학습했습니다. DOM 조작과 이벤트 처리 방법을 익혔습니다.',
-    studyGoalId: 1,
+    goalId: 1,
     studyGoalTitle: '웹 개발 기초 마스터',
     todoTitle: 'JavaScript 핵심 개념',
     createdAt: '2024-01-17T09:15:00Z',
@@ -34,7 +34,7 @@ export const notes: Note[] = [
   {
     id: 4,
     content: 'React의 기본 개념과 컴포넌트에 대해 학습했습니다. JSX 문법과 props, state의 차이점을 이해했습니다.',
-    studyGoalId: 2,
+    goalId: 2,
     studyGoalTitle: 'React 생태계 완성',
     todoTitle: 'React 기초 학습',
     createdAt: '2024-01-18T11:20:00Z',
@@ -43,7 +43,7 @@ export const notes: Note[] = [
   {
     id: 5,
     content: 'TypeScript의 타입 시스템과 인터페이스에 대해 학습했습니다. 제네릭과 유니온 타입의 활용법을 익혔습니다.',
-    studyGoalId: 2,
+    goalId: 2,
     studyGoalTitle: 'React 생태계 완성',
     todoTitle: 'TypeScript 마스터',
     createdAt: '2024-01-19T15:45:00Z',
@@ -52,7 +52,7 @@ export const notes: Note[] = [
   {
     id: 6,
     content: 'Next.js의 App Router와 파일 기반 라우팅 시스템에 대해 학습했습니다. 동적 라우팅과 중첩 라우팅을 실습했습니다.',
-    studyGoalId: 3,
+    goalId: 3,
     studyGoalTitle: 'React 생태계 완성',
     todoTitle: 'Next.js 완벽 이해',
     createdAt: '2024-01-20T13:30:00Z',
@@ -61,7 +61,7 @@ export const notes: Note[] = [
   {
     id: 7,
     content: 'Node.js의 기본 개념과 모듈 시스템에 대해 학습했습니다. npm과 package.json의 활용법을 익혔습니다.',
-    studyGoalId: 3,
+    goalId: 3,
     studyGoalTitle: '백엔드 개발 기초',
     todoTitle: 'Node.js 서버 구축',
     createdAt: '2024-01-21T10:15:00Z',
@@ -70,7 +70,7 @@ export const notes: Note[] = [
   {
     id: 8,
     content: 'Express.js를 사용한 웹 서버 구축에 대해 학습했습니다. 미들웨어와 라우팅 설정 방법을 실습했습니다.',
-    studyGoalId: 4,
+    goalId: 4,
     studyGoalTitle: '백엔드 개발 기초',
     todoTitle: 'Express.js 마스터',
     createdAt: '2024-01-22T16:20:00Z',
@@ -79,7 +79,7 @@ export const notes: Note[] = [
   {
     id: 9,
     content: 'SQL의 기본 문법과 데이터베이스 설계에 대해 학습했습니다. SELECT, INSERT, UPDATE, DELETE 쿼리를 실습했습니다.',
-    studyGoalId: 4,
+    goalId: 4,
     studyGoalTitle: '데이터베이스 마스터',
     todoTitle: 'SQL 데이터베이스',
     createdAt: '2024-01-23T09:30:00Z',
@@ -88,7 +88,7 @@ export const notes: Note[] = [
   {
     id: 10,
     content: 'MongoDB의 문서 기반 데이터베이스 구조에 대해 학습했습니다. CRUD 작업과 집계 파이프라인을 실습했습니다.',
-    studyGoalId: 4,
+    goalId: 4,
     studyGoalTitle: '데이터베이스 마스터',
     todoTitle: 'MongoDB NoSQL',
     createdAt: '2024-01-24T14:45:00Z',

@@ -19,20 +19,20 @@ export function NoteListPage() {
   // useGoalStore에서 현재 목표 아이디를 가져옴
   const { setGoalId } = useGoalStore();
 
-  const studyGoalIdParam = searchParams?.get('studyGoalId');
-  const hasStudyGoalId = studyGoalIdParam !== null;
+  const goalIdParam = searchParams?.get('goalId');
+  const hasGoalId = goalIdParam !== null;
 
   // 목표 목록 가져오기
   const { data: goalData } = useGetGoal(Number(currentStudyId));
 
-  // studyGoalId가 없고 목표가 있을 때 첫 번째 목표로 자동 이동
+  // goalId가 없고 목표가 있을 때 첫 번째 목표로 자동 이동
   useEffect(() => {
-    if (!hasStudyGoalId && goalData && goalData.goals.length > 0) {
+    if (!hasGoalId && goalData && goalData.goals.length > 0) {
       const firstGoalId = goalData.goals[0].id;
       setGoalId(String(firstGoalId));
-      router.replace(`/note?studyGoalId=${firstGoalId}`);
+      router.replace(`/note?goalId=${firstGoalId}`);
     }
-  }, [hasStudyGoalId, goalData, router, setGoalId]);
+  }, [hasGoalId, goalData, router, setGoalId]);
 
   const { data: notesResponse, isLoading, isError } = useNotesByStudyGoalId();
 
@@ -74,7 +74,7 @@ export function NoteListPage() {
           </h1>
         </div>
         <div className="px-16 py-70 md:px-30 md:py-34">
-          {hasStudyGoalId ? (
+          {hasGoalId ? (
             <NoteList title={studyGoalTitle} notes={notes} />
           ) : (
             <div className="py-12 text-center">
