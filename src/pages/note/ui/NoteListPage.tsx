@@ -7,6 +7,7 @@ import { useGetGoal } from '@/entities/goal/model/useGetGoal';
 import { useStudyStore } from '@/features/get-study-list/model';
 import { useGoalStore } from '@/features/get-goal-list/model';
 import { useEffect } from 'react';
+import AppBar from '@/shared/ui/AppBar';
 
 export function NoteListPage() {
   const searchParams = useSearchParams();
@@ -64,23 +65,24 @@ export function NoteListPage() {
   }
 
   return (
-    <div className="md:bg-surface-1 md:border-border-subtle w-full max-w-[1208px] rounded-lg md:border">
-      <div className="border-border-subtle hidden border px-22 py-12 md:block">
-        <h1 className="text-text-tertiary headline-medium text-lg">
-          노트 모아보기
-        </h1>
-      </div>
-      <div className="px-16 py-70 md:px-30 md:py-34">
-        {hasStudyGoalId ? (
-          <NoteList title={studyGoalTitle} notes={notes} />
-        ) : (
-          <div className="py-12 text-center">
-            <div className="mb-4 text-gray-500">
-              생성된 목표가 없습니다.
+    <>
+      <AppBar pageName="노트 모아보기" />
+      <div className="md:bg-surface-1 md:border-border-subtle w-full max-w-[1208px] rounded-lg md:border">
+        <div className="border-border-subtle hidden border px-22 py-12 md:block">
+          <h1 className="text-text-tertiary headline-medium text-lg">
+            노트 모아보기
+          </h1>
+        </div>
+        <div className="px-16 py-70 md:px-30 md:py-34">
+          {hasStudyGoalId ? (
+            <NoteList title={studyGoalTitle} notes={notes} />
+          ) : (
+            <div className="py-12 text-center">
+              <div className="mb-4 text-gray-500">생성된 목표가 없습니다.</div>
             </div>
-          </div>
-        )}
+          )}
+        </div>
       </div>
-    </div>
+    </>
   );
 }
