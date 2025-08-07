@@ -16,4 +16,5 @@ export const useUpdateTodoOrderMutation = (goalId: string) =>
       [...dashboardQueryKeys.goal(goalId)],
       [...todolistQueryKeys.todolist(goalId)],
     ],
+    successMessage: '투두 순서가 이동되었습니다',
   });
