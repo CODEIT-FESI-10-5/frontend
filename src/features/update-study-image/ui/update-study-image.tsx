@@ -7,7 +7,7 @@ import SettingIcon from '@/assets/icon-Settings.svg';
 import { useModal } from '@/shared/lib/utils/useModal';
 import Link from 'next/link';
 import { cn } from '@/shared/lib/utils/cn';
-import { useDeleteStudyMutation } from '@/features/delete-study';
+import DeleteStudyButton from '@/features/delete-study/ui/deleteStudy';
 
 interface UpdateStudyImageProps {
   studyId: string;
@@ -38,22 +38,14 @@ export default function UpdateStudyImage({ studyId }: UpdateStudyImageProps) {
     // TODO: 배경 이미지 삭제 API 연동
   };
 
-  const deleteStudyMutation = useDeleteStudyMutation(studyId);
-
-  // 스터디 삭제 핸들러
-  const handleStudyDelete = () => {
-    deleteStudyMutation.mutate({ studyId });
-    close(); // 모달 닫기
-  };
-
   // 설정 모달 열기
   const handleSettingIconClick = () => {
     if (settingIconRef.current) {
       open(
         <SettingModal
+          studyId={studyId}
           onChangeBg={() => fileInputRef.current?.click()}
           onDeleteBg={handleImageDelete}
-          onStudyDelete={handleStudyDelete}
         />,
         settingIconRef,
         { top: 8, left: 0 },
@@ -121,13 +113,13 @@ export default function UpdateStudyImage({ studyId }: UpdateStudyImageProps) {
 
 // 설정 모달 컴포넌트
 function SettingModal({
+  studyId,
   onChangeBg,
   onDeleteBg,
-  onStudyDelete,
 }: {
+  studyId: string;
   onChangeBg: () => void;
   onDeleteBg: () => void;
-  onStudyDelete: () => void;
 }) {
   return (
     <div
@@ -155,16 +147,7 @@ function SettingModal({
       >
         배경 삭제
       </button>
-      <button
-        className={cn(
-          'text-highlight cursor-pointer px-30 py-14',
-          'm-body-large',
-          'body-medium',
-        )}
-        onClick={onStudyDelete}
-      >
-        스터디 삭제
-      </button>
+      <DeleteStudyButton studyId={studyId} />
     </div>
   );
 }
