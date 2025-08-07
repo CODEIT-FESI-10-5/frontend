@@ -8,6 +8,7 @@ import { useStudyStore } from '@/features/get-study-list/model';
 import { useStudyRoleStore } from '@/entities/study/model/useStudyRoleStore';
 import { useDrawerStore } from '@/shared/model';
 import CreateGoalButton from '@/features/create-goal/ui/CreateGoalButton';
+import DeleteGoalButton from '@/features/delete-goal/ui/deleteGoalButton';
 
 export default function StudyGoalList() {
   const router = useRouter();
@@ -53,13 +54,21 @@ export default function StudyGoalList() {
                 onClick={() => handleClick(goalItem)}
                 key={goalItem.id}
                 className={clsx(
-                  'rounded-4 body-medium h-36 w-full px-12 py-7',
+                  'rounded-4 body-medium flex h-36 w-full items-center justify-between px-12 py-7',
                   goalItem.id === currentGoalId
                     ? 'bg-surface-4 text-text-secondary'
                     : 'bg-surface-2 text-text-tertiary',
                 )}
               >
                 <h3 className="flex items-center">{goalItem.title}</h3>
+                {role && goalItem.id === currentGoalId && (
+                  <div className="ml-auto">
+                    <DeleteGoalButton
+                      goalId={goalItem.id}
+                      studyId={String(data.studyId)}
+                    />
+                  </div>
+                )}
               </li>
             );
           })}

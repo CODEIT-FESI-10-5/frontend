@@ -7,6 +7,7 @@ import SettingIcon from '@/assets/icon-Settings.svg';
 import { useModal } from '@/shared/lib/utils/useModal';
 import Link from 'next/link';
 import { cn } from '@/shared/lib/utils/cn';
+import { useDeleteStudyMutation } from '@/features/delete-study';
 
 interface UpdateStudyImageProps {
   studyId: string;
@@ -14,7 +15,7 @@ interface UpdateStudyImageProps {
 
 export default function UpdateStudyImage({ studyId }: UpdateStudyImageProps) {
   const { open, close } = useModal();
-  const mutation = useUpdateStudyImageMutation(studyId, close);
+  const ImageMutation = useUpdateStudyImageMutation(studyId, close);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const settingIconRef = useRef<HTMLSpanElement>(null);
   const { role } = useStudyRoleStore();
@@ -27,7 +28,7 @@ export default function UpdateStudyImage({ studyId }: UpdateStudyImageProps) {
     const imageFile = files[0];
     const formData = new FormData();
     formData.append('image', imageFile);
-    mutation.mutate(formData);
+    ImageMutation.mutate(formData);
   };
 
   // 배경 삭제 핸들러 (API 연동만 비워둠)
@@ -37,6 +38,14 @@ export default function UpdateStudyImage({ studyId }: UpdateStudyImageProps) {
     // TODO: 배경 이미지 삭제 API 연동
   };
 
+  const deleteStudyMutation = useDeleteStudyMutation(studyId);
+
+  // 스터디 삭제 핸들러
+  const handleStudyDelete = () => {
+    deleteStudyMutation.mutate({ studyId });
+    close(); // 모달 닫기
+  };
+
   // 설정 모달 열기
   const handleSettingIconClick = () => {
     if (settingIconRef.current) {
@@ -44,6 +53,7 @@ export default function UpdateStudyImage({ studyId }: UpdateStudyImageProps) {
         <SettingModal
           onChangeBg={() => fileInputRef.current?.click()}
           onDeleteBg={handleImageDelete}
+          onStudyDelete={handleStudyDelete}
         />,
         settingIconRef,
         { top: 8, left: 0 },
@@ -113,9 +123,11 @@ export default function UpdateStudyImage({ studyId }: UpdateStudyImageProps) {
 function SettingModal({
   onChangeBg,
   onDeleteBg,
+  onStudyDelete,
 }: {
   onChangeBg: () => void;
   onDeleteBg: () => void;
+  onStudyDelete: () => void;
 }) {
   return (
     <div
@@ -135,13 +147,23 @@ function SettingModal({
       </button>
       <button
         className={cn(
-          'cursor-pointer px-30 py-14',
+          'cursor-pointer border-b px-30 py-14',
           'm-body-large',
           'body-medium',
         )}
         onClick={onDeleteBg}
       >
         배경 삭제
+      </button>
+      <button
+        className={cn(
+          'text-highlight cursor-pointer px-30 py-14',
+          'm-body-large',
+          'body-medium',
+        )}
+        onClick={onStudyDelete}
+      >
+        스터디 삭제
       </button>
     </div>
   );

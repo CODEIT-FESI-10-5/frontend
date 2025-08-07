@@ -12,12 +12,14 @@ import { dashboardHandlers } from '@/entities/dashboard';
 import { accountHandler } from '@/features/update-account/api/handler';
 import { deleteAccountHandler } from '@/features/delete-account/api/handler';
 import { logoutHandler } from '@/features/logout/api/handler';
+import { sidebarDeleteGoal } from '@/features/delete-goal';
 
 export const handlers = [
   ...sidebarCreateStudyHandler,
   ...sidebarStudyHandler,
   ...sidebarGoalHandler,
   ...sidebarCreateGoalHandler,
+  ...sidebarDeleteGoal,
   ...noteHandlers,
   ...dashboardHandlers,
   ...studyHandlers,
