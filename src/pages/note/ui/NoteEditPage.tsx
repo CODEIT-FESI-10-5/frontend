@@ -54,11 +54,11 @@ export function NoteEditPage({ noteId }: { noteId: number }) {
             <div>
               <div className="mb-6 flex items-center gap-4">
                 <NoteIcon />
-                <h1 className="m-headline-medium xl:headline-large text-white">
+                <h1 className="m-headline-medium xl:headline-large line-clamp-2 text-white">
                   {note.studyGoalTitle}
                 </h1>
               </div>
-              <p className="m-body-small xl:body-medium mb-24 text-white">
+              <p className="m-body-small xl:body-medium mb-24 line-clamp-2 text-white">
                 현재 투두: {note.todoTitle}
               </p>
               <NoteEditor initialNote={note} onAutoSave={handleAutoSave} />

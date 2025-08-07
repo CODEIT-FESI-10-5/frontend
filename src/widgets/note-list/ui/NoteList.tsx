@@ -24,7 +24,7 @@ export function NoteList({ title, notes }: NoteListProps) {
     <section>
       <div className="mb-24 flex items-center gap-4">
         <NoteIcon />
-        <h1 className="m-headline-medium md:headline-large text-white">
+        <h1 className="m-headline-medium md:headline-large line-clamp-2 text-white">
           {title}
         </h1>
       </div>
