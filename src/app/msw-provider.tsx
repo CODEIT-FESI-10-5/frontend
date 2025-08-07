@@ -26,7 +26,7 @@ export function MswProvider({ children }: MswProviderProps) {
     }
   }, []);
 
-  if (!mswReady) {
+  if (process.env.NODE_ENV === 'development' && !mswReady) {
     return <div>Loading...</div>;
   }
 
