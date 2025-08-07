@@ -43,19 +43,29 @@ function DeleteGoalModal({
   };
 
   return (
-    <div className="rounded-12 bg-surface-2 border-border-emphasis relative flex flex-col gap-62 border-1 md:w-642 md:px-100 md:py-68">
-      <CloseIcon
-        className="absolute top-30 right-30 h-30 w-30 cursor-pointer"
-        onClick={close}
-      />
-      <div className="flex flex-col gap-12">
-        <p className="headline-large text-text-white flex w-full items-start">
-          스터디 목표를 삭제합니다.
-        </p>
+    <div className="rounded-12 bg-surface-2 border-border-emphasis relative flex w-518 flex-col gap-16 border-1 md:px-38 md:py-38">
+      <div className="flex items-center justify-between">
+        <h3 className="headline-large flex w-full text-white">
+          스터디 목표 삭제
+        </h3>
+        <CloseIcon className="h-30 w-30 cursor-pointer" onClick={close} />
       </div>
-      <div className="flex w-full items-center justify-center gap-12">
-        <Button label="취소" size="lg" theme="emphasis" onClick={close} />
-        <Button label="삭제" size="lg" theme="primary" onClick={handleDelete} />
+      <span>생성된 세부 투두와 메모도 모두 삭제됩니다.</span>
+      <div className="mt-40 flex w-full items-center justify-end gap-12">
+        <Button
+          label="취소"
+          size="md"
+          theme="emphasis"
+          onClick={close}
+          className="w-166"
+        />
+        <Button
+          label="삭제"
+          size="md"
+          theme="primary"
+          onClick={handleDelete}
+          className="w-166"
+        />
       </div>
     </div>
   );
