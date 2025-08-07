@@ -8,9 +8,10 @@ import {
 } from '../model';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useProfileStore } from '@/entities/profile/model';
 
 export default function UpdateNickname() {
-  const currentNickname = localStorage.getItem('nickname');
+  const currentNickname = useProfileStore((state) => state.currentNickname);
   const [isOpen, setIsOpen] = useState(false);
   const { mutate } = useUpdateNickname();
   const {

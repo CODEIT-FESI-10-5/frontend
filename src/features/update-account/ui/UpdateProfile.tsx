@@ -4,9 +4,10 @@ import { Button } from '@/shared/ui';
 import DeleteIcon from '@/assets/icon-delete.svg';
 import { useState, useRef } from 'react';
 import { useUpdateProfile } from '../model/useUpdateProfile';
+import { useProfileStore } from '@/entities/profile/model';
 
 export default function UpdateProfile() {
-  const currentImage = localStorage.getItem('profileImg');
+  const currentImage = useProfileStore((state) => state.currentProfileImg);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const [imageSrc, setImageSrc] = useState(
