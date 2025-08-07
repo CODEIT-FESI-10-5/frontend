@@ -67,13 +67,13 @@ export function NoteListPage() {
   return (
     <>
       <AppBar pageName="노트 모아보기" />
-      <div className="md:bg-surface-1 md:border-border-subtle w-full max-w-[1208px] rounded-lg md:border">
-        <div className="border-border-subtle hidden border px-22 py-12 md:block">
+      <div className="xl:bg-surface-1 xl:border-border-subtle w-full max-w-[1208px] rounded-lg xl:border">
+        <div className="border-border-subtle hidden border px-22 py-12 xl:block">
           <h1 className="text-text-tertiary headline-medium text-lg">
             노트 모아보기
           </h1>
         </div>
-        <div className="px-16 py-70 md:px-30 md:py-34">
+        <div className="px-16 py-70 xl:px-30 xl:py-34">
           {hasGoalId ? (
             <NoteList title={studyGoalTitle} notes={notes} />
           ) : (

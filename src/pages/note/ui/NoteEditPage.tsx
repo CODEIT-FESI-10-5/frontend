@@ -44,8 +44,8 @@ export function NoteEditPage({ noteId }: { noteId: number }) {
   return (
     <>
       <AppBar pageName="노트 작성" />
-      <div className="md:bg-surface-1 md:border-border-subtle w-full max-w-[1208px] rounded-lg md:border">
-        <div className="border-border-subtle hidden border px-22 py-12 md:block">
+      <div className="xl:bg-surface-1 xl:border-border-subtle w-full max-w-[1208px] rounded-lg xl:border">
+        <div className="border-border-subtle hidden border px-22 py-12 xl:block">
           <h1 className="text-text-tertiary m-headline-medium">노트 작성</h1>
         </div>
 
@@ -54,11 +54,11 @@ export function NoteEditPage({ noteId }: { noteId: number }) {
             <div>
               <div className="mb-6 flex items-center gap-4">
                 <NoteIcon />
-                <h1 className="m-headline-medium md:headline-large text-white">
+                <h1 className="m-headline-medium xl:headline-large text-white">
                   {note.studyGoalTitle}
                 </h1>
               </div>
-              <p className="m-body-small md:body-medium mb-24 text-white">
+              <p className="m-body-small xl:body-medium mb-24 text-white">
                 현재 투두: {note.todoTitle}
               </p>
               <NoteEditor initialNote={note} onAutoSave={handleAutoSave} />
