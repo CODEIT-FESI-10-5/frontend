@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 import { useQueryClient } from '@tanstack/react-query';
 import { getGoalList, goalQueryKeys } from '@/entities/goal';
 import { useDrawerStore } from '@/shared/model';
+import { useStudyStore } from '../model';
 
 interface StudyDropDownProps {
   data: StudyListResponse;
@@ -11,6 +12,7 @@ interface StudyDropDownProps {
 }
 
 export default function StudyDropDown({ onClick, data }: StudyDropDownProps) {
+  const { currentStudyId } = useStudyStore();
   const router = useRouter();
   const queryClient = useQueryClient();
   const { close } = useDrawerStore();
@@ -47,8 +49,9 @@ export default function StudyDropDown({ onClick, data }: StudyDropDownProps) {
 
   return (
     <div className="border-border-emphasis bg-surface-4 rounded-6 scrollbar-hide mt-12 flex w-296 flex-col items-center justify-start gap-14 border-1 px-13 py-8 xl:max-h-346 xl:overflow-y-scroll">
-      {data &&
-        data.studyList.map((study: StudyItem) => (
+      {data.studyList
+        .filter((study: StudyItem) => study.id !== currentStudyId)
+        .map((study: StudyItem) => (
           <div
             key={study.id}
             onClick={() => handleClick(study)}

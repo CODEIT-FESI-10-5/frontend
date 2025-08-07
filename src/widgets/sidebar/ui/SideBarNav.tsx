@@ -55,12 +55,28 @@ export default function SideBarNav() {
       />
 
       {/* StudyDropDown */}
-      <div className={isOpen ? '' : 'hidden'}>
+      <div
+        className={
+          isOpen &&
+          studyData.studyList.filter((study) => study.id !== currentStudyId)
+            .length > 0
+            ? ''
+            : 'hidden'
+        }
+      >
         <StudyDropDown onClick={handleClick} data={studyData} />
       </div>
 
       {/* StudyGoalList */}
-      <div className={isOpen ? 'hidden' : ''}>
+      <div
+        className={
+          isOpen &&
+          studyData.studyList.filter((study) => study.id !== currentStudyId)
+            .length > 0
+            ? 'hidden'
+            : ''
+        }
+      >
         <StudyGoalList />
       </div>
     </div>
