@@ -54,6 +54,7 @@ export async function middleware(req: NextRequest) {
           'Content-Type': 'application/json',
           cookie,
         },
+        cache: 'no-store',
       },
     );
     const loginRes: AuthCheckResponse = await res.json();
@@ -73,6 +74,7 @@ export async function middleware(req: NextRequest) {
           'Content-Type': 'application/json',
           cookie,
         },
+        cache: 'no-store',
       },
     );
 
@@ -93,6 +95,7 @@ export async function middleware(req: NextRequest) {
             'Content-Type': 'application/json',
             cookie,
           },
+          cache: 'no-store',
         },
       );
 
