@@ -1,4 +1,4 @@
-import { noteHandlers } from '@/entities/note/model/mock/handler/noteHandler';
+import { noteHandlers } from '@/entities/note/api/noteHandler';
 import { sidebarCreateStudyHandler } from '@/features/create-study/api/handler';
 import { sidebarStudyHandler } from '@/features/get-study-list/api/handler';
 import { sidebarGoalHandler } from '@/features/get-goal-list/api/handler';
