@@ -4,10 +4,11 @@ import { useGoalStore } from '@/features/get-goal-list/model';
 import { StudyGoalList } from '@/features/get-goal-list/ui';
 import { useStudyStore } from '@/features/get-study-list/model';
 import { StudyDropDown, CurrentStudy } from '@/features/get-study-list/ui';
-import { useParams, usePathname } from 'next/navigation';
+import { useParams, usePathname, useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
 
 export default function SideBarNav() {
+  const router = useRouter();
   const { setStudyId, currentStudyId } = useStudyStore();
   const { setGoalId, resetGoalId } = useGoalStore();
   const pathname = usePathname();
@@ -38,6 +39,14 @@ export default function SideBarNav() {
 
   // 드랍다운 오픈 여부
   const handleClick = () => {
+    // 스터디가 하나일 경우, 현재 스터디 누르면 해당 페이지로 이동
+    if (
+      (studyData.totalCount === 1 && pathname?.startsWith('/account')) ||
+      pathname?.startsWith('/note') ||
+      pathname?.startsWith('/todolist-detail')
+    ) {
+      router.push('/');
+    }
     setIsOpen(!isOpen);
   };
 
@@ -55,15 +64,7 @@ export default function SideBarNav() {
       />
 
       {/* StudyDropDown */}
-      <div
-        className={
-          isOpen &&
-          studyData.studyList.filter((study) => study.id !== currentStudyId)
-            .length > 0
-            ? ''
-            : 'hidden'
-        }
-      >
+      <div className={isOpen && studyData.totalCount !== 1 ? '' : 'hidden'}>
         <StudyDropDown onClick={handleClick} data={studyData} />
       </div>
 
@@ -72,7 +73,7 @@ export default function SideBarNav() {
         className={
           isOpen &&
           studyData.studyList.filter((study) => study.id !== currentStudyId)
-            .length > 0
+            .length !== 1
             ? 'hidden'
             : ''
         }

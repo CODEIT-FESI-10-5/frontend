@@ -64,7 +64,7 @@ export default function UpdateProfile() {
               />
               <DeleteIcon
                 onClick={handleDeleteImage}
-                className="cursor-pointer"
+                className="h-24 w-24 cursor-pointer"
               />
               <input
                 ref={fileInputRef}

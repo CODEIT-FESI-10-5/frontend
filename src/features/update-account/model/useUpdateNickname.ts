@@ -2,10 +2,14 @@
 
 import { updateNickname } from '@/entities/profile/api';
 import { UpdateNicknameSchema } from './update-account.schema';
-import { UpdateNicknameRequestApi } from '@/entities/profile/model';
+import {
+  UpdateNicknameRequestApi,
+  useProfileStore,
+} from '@/entities/profile/model';
 import { useCustomMutation } from '@/shared/lib/utils/useCustomMutation';
 
 export function useUpdateNickname() {
+  const setNickname = useProfileStore((state) => state.setNickname);
   return useCustomMutation({
     mutationFn: (data: UpdateNicknameSchema) => {
       const requestData: UpdateNicknameRequestApi = {
@@ -17,7 +21,7 @@ export function useUpdateNickname() {
     mutationOptions: {
       onSuccess: (res) => {
         const nickname = res.data.nickname;
-        localStorage.setItem('nickname', nickname);
+        setNickname(nickname);
       },
     },
   });
