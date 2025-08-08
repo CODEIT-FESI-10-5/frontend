@@ -21,7 +21,7 @@ export function NoteItem({
 }: NoteItemProps) {
   return (
     <div
-      className="bg-surface-2 cursor-pointer rounded-lg px-16 py-12 min-h-64"
+      className="bg-surface-2 min-h-64 cursor-pointer rounded-lg px-16 py-12"
       onClick={onToggle}
     >
       <div className="flex flex-col">
@@ -39,7 +39,9 @@ export function NoteItem({
                 <NoteOpenIcon />
               </motion.span>
             </span>
-            <h3 className="text-lg font-semibold line-clamp-2">{note.todoTitle}</h3>
+            <h3 className="m-body-large md:body-medium line-clamp-2 text-white">
+              {note.todoTitle}
+            </h3>
           </div>
           <div className="hidden md:block">{isExpanded && actions}</div>
         </div>
