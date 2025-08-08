@@ -8,7 +8,7 @@ import {
 import { useCustomMutation } from '@/shared/lib/utils/useCustomMutation';
 
 export function useUpdateProfile() {
-  const setProfileImg = useProfileStore((state) => state.setNickname);
+  const setProfileImg = useProfileStore((state) => state.setProfileImg);
   return useCustomMutation({
     mutationFn: (data: UpdateProfileRequestApi) => updateProfile(data),
     successMessage: '이미지가 변경되었습니다.',
