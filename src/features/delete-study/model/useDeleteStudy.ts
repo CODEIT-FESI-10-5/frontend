@@ -7,12 +7,14 @@ import { deleteStudy } from '../api';
 import { studyQueryKeys } from '@/entities/study';
 import { goalQueryKeys } from '@/entities/goal';
 import { useRouter } from 'next/navigation';
+import { useRedirect } from '@/shared/lib/utils/useRedirect';
 
 interface DeleteStudyMutationParams {
   studyId: string;
 }
 export const useDeleteStudyMutation = (studyId: string) => {
   const router = useRouter();
+  const url = useRedirect();
 
   return useCustomMutation<DeleteStudyMutationParams, any>({
     mutationFn: ({ studyId }) => deleteStudy(studyId),
@@ -27,7 +29,11 @@ export const useDeleteStudyMutation = (studyId: string) => {
     successMessage: '스터디가 삭제되었습니다',
     mutationOptions: {
       onSuccess: () => {
-        router.push('/');
+        if (url) {
+          router.push(url);
+        } else {
+          router.push('/');
+        }
       },
     },
   });
