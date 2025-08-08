@@ -30,9 +30,9 @@ export const useDeleteStudyMutation = (studyId: string) => {
     mutationOptions: {
       onSuccess: () => {
         if (url) {
-          router.push(url);
+          router.replace(url);
         } else {
-          router.push('/');
+          router.replace('/');
         }
       },
     },

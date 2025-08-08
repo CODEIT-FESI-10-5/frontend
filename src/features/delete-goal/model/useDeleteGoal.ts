@@ -29,9 +29,9 @@ export const useDeleteGoalMutation = (goalId: string, studyId: string) => {
     mutationOptions: {
       onSuccess: () => {
         if (url) {
-          router.push(url);
+          router.replace(url);
         } else {
-          router.push('/');
+          router.replace('/');
         }
       },
     },
