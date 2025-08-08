@@ -1,6 +1,7 @@
 import { StudyItem } from '@/entities/study/model';
 import DropDownIcon from '@/assets/dropdown.svg';
 import DropUpIcon from '@/assets/dropup.svg';
+import { cn } from '@/shared/lib/utils/cn';
 
 interface CurrentStudyProps {
   isOpen: boolean;
@@ -19,7 +20,12 @@ export default function CurrentStudy({
       {currentStudy !== null ? (
         <div
           onClick={onClick}
-          className="bg-surface-4 rounded-6 border-border-default hover:border-primary flex h-108 w-full items-center gap-12 border-1 p-16"
+          className={cn(
+            'bg-surface-4 flex h-108 w-full cursor-pointer items-center gap-12 p-16',
+            isOpen
+              ? 'rounded-t-6 xl:rounded-6'
+              : 'rounded-6 border-border-default hover:border-primary border-1',
+          )}
         >
           <div className="flex h-full w-232 flex-col gap-12">
             <h3 className="text-text-secondary title-small">

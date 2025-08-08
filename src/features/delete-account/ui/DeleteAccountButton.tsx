@@ -32,7 +32,10 @@ export default function DeleteAccountButton() {
 
   return (
     <div className="flex w-full items-center justify-center">
-      <p className="label-small text-highlight" onClick={handleClick}>
+      <p
+        className="label-small text-highlight cursor-pointer"
+        onClick={handleClick}
+      >
         회원탈퇴
       </p>
     </div>
