@@ -69,15 +69,7 @@ export default function SideBarNav() {
       </div>
 
       {/* StudyGoalList */}
-      <div
-        className={
-          isOpen &&
-          studyData.studyList.filter((study) => study.id !== currentStudyId)
-            .length !== 1
-            ? 'hidden'
-            : ''
-        }
-      >
+      <div className={isOpen && studyData.totalCount !== 1 ? 'hidden' : ''}>
         <StudyGoalList />
       </div>
     </div>
