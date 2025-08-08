@@ -21,7 +21,7 @@ export function useLogin() {
         if (url) {
           router.replace(url);
         } else {
-          router.replace('/dashboard');
+          router.replace('/');
         }
       },
     },
