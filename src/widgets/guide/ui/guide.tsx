@@ -1,11 +1,12 @@
 'use client';
 
 import Image from 'next/image';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { motion, AnimatePresence, PanInfo } from 'framer-motion';
 import { useRouter } from 'next/navigation';
 import { cn } from '@/shared/lib/utils/cn';
 import { Button } from '@/shared/ui';
+import { useRedirect } from '@/shared/lib/utils/useRedirect';
 
 const images = [
   '/images/guide/guide_1.png',
@@ -46,6 +47,13 @@ export default function Guide() {
   const [current, setCurrent] = useState(0);
   const router = useRouter();
   const [slideDirection, setSlideDirection] = useState(0);
+
+  const url = useRedirect('study'); // 스터디/목표 기준 자동 리다이렉트
+  useEffect(() => {
+    if (url) {
+      router.replace(url);
+    }
+  }, [url, router]);
 
   // 슬라이드 애니메이션 설정
   const slideVariants = {
