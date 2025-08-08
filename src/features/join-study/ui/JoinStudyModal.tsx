@@ -11,7 +11,7 @@ export default function JoinStudyModal() {
   const {
     register,
     handleSubmit,
-    formState: { isValid },
+    formState: { isValid, errors },
   } = useForm<JoinStudySchema>({
     resolver: zodResolver(joinStudySchema),
     defaultValues: {
@@ -24,7 +24,7 @@ export default function JoinStudyModal() {
     close();
   };
   return (
-    <div className="rounded-12 bg-surface-2 border-border-emphasis relative flex h-297 w-327 flex-col gap-30 border-1 px-24 py-38 md:h-338 md:w-518 md:p-38">
+    <div className="rounded-12 bg-surface-2 border-border-emphasis relative flex h-303 w-327 flex-col gap-30 border-1 px-24 py-38 md:h-338 md:w-518 md:p-38">
       <CloseIcon
         className="absolute top-30 right-30 h-30 w-30"
         onClick={close}
@@ -44,7 +44,8 @@ export default function JoinStudyModal() {
         <TextField
           type="text"
           placeholder="알파벳 대/소문자,숫자 8자리"
-          error={false}
+          error={!!errors.inviteCode}
+          errorMessage={errors.inviteCode?.message}
           {...register('inviteCode', { required: true })}
         />
         <Button
