@@ -35,10 +35,8 @@ export default function UpdateStudyInfo(props: {
     debouncedUpdateInfo(newTitle, description);
   };
 
-  // 설명 변경 핸들러
-  const handleDescriptionChange = (
-    e: React.ChangeEvent<HTMLTextAreaElement>,
-  ) => {
+  // 설명 변경 핸들러 (input용으로 변경)
+  const handleDescriptionChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newDescription = e.target.value;
     setDescription(newDescription);
     debouncedUpdateInfo(title, newDescription);
@@ -62,16 +60,16 @@ export default function UpdateStudyInfo(props: {
               )}
               placeholder="스터디 제목을 입력하세요..."
             />
-            <textarea
+            <input
+              type="text"
               value={description}
               onChange={handleDescriptionChange}
               className={cn(
-                'text-text-primary w-full resize-none border-none placeholder-gray-300 outline-none',
+                'text-text-primary w-full border-none bg-transparent placeholder-gray-300 outline-none',
                 'm-body-small',
                 'md:label-small',
               )}
               placeholder="스터디 목표나 응원 메세지를 적어주세요..."
-              rows={1}
             />
           </>
         ) : (

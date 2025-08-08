@@ -89,7 +89,7 @@ export default function UpdateStudyImage({ studyId }: UpdateStudyImageProps) {
         <Link href="/note">
           <button
             className={cn(
-              'text-text-primary flex items-center justify-center rounded-full border border-[#a9abb9]',
+              'text-text-primary flex cursor-pointer items-center justify-center rounded-full border border-[#a9abb9]',
               'm-label-small px-8 py-4',
               'md:body-small md:px-10 md:py-6',
             )}
@@ -100,7 +100,7 @@ export default function UpdateStudyImage({ studyId }: UpdateStudyImageProps) {
         <button
           onClick={handleSettingIconClick}
           className={cn(
-            'p-2 transition-all duration-200 hover:cursor-pointer disabled:opacity-50',
+            'cursor-pointer p-2 transition-all duration-200 disabled:opacity-50',
           )}
           title="배경 이미지 설정"
         >

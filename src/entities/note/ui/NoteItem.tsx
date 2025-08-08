@@ -21,7 +21,7 @@ export function NoteItem({
 }: NoteItemProps) {
   return (
     <div
-      className="bg-surface-2 cursor-pointer rounded-lg px-16 py-12 min-h-64"
+      className="bg-surface-2 min-h-64 cursor-pointer rounded-lg px-16 py-12"
       onClick={onToggle}
     >
       <div className="flex flex-col">
@@ -29,8 +29,9 @@ export function NoteItem({
           <div className="flex items-center gap-8 py-10">
             <span className="mr-2 flex-shrink-0">
               <motion.span
+                initial={{ rotate: -90, color: '#fff' }}
                 animate={{
-                  rotate: isExpanded ? 0 : -180,
+                  rotate: isExpanded ? 0 : -90,
                   color: isExpanded ? '#7380E9' : '#fff',
                 }}
                 transition={{ duration: 0.4, ease: 'easeInOut' }}
@@ -39,9 +40,25 @@ export function NoteItem({
                 <NoteOpenIcon />
               </motion.span>
             </span>
-            <h3 className="text-lg font-semibold line-clamp-2">{note.todoTitle}</h3>
+            <h3 className="m-body-large md:body-medium line-clamp-2 text-white">
+              {note.todoTitle}
+            </h3>
           </div>
-          <div className="hidden md:block">{isExpanded && actions}</div>
+          <div className="hidden md:block">
+            <AnimatePresence initial={false}>
+              {isExpanded && (
+                <motion.div
+                  key="desktop-actions"
+                  initial={{ opacity: 0, y: -5 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -5 }}
+                  transition={{ duration: 0.3, ease: 'easeOut' }}
+                >
+                  {actions}
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
         </div>
         <AnimatePresence initial={false}>
           {isExpanded && (
@@ -50,10 +67,10 @@ export function NoteItem({
               initial={{ height: 0, opacity: 0 }}
               animate={{ height: 'auto', opacity: 1 }}
               exit={{ height: 0, opacity: 0 }}
-              transition={{ duration: 0.4, ease: 'easeInOut' }}
+              transition={{ duration: 0.7, ease: 'easeInOut' }}
               style={{ overflow: 'hidden' }}
             >
-              <div className="mt-18">
+              <div className="mt-18 mb-16">
                 <div className="relative rounded-md">
                   <div className="text-text-primary prose prose-sm max-w-none">
                     {parse(
@@ -69,7 +86,20 @@ export function NoteItem({
           )}
         </AnimatePresence>
         <div className="md:hidden">
-          {isExpanded && <div className="mt-16 w-full">{actions}</div>}
+          <AnimatePresence initial={false}>
+            {isExpanded && (
+              <motion.div
+                key="mobile-actions"
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: 'auto', opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                transition={{ duration: 0.4, ease: 'easeInOut' }}
+                style={{ overflow: 'hidden' }}
+              >
+                {actions}
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
       </div>
     </div>

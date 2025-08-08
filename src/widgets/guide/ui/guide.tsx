@@ -58,6 +58,17 @@ export default function Guide() {
     setLoading(false);
   }, [url, router]);
 
+  // 자동 슬라이드 기능 - 5초마다 다음 이미지로 넘어감
+  // current가 변경될 때마다 타이머 리셋
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setSlideDirection(1);
+      setCurrent((prev) => (prev + 1) % images.length);
+    }, 5000); // 5초 간격
+
+    return () => clearInterval(interval);
+  }, [current]); // current가 변경될 때마다 타이머 리셋
+
   // 슬라이드 애니메이션 설정
   const slideVariants = {
     enter: (direction: number) => ({
