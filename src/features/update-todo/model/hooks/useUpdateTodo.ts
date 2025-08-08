@@ -17,5 +17,5 @@ export const useUpdateTodoMutation = (goalId: string) =>
       [...dashboardQueryKeys.goal(goalId)],
       [...todolistQueryKeys.todolist(goalId)],
     ],
-    successMessage: '투두 갱신에 성공했습니다',
+    successMessage: '투두 상태가 저장되었습니다!',
   });
