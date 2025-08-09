@@ -6,7 +6,7 @@ export const mockStudyListResponseApi: StudyListResponseApi = {
   errorMessage: '',
   fieldErrors: [],
   data: {
-    totalCount: 0,
+    totalCount: 6,
     recentStudyId: 1,
     studyList: [
       {
