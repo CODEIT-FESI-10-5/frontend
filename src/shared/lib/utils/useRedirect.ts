@@ -1,6 +1,7 @@
 // 목적지 url만 반환하는 훅
 import { useGetStudy } from '@/entities/study/model/useGetStudy';
 import { useGetGoal } from '@/entities/goal/model/useGetGoal';
+import { StudyListResponse } from '@/entities/study';
 
 /**
  * 스터디/목표 존재 여부에 따라 대시보드 내에서 적절한 경로로 리다이렉트하는 훅
@@ -18,20 +19,14 @@ export function useRedirect(
   deleteType: DeleteType = 'study',
   studyId?: string | number,
 ) {
-  let baseStudyId: string | number | undefined;
-  let isStudyFetched = true;
-  let studyData: any = undefined;
+  // 항상 훅을 호출
+  const study = useGetStudy();
+  const studyData: StudyListResponse | undefined = study.data;
+  const isStudyFetched = study.isFetched;
 
-  // 스터디 데이터 가져오기
-  if (deleteType === 'study') {
-    const study = useGetStudy();
-    studyData = study.data;
-    isStudyFetched = study.isFetched;
-    baseStudyId = studyData?.studyList?.[0]?.id;
-  } else {
-    // 타입이 goal인 경우 스터디 id값 사용
-    baseStudyId = studyId;
-  }
+  // studyId 결정
+  const baseStudyId =
+    deleteType === 'study' ? studyData?.studyList?.[0]?.id : studyId;
   const studyIdNum = Number(baseStudyId);
   const { data: goalData, isFetched: isGoalFetched } = useGetGoal(studyIdNum, {
     enabled: !!studyIdNum,

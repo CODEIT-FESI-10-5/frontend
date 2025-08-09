@@ -4,7 +4,6 @@
 import { useCustomMutation } from '@/shared/lib/utils/useCustomMutation';
 import { dashboardQueryKeys } from '@/entities/dashboard';
 import { deleteGoals } from '../api';
-import { studyQueryKeys } from '@/entities/study';
 import { goalQueryKeys } from '@/entities/goal';
 import { useRouter } from 'next/navigation';
 import { useRedirect } from '@/shared/lib/utils/useRedirect';
