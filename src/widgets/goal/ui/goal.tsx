@@ -1,4 +1,5 @@
 'use client';
+import type { Todo as TodoType } from '@/widgets/todo/model/types';
 
 import { motion } from 'framer-motion';
 
@@ -225,7 +226,7 @@ export default function Goal({ goalId }: { goalId: string }) {
 // 공통 투두 섹션 컴포넌트
 function TodoSection(props: {
   label: string;
-  todo: any;
+  todo: TodoType | null | undefined;
   emptyMessage: string;
   emptySubMessage: string;
   inProgress?: boolean;
