@@ -4,11 +4,10 @@ import { useGoalStore } from '@/features/get-goal-list/model';
 import { StudyGoalList } from '@/features/get-goal-list/ui';
 import { useStudyStore } from '@/features/get-study-list/model';
 import { StudyDropDown, CurrentStudy } from '@/features/get-study-list/ui';
-import { useParams, usePathname, useRouter } from 'next/navigation';
+import { useParams, usePathname } from 'next/navigation';
 import { useState, useEffect } from 'react';
 
 export default function SideBarNav() {
-  const router = useRouter();
   const { setStudyId, currentStudyId } = useStudyStore();
   const { setGoalId, resetGoalId } = useGoalStore();
   const pathname = usePathname();
