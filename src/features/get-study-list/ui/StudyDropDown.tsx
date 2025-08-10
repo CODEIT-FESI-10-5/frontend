@@ -52,14 +52,14 @@ export default function StudyDropDown({ onClick, data }: StudyDropDownProps) {
   };
 
   return (
-    <div className="bg-surface-4 rounded-b-6 scrollbar-hide xl:rounded-6 flex w-full flex-col items-center justify-start gap-24 p-16 xl:mt-12 xl:max-h-346 xl:overflow-y-scroll">
+    <div className="bg-surface-4 rounded-b-6 scrollbar-hide xl:rounded-6 xl:border-border-emphasis xl:-y-12 flex w-full flex-col items-center justify-start gap-24 p-16 xl:mt-12 xl:max-h-289 xl:gap-14 xl:overflow-y-scroll xl:border-1 xl:px-7">
       {data.studyList
         .filter((study: StudyItem) => study.id !== currentStudyId)
         .map((study: StudyItem) => (
           <div
             key={study.id}
             onClick={() => handleClick(study)}
-            className="flex h-76 min-h-76 w-full cursor-pointer flex-col"
+            className="xl:hover:bg-border-default rounded-6 flex h-76 min-h-76 w-full cursor-pointer flex-col xl:min-h-96 xl:gap-12 xl:px-8 xl:py-13"
           >
             <h3 className="text-text-secondary m-title-small xl:title-small">
               {study.title}
