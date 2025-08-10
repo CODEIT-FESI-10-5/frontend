@@ -40,15 +40,6 @@ export default function SideBarNav() {
 
   // 드랍다운 오픈 여부
   const handleClick = () => {
-    // 스터디가 하나일 경우, 현재 스터디 누르면 해당 페이지로 이동
-    if (
-      (studyData.totalCount === 1 && pathname?.startsWith('/account')) ||
-      pathname?.startsWith('/note') ||
-      pathname?.startsWith('/todolist-detail')
-    ) {
-      setIsOpen(false);
-      router.push('/');
-    }
     setIsOpen(!isOpen);
   };
 
