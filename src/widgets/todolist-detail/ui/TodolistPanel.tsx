@@ -12,6 +12,7 @@ import toast from 'react-hot-toast';
 import { useGoalId } from '@/shared/model/useGoalId';
 import { AppBar, Button } from '@/shared/ui';
 import findInProgressTodoId from '@/entities/todolist/lib/utils/findInProgressTodo';
+import { notFound } from 'next/navigation';
 
 function TitleArea({ title = '목표' }: { title?: string }) {
   const toggleEditMode = useCreateTodoStore((state) => state.toggleEditMode);
@@ -48,7 +49,7 @@ function TitleArea({ title = '목표' }: { title?: string }) {
 
 export default function TodolistPanel() {
   const goalId = useGoalId();
-  const { data, isLoading, isError } = useTodolistQuery(goalId);
+  const { data, isError } = useTodolistQuery(goalId);
   const { setAllGroup, setInProgressTodoId } = useTodolistStore();
 
   useEffect(() => {
@@ -63,9 +64,11 @@ export default function TodolistPanel() {
     setInProgressTodoId(inProgressTodoId);
   }, [data, setAllGroup, setInProgressTodoId]);
 
-  if (isLoading) return <>Todolist - 불러오는 중입니다</>;
+  // if (isLoading) return <>Todolist - 불러오는 중입니다</>;
 
-  if (isError) return <>Todolist - 불러오는데 실패했습니다</>;
+  if (isError) {
+    notFound();
+  }
 
   return (
     <LayoutGroup>

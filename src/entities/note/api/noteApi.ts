@@ -2,10 +2,10 @@ import { clientFetch } from '@/shared/api';
 import { NoteListResponse, NoteResponse, UpdateNoteRequest } from '../model/types';
 
 // 노트 목록 조회
-export const getNoteListByStudyGoalId = async (studyGoalId: number): Promise<NoteListResponse> => {
+export const getNoteListByStudyGoalId = async (goalId: number): Promise<NoteListResponse> => {
   return clientFetch.get<NoteListResponse>('/api/notes', {
     params: {
-      goalId: studyGoalId,
+      goalId: goalId,
       noteContent: null,
     },
   });

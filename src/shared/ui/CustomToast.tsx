@@ -1,8 +1,18 @@
 'use client';
 
-import { Toaster } from 'react-hot-toast';
+import { useEffect } from 'react';
+import toast, { Toaster, useToasterStore } from 'react-hot-toast';
+
+const TOAST_LIMIT = 1; // Or any desired limit
 
 export default function CustomToast() {
+  const { toasts } = useToasterStore();
+  useEffect(() => {
+    toasts
+      .filter((t) => t.visible) // Only consider currently visible toasts
+      .filter((item, i) => i >= TOAST_LIMIT) // Identify toasts exceeding the limit
+      .forEach((t) => toast.dismiss(t.id)); // Dismiss those toasts
+  }, [toasts]);
   return (
     <div className="body-medium">
       <Toaster
@@ -14,9 +24,8 @@ export default function CustomToast() {
             alignItems: 'center',
             justifyContent: 'center',
             width: '442px',
-            height: '44px',
             borderRadius: '4px',
-            padding: '10px 20px',
+            padding: '6px 20px',
             whiteSpace: 'nowrap',
           },
 

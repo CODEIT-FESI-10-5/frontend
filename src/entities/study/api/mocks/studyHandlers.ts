@@ -1,5 +1,6 @@
 import { http, HttpResponse } from 'msw';
 import { mockStudyGroup } from './mocks';
+import { mockStudyListResponseApi } from '../../model/__mocks__/study.mock';
 
 export const studyHandlers = [
   // Study 조회 API
@@ -74,5 +75,66 @@ export const studyHandlers = [
         { status: 400 },
       );
     }
+  }),
+  http.delete('/api/study/:studyId', ({ params }) => {
+    const studyId = Number(params.studyId);
+
+    // studyId가 유효하지 않은 경우
+    if (!studyId || isNaN(studyId)) {
+      return HttpResponse.json(
+        {
+          httpStatusCode: 400,
+          errorCode: 'INVALID_STUDY_ID',
+          errorMessage: '유효하지 않은 스터디 ID입니다.',
+          fieldErrors: [],
+          data: null,
+        },
+        { status: 400 },
+      );
+    }
+
+    // 해당 studyId가 존재하지 않는 경우
+    const studyExists = mockStudyListResponseApi.data.studyList.some(
+      (study) => study.studyId === studyId,
+    );
+
+    if (!studyExists) {
+      return HttpResponse.json(
+        {
+          httpStatusCode: 404,
+          errorCode: 'STUDY_NOT_FOUND',
+          errorMessage: '존재하지 않는 스터디입니다.',
+          fieldErrors: [],
+          data: null,
+        },
+        { status: 404 },
+      );
+    }
+
+    // 스터디 삭제 (실제로는 목 데이터에서 제거)
+    const studyIndex = mockStudyListResponseApi.data.studyList.findIndex(
+      (study) => study.studyId === studyId,
+    );
+
+    if (studyIndex !== -1) {
+      mockStudyListResponseApi.data.studyList.splice(studyIndex, 1);
+      mockStudyListResponseApi.data.totalCount =
+        mockStudyListResponseApi.data.studyList.length;
+    }
+
+    // 성공 응답
+    return HttpResponse.json(
+      {
+        httpStatusCode: 200,
+        errorCode: '',
+        errorMessage: '',
+        fieldErrors: [],
+        data: {
+          message: '스터디가 성공적으로 삭제되었습니다.',
+          deletedStudyId: studyId,
+        },
+      },
+      { status: 200 },
+    );
   }),
 ];

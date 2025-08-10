@@ -6,7 +6,6 @@ import {
 } from '@tanstack/react-query';
 import toast from 'react-hot-toast';
 import { useLoadingStore } from '@/shared/model/useLoadingStore';
-import { useEffect, useRef } from 'react';
 
 interface UseCustomMutationArgs<TVariables, TResult, TError> {
   mutationFn: (variables: TVariables) => Promise<TResult>;
@@ -15,29 +14,33 @@ interface UseCustomMutationArgs<TVariables, TResult, TError> {
   successMessage?: string;
 }
 
+interface MutationContext {
+  toastId?: string;
+}
+
 export const useCustomMutation = <TVariables, TResult, TError = ApiError>(
   args: UseCustomMutationArgs<TVariables, TResult, TError>,
 ) => {
   const queryClient = useQueryClient();
-  const { isLoading, startLoading, stopLoading } = useLoadingStore();
+  const { startLoading, stopLoading } = useLoadingStore();
   const { mutationFn, invalidateQueryKeys, mutationOptions, successMessage } =
     args;
 
-  const pendingInvalidationRef = useRef<Array<
-    Array<string | number | object>
-  > | null>(null);
+  // const pendingInvalidationRef = useRef<Array<
+  //   Array<string | number | object>
+  // > | null>(null);
 
   // isLoading이 false가 되면 pending된 invalidation 실행
-  useEffect(() => {
-    if (!isLoading && pendingInvalidationRef.current) {
-      pendingInvalidationRef.current.forEach((key) => {
-        queryClient.invalidateQueries({ queryKey: key });
-      });
-      pendingInvalidationRef.current = null;
-    }
-  }, [isLoading, queryClient]);
+  // useEffect(() => {
+  //   if (!isLoading && pendingInvalidationRef.current) {
+  //     pendingInvalidationRef.current.forEach((key) => {
+  //       queryClient.invalidateQueries({ queryKey: key });
+  //     });
+  //     pendingInvalidationRef.current = null;
+  //   }
+  // }, [isLoading, queryClient]);
 
-  return useMutation({
+  return useMutation<TResult, TError, TVariables, MutationContext>({
     mutationFn,
     ...mutationOptions,
     onMutate: (variables) => {
@@ -46,7 +49,12 @@ export const useCustomMutation = <TVariables, TResult, TError = ApiError>(
 
       // 기존 onMutate가 있다면 실행
       if (mutationOptions?.onMutate) {
-        return mutationOptions.onMutate(variables);
+        mutationOptions.onMutate(variables);
+      }
+
+      if (successMessage) {
+        const toastId = toast.loading('응답을 기다리는중...');
+        return { toastId };
       }
     },
     onSuccess: (data, variables, context) => {
@@ -54,7 +62,7 @@ export const useCustomMutation = <TVariables, TResult, TError = ApiError>(
         mutationOptions.onSuccess(data, variables, context);
       }
       if (successMessage) {
-        toast.success(successMessage);
+        toast.success(successMessage, { id: context?.toastId });
       }
     },
     onError: (error: TError, variables, context) => {
@@ -63,7 +71,7 @@ export const useCustomMutation = <TVariables, TResult, TError = ApiError>(
       }
       const errorMessage =
         (error as ApiError)?.body?.errorMessage ?? '알 수 없는 에러입니다';
-      toast.error(errorMessage);
+      toast.error(errorMessage, { id: context?.toastId });
     },
     onSettled: (data, error, variables, context) => {
       // 로딩 상태 종료
@@ -73,10 +81,16 @@ export const useCustomMutation = <TVariables, TResult, TError = ApiError>(
         mutationOptions.onSettled(data, error, variables, context);
       }
 
-      // invalidateQueries를 pending 상태로 저장
       if (invalidateQueryKeys) {
-        pendingInvalidationRef.current = invalidateQueryKeys;
+        invalidateQueryKeys.forEach((key) => {
+          queryClient.invalidateQueries({ queryKey: key });
+        });
       }
+
+      // invalidateQueries를 pending 상태로 저장
+      // if (invalidateQueryKeys) {
+      // pendingInvalidationRef.current = invalidateQueryKeys;
+      // }
     },
   });
 };

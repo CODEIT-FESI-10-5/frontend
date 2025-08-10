@@ -7,6 +7,7 @@ import SettingIcon from '@/assets/icon-Settings.svg';
 import { useModal } from '@/shared/lib/utils/useModal';
 import Link from 'next/link';
 import { cn } from '@/shared/lib/utils/cn';
+import DeleteStudyButton from '@/features/delete-study/ui/deleteStudy';
 
 interface UpdateStudyImageProps {
   studyId: string;
@@ -14,7 +15,7 @@ interface UpdateStudyImageProps {
 
 export default function UpdateStudyImage({ studyId }: UpdateStudyImageProps) {
   const { open, close } = useModal();
-  const mutation = useUpdateStudyImageMutation(studyId, close);
+  const ImageMutation = useUpdateStudyImageMutation(studyId, close);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const settingIconRef = useRef<HTMLSpanElement>(null);
   const { role } = useStudyRoleStore();
@@ -27,7 +28,7 @@ export default function UpdateStudyImage({ studyId }: UpdateStudyImageProps) {
     const imageFile = files[0];
     const formData = new FormData();
     formData.append('image', imageFile);
-    mutation.mutate(formData);
+    ImageMutation.mutate(formData);
   };
 
   // 배경 삭제 핸들러 (API 연동만 비워둠)
@@ -42,6 +43,7 @@ export default function UpdateStudyImage({ studyId }: UpdateStudyImageProps) {
     if (settingIconRef.current) {
       open(
         <SettingModal
+          studyId={studyId}
           onChangeBg={() => fileInputRef.current?.click()}
           onDeleteBg={handleImageDelete}
         />,
@@ -87,7 +89,7 @@ export default function UpdateStudyImage({ studyId }: UpdateStudyImageProps) {
         <Link href="/note">
           <button
             className={cn(
-              'text-text-primary flex items-center justify-center rounded-full border border-[#a9abb9]',
+              'text-text-primary flex cursor-pointer items-center justify-center rounded-full border border-[#a9abb9]',
               'm-label-small px-8 py-4',
               'md:body-small md:px-10 md:py-6',
             )}
@@ -98,7 +100,7 @@ export default function UpdateStudyImage({ studyId }: UpdateStudyImageProps) {
         <button
           onClick={handleSettingIconClick}
           className={cn(
-            'p-2 transition-all duration-200 hover:cursor-pointer disabled:opacity-50',
+            'cursor-pointer p-2 transition-all duration-200 disabled:opacity-50',
           )}
           title="배경 이미지 설정"
         >
@@ -111,9 +113,11 @@ export default function UpdateStudyImage({ studyId }: UpdateStudyImageProps) {
 
 // 설정 모달 컴포넌트
 function SettingModal({
+  studyId,
   onChangeBg,
   onDeleteBg,
 }: {
+  studyId: string;
   onChangeBg: () => void;
   onDeleteBg: () => void;
 }) {
@@ -135,7 +139,7 @@ function SettingModal({
       </button>
       <button
         className={cn(
-          'cursor-pointer px-30 py-14',
+          'cursor-pointer border-b px-30 py-14',
           'm-body-large',
           'body-medium',
         )}
@@ -143,6 +147,7 @@ function SettingModal({
       >
         배경 삭제
       </button>
+      <DeleteStudyButton studyId={studyId} />
     </div>
   );
 }

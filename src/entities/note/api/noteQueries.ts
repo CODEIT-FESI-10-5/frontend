@@ -12,13 +12,13 @@ import { useCustomMutation } from '@/shared/lib/utils/useCustomMutation';
 // 노트 목록 데이터 가져오기
 export const useNotesByStudyGoalId = () => {
   const searchParams = useSearchParams();
-  const studyGoalIdParam = searchParams?.get('studyGoalId');
-  const studyGoalId = Number(studyGoalIdParam);
+  const goalIdParam = searchParams?.get('goalId');
+  const goalId = Number(goalIdParam);
 
   return useQuery<NoteListResponse>({
-    queryKey: noteKeys.list(studyGoalId),
-    queryFn: () => getNoteListByStudyGoalId(studyGoalId),
-    enabled: !isNaN(studyGoalId) && studyGoalId > 0,
+    queryKey: noteKeys.list(goalId),
+    queryFn: () => getNoteListByStudyGoalId(goalId),
+    enabled: !isNaN(goalId) && goalId > 0,
   });
 };
 

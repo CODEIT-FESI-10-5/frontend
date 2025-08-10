@@ -82,7 +82,17 @@ export const noneMockDashboard: DashboardResponse = {
       title: '',
       completedCt: '',
       progress: 0,
-      recentCompletedTodo: null,
+      recentCompletedTodo: {
+        id: '1',
+        content:
+          'JPA 실습 과제 제출1231231231231233214234234234234234234234234234234234',
+        createdAt: '2024-02-01T09:00:00',
+        completed: true,
+        completedAt: '2024-02-01T18:00:00',
+        note: 'JPA 실습 과제에서 발생한 이슈 정리',
+        noteId: '2',
+        shared: true,
+      },
       inProgressTodo: null,
       teamProgress: [],
     },
