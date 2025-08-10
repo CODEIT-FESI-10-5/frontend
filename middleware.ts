@@ -56,6 +56,7 @@ export async function middleware(req: NextRequest) {
       },
     );
     const loginRes: AuthCheckResponse = await res.json();
+
     if (loginRes.httpStatusCode !== 200) {
       return NextResponse.redirect(new URL('/auth/login', req.url));
     }

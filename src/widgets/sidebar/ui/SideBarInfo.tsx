@@ -21,7 +21,10 @@ export default function SideBarInfo() {
         <Link href="/">
           <Image src="/images/logo.png" alt="logo" width={115} height={28} />
         </Link>
-        <CloseIcon className="h-26 w-26 xl:hidden" onClick={close} />
+        <CloseIcon
+          className="h-26 w-26 cursor-pointer xl:hidden"
+          onClick={close}
+        />
       </div>
       {isNotePage ? <NoteInfo /> : <ProfileInfo />}
     </div>

@@ -40,10 +40,12 @@ export default function StudyGoalList() {
     <section className="mt-64 flex flex-col gap-14">
       <div className="flex items-center justify-between">
         <h2 className="text-text-secondary title-small">스터디 목표</h2>
-        {role && <CreateGoalButton studyId={data.studyId} />}
+        {role && currentStudyId != null && (
+          <CreateGoalButton studyId={data.studyId} />
+        )}
       </div>
       {data.totalCount !== 0 ? (
-        <ul className="py-4">
+        <ul className="cursor-pointer py-4">
           {data.goals.map((goal) => {
             const goalItem: GoalListItem = {
               id: String(goal.id),

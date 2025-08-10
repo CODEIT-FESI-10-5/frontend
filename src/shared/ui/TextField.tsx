@@ -35,12 +35,14 @@ export default function TextField({
           {label}
         </label>
       )}
-      <input className={cn(textFieldVariants({ error }))} {...props}></input>
-      {error && (
-        <span className="text-highlight m-body-small md:label-small">
-          {errorMessage}
-        </span>
-      )}
+      <div>
+        <input className={cn(textFieldVariants({ error }))} {...props} />
+        {error && (
+          <span className="text-highlight m-body-small md:label-small">
+            {errorMessage}
+          </span>
+        )}
+      </div>
     </div>
   );
 }

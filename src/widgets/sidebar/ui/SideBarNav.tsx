@@ -22,6 +22,7 @@ export default function SideBarNav() {
 
   // 대시보드 진입시 로컬 스토리지에 스터디, 목표 아이디 저장
   useEffect(() => {
+    setIsOpen(false);
     if (pathname?.startsWith('/dashboard') && studyId) {
       if (goalId) {
         setGoalId(String(goalId));
@@ -45,6 +46,7 @@ export default function SideBarNav() {
       pathname?.startsWith('/note') ||
       pathname?.startsWith('/todolist-detail')
     ) {
+      setIsOpen(false);
       router.push('/');
     }
     setIsOpen(!isOpen);
@@ -69,15 +71,7 @@ export default function SideBarNav() {
       </div>
 
       {/* StudyGoalList */}
-      <div
-        className={
-          isOpen &&
-          studyData.studyList.filter((study) => study.id !== currentStudyId)
-            .length !== 1
-            ? 'hidden'
-            : ''
-        }
-      >
+      <div className={isOpen && studyData.totalCount !== 1 ? 'hidden' : ''}>
         <StudyGoalList />
       </div>
     </div>
