@@ -22,7 +22,6 @@ export const config = {
     '/note/:path*',
     '/account',
     '/todolist-detail/:path*',
-    '/',
   ],
 };
 
@@ -38,10 +37,8 @@ export async function middleware(req: NextRequest) {
   const isNote = pathname.startsWith('/note/');
   const isTodo = pathname.startsWith('/todolist-detail/');
   const isAccount = pathname === '/account';
-  const isRoot = pathname === '/';
 
-  const needsLoginCheck =
-    isDashboard || isNote || isAccount || isRoot || isTodo;
+  const needsLoginCheck = isDashboard || isNote || isAccount || isTodo;
 
   if (needsLoginCheck) {
     const res = await fetch(
