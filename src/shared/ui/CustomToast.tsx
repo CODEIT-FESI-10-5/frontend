@@ -52,6 +52,7 @@ export default function CustomToast() {
           },
 
           loading: {
+            duration: Infinity,
             style: {
               background: '#9b9b9b', // --color-text-tertiary
               color: 'white',
