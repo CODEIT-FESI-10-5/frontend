@@ -7,6 +7,8 @@ import {
 } from '@/entities/note/api/noteQueries';
 import NoteIcon from '@/assets/note-icon.svg';
 import AppBar from '@/shared/ui/AppBar';
+import RouterBackButton from '@/shared/ui/RouterBackButton';
+import IconBack3 from '@/assets/icon-back3.svg';
 
 export function NoteEditPage({ noteId }: { noteId: number }) {
   const { data: noteResponse, isLoading, isError } = useGetNoteById(noteId);
@@ -43,6 +45,11 @@ export function NoteEditPage({ noteId }: { noteId: number }) {
 
   return (
     <>
+      <div className="mb-18 hidden xl:block">
+        <RouterBackButton>
+          <IconBack3 />
+        </RouterBackButton>
+      </div>
       <AppBar pageName="노트 작성" />
       <div className="xl:bg-surface-1 xl:border-border-subtle w-full max-w-[1208px] rounded-lg xl:border">
         <div className="border-border-subtle hidden border px-22 py-12 xl:block">
@@ -52,7 +59,7 @@ export function NoteEditPage({ noteId }: { noteId: number }) {
         <div className="px-30 py-34">
           {note ? (
             <div>
-              <div className="mb-6 flex items-center gap-4">
+              <div className="mb-6 flex items-center gap-10">
                 <NoteIcon />
                 <h1 className="m-headline-medium xl:headline-large line-clamp-2 text-white">
                   {note.studyGoalTitle}

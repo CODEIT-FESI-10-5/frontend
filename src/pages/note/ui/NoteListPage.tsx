@@ -8,6 +8,8 @@ import { useStudyStore } from '@/features/get-study-list/model';
 import { useGoalStore } from '@/features/get-goal-list/model';
 import { useEffect } from 'react';
 import AppBar from '@/shared/ui/AppBar';
+import RouterBackButton from '@/shared/ui/RouterBackButton';
+import IconBack3 from '@/assets/icon-back3.svg';
 
 export function NoteListPage() {
   const searchParams = useSearchParams();
@@ -67,6 +69,12 @@ export function NoteListPage() {
   return (
     <>
       <AppBar pageName="노트 모아보기" />
+      <div className="mb-18 hidden xl:block">
+        <RouterBackButton>
+          <IconBack3 />
+        </RouterBackButton>
+      </div>
+
       <div className="xl:bg-surface-1 xl:border-border-subtle w-full max-w-[1208px] rounded-lg xl:border">
         <div className="border-border-subtle hidden border px-22 py-12 xl:block">
           <h1 className="text-text-tertiary headline-medium text-lg">

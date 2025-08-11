@@ -22,7 +22,7 @@ export function NoteList({ title, notes }: NoteListProps) {
 
   return (
     <section>
-      <div className="mb-24 flex items-center gap-4">
+      <div className="mb-24 flex items-center gap-10">
         <NoteIcon />
         <h1 className="m-headline-medium md:headline-large line-clamp-2 text-white">
           {title}
