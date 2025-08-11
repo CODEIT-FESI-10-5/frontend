@@ -6,8 +6,8 @@ import { motion, AnimatePresence, PanInfo } from 'framer-motion';
 import { useRouter } from 'next/navigation';
 import { cn } from '@/shared/lib/utils/cn';
 import { Button } from '@/shared/ui';
-import { useRedirect } from '@/shared/lib/utils/useRedirect';
-import { clientFetch } from '@/shared/api';
+// import { useRedirect } from '@/shared/lib/utils/useRedirect';
+// import { clientFetch } from '@/shared/api';
 
 const images = [
   '/images/guide/guide_1.png',
@@ -48,9 +48,9 @@ export default function Guide() {
   const [current, setCurrent] = useState(0);
   const router = useRouter();
   const [slideDirection, setSlideDirection] = useState(0);
-  const [loading, setLoading] = useState(true);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [authChecked, setAuthChecked] = useState(false);
+  const [loading] = useState(true);
+  // const [isLoggedIn, setIsLoggedIn] = useState(false);
+  // const [authChecked, setAuthChecked] = useState(false);
 
   // // 로그인 상태 확인
   // useEffect(() => {
