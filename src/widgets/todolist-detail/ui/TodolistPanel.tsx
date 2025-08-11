@@ -20,29 +20,34 @@ function TitleArea({ title = '목표' }: { title?: string }) {
   return (
     <motion.div
       layout={'position'}
-      className="mb-26 flex w-full items-center justify-between md:mb-40"
+      className="mb-26 flex w-full flex-col gap-12 md:mb-40 md:gap-16"
     >
-      <p className="m-headline-medium md:headline-large font-bold text-white">
-        {title}
-      </p>
-      <Button
-        aria-label="open-todo-form-btn"
-        label={
-          <div className="flex items-center justify-center gap-4">
-            <NewTodo width={20} height={20} />
-            {'세부 투두 생성'}
-          </div>
-        }
-        size={'xs'}
-        theme={'highlight'}
-        onClick={() => {
-          if (getTodoCount() >= 10) {
-            toast.error('투두는 최대 10개까지 생성 가능합니다');
-            return;
+      <div className="flex items-center justify-between">
+        <p className="m-headline-medium md:headline-large font-bold text-white">
+          {title}
+        </p>
+        <Button
+          aria-label="open-todo-form-btn"
+          label={
+            <div className="flex items-center justify-center gap-4">
+              <NewTodo width={20} height={20} />
+              {'세부 투두 생성'}
+            </div>
           }
-          toggleEditMode();
-        }}
-      />
+          size={'xs'}
+          theme={'highlight'}
+          onClick={() => {
+            if (getTodoCount() >= 10) {
+              toast.error('투두는 최대 10개까지 생성 가능합니다');
+              return;
+            }
+            toggleEditMode();
+          }}
+        />
+      </div>
+      <p className="m-label-small md:label-small text-text-tertiary">
+        투두를 꾹 눌러 드래그로 순서를 바꿀 수 있어요(동일 그룹끼리 가능)
+      </p>
     </motion.div>
   );
 }
