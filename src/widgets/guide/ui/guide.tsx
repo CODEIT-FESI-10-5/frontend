@@ -48,7 +48,7 @@ export default function Guide() {
   const [current, setCurrent] = useState(0);
   const router = useRouter();
   const [slideDirection, setSlideDirection] = useState(0);
-  const [loading] = useState(true);
+  //const [loading] = useState(true);
   // const [isLoggedIn, setIsLoggedIn] = useState(false);
   // const [authChecked, setAuthChecked] = useState(false);
 
@@ -152,9 +152,9 @@ export default function Guide() {
     }
   };
 
-  if (loading) {
-    return <></>;
-  }
+  // if (loading) {
+  //   return <>logding</>;
+  // }
 
   return (
     <div
