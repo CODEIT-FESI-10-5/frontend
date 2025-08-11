@@ -52,38 +52,38 @@ export default function Guide() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [authChecked, setAuthChecked] = useState(false);
 
-  // 로그인 상태 확인
-  useEffect(() => {
-    const checkAuth = async () => {
-      try {
-        await clientFetch.get('/api/auth/check');
-        setIsLoggedIn(true);
-      } catch (error) {
-        console.error('Auth check failed:', error);
-      } finally {
-        setAuthChecked(true);
-      }
-    };
+  // // 로그인 상태 확인
+  // useEffect(() => {
+  //   const checkAuth = async () => {
+  //     try {
+  //       await clientFetch.get('/api/auth/check');
+  //       setIsLoggedIn(true);
+  //     } catch (error) {
+  //       console.error('Auth check failed:', error);
+  //     } finally {
+  //       setAuthChecked(true);
+  //     }
+  //   };
 
-    checkAuth();
-  }, []);
+  //   checkAuth();
+  // }, []);
 
-  // 로그인 상태가 확인된 후에만 useRedirect 활성화
-  const url = useRedirect('study', undefined, isLoggedIn && authChecked);
+  // // 로그인 상태가 확인된 후에만 useRedirect 활성화
+  // const url = useRedirect('study', undefined, isLoggedIn && authChecked);
 
-  useEffect(() => {
-    // 인증 확인이 완료되지 않았으면 대기
-    if (!authChecked) return;
+  // useEffect(() => {
+  //   // 인증 확인이 완료되지 않았으면 대기
+  //   if (!authChecked) return;
 
-    // 로그인되어 있고 url이 있을 때만 리다이렉트 실행
-    if (isLoggedIn && url) {
-      router.replace(url);
-      return; // url이 있으면 리다이렉트하고 loading 상태 유지
-    }
+  //   // 로그인되어 있고 url이 있을 때만 리다이렉트 실행
+  //   if (isLoggedIn && url) {
+  //     router.replace(url);
+  //     return; // url이 있으면 리다이렉트하고 loading 상태 유지
+  //   }
 
-    // 로그인되지 않았거나 (로그인되었지만 url이 로딩완료된 경우) 로딩 상태 해제
-    if (!isLoggedIn || (isLoggedIn && url !== undefined)) setLoading(false);
-  }, [url, router, isLoggedIn, authChecked]);
+  //   // 로그인되지 않았거나 (로그인되었지만 url이 로딩완료된 경우) 로딩 상태 해제
+  //   if (!isLoggedIn || (isLoggedIn && url !== undefined)) setLoading(false);
+  // }, [url, router, isLoggedIn, authChecked]);
 
   // 자동 슬라이드 기능 - 5초마다 다음 이미지로 넘어감
   // current가 변경될 때마다 타이머 리셋
