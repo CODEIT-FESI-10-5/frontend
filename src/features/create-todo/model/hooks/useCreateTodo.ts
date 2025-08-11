@@ -15,5 +15,5 @@ export const useCreateTodoMutation = (goalId: string) =>
       [...dashboardQueryKeys.goal(goalId)],
       [...todolistQueryKeys.todolist(goalId)],
     ],
-    successMessage: '투두 생성에 성공했습니다',
+    successMessage: '투두가 생성되었습니다!',
   });

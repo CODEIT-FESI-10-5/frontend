@@ -14,5 +14,5 @@ export const useDeleteTodoMutation = (goalId: string) =>
       [...dashboardQueryKeys.goal(goalId)],
       [...todolistQueryKeys.todolist(goalId)],
     ],
-    successMessage: '투두가 삭제되었습니다',
+    successMessage: '투두가 삭제되었습니다!',
   });
