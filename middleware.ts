@@ -20,6 +20,7 @@ export const config = {
     '/note/:path*',
     '/account',
     '/todolist-detail/:path*',
+    '/',
   ],
 };
 
