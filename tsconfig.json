@@ -22,7 +22,8 @@
     "paths": {
       "@/*": ["./src/*"],
       "@/assets/*": ["public/assets/*"],
-      "@/images/*": ["public/images/*"]
+      "@/images/*": ["public/images/*"],
+      "@/lottie/*": ["public/lottie/*"]
     }
   },
   "include": [
