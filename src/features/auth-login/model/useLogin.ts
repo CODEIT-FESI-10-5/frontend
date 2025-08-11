@@ -3,7 +3,6 @@
 import { LoginSchema } from '@/features/auth-login';
 import { requestLogin } from '@/entities/auth/api';
 import { useRouter } from 'next/navigation';
-import { useRedirect } from '@/shared/lib/utils/useRedirect';
 import { useCustomMutation } from '@/shared/lib/utils/useCustomMutation';
 import { useProfileStore } from '@/entities/profile/model';
 
