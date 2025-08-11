@@ -14,12 +14,14 @@ type DeleteType = 'study' | 'goal';
 /**
  * @param deleteType 'study' | 'goal' (삭제 타입)
  * @param studyId goal 삭제 시 기준이 되는 스터디 id (goal 삭제 시 필수)
+ * @param enabled 훅 활성화 여부 (기본값: true)
  */
 export function useRedirect(
   deleteType: DeleteType = 'study',
   studyId?: string | number,
+  enabled: boolean = true,
 ) {
-  // 항상 훅을 호출
+  // enabled가 false면 쿼리 비활성화
   const study = useGetStudy();
   const studyData: StudyListResponse | undefined = study.data;
   const isStudyFetched = study.isFetched;
@@ -29,8 +31,11 @@ export function useRedirect(
     deleteType === 'study' ? studyData?.studyList?.[0]?.id : studyId;
   const studyIdNum = Number(baseStudyId);
   const { data: goalData, isFetched: isGoalFetched } = useGetGoal(studyIdNum, {
-    enabled: !!studyIdNum,
+    enabled: !!studyIdNum && enabled,
   });
+
+  // enabled가 false면 undefined 반환
+  if (!enabled) return undefined;
 
   // 목적지 url만 반환
   if (!isStudyFetched) return undefined;

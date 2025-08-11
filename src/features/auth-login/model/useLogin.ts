@@ -16,7 +16,7 @@ export function useLogin() {
         //localStorage에 email, nickname, profileImg 저장
         const { email, nickname, profileImg } = res.data;
         setProfile(nickname, email, profileImg);
-        router.replace('/');
+        router.replace('/redirect');
       },
     },
   });
