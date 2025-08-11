@@ -51,13 +51,6 @@ export default function CreateTodoForm() {
   return (
     <motion.form
       ref={scope}
-      // transition={{
-      //   type: 'spring',
-      //   stiffness: 300,
-      //   damping: 10,
-      //   mass: 0.5,
-      //   velocity: 100000,
-      // }}
       onSubmit={handleSubmit}
       className={cn(
         'bg-surface-4 jutify-between mb-16 flex h-fit min-h-72 w-full items-center rounded-lg border',
