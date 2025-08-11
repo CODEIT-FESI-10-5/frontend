@@ -32,6 +32,9 @@ export function NoteEditor({ initialNote, onAutoSave }: NoteEditorProps) {
       Placeholder.configure({ placeholder: '노트를 적어주세요!' }),
     ],
     content: initialNote?.content || '',
+    onCreate: ({ editor }) => {
+      editor.commands.focus('end');
+    },
     onUpdate: ({ editor }) => {
       const html = editor.getHTML();
 
@@ -54,17 +57,6 @@ export function NoteEditor({ initialNote, onAutoSave }: NoteEditorProps) {
     },
     immediatelyRender: false,
   });
-
-  // 에디터가 준비되면 자동으로 focus
-  useEffect(() => {
-    if (editor) {
-      const timer = setTimeout(() => {
-        editor.commands.focus('end');
-      }, 100);
-
-      return () => clearTimeout(timer);
-    }
-  }, [editor]);
 
   // 초기 노트 내용 설정 및 커서 위치 설정
   useEffect(() => {
