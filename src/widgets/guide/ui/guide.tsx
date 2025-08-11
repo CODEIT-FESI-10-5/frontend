@@ -53,9 +53,11 @@ export default function Guide() {
   useEffect(() => {
     if (url) {
       router.replace(url);
+      return; // url이 있으면 리다이렉트하고 loading 상태 유지
     }
 
-    setLoading(false);
+    // url이 로딩이 되지 않았다면 로딩 상태 유지
+    if (url !== undefined) setLoading(false);
   }, [url, router]);
 
   // 자동 슬라이드 기능 - 5초마다 다음 이미지로 넘어감
