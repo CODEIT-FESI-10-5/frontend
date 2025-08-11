@@ -8,6 +8,7 @@ import Underline from '@tiptap/extension-underline';
 import Placeholder from '@tiptap/extension-placeholder';
 import Highlight from '@tiptap/extension-highlight';
 import { NoteEditorMenu } from './NoteEditorMenu';
+import { cn } from '@/shared/lib/utils/cn';
 
 interface NoteEditorProps {
   initialNote?: Note;
@@ -15,21 +16,20 @@ interface NoteEditorProps {
 }
 
 export function NoteEditor({ initialNote, onAutoSave }: NoteEditorProps) {
-  const [status, setStatus] = useState<'idle' | 'typing' | 'saved'>('idle');
-  const [showStatus, setShowStatus] = useState(false);
-  const [fadeOut, setFadeOut] = useState(false);
+  const [typingStatus, setTypingStatus] = useState<'idle' | 'typing' | 'saved'>('idle');
+  const [isFadeOut, setIsFadeOut] = useState(false);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
   const fadeTimerRef = useRef<NodeJS.Timeout | null>(null);
 
   // TipTap 에디터 초기화
   const editor = useEditor({
     extensions: [
-      StarterKit.configure({
-        heading: { levels: [1, 2, 3, 4] },
-      }),
       Underline,
       Highlight,
       Placeholder.configure({ placeholder: '노트를 적어주세요!' }),
+      StarterKit.configure({
+        heading: { levels: [1, 2, 3, 4] },
+      }),
     ],
     content: initialNote?.content || '',
     onCreate: ({ editor }) => {
@@ -38,15 +38,14 @@ export function NoteEditor({ initialNote, onAutoSave }: NoteEditorProps) {
     onUpdate: ({ editor }) => {
       const html = editor.getHTML();
 
-      setStatus('typing');
-      setShowStatus(true);
-      setFadeOut(false);
+      setTypingStatus('typing');
+      setIsFadeOut(false);
 
       if (timerRef.current) clearTimeout(timerRef.current);
       if (fadeTimerRef.current) clearTimeout(fadeTimerRef.current);
 
       timerRef.current = setTimeout(() => {
-        setStatus('saved');
+        setTypingStatus('saved');
         onAutoSave(html);
       }, 1500);
     },
@@ -77,23 +76,17 @@ export function NoteEditor({ initialNote, onAutoSave }: NoteEditorProps) {
 
   // 상태 메시지 표시 및 페이드 아웃
   useEffect(() => {
-    if (status === 'typing') {
-      setShowStatus(true);
-      setFadeOut(false);
-      if (fadeTimerRef.current) clearTimeout(fadeTimerRef.current);
-    }
-    if (status === 'saved') {
-      setShowStatus(true);
-      setFadeOut(false);
+    if (typingStatus === 'saved') {
+      setIsFadeOut(false);
       fadeTimerRef.current = setTimeout(() => {
-        setFadeOut(true);
-        setTimeout(() => setShowStatus(false), 500);
+        setIsFadeOut(true);
+        setTimeout(() => setTypingStatus('idle'), 500);
       }, 1500);
     }
     return () => {
       if (fadeTimerRef.current) clearTimeout(fadeTimerRef.current);
     };
-  }, [status]);
+  }, [typingStatus]);
 
   // 타이머 정리
   useEffect(() => {
@@ -116,18 +109,17 @@ export function NoteEditor({ initialNote, onAutoSave }: NoteEditorProps) {
       </div>
       {/* 상태 메시지 */}
       <div className="min-h-30 text-left">
-        {showStatus && (
+        {typingStatus !== 'idle' && (
           <span
-            className={`transition-opacity duration-500 ${fadeOut ? 'opacity-0' : 'opacity-100'}`}
+            className={cn(
+              'transition-opacity duration-500',
+              isFadeOut ? 'opacity-0' : 'opacity-100',
+              typingStatus === 'typing' && 'text-text-tertiary body-medium',
+              typingStatus === 'saved' && 'body-medium text-highlight',
+            )}
           >
-            {status === 'typing' && (
-              <span className="text-text-tertiary body-medium">작성 중...</span>
-            )}
-            {status === 'saved' && (
-              <span className="body-medium text-highlight">
-                자동 저장되었습니다.
-              </span>
-            )}
+            {typingStatus === 'typing' && '작성 중...'}
+            {typingStatus === 'saved' && '자동 저장되었습니다.'}
           </span>
         )}
       </div>
