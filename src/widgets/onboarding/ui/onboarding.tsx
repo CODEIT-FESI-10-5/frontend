@@ -50,6 +50,7 @@ export default function Onboarding() {
                 size="lg"
                 theme="primary"
                 onClick={handleCreateClick}
+                isPending={mutation.isPending}
               >
                 스터디 만들기 (팀장으로 시작)
               </Button>
@@ -106,6 +107,7 @@ export default function Onboarding() {
             size="lg"
             theme="primary"
             onClick={handleCreateClick}
+            isPending={mutation.isPending}
           />
           <Button
             label="초대코드로 가입하기"

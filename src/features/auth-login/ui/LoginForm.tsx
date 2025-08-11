@@ -11,7 +11,7 @@ import {
 } from '@/features/auth-login/model';
 
 export default function LoginForm() {
-  const { mutate } = useLogin();
+  const { mutate, isPending } = useLogin();
   const {
     register,
     handleSubmit,
@@ -56,6 +56,7 @@ export default function LoginForm() {
           theme="primary"
           size="lg"
           type="submit"
+          isPending={isPending}
         />
       </form>
       <div className="mt-24 flex items-start justify-center">

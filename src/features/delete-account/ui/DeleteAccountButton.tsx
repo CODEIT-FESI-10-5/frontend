@@ -6,7 +6,7 @@ import CloseIcon from '@/assets/icon-close.svg';
 
 export default function DeleteAccountButton() {
   const { open, close } = useModal();
-  const { mutate: deleteMutation } = useDeleteAccount(() => {
+  const { mutate: deleteMutation, isPending } = useDeleteAccount(() => {
     close();
   });
 
@@ -39,6 +39,7 @@ export default function DeleteAccountButton() {
             theme="primary"
             onClick={deleteMutation}
             className="w-133 md:w-166"
+            isPending={isPending}
           />
         </div>
       </div>,

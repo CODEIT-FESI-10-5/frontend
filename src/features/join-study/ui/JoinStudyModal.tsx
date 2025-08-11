@@ -7,7 +7,7 @@ import { useModal } from '@/shared/lib/utils/useModal';
 
 export default function JoinStudyModal() {
   const { close } = useModal();
-  const { mutate } = useJoinStudy();
+  const { mutate, isPending } = useJoinStudy();
   const {
     register,
     handleSubmit,
@@ -53,6 +53,7 @@ export default function JoinStudyModal() {
           theme="primary"
           type="submit"
           className="top-36 md:top-56"
+          isPending={isPending}
         />
       </form>
     </div>

@@ -6,7 +6,7 @@ import CloseIcon from '@/assets/icon-close.svg';
 
 export default function LogoutButton() {
   const { open, close } = useModal();
-  const { mutate: deleteMutation } = useLogout(() => {
+  const { mutate: deleteMutation, isPending } = useLogout(() => {
     close();
   });
 
@@ -39,6 +39,7 @@ export default function LogoutButton() {
             theme="primary"
             onClick={deleteMutation}
             className="w-133 md:w-166"
+            isPending={isPending}
           />
         </div>
       </div>,
