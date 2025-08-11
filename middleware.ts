@@ -20,7 +20,6 @@ export const config = {
     '/note/:path*',
     '/account',
     '/todolist-detail/:path*',
-    '/',
   ],
 };
 
@@ -31,15 +30,14 @@ export async function middleware(req: NextRequest) {
 
   const cookie = req.headers.get('cookie') || '';
   const pathname = req.nextUrl.pathname;
-  const isLoginToDashboard = pathname === '/dashboard';
-  const isDashboard = pathname.startsWith('/dashboard/') && !isLoginToDashboard;
+  const isDashboard = pathname.startsWith('/dashboard/');
   const isNote = pathname.startsWith('/note/');
   const isTodo = pathname.startsWith('/todolist-detail/');
   const isAccount = pathname === '/account';
   const isRoot = pathname === '/';
 
   const needsLoginCheck =
-    isDashboard || isNote || isAccount || isRoot || isTodo;
+    isDashboard || isNote || isAccount || isTodo || isRoot;
 
   if (needsLoginCheck) {
     const res = await fetch(
@@ -56,7 +54,15 @@ export async function middleware(req: NextRequest) {
     const loginRes: AuthCheckResponse = await res.json();
 
     if (loginRes.httpStatusCode !== 200) {
+      // 가이드 페이지 접속 시 로그인X => 가이드 페이지 보여줌
+      if (isRoot) {
+        return NextResponse.next();
+      }
       return NextResponse.redirect(new URL('/auth/login', req.url));
+    }
+    // 가이드 페이지 접속 시 로그인O => redirect 페이지로 이동
+    if (isRoot) {
+      return NextResponse.redirect(new URL('/redirect', req.url));
     }
   }
   return NextResponse.next();

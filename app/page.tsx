@@ -1,5 +1,5 @@
-import RootPage from '@/pages/rootPage';
+import Guide from '@/widgets/guide/ui/guide';
 
-export default function Home() {
-  return <RootPage></RootPage>;
+export default function Root() {
+  return <Guide />;
 }
