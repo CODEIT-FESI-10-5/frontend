@@ -3,14 +3,12 @@
 import { LoginSchema } from '@/features/auth-login';
 import { requestLogin } from '@/entities/auth/api';
 import { useRouter } from 'next/navigation';
-import { useRedirect } from '@/shared/lib/utils/useRedirect';
 import { useCustomMutation } from '@/shared/lib/utils/useCustomMutation';
 import { useProfileStore } from '@/entities/profile/model';
 
 export function useLogin() {
   const router = useRouter();
   const { setProfile } = useProfileStore();
-  const url = useRedirect('study');
   return useCustomMutation({
     mutationFn: (data: LoginSchema) => requestLogin(data),
     mutationOptions: {
@@ -18,11 +16,7 @@ export function useLogin() {
         //localStorage에 email, nickname, profileImg 저장
         const { email, nickname, profileImg } = res.data;
         setProfile(nickname, email, profileImg);
-        if (url) {
-          router.replace(url);
-        } else {
-          router.replace('/');
-        }
+        router.replace('/');
       },
     },
   });
