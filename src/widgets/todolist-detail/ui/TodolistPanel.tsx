@@ -20,7 +20,7 @@ function TitleArea({ title = '목표' }: { title?: string }) {
   return (
     <motion.div
       layout={'position'}
-      className="mb-26 flex w-full flex-col gap-12 md:mb-40 md:gap-16"
+      className="mb-26 flex w-full flex-col gap-12 md:mb-28 md:gap-16"
     >
       <div className="flex items-center justify-between">
         <p className="m-headline-medium md:headline-large font-bold text-white">
