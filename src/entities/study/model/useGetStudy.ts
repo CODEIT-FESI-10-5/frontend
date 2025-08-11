@@ -6,11 +6,10 @@ import {
   studyQueryKeys,
 } from '@/entities/study';
 
-export const useGetStudy = (options?: { enabled?: boolean }) => {
+export const useGetStudy = () => {
   return useQuery<StudyListResponseApi, Error, StudyListResponse>({
     queryKey: studyQueryKeys.list(),
     queryFn: getStudyList,
-    enabled: options?.enabled ?? true,
     select: (response: StudyListResponseApi) => {
       const { totalCount, recentStudyId, studyList } = response.data;
       return {
