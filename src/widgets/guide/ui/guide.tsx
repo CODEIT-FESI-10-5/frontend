@@ -7,6 +7,7 @@ import { useRouter } from 'next/navigation';
 import { cn } from '@/shared/lib/utils/cn';
 import { Button } from '@/shared/ui';
 import { useRedirect } from '@/shared/lib/utils/useRedirect';
+import { clientFetch } from '@/shared/api';
 
 const images = [
   '/images/guide/guide_1.png',
@@ -48,17 +49,41 @@ export default function Guide() {
   const router = useRouter();
   const [slideDirection, setSlideDirection] = useState(0);
   const [loading, setLoading] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [authChecked, setAuthChecked] = useState(false);
 
-  const url = useRedirect('study'); // 스터디/목표 기준 자동 리다이렉트
+  // 로그인 상태 확인
   useEffect(() => {
-    if (url) {
+    const checkAuth = async () => {
+      try {
+        await clientFetch.get('/api/auth/check');
+        setIsLoggedIn(true);
+      } catch (error) {
+        console.error('Auth check failed:', error);
+      } finally {
+        setAuthChecked(true);
+      }
+    };
+
+    checkAuth();
+  }, []);
+
+  // 로그인 상태가 확인된 후에만 useRedirect 활성화
+  const url = useRedirect('study', undefined, isLoggedIn && authChecked);
+
+  useEffect(() => {
+    // 인증 확인이 완료되지 않았으면 대기
+    if (!authChecked) return;
+
+    // 로그인되어 있고 url이 있을 때만 리다이렉트 실행
+    if (isLoggedIn && url) {
       router.replace(url);
       return; // url이 있으면 리다이렉트하고 loading 상태 유지
     }
 
-    // url이 로딩이 되지 않았다면 로딩 상태 유지
-    if (url !== undefined) setLoading(false);
-  }, [url, router]);
+    // 로그인되지 않았거나 (로그인되었지만 url이 로딩완료된 경우) 로딩 상태 해제
+    if (!isLoggedIn || (isLoggedIn && url !== undefined)) setLoading(false);
+  }, [url, router, isLoggedIn, authChecked]);
 
   // 자동 슬라이드 기능 - 5초마다 다음 이미지로 넘어감
   // current가 변경될 때마다 타이머 리셋
