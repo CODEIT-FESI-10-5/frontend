@@ -1,6 +1,8 @@
 'use client';
+import type { Todo as TodoType } from '@/widgets/todo/model/types';
 
 import { motion } from 'framer-motion';
+
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
@@ -186,71 +188,19 @@ export default function Goal({ goalId }: { goalId: string }) {
           </div>
           {/* Todo List 리스트 항목 추가 */}
           <div className={cn('flex min-w-0 flex-col', 'gap-20', 'md:gap-32')}>
-            {/*최근 완료된 투두 */}
-            <div className={cn('flex min-w-0 flex-col gap-12')}>
-              <span className={cn('font-medium text-white', 'body-medium', '')}>
-                최근 완료된 투두
-              </span>
-              {/* 가장 최근 완료된 투두를 정렬 후 todo 컴포넌트 넣음 */}
-              <motion.div
-                key={goal?.recentCompletedTodo?.id || 'empty-completed'}
-                initial={{ opacity: 0, y: 20, scale: 0.95 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={{ opacity: 0, y: -20, scale: 0.95 }}
-                transition={{
-                  duration: 0.5,
-                  ease: [0.4, 0, 0.2, 1],
-                }}
-              >
-                {goal?.recentCompletedTodo?.content ? (
-                  <motion.div
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.3, delay: 0.1 }}
-                  >
-                    <Todo todo={goal.recentCompletedTodo} />
-                  </motion.div>
-                ) : (
-                  <span
-                    className={cn('text-text-secondary', 'body-medium', '')}
-                  >
-                    최근 완료된 투두가 없습니다.
-                  </span>
-                )}
-              </motion.div>
-            </div>
-            {/*진행중인 투두 */}
-            <div className={cn('flex min-w-0 flex-col gap-12')}>
-              <span className={cn('font-medium text-white', 'body-medium', '')}>
-                진행중인 투두
-              </span>
-              <motion.div
-                key={goal?.inProgressTodo?.id || 'empty-progress'}
-                initial={{ opacity: 0, y: 20, scale: 0.95 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={{ opacity: 0, y: -20, scale: 0.95 }}
-                transition={{
-                  duration: 0.5,
-                  ease: [0.4, 0, 0.2, 1],
-                }}
-              >
-                {goal?.inProgressTodo?.content ? (
-                  <motion.div
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.3, delay: 0.1 }}
-                  >
-                    <Todo todo={goal.inProgressTodo} inProgress={true} />
-                  </motion.div>
-                ) : (
-                  <span
-                    className={cn('text-text-secondary', 'body-medium', '')}
-                  >
-                    진행중인 투두가 없습니다.
-                  </span>
-                )}
-              </motion.div>
-            </div>
+            <TodoSection
+              label="최근 완료된 투두"
+              todo={goal?.recentCompletedTodo}
+              emptyMessage="완료된 투두가 없습니다."
+              emptySubMessage="첫 완료를 기다리고 있어요!"
+            />
+            <TodoSection
+              label="진행중인 투두"
+              todo={goal?.inProgressTodo}
+              emptyMessage="다음 투두가 없습니다."
+              emptySubMessage="전체 보기를 눌러 새 투두를 추가해 보세요."
+              inProgress
+            />
           </div>
           <Link href={`/todolist-detail/${goalId}`}>
             <span
@@ -270,5 +220,83 @@ export default function Goal({ goalId }: { goalId: string }) {
         <TeamProgress teamProgress={goal.teamProgress || []} />
       </div>
     </>
+  );
+}
+
+// 공통 투두 섹션 컴포넌트
+function TodoSection(props: {
+  label: string;
+  todo: TodoType | null | undefined;
+  emptyMessage: string;
+  emptySubMessage: string;
+  inProgress?: boolean;
+}) {
+  const {
+    label,
+    todo,
+    emptyMessage,
+    emptySubMessage,
+    inProgress = false,
+  } = props;
+  return (
+    <div className={cn('flex min-w-0 flex-col gap-12')}>
+      <span className={cn('font-medium text-white', 'body-medium', '')}>
+        {label}
+      </span>
+      <motion.div
+        key={todo?.id || emptyMessage}
+        initial={{ opacity: 0, y: 20, scale: 0.95 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
+        exit={{ opacity: 0, y: -20, scale: 0.95 }}
+        transition={{
+          duration: 0.5,
+          ease: [0.4, 0, 0.2, 1],
+        }}
+      >
+        {todo?.content ? (
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.3, delay: 0.1 }}
+          >
+            <Todo todo={todo} inProgress={inProgress} />
+          </motion.div>
+        ) : (
+          <GoalEmptyMessage
+            message={emptyMessage}
+            subMessage={emptySubMessage}
+          />
+        )}
+      </motion.div>
+    </div>
+  );
+}
+
+// 공통 Empty 메시지 컴포넌트
+function GoalEmptyMessage({
+  message,
+  subMessage,
+}: {
+  message: string;
+  subMessage: string;
+}) {
+  return (
+    <div
+      aria-label="todo-card"
+      className={
+        'text-text-primary bg-surface-4 flex min-h-72 w-full items-center justify-center rounded-lg px-12 py-14 md:px-14'
+      }
+    >
+      <div
+        className={cn(
+          'text-text-secondary flex flex-col items-center justify-center',
+          'm-body-medium',
+          'md:body-medium',
+        )}
+      >
+        <span>{message}</span>
+        <span>{subMessage}</span>
+      </div>
+    </div>
   );
 }

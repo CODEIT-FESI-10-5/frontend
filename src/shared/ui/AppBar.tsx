@@ -1,5 +1,5 @@
 'use client';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { useDrawerStore } from '@/shared/model';
 import BackIcon from '@/assets/icon-back2.svg';
 import CloseIcon from '@/assets/icon-close.svg';
@@ -11,11 +11,10 @@ interface AppBarProps {
 export default function AppBar({ pageName }: AppBarProps) {
   const { open } = useDrawerStore();
   const pathname = usePathname();
-  //const router = useRouter();
+  const router = useRouter();
 
   const handleBack = () => {
-    //router.back();
-    open();
+    router.back();
   };
 
   const isNote = pathname === '/note';

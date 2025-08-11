@@ -40,10 +40,12 @@ export default function StudyGoalList() {
     <section className="mt-64 flex flex-col gap-14">
       <div className="flex items-center justify-between">
         <h2 className="text-text-secondary title-small">스터디 목표</h2>
-        {role && <CreateGoalButton studyId={data.studyId} />}
+        {role && currentStudyId != null && (
+          <CreateGoalButton studyId={data.studyId} />
+        )}
       </div>
       {data.totalCount !== 0 ? (
-        <ul className="py-4">
+        <ul className="flex cursor-pointer flex-col not-only:gap-4">
           {data.goals.map((goal) => {
             const goalItem: GoalListItem = {
               id: String(goal.id),
@@ -54,7 +56,7 @@ export default function StudyGoalList() {
                 onClick={() => handleClick(goalItem)}
                 key={goalItem.id}
                 className={clsx(
-                  'rounded-4 body-medium flex h-36 w-full items-center justify-between px-12 py-7',
+                  'rounded-4 body-medium hover:bg-surface-4 flex h-40 w-full items-center justify-between px-12 py-7',
                   goalItem.id === currentGoalId
                     ? 'bg-surface-4 text-text-secondary'
                     : 'bg-surface-2 text-text-tertiary',
@@ -62,7 +64,7 @@ export default function StudyGoalList() {
               >
                 <h3 className="flex items-center">{goalItem.title}</h3>
                 {role && goalItem.id === currentGoalId && (
-                  <div className="ml-auto">
+                  <div className="hover:rounded-3 hover:bg-border-emphasis ml-auto flex h-28 w-29 items-center justify-center">
                     <DeleteGoalButton
                       goalId={goalItem.id}
                       studyId={String(data.studyId)}

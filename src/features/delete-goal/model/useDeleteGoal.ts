@@ -4,9 +4,9 @@
 import { useCustomMutation } from '@/shared/lib/utils/useCustomMutation';
 import { dashboardQueryKeys } from '@/entities/dashboard';
 import { deleteGoals } from '../api';
-import { studyQueryKeys } from '@/entities/study';
 import { goalQueryKeys } from '@/entities/goal';
 import { useRouter } from 'next/navigation';
+import { useRedirect } from '@/shared/lib/utils/useRedirect';
 
 interface DeleteGoalMutationParams {
   goalId: string;
@@ -14,21 +14,24 @@ interface DeleteGoalMutationParams {
 }
 export const useDeleteGoalMutation = (goalId: string, studyId: string) => {
   const router = useRouter();
+  const url = useRedirect('goal', studyId);
 
   return useCustomMutation<DeleteGoalMutationParams, any>({
     mutationFn: ({ goalId }) => deleteGoals(goalId),
     invalidateQueryKeys: [
       //대시보드 쿼리 무효화
       [...dashboardQueryKeys.goal(goalId)],
-      //스터디 리스트 쿼리 무효화
-      [...studyQueryKeys.list()],
       //목표 리스트 쿼리 무효화
       [...goalQueryKeys.list(Number(studyId))],
     ],
     successMessage: '목표가 삭제되었습니다',
     mutationOptions: {
       onSuccess: () => {
-        router.push('/');
+        if (url) {
+          router.replace(url);
+        } else {
+          router.replace('/');
+        }
       },
     },
   });

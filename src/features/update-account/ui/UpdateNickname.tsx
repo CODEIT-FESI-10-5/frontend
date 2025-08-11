@@ -59,7 +59,8 @@ export default function UpdateNickname() {
                     placeholder="닉네임을 입력해주세요."
                     error={!!errors.nickname}
                     errorMessage={errors.nickname?.message}
-                    onBlur={() => setIsOpen(false)}
+                    onSubmit={() => setIsOpen(false)}
+                    autoComplete="off"
                   />
                 ) : (
                   <p className="text-text-white body-medium mt-10">

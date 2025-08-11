@@ -37,7 +37,7 @@ export default function Profile() {
         </p>
       </div>
       <div className="ml-auto flex h-full w-full items-start justify-end">
-        <button onClick={handleClick}>
+        <button onClick={handleClick} className="cursor-pointer">
           <SettingIcon />
         </button>
       </div>
