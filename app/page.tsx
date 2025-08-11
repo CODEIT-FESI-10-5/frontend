@@ -1,5 +1,5 @@
-import GuidePage from '@/pages/guide/guidePage';
+import RootPage from '@/pages/rootPage';
 
-export default function Guide() {
-  return <GuidePage />;
+export default function Home() {
+  return <RootPage></RootPage>;
 }

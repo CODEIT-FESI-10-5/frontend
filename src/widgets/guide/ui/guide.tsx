@@ -6,7 +6,6 @@ import { motion, AnimatePresence, PanInfo } from 'framer-motion';
 import { useRouter } from 'next/navigation';
 import { cn } from '@/shared/lib/utils/cn';
 import { Button } from '@/shared/ui';
-import { useRedirect } from '@/shared/lib/utils/useRedirect';
 
 const images = [
   '/images/guide/guide_1.png',
@@ -47,18 +46,6 @@ export default function Guide() {
   const [current, setCurrent] = useState(0);
   const router = useRouter();
   const [slideDirection, setSlideDirection] = useState(0);
-  const [loading, setLoading] = useState(true);
-
-  const url = useRedirect('study'); // 스터디/목표 기준 자동 리다이렉트
-  useEffect(() => {
-    if (url) {
-      router.replace(url);
-      return; // url이 있으면 리다이렉트하고 loading 상태 유지
-    }
-
-    // url이 로딩이 되지 않았다면 로딩 상태 유지
-    if (url !== undefined) setLoading(false);
-  }, [url, router]);
 
   // 자동 슬라이드 기능 - 5초마다 다음 이미지로 넘어감
   // current가 변경될 때마다 타이머 리셋
@@ -126,10 +113,6 @@ export default function Guide() {
       paginate(-1);
     }
   };
-
-  if (loading) {
-    return <></>;
-  }
 
   return (
     <div
