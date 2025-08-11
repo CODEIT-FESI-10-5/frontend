@@ -75,6 +75,7 @@ export default function UpdatePassword() {
                 {...register('currentPassword')}
                 error={!!errors.currentPassword}
                 errorMessage={errors.currentPassword?.message}
+                type="password"
               />
             </div>
             <div className="flex flex-col gap-8">
@@ -86,12 +87,14 @@ export default function UpdatePassword() {
                 {...register('password')}
                 error={!!errors.password}
                 errorMessage={errors.password?.message}
+                type="password"
               />
               <TextField
                 placeholder="비밀번호를 다시 입력해주세요."
                 {...register('confirmPassword')}
                 error={!!errors.confirmPassword}
                 errorMessage={errors.confirmPassword?.message}
+                type="password"
               />
             </div>
           </form>
