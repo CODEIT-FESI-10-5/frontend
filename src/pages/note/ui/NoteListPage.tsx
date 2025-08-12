@@ -67,7 +67,7 @@ export function NoteListPage() {
   }
 
   return (
-    <>
+    <div className="bg-surface-1 min-h-full xl:bg-transparent">
       <AppBar pageName="노트 모아보기" />
       <div className="mb-18 hidden xl:block">
         <RouterBackButton>
@@ -81,7 +81,7 @@ export function NoteListPage() {
             노트 모아보기
           </h1>
         </div>
-        <div className="px-16 py-70 xl:px-30 xl:py-34">
+        <div className="p-16 xl:px-30 xl:py-34">
           {hasGoalId ? (
             <NoteList title={studyGoalTitle} notes={notes} />
           ) : (
@@ -91,6 +91,6 @@ export function NoteListPage() {
           )}
         </div>
       </div>
-    </>
+    </div>
   );
 }
