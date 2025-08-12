@@ -12,6 +12,7 @@ import { useProfileStore } from '@/entities/profile/model';
 
 export default function UpdateNickname() {
   const currentNickname = useProfileStore((state) => state.currentNickname);
+  const currentEmail = useProfileStore((state) => state.currentEmail);
   const [isOpen, setIsOpen] = useState(false);
   const { mutate } = useUpdateNickname();
   const {
@@ -56,7 +57,7 @@ export default function UpdateNickname() {
                 {isOpen ? (
                   <TextField
                     {...register('nickname')}
-                    placeholder="닉네임을 입력해주세요."
+                    placeholder={currentNickname}
                     error={!!errors.nickname}
                     errorMessage={errors.nickname?.message}
                     onSubmit={() => setIsOpen(false)}
@@ -81,7 +82,7 @@ export default function UpdateNickname() {
           </form>
           <div>
             <h3 className="label-large text-text-tertiary">이메일</h3>
-            <p className="text-text-white body-medium">user.mail</p>
+            <p className="text-text-white body-medium">{currentEmail}</p>
           </div>
         </div>
       </section>
