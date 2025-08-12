@@ -13,7 +13,7 @@ export default function UpdateProfile() {
   const [imageSrc, setImageSrc] = useState(
     currentImage || '/images/default-profile.png',
   );
-  const { mutate } = useUpdateProfile();
+  const { mutate, isPending } = useUpdateProfile();
 
   // 이미지 업로드
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -61,6 +61,7 @@ export default function UpdateProfile() {
                 theme="primary"
                 type="button"
                 onClick={() => fileInputRef.current?.click()}
+                isPending={isPending}
               />
               <DeleteIcon
                 onClick={handleDeleteImage}

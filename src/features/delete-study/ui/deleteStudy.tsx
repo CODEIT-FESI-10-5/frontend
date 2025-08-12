@@ -27,7 +27,7 @@ export default function DeleteStudyButton({ studyId }: { studyId: string }) {
 
 function DeleteStudyModal({ studyId }: { studyId: string }) {
   const { close } = useModal();
-  const { mutate: deleteStudy } = useDeleteStudyMutation(studyId);
+  const { mutate: deleteStudy, isPending } = useDeleteStudyMutation(studyId);
 
   const handleDelete = () => {
     deleteStudy({ studyId });
@@ -62,6 +62,7 @@ function DeleteStudyModal({ studyId }: { studyId: string }) {
           theme="primary"
           onClick={handleDelete}
           className="w-full max-w-166 md:w-166"
+          isPending={isPending}
         />
       </div>
     </div>

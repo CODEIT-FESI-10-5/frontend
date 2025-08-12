@@ -11,7 +11,7 @@ import {
 } from '@/features/auth-sign-up/model';
 
 export default function SignUpForm() {
-  const { mutate } = useSignup();
+  const { mutate, isPending } = useSignup();
   const {
     register,
     handleSubmit,
@@ -77,6 +77,7 @@ export default function SignUpForm() {
           disabled={!isValid}
           size="lg"
           type="submit"
+          isPending={isPending}
         />
       </form>
       <div className="mt-24 flex items-start justify-center">

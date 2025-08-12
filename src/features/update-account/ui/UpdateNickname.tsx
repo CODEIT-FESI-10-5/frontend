@@ -13,7 +13,7 @@ import { useProfileStore } from '@/entities/profile/model';
 export default function UpdateNickname() {
   const currentNickname = useProfileStore((state) => state.currentNickname);
   const [isOpen, setIsOpen] = useState(false);
-  const { mutate } = useUpdateNickname();
+  const { mutate, isPending } = useUpdateNickname();
   const {
     register,
     handleSubmit,
@@ -76,6 +76,7 @@ export default function UpdateNickname() {
                 type="submit"
                 onClick={handleClick}
                 className="mt-10"
+                isPending={isPending}
               />
             </div>
           </form>

@@ -20,6 +20,7 @@ export default function CreateStudyButton() {
       className="w-143"
       type="button"
       onClick={handleClick}
+      isPending={mutation.isPending}
     />
   );
 }

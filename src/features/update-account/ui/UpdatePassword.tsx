@@ -11,7 +11,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 
 export default function UpdatePassword() {
   const [isOpen, setIsOpen] = useState(false);
-  const { mutate } = useUpdatePassword();
+  const { mutate, isPending } = useUpdatePassword();
   const {
     register,
     handleSubmit,
@@ -58,6 +58,7 @@ export default function UpdatePassword() {
             type="submit"
             form="change-password-form"
             onClick={handleClick}
+            isPending={isPending}
           />
         </div>
         {isOpen && (
