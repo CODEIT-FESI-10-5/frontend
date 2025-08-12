@@ -184,8 +184,8 @@ export default function StudyInfo({
         size="md"
         className={cn(
           'absolute right-18 -bottom-18 h-auto',
-          '',
-          'md:right-20 md:-bottom-26',
+          'px-16 py-8',
+          'md:right-20 md:-bottom-26 md:px-18 md:py-13',
         )}
         onClick={handleCopyInvite}
         title="클릭 시 복사"
@@ -202,11 +202,11 @@ function ProfileModal({ members }: { members: StudyGroup['members'] }) {
       className={cn(
         'bg-surface-4 flex flex-col gap-24 rounded-t-2xl p-24 shadow-lg',
         '',
-        'md:hidden',
+        '',
       )}
     >
       {/* 모바일용 하단 모달 헤더 */}
-      <div className={cn('flex items-center justify-between')}>
+      <div className={cn('flex items-center justify-between md:hidden')}>
         <h3 className={cn('text-white', 'm-title-medium', '')}>팀원 목록</h3>
         <CloseIcon width={24} height={24} onClick={close} />
       </div>
