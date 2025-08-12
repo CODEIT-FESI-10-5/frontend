@@ -40,9 +40,9 @@ export default function RootLayout({
             <SideBarWrapper>
               {children}
               <Modal />
-              <CustomToast />
               <GlobalLoadingInteractionBlock />
             </SideBarWrapper>
+            <CustomToast />
           </QueryProvider>
         </MswProvider>
       </body>
