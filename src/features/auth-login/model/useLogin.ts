@@ -5,8 +5,12 @@ import { requestLogin } from '@/entities/auth/api';
 import { useRouter } from 'next/navigation';
 import { useCustomMutation } from '@/shared/lib/utils/useCustomMutation';
 import { useProfileStore } from '@/entities/profile/model';
+import { useQueryClient } from '@tanstack/react-query';
+import { studyQueryKeys } from '@/entities/study';
+import { goalQueryKeys } from '@/entities/goal';
 
 export function useLogin() {
+  const queryClient = useQueryClient();
   const router = useRouter();
   const { setProfile } = useProfileStore();
   return useCustomMutation({
@@ -16,8 +20,11 @@ export function useLogin() {
         //localStorage에 email, nickname, profileImg 저장
         const { email, nickname, profileImg } = res.data;
         setProfile(nickname, email, profileImg);
+        queryClient.resetQueries({ queryKey: studyQueryKeys.all });
+        queryClient.resetQueries({ queryKey: goalQueryKeys.all });
         router.replace('/redirect');
       },
     },
   });
 }
+å;
