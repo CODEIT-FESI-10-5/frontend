@@ -44,7 +44,7 @@ export function NoteEditPage({ noteId }: { noteId: number }) {
   }
 
   return (
-    <>
+    <div className="bg-surface-1 min-h-full xl:bg-transparent">
       <div className="mb-18 hidden xl:block">
         <RouterBackButton>
           <IconBack3 />
@@ -56,12 +56,12 @@ export function NoteEditPage({ noteId }: { noteId: number }) {
           <h1 className="text-text-tertiary m-headline-medium">노트 작성</h1>
         </div>
 
-        <div className="px-30 py-34">
+        <div className="p-16 xl:px-30 xl:py-34">
           {note ? (
             <div>
               <div className="mb-6 flex items-center gap-10">
                 <NoteIcon />
-                <h1 className="m-headline-medium xl:headline-large line-clamp-2 text-white">
+                <h1 className="m-headline-medium md:headline-large line-clamp-2 text-white">
                   {note.studyGoalTitle}
                 </h1>
               </div>
@@ -84,6 +84,6 @@ export function NoteEditPage({ noteId }: { noteId: number }) {
           )}
         </div>
       </div>
-    </>
+    </div>
   );
 }
