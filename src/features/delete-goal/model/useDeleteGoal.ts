@@ -6,7 +6,6 @@ import { dashboardQueryKeys } from '@/entities/dashboard';
 import { deleteGoals } from '../api';
 import { goalQueryKeys } from '@/entities/goal';
 import { useRouter } from 'next/navigation';
-import { useRedirect } from '@/shared/lib/utils/useRedirect';
 
 interface DeleteGoalMutationParams {
   goalId: string;
@@ -14,7 +13,6 @@ interface DeleteGoalMutationParams {
 }
 export const useDeleteGoalMutation = (goalId: string, studyId: string) => {
   const router = useRouter();
-  const url = useRedirect('goal', studyId);
 
   return useCustomMutation<DeleteGoalMutationParams, any>({
     mutationFn: ({ goalId }) => deleteGoals(goalId),
@@ -27,11 +25,7 @@ export const useDeleteGoalMutation = (goalId: string, studyId: string) => {
     successMessage: '목표가 삭제되었습니다',
     mutationOptions: {
       onSuccess: () => {
-        if (url) {
-          router.replace(url);
-        } else {
-          router.replace('/');
-        }
+        router.replace('/redirect');
       },
     },
   });
