@@ -1,5 +1,5 @@
-import GuidePage from '@/pages/guide/guidePage';
+import Guide from '@/widgets/guide/ui/guide';
 
-export default function Guide() {
-  return <GuidePage />;
+export default function Root() {
+  return <Guide />;
 }

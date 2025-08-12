@@ -22,7 +22,7 @@ export function useRedirect(
   enabled: boolean = true,
 ) {
   // enabled가 false면 쿼리 비활성화
-  const study = useGetStudy({ enabled });
+  const study = useGetStudy();
   const studyData: StudyListResponse | undefined = study.data;
   const isStudyFetched = study.isFetched;
 
