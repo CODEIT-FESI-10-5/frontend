@@ -77,7 +77,7 @@ export default function Study({ studyId }: { studyId: string }) {
         width={24}
         height={24}
         onClick={isOpen ? close : open}
-        className="absolute top-16 left-18 cursor-pointer sm:hidden"
+        className="absolute top-16 left-18 cursor-pointer xl:hidden"
       />
 
       <UpdateStudyInfo
