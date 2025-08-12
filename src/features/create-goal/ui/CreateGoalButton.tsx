@@ -17,6 +17,7 @@ export default function CreateGoalButton({ studyId }: CreateGoalButtonProps) {
           studyId: studyId,
         });
       }}
+      className="cursor-pointer"
     >
       <CreateGoalIcon />
     </button>
