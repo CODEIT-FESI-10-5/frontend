@@ -21,7 +21,7 @@ export function NoteEditorMenu({ editor }: NoteEditorMenuProps) {
   return (
     <div className="mt-2 flex justify-center">
       <div className="flex w-full max-w-[360px] items-center justify-center gap-1 rounded bg-white px-2 py-2 sm:gap-2 sm:px-3">
-        <div className="flex w-full items-center justify-center gap-1 overflow-x-auto sm:w-auto sm:gap-2">
+        <div className="flex w-full flex-wrap items-center justify-center gap-1 sm:w-auto sm:gap-2">
           {/* Bold */}
           <EditorMenuButton
             onClick={() => editor.chain().focus().toggleBold().run()}
