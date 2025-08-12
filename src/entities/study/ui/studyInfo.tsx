@@ -183,7 +183,7 @@ export default function StudyInfo({
         theme="tertiary"
         size="md"
         className={cn(
-          'absolute right-18 -bottom-18 h-auto px-14 py-8',
+          'absolute right-18 -bottom-18 h-auto',
           '',
           'md:right-20 md:-bottom-26',
         )}

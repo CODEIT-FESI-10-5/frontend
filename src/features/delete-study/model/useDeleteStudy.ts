@@ -19,6 +19,8 @@ export const useDeleteStudyMutation = (studyId: string) => {
   return useCustomMutation<DeleteStudyMutationParams, any>({
     mutationFn: ({ studyId }) => deleteStudy(studyId),
     invalidateQueryKeys: [
+      //스터디 쿼리 무효화
+      [...studyQueryKeys.detail(studyId)],
       //대시보드 쿼리 무효화
       [...dashboardQueryKeys.goal(studyId)],
       //스터디 리스트 쿼리 무효화
